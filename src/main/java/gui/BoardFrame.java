@@ -155,7 +155,7 @@ public class BoardFrame extends JFrame {
         board_panel = new BoardPanel(screen_messages, this, is_web_start, p_locale);
         scroll_pane.setViewportView(board_panel);
 
-        setTitle(resources.getString("title"));
+        setTitle(resources.getString("title") + " - " + design_file.get_name());
         addWindowListener(new WindowStateListener());
 
         pack();
@@ -698,7 +698,7 @@ public class BoardFrame extends JFrame {
             setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             if (confirm_cancel) {
                 int option = JOptionPane.showConfirmDialog(null, resources.getString("confirm_cancel"),
-                        null, JOptionPane.YES_NO_OPTION);
+                        resources.getString("title"), JOptionPane.YES_NO_OPTION);
                 if (option == JOptionPane.NO_OPTION) {
                     setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
                 }

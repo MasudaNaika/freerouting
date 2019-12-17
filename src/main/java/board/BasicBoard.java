@@ -1227,8 +1227,7 @@ public class BasicBoard implements Serializable {
         end_corners[1] = p_trace.last_corner();
         tail_at_endpoint_before = new boolean[2];
         for (int i = 0; i < 2; ++i) {
-            Trace tail
-                    = get_trace_tail(end_corners[i], curr_layer, curr_net_no_arr);
+            Trace tail = get_trace_tail(end_corners[i], curr_layer, curr_net_no_arr);
             tail_at_endpoint_before[i] = (tail != null);
         }
         Set<Item> connection_items = p_trace.get_connection_items();

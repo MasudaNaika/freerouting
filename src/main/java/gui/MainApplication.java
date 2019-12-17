@@ -22,6 +22,7 @@ package gui;
 
 import board.TestLevel;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -123,8 +124,7 @@ public class MainApplication extends JFrame {
         is_test_version = startupOptions.isTestVersion();
         is_webstart = startupOptions.getWebstartOption();
         locale = startupOptions.getCurrentLocale();
-        resources
-                = ResourceBundle.getBundle("gui.resources.MainApplication", locale);
+        resources = ResourceBundle.getBundle("gui.resources.MainApplication", locale);
         main_panel = new JPanel();
         getContentPane().add(main_panel);
         GridBagLayout gridbag = new GridBagLayout();
@@ -146,7 +146,8 @@ public class MainApplication extends JFrame {
         window_net_sample_designs = new WindowNetSampleDesigns(locale);
         window_net_sample_designs.setLocation((int) location.getX() + 90, (int) location.getY() + 90);
 
-        setTitle(resources.getString("title") + " " + VERSION_NUMBER_STRING);
+//        setTitle(resources.getString("title") + " " + VERSION_NUMBER_STRING);
+        setTitle(resources.getString("title"));
         boolean add_buttons = true;
 
         if (startupOptions.getWebstartOption()) {
@@ -198,6 +199,8 @@ public class MainApplication extends JFrame {
         message_field.setRequestFocusEnabled(false);
         gridbag.setConstraints(message_field, gridbag_constraints);
         main_panel.add(message_field, gridbag_constraints);
+        
+        main_panel.add(new JLabel(resources.getString("title") + " " + VERSION_NUMBER_STRING));
 
         addWindowListener(new WindowStateListener());
         pack();
