@@ -1,5 +1,11 @@
 package gui;
 
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -21,7 +27,30 @@ public class Freerouter {
             System.setProperty("apple.laf.useScreenMenuBar", String.valueOf(true));
             System.setProperty("com.apple.macos.smallTabs", String.valueOf(true));
             System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Freerouter");    // doesn't work
+            
+        Desktop desktop = Desktop.getDesktop();
+
+        // About
+        desktop.setAboutHandler(e -> {
+                try {
+                    desktop.browse(new URI("http://www.freerouting.net"));
+                } catch (IOException | URISyntaxException ex) {
+                }
+            });
+
+        // Preference
+        desktop.setPreferencesHandler(e -> {
+        });
+
+        // Quit
+        desktop.setQuitHandler((qe, qr) -> {
+            System.exit(0);
+        });
+
+        // Dock Icon
+//        Taskbar.getTaskbar().setIconImage(icon_image);
         }
+        
         System.setProperty("awt.useSystemAAFontSettings", "on");
         
         String userLaf = FLAT_LAF_INTELLIJ;
