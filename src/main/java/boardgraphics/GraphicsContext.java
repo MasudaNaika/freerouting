@@ -115,7 +115,7 @@ public class GraphicsContext implements Serializable {
             return;
         }
         Graphics2D g2 = (Graphics2D) p_g;
-        Rectangle clip_shape = (Rectangle) p_g.getClip();
+        Rectangle clip_shape = p_g.getClipBounds();
         // the class member update_box cannot be used here, because
         // the dirty rectangle is internally enlarged by the system.
         // Therefore we can not improve the performance by using an
@@ -238,7 +238,7 @@ public class GraphicsContext implements Serializable {
         }
         Point2D center = coordinate_transform.board_to_screen(p_circle.center.to_float());
         double radius = coordinate_transform.board_to_screen(p_circle.radius);
-        if (!point_near_rectangle(center.getX(), center.getY(), (Rectangle) p_g.getClip(), radius)) {
+        if (!point_near_rectangle(center.getX(), center.getY(), p_g.getClipBounds(), radius)) {
             return;
         }
         double diameter = 2 * radius;
@@ -272,7 +272,7 @@ public class GraphicsContext implements Serializable {
         for (Ellipse curr_ellipse : p_ellipse_arr) {
             Point2D center = coordinate_transform.board_to_screen(curr_ellipse.center);
             double bigger_radius = coordinate_transform.board_to_screen(curr_ellipse.bigger_radius);
-            if (!point_near_rectangle(center.getX(), center.getY(), (Rectangle) p_g.getClip(), bigger_radius)) {
+            if (!point_near_rectangle(center.getX(), center.getY(), p_g.getClipBounds(), bigger_radius)) {
                 continue;
             }
             double smaller_radius = coordinate_transform.board_to_screen(curr_ellipse.smaller_radius);
@@ -373,7 +373,7 @@ public class GraphicsContext implements Serializable {
                 System.out.println("GraphicsContext.fill_area: shape not bounded");
                 return;
             }
-            Rectangle clip_shape = (Rectangle) p_g.getClip();
+            Rectangle clip_shape = p_g.getClipBounds();
             IntBox clip_box = coordinate_transform.screen_to_board(clip_shape);
             if (!border.bounding_box().intersects(clip_box)) {
                 return;
