@@ -65,7 +65,7 @@ public class PolylinePath extends Path {
         p_file.write("polyline_path ");
         p_identifier.write(layer.name, p_file);
         p_file.write(" ");
-        p_file.write((new Double(width)).toString());
+        p_file.write(Double.toString(width));
         int line_count = coordinate_arr.length / 4;
         for (int i = 0; i < line_count; ++i) {
             p_file.new_line();

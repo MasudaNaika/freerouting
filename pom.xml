@@ -58,6 +58,12 @@
                 <configuration>
                     <source>11</source>
                     <target>11</target>
+<!--
+                    <compilerArgs>
+                        <arg>-Xlint:unchecked</arg>
+                        <arg>-Xlint:deprecation</arg>
+                    </compilerArgs>
+-->
                 </configuration>
             </plugin>
             <plugin>

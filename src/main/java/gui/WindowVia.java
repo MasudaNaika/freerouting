@@ -441,7 +441,7 @@ public class WindowVia extends BoardSavableSubWindow {
 
         @Override
         public void actionPerformed(ActionEvent p_evt) {
-            Object[] selected_objects = rule_list.getSelectedValues();
+            Object[] selected_objects = rule_list.getSelectedValuesList().toArray();
             if (selected_objects.length <= 0) {
                 return;
             }

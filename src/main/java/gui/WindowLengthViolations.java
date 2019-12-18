@@ -67,7 +67,7 @@ public class WindowLengthViolations extends WindowObjectListWithFilter {
 
     @Override
     protected void select_instances() {
-        Object[] selected_violations = list.getSelectedValues();
+        Object[] selected_violations = list.getSelectedValuesList().toArray();
         if (selected_violations.length <= 0) {
             return;
         }

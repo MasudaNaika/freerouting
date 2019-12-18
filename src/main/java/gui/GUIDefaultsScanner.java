@@ -1683,7 +1683,7 @@ class GUIDefaultsScanner {
                 case 146:
                     break;
                 case 7: {
-                    return new Double(yytext());
+                    return Double.parseDouble(yytext());
                 }
                 case 147:
                     break;

@@ -81,7 +81,7 @@ public class WindowNets extends WindowObjectListWithFilter {
 
     @Override
     protected void select_instances() {
-        Object[] selected_nets = list.getSelectedValues();
+        Object[] selected_nets = list.getSelectedValuesList().toArray();
         if (selected_nets.length <= 0) {
             return;
         }
@@ -114,7 +114,7 @@ public class WindowNets extends WindowObjectListWithFilter {
 
         @Override
         public void actionPerformed(ActionEvent p_evt) {
-            Object[] selected_nets = list.getSelectedValues();
+            Object[] selected_nets = list.getSelectedValuesList().toArray();
             if (selected_nets.length <= 0) {
                 return;
             }
@@ -141,7 +141,7 @@ public class WindowNets extends WindowObjectListWithFilter {
 
         @Override
         public void actionPerformed(ActionEvent p_evt) {
-            Object[] selected_nets = list.getSelectedValues();
+            Object[] selected_nets = list.getSelectedValuesList().toArray();
             if (selected_nets.length <= 0) {
                 return;
             }

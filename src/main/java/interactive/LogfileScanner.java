@@ -563,7 +563,7 @@ class LogfileScanner {
                 case 8:
                     break;
                 case 5: {
-                    return new Double(yytext());
+                    return Double.parseDouble(yytext());
                 }
                 case 9:
                     break;

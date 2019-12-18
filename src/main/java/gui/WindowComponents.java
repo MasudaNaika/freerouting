@@ -64,7 +64,7 @@ public class WindowComponents extends WindowObjectListWithFilter {
 
     @Override
     protected void select_instances() {
-        Object[] selected_components = list.getSelectedValues();
+        Object[] selected_components = list.getSelectedValuesList().toArray();
         if (selected_components.length <= 0) {
             return;
         }
