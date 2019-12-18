@@ -32,7 +32,7 @@
                     <archive>
                         <manifestEntries>
                             <Multi-Release>true</Multi-Release>
-                            <Main-Class>gui.MainApplication</Main-Class>
+                            <Main-Class>gui.Freerouter</Main-Class>
                         </manifestEntries>
                     </archive>
                     <descriptorRefs>
@@ -75,7 +75,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>gui.MainApplication</mainClass>
+                            <mainClass>gui.Freerouter</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

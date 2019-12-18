@@ -44,33 +44,10 @@ import javax.swing.*;
  */
 public class MainApplication extends JFrame {
 
-    private static final String FLAT_LAF_LIGHT = "com.formdev.flatlaf.FlatLightLaf";
-    private static final String FLAT_LAF_DARK = "com.formdev.flatlaf.FlatDarkLaf";
-    private static final String FLAT_LAF_INTELLIJ = "com.formdev.flatlaf.FlatIntelliJLaf";
-    private static final String FLAT_LAF_DARCULA = "com.formdev.flatlaf.FlatDarculaLaf";
-
     /**
      * Main function of the Application
      */
     public static void main(String p_args[]) {
-
-        System.setProperty("awt.useSystemAAFontSettings", "on");
-
-        if (System.getProperty("os.name").toLowerCase().startsWith("mac")) {
-            System.setProperty("apple.laf.useScreenMenuBar", String.valueOf(true));
-            System.setProperty("com.apple.macos.smallTabs", String.valueOf(true));
-            System.setProperty("com.apple.mrj.application.apple.menu.about.name", "freerouting");
-        }
-        String userLaf = FLAT_LAF_INTELLIJ;
-        try {
-            UIManager.setLookAndFeel(userLaf);
-        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException e) {
-            userLaf = UIManager.getSystemLookAndFeelClassName();
-            try {
-                UIManager.setLookAndFeel(userLaf);
-            } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
-            }
-        }
 
         Thread.setDefaultUncaughtExceptionHandler(new DefaultExceptionHandler());
         StartupOptions startupOptions = StartupOptions.parse(p_args);
