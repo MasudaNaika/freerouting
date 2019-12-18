@@ -111,6 +111,9 @@ public class BoardFrame extends JFrame {
      */
     BoardFrame(DesignFile p_design, Option p_option, TestLevel p_test_level, BoardObservers p_observers,
             datastructures.IdNoGenerator p_item_id_no_generator, Locale p_locale, boolean p_confirm_cancel) {
+        
+        Freerouter.setWindowIcon(this);
+        
         design_file = p_design;
         is_web_start = (p_option == Option.WEBSTART);
         test_level = p_test_level;

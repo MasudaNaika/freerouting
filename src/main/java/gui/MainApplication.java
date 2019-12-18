@@ -83,11 +83,12 @@ public class MainApplication extends JFrame {
             new_frame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosed(WindowEvent evt) {
-                    Runtime.getRuntime().exit(0);
+                    System.exit(0);
                 }
             });
         } else {
-            new MainApplication(startupOptions).setVisible(true);
+            MainApplication app = new MainApplication(startupOptions);
+            app.setVisible(true);
         }
     }
 
@@ -96,6 +97,9 @@ public class MainApplication extends JFrame {
      * designs as optional argument.
      */
     public MainApplication(StartupOptions startupOptions) {
+        
+        Freerouter.setWindowIcon(this);
+        
         design_dir_name = startupOptions.getDesignDir();
         is_test_version = startupOptions.isTestVersion();
         is_webstart = startupOptions.getWebstartOption();
@@ -191,7 +195,7 @@ public class MainApplication extends JFrame {
             design_dir_name = System.getProperty("user.dir");
         }
 
-        DesignFile design_file = DesignFile.open_dialog(is_webstart, design_dir_name);
+        DesignFile design_file = DesignFile.open_dialog(is_webstart, design_dir_name, this);
 
         if (design_file == null) {
             message_field.setText(resources.getString("message_3"));
@@ -208,6 +212,9 @@ public class MainApplication extends JFrame {
         message_field.setText(message);
         WindowMessage welcome_window = WindowMessage.show(message);
         welcome_window.setTitle(message);
+        
+        Freerouter.setWindowIcon(welcome_window);
+        
         BoardFrame new_frame
                 = create_board_frame(design_file, message_field, option, is_test_version, locale);
         welcome_window.dispose();
@@ -217,6 +224,8 @@ public class MainApplication extends JFrame {
         message_field.setText(resources.getString("message_4") + " " + design_file.get_name() + " " + resources.getString("message_5"));
         board_frames.add(new_frame);
         new_frame.addWindowListener(new BoardFrameWindowListener(new_frame));
+        
+        new_frame.setLocationRelativeTo(null);
     }
 
     /**
@@ -324,6 +333,12 @@ public class MainApplication extends JFrame {
                 board_frame = null;
             }
         }
+
+        @Override
+        public void windowOpened(WindowEvent e) {
+            board_frame.toFront();
+        }
+        
         private BoardFrame board_frame;
     }
 

@@ -21,6 +21,8 @@
 package gui;
 
 import datastructures.FileFilter;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -58,7 +60,7 @@ public class DesignFile {
      * are security restrictions because the application was opened with java
      * web start.
      */
-    public static DesignFile open_dialog(boolean p_is_webstart, String p_design_dir_name) {
+    public static DesignFile open_dialog(boolean p_is_webstart, String p_design_dir_name, java.awt.Component parent) {
         DesignFile result;
         if (p_is_webstart) {
             result = webstart_open_dialog(p_design_dir_name);
@@ -66,7 +68,7 @@ public class DesignFile {
             JFileChooser file_chooser = new JFileChooser(p_design_dir_name);
             FileFilter file_filter = new FileFilter(all_file_extensions);
             file_chooser.setFileFilter(file_filter);
-            file_chooser.showOpenDialog(null);
+            file_chooser.showOpenDialog(parent);
             File curr_design_file = file_chooser.getSelectedFile();
             if (curr_design_file == null) {
                 return null;
@@ -123,7 +125,7 @@ public class DesignFile {
                 result = null;
             }
         }
-        return result;
+        return new BufferedInputStream(result);
     }
 
     /**
@@ -280,7 +282,8 @@ public class DesignFile {
         if (output_stream == null) {
             return false;
         }
-        designformats.specctra.RulesFile.write(p_board_handling, output_stream, p_design_name);
+        BufferedOutputStream bos = new BufferedOutputStream(output_stream);
+        designformats.specctra.RulesFile.write(p_board_handling, bos, p_design_name);
         return true;
     }
 

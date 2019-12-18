@@ -28,6 +28,10 @@ import javax.swing.JFrame;
  * @author Alfons Wirtz
  */
 public class BoardSubWindow extends JFrame {
+    
+    public BoardSubWindow() {
+        Freerouter.setWindowIcon(this);
+    }
 
     public void parent_iconified() {
         visible_before_iconifying = isVisible();

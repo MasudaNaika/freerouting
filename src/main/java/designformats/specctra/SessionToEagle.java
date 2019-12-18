@@ -19,6 +19,7 @@
  */
 package designformats.specctra;
 
+import gui.Freerouter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -70,6 +71,9 @@ public class SessionToEagle extends JFrame {
 
     SessionToEagle(Scanner p_scanner, OutputStreamWriter p_out_file, board.BasicBoard p_board,
             board.Unit p_unit, double p_session_file_scale_dominator, double p_board_scale_factor) {
+        
+        Freerouter.setWindowIcon(this);
+        
         scanner = p_scanner;
         out_file = p_out_file;
         board = p_board;

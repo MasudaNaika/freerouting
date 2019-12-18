@@ -31,6 +31,10 @@ import javax.swing.*;
  * @author Alfons Wirtz
  */
 public class WindowMessage extends JFrame {
+    
+    public WindowMessage() {
+        Freerouter.setWindowIcon(this);
+    }
 
     /**
      * Displays a window with the input message at the center of the screen.

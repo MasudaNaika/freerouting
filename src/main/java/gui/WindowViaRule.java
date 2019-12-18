@@ -42,6 +42,9 @@ public class WindowViaRule extends JFrame {
      * Creates a new instance of ViaRuleWindow
      */
     public WindowViaRule(ViaRule p_via_rule, ViaInfos p_via_list, BoardFrame p_board_frame) {
+        
+        Freerouter.setWindowIcon(this);
+        
         via_rule = p_via_rule;
         via_list = p_via_list;
 

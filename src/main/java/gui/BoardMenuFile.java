@@ -173,7 +173,7 @@ public class BoardMenuFile extends JMenu {
         File logfile_dir = board_frame.design_file.get_parent_file();
         file_chooser.setCurrentDirectory(logfile_dir);
         file_chooser.setFileFilter(BoardFrame.logfile_filter);
-        file_chooser.showOpenDialog(this);
+        file_chooser.showOpenDialog(board_frame);
         File filename = file_chooser.getSelectedFile();
         if (filename == null) {
             board_frame.screen_messages.set_status_message(resources.getString("message_8"));
@@ -188,7 +188,7 @@ public class BoardMenuFile extends JMenu {
         File logfile_dir = board_frame.design_file.get_parent_file();
         file_chooser.setCurrentDirectory(logfile_dir);
         file_chooser.setFileFilter(BoardFrame.logfile_filter);
-        file_chooser.showOpenDialog(this);
+        file_chooser.showOpenDialog(board_frame);
         File filename = file_chooser.getSelectedFile();
         if (filename == null) {
             board_frame.screen_messages.set_status_message(resources.getString("message_10"));
