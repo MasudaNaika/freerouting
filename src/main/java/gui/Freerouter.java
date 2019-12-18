@@ -39,14 +39,31 @@ public class Freerouter {
     public static void main(String... args) {
         
         System.setProperty("awt.useSystemAAFontSettings", "on");
+        
+        boolean isMac = System.getProperty("os.name").toLowerCase().startsWith("mac");
 
-        if (System.getProperty("os.name").toLowerCase().startsWith("mac")) {
-            
+        if (isMac) {
             System.setProperty("apple.laf.useScreenMenuBar", String.valueOf(true));
             System.setProperty("com.apple.macos.smallTabs", String.valueOf(true));
             System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Freerouter");    // doesn't work
             System.setProperty("apple.awt.application.name", "Freerouter");
+        }
 
+        String userLaf = FLAT_LAF_INTELLIJ;
+        try {
+            UIManager.setLookAndFeel(userLaf);
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException e) {
+            userLaf = UIManager.getSystemLookAndFeelClassName();
+            try {
+                UIManager.setLookAndFeel(userLaf);
+            } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
+            }
+        }
+
+        // shoud load after Sytem.setProperty
+        ICON = getImageIcon("circuit_3241.png");
+        
+        if (isMac) {
             Desktop desktop = Desktop.getDesktop();
 
             // About
@@ -69,20 +86,6 @@ public class Freerouter {
             // Dock Icon
             Taskbar.getTaskbar().setIconImage(ICON.getImage());
         }
-
-        String userLaf = FLAT_LAF_INTELLIJ;
-        try {
-            UIManager.setLookAndFeel(userLaf);
-        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException e) {
-            userLaf = UIManager.getSystemLookAndFeelClassName();
-            try {
-                UIManager.setLookAndFeel(userLaf);
-            } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
-            }
-        }
-
-        // shoud load after Sytem.setProperty
-        ICON = getImageIcon("circuit_3241.png");
         
         MainApplication.main(args);
     }
