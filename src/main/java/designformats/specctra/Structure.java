@@ -321,8 +321,9 @@ class Structure extends ScopeKeyword {
 
         // write the layer structure
         for (int i = 0; i < p_par.board.layer_structure.arr.length; ++i) {
-            boolean write_layer_rule
-                    = p_par.board.rules.get_default_net_class().get_trace_half_width(i) != p_par.board.rules.get_default_net_class().get_trace_half_width(0) || !clearance_equals(p_par.board.rules.clearance_matrix, i, 0);
+            boolean write_layer_rule = p_par.board.rules.get_default_net_class().get_trace_half_width(i)
+                    != p_par.board.rules.get_default_net_class().get_trace_half_width(0)
+                    || !clearance_equals(p_par.board.rules.clearance_matrix, i, 0);
             Layer.write_scope(p_par, i, write_layer_rule);
         }
     }
@@ -387,8 +388,8 @@ class Structure extends ScopeKeyword {
         if (dsn_shape != null) {
             dsn_shape.write_scope(p_par.file, p_par.identifier_type);
         }
-        for (int i = 0; i < holes.length; ++i) {
-            Shape dsn_hole = p_par.coordinate_transform.board_to_dsn(holes[i], keepout_layer);
+        for (geometry.planar.Shape hole : holes) {
+            Shape dsn_hole = p_par.coordinate_transform.board_to_dsn(hole, keepout_layer);
             dsn_hole.write_hole_scope(p_par.file, p_par.identifier_type);
         }
         if (p_keepout.clearance_class_no() > 0) {
@@ -780,10 +781,10 @@ class Structure extends ScopeKeyword {
             }
         }
         Collection<PolylineShape> hole_list = new LinkedList<>();
-        for (int i = 0; i < shape_arr.length; ++i) {
-            if (shape_arr[i].is_hole) {
-                p_outline_shapes.remove(shape_arr[i].shape);
-                hole_list.add(shape_arr[i].shape);
+        for (OutlineShape curr_shape : shape_arr) {
+            if (curr_shape.is_hole) {
+                p_outline_shapes.remove(curr_shape.shape);
+                hole_list.add(curr_shape.shape);
             }
         }
         return hole_list;
@@ -1082,8 +1083,8 @@ class Structure extends ScopeKeyword {
             for (int i = 0; i < corner_count; ++i) {
                 Point curr_corner = p_other_shape.shape.corner(i);
                 boolean is_contained = false;
-                for (int j = 0; j < convex_shapes.length; ++j) {
-                    if (convex_shapes[j].contains(curr_corner)) {
+                for (TileShape curr_shape : convex_shapes) {
+                    if (curr_shape.contains(curr_corner)) {
                         is_contained = true;
                         break;
                     }

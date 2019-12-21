@@ -142,9 +142,10 @@ public class Package {
             p_par.file.write(" ");
             p_par.identifier_type.write(curr_pin.name, p_par.file);
             double[] rel_coor = p_par.coordinate_transform.board_to_dsn(curr_pin.relative_location);
-            for (int j = 0; j < rel_coor.length; ++j) {
+            
+            for (double d : rel_coor) {
                 p_par.file.write(" ");
-                p_par.file.write(Double.toString(rel_coor[j]));
+                p_par.file.write(Double.toString(d));
             }
             int rotation = (int) Math.round(curr_pin.rotation_in_degree);
             if (rotation != 0) {
@@ -155,17 +156,17 @@ public class Package {
             p_par.file.write(")");
         }
         // write the keepouts belonging to  the package.
-        for (int i = 0; i < p_package.keepout_arr.length; ++i) {
-            write_package_keepout(p_package.keepout_arr[i], p_par, false);
+        for (library.Package.Keepout keepout : p_package.keepout_arr) {
+            write_package_keepout(keepout, p_par, false);
         }
-        for (int i = 0; i < p_package.via_keepout_arr.length; ++i) {
-            write_package_keepout(p_package.via_keepout_arr[i], p_par, true);
+        for (library.Package.Keepout keepout :p_package.via_keepout_arr) {
+            write_package_keepout(keepout, p_par, true);
         }
         // write the package outline.
-        for (int i = 0; i < p_package.outline.length; ++i) {
+        for (geometry.planar.Shape shape : p_package.outline) {
             p_par.file.start_scope();
             p_par.file.write("outline");
-            Shape curr_outline = p_par.coordinate_transform.board_to_dsn_rel(p_package.outline[i], Layer.SIGNAL);
+            Shape curr_outline = p_par.coordinate_transform.board_to_dsn_rel(shape, Layer.SIGNAL);
             curr_outline.write_scope(p_par.file, p_par.identifier_type);
             p_par.file.end_scope();
         }
@@ -200,8 +201,8 @@ public class Package {
         if (dsn_shape != null) {
             dsn_shape.write_scope(p_par.file, p_par.identifier_type);
         }
-        for (int j = 0; j < holes.length; ++j) {
-            Shape dsn_hole = p_par.coordinate_transform.board_to_dsn(holes[j], keepout_layer);
+        for (geometry.planar.Shape hole : holes) {
+            Shape dsn_hole = p_par.coordinate_transform.board_to_dsn(hole, keepout_layer);
             dsn_hole.write_hole_scope(p_par.file, p_par.identifier_type);
         }
         p_par.file.end_scope();

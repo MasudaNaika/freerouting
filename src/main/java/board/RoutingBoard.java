@@ -126,7 +126,7 @@ public class RoutingBoard extends BasicBoard implements Serializable {
                 }
             }
         }
-        for (Integer curr_net_no : changed_nets) {
+        for (int curr_net_no : changed_nets) {
             combine_traces(curr_net_no);
         }
         if (calculate_tidy_region) {
@@ -347,9 +347,8 @@ public class RoutingBoard extends BasicBoard implements Serializable {
         net_no_arr[0] = p_new_net_no;
         for (int i = 0; i < p_item.tile_shape_count(); ++i) {
             TileShape curr_shape = p_item.get_tile_shape(i);
-            Set<Item> obstacles
-                    = overlapping_items_with_clearance(curr_shape, p_item.shape_layer(i),
-                            net_no_arr, p_item.clearance_class_no());
+            Set<Item> obstacles = overlapping_items_with_clearance(curr_shape, p_item.shape_layer(i),
+                    net_no_arr, p_item.clearance_class_no());
             for (SearchTreeObject curr_ob : obstacles) {
                 if (curr_ob != p_item && curr_ob instanceof Connectable && !((Connectable) curr_ob).contains_net(p_new_net_no)) {
                     return false;

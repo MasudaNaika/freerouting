@@ -131,9 +131,9 @@ public abstract class LogfileScope {
      * Returns the LogfileScope with name p_name if it exists, else null.
      */
     public static LogfileScope get_scope(String p_name) {
-        for (int i = 0; i < arr.length; ++i) {
-            if (arr[i].name.compareTo(p_name) == 0) {
-                return arr[i];
+        for (LogfileScope ls : arr) {
+            if (ls.name.compareTo(p_name) == 0) {
+                return ls;
             }
         }
         return null;

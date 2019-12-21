@@ -231,8 +231,8 @@ public class ShapeTraceEntries {
             fast_cutout_trace(p_trace, pieces[0], pieces[1]);
         } else {
             board.remove_item(p_trace);
-            for (int i = 0; i < pieces.length; ++i) {
-                board.insert_trace_without_cleaning(pieces[i], p_trace.get_layer(),
+            for (Polyline piece : pieces) {
+                board.insert_trace_without_cleaning(piece, p_trace.get_layer(),
                         p_trace.get_half_width(), p_trace.net_no_arr, p_trace.clearance_class_no(), FixedState.UNFIXED);
             }
         }
@@ -286,11 +286,9 @@ public class ShapeTraceEntries {
         // using enlarge here instead offset causes problems because of a
         // comparison in the constructor of class EntryPoint
         int[][] entries = offset_shape.entrance_points(p_trace.polyline());
-        for (int i = 0; i < entries.length; ++i) {
-            int[] entry_tuple = entries[i];
-            FloatPoint entry_approx
-                    = p_trace.polyline().arr[entry_tuple[0]].
-                            intersection_approx(offset_shape.border_line(entry_tuple[1]));
+        for (int[] entry_tuple : entries) {
+            FloatPoint entry_approx = p_trace.polyline().arr[entry_tuple[0]].
+                    intersection_approx(offset_shape.border_line(entry_tuple[1]));
             insert_entry_point(p_trace, entry_tuple[0], entry_tuple[1], entry_approx);
         }
 

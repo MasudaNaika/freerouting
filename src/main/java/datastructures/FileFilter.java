@@ -39,15 +39,17 @@ public class FileFilter extends javax.swing.filechooser.FileFilter {
     @Override
     public String getDescription() {
         String message = "files with the extensions";
+        StringBuilder sb = new StringBuilder();
+        sb.append(message);
         for (int i = 0; i < extensions.length; ++i) {
             message += " ." + extensions[i];
             if (i == extensions.length - 2) {
-                message += " or ";
+                sb.append(" or ");
             } else if (i < extensions.length - 2) {
-                message += ", ";
+                sb.append(", ");
             }
         }
-        return message;
+        return sb.toString();
     }
 
     @Override
@@ -61,8 +63,8 @@ public class FileFilter extends javax.swing.filechooser.FileFilter {
             return false;
         }
         String found_extension = name_parts[name_parts.length - 1];
-        for (int i = 0; i < extensions.length; ++i) {
-            if (found_extension.compareToIgnoreCase(extensions[i]) == 0) {
+        for (String extension : extensions) {
+            if (found_extension.compareToIgnoreCase(extension) == 0) {
                 return true;
             }
         }

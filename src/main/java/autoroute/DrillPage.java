@@ -95,8 +95,7 @@ class DrillPage implements ExpandableObject {
             // Use the center points of these drill shapes to try making a via.
             int drill_first_layer = 0;
             int drill_last_layer = board.get_layer_count() - 1;
-            for (int i = 0; i < drill_shapes.length; ++i) {
-                TileShape curr_drill_shape = drill_shapes[i];
+            for (TileShape curr_drill_shape : drill_shapes) {
                 Point curr_drill_location = null;
                 if (p_attach_smd) {
                     curr_drill_location

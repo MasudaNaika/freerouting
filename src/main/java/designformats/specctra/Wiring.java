@@ -143,9 +143,9 @@ class Wiring extends ScopeKeyword {
         p_par.file.start_scope();
         p_par.file.write("via ");
         p_par.identifier_type.write(via_padstack.name, p_par.file);
-        for (int i = 0; i < via_coor.length; ++i) {
+        for (double d : via_coor) {
             p_par.file.write(" ");
-            p_par.file.write(Double.toString(via_coor[i]));
+            p_par.file.write(Double.toString(d));
         }
         if (via_net != null) {
             write_net(via_net, p_par.file, p_par.identifier_type);
@@ -224,8 +224,8 @@ class Wiring extends ScopeKeyword {
         if (dsn_shape != null) {
             dsn_shape.write_scope(p_par.file, p_par.identifier_type);
         }
-        for (int i = 0; i < holes.length; ++i) {
-            Shape dsn_hole = p_par.coordinate_transform.board_to_dsn(holes[i], conduction_layer);
+        for (geometry.planar.Shape hole : holes) {
+            Shape dsn_hole = p_par.coordinate_transform.board_to_dsn(hole, conduction_layer);
             dsn_hole.write_hole_scope(p_par.file, p_par.identifier_type);
         }
         write_net(curr_net, p_par.file, p_par.identifier_type);

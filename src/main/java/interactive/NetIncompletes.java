@@ -225,8 +225,7 @@ public class NetIncompletes {
      * connected sets of the items in p_net_items.
      */
     private void join_connected_sets(NetItem[] p_net_items, Collection<Item> p_from_connected_set, Collection<Item> p_to_connected_set) {
-        for (int i = 0; i < p_net_items.length; ++i) {
-            NetItem curr_item = p_net_items[i];
+        for (NetItem curr_item : p_net_items) {
             if (curr_item.connected_set == p_from_connected_set) {
                 p_to_connected_set.add(curr_item.item);
                 curr_item.connected_set = p_to_connected_set;

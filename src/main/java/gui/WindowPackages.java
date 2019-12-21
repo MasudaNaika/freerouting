@@ -26,6 +26,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import library.Package;
 import library.Packages;
+import java.util.List;
 
 /**
  * Window displaying the library packagess.
@@ -56,16 +57,16 @@ public class WindowPackages extends WindowObjectListWithFilter {
             sorted_arr[i] = packages.get(i + 1);
         }
         Arrays.sort(sorted_arr);
-        for (int i = 0; i < sorted_arr.length; ++i) {
-            add_to_list(sorted_arr[i]);
+        for (Package p : sorted_arr) {
+            add_to_list(p);
         }
         list.setVisibleRowCount(Math.min(packages.count(), DEFAULT_TABLE_SIZE));
     }
 
     @Override
     protected void select_instances() {
-        Object[] selected_packages = list.getSelectedValuesList().toArray();
-        if (selected_packages.length <= 0) {
+        List selected_packages = list.getSelectedValuesList();
+        if (selected_packages.isEmpty()) {
             return;
         }
         board.RoutingBoard routing_board = board_frame.board_panel.board_handling.get_routing_board();
@@ -76,8 +77,8 @@ public class WindowPackages extends WindowObjectListWithFilter {
                 board.Component curr_component = routing_board.components.get(curr_item.get_component_no());
                 Package curr_package = curr_component.get_package();
                 boolean package_matches = false;
-                for (int i = 0; i < selected_packages.length; ++i) {
-                    if (curr_package == selected_packages[i]) {
+                for (Object obj : selected_packages) {
+                    if (curr_package == obj) {
                         package_matches = true;
                         break;
                     }

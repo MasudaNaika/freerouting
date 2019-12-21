@@ -532,8 +532,7 @@ public class FloatPoint implements Serializable {
         double lrx = Integer.MIN_VALUE;
         double llx = Integer.MAX_VALUE;
         double urx = Integer.MIN_VALUE;
-        for (int i = 0; i < p_point_arr.length; ++i) {
-            FloatPoint curr = p_point_arr[i];
+        for (FloatPoint curr : p_point_arr) {
             lx = Math.min(lx, curr.x);
             ly = Math.min(ly, curr.y);
             rx = Math.max(rx, curr.x);

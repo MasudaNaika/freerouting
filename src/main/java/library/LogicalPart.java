@@ -63,8 +63,7 @@ public class LogicalPart implements board.ObjectInfoPanel.Printable, Serializabl
                 = ResourceBundle.getBundle("board.resources.ObjectInfoPanel", p_locale);
         p_window.append_bold(resources.getString("logical_part_2") + " ");
         p_window.append_bold(name);
-        for (int i = 0; i < part_pin_arr.length; ++i) {
-            PartPin curr_pin = part_pin_arr[i];
+        for (PartPin curr_pin : part_pin_arr) {
             p_window.newline();
             p_window.indent();
             p_window.append(resources.getString("pin") + " ");

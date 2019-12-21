@@ -110,10 +110,9 @@ public class DrillPageArray {
      * Resets all drill pages for autorouting the next connection.
      */
     public void reset() {
-        for (int j = 0; j < page_arr.length; ++j) {
-            DrillPage[] curr_row = page_arr[j];
-            for (int i = 0; i < curr_row.length; ++i) {
-                curr_row[i].reset();
+        for (DrillPage[] curr_row : page_arr) {
+            for (DrillPage dp : curr_row) {
+                dp.reset();
             }
         }
     }
@@ -122,10 +121,9 @@ public class DrillPageArray {
     * Test draw of the all drills
      */
     public void draw(Graphics p_graphics, boardgraphics.GraphicsContext p_graphics_context, double p_intensity) {
-        for (int j = 0; j < page_arr.length; ++j) {
-            DrillPage[] curr_row = page_arr[j];
-            for (int i = 0; i < curr_row.length; ++i) {
-                curr_row[i].draw(p_graphics, p_graphics_context, p_intensity);
+        for (DrillPage[] curr_row : page_arr) {
+            for (DrillPage dp : curr_row) {
+                dp.draw(p_graphics, p_graphics_context, p_intensity);
             }
         }
     }

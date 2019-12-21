@@ -32,6 +32,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import rules.Net;
 import rules.Nets;
+import java.util.List;
 
 /**
  *
@@ -73,8 +74,8 @@ public class WindowNets extends WindowObjectListWithFilter {
             sorted_arr[i] = nets.get(i + 1);
         }
         Arrays.sort(sorted_arr);
-        for (int i = 0; i < sorted_arr.length; ++i) {
-            add_to_list(sorted_arr[i]);
+        for (Net net : sorted_arr) {
+            add_to_list(net);
         }
         list.setVisibleRowCount(Math.min(sorted_arr.length, DEFAULT_TABLE_SIZE));
     }
@@ -114,8 +115,8 @@ public class WindowNets extends WindowObjectListWithFilter {
 
         @Override
         public void actionPerformed(ActionEvent p_evt) {
-            Object[] selected_nets = list.getSelectedValuesList().toArray();
-            if (selected_nets.length <= 0) {
+            List selected_nets = list.getSelectedValuesList();
+            if (selected_nets.isEmpty()) {
                 return;
             }
             rules.NetClasses net_classes = board_frame.board_panel.board_handling.get_routing_board().rules.net_classes;
@@ -130,8 +131,8 @@ public class WindowNets extends WindowObjectListWithFilter {
                 return;
             }
             rules.NetClass selected_class = (rules.NetClass) selected_value;
-            for (int i = 0; i < selected_nets.length; ++i) {
-                ((Net) selected_nets[i]).set_class(selected_class);
+            for (Object obj : selected_nets) {
+                ((Net) obj).set_class(selected_class);
             }
             board_frame.refresh_windows();
         }
@@ -150,8 +151,8 @@ public class WindowNets extends WindowObjectListWithFilter {
             for (int i = 1; i <= max_net_no; ++i) {
                 board_handling.set_incompletes_filter(i, true);
             }
-            for (int i = 0; i < selected_nets.length; ++i) {
-                board_handling.set_incompletes_filter(((Net) selected_nets[i]).net_number, false);
+            for (Object obj : selected_nets) {
+                board_handling.set_incompletes_filter(((Net) obj).net_number, false);
             }
             board_frame.board_panel.repaint();
         }

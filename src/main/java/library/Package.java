@@ -103,8 +103,7 @@ public class Package implements Comparable<Package>, board.ObjectInfoPanel.Print
                 = ResourceBundle.getBundle("board.resources.ObjectInfoPanel", p_locale);
         p_window.append_bold(resources.getString("package") + " ");
         p_window.append_bold(name);
-        for (int i = 0; i < pin_arr.length; ++i) {
-            Pin curr_pin = pin_arr[i];
+        for (Pin curr_pin : pin_arr) {
             p_window.newline();
             p_window.indent();
             p_window.append(resources.getString("pin") + " ");

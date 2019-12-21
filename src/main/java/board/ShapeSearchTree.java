@@ -103,8 +103,8 @@ public class ShapeSearchTree extends datastructures.MinAreaTree {
         Leaf[] new_leaf_arr = new Leaf[new_shape_count];
         TileShape[] new_precalculated_tree_shapes = new TileShape[new_shape_count];
         Leaf[] old_entries = p_obj.get_search_tree_entries(this);
+        System.arraycopy(old_entries, 0, new_leaf_arr, 0, p_keep_at_start_count);
         for (int i = 0; i < p_keep_at_start_count; ++i) {
-            new_leaf_arr[i] = old_entries[i];
             new_precalculated_tree_shapes[i] = p_obj.get_tree_shape(this, i);
         }
         for (int i = p_keep_at_start_count; i < old_shape_count - p_keep_at_end_count; ++i) {
@@ -120,9 +120,8 @@ public class ShapeSearchTree extends datastructures.MinAreaTree {
         }
 
         // correct the precalculated tree shapes first, because it is used in insert
-        for (int i = p_keep_at_start_count; i < new_shape_count - p_keep_at_end_count; ++i) {
-            new_precalculated_tree_shapes[i] = changed_shapes[i - p_keep_at_start_count];
-        }
+        System.arraycopy(changed_shapes, 0, new_precalculated_tree_shapes,
+                p_keep_at_start_count, new_shape_count - p_keep_at_end_count - p_keep_at_start_count);
         p_obj.set_precalculated_tree_shapes(new_precalculated_tree_shapes, this);
 
         for (int i = p_keep_at_start_count; i < new_shape_count - p_keep_at_end_count; ++i) {
@@ -230,9 +229,9 @@ public class ShapeSearchTree extends datastructures.MinAreaTree {
         TileShape[] new_precalculated_tree_shapes = new TileShape[new_shape_count];
         // transfer the tree entries except the last from the old shapes
         // of p_to_trace to the new shapes of p_to_trace
+        System.arraycopy(to_trace_entries, 0, new_leaf_arr, 0, to_shape_count_minus_1);
         for (int i = 0; i < to_shape_count_minus_1; ++i) {
             new_precalculated_tree_shapes[i] = p_to_trace.get_tree_shape(this, i);
-            new_leaf_arr[i] = to_trace_entries[i];
         }
 
         for (int i = 1; i < from_trace_entries.length; ++i) {
@@ -250,10 +249,7 @@ public class ShapeSearchTree extends datastructures.MinAreaTree {
         }
 
         // correct the precalculated tree shapes first, because it is used in insert
-        for (int i = 0; i < link_shapes.length; ++i) {
-            int curr_ind = to_shape_count_minus_1 + i;
-            new_precalculated_tree_shapes[curr_ind] = link_shapes[i];
-        }
+        System.arraycopy(link_shapes, 0, new_precalculated_tree_shapes, to_shape_count_minus_1, link_shapes.length);
         p_to_trace.set_precalculated_tree_shapes(new_precalculated_tree_shapes, this);
 
         // create the new link entries
@@ -360,8 +356,8 @@ public class ShapeSearchTree extends datastructures.MinAreaTree {
             boolean ignore_object
                     = p_layer >= 0 && curr_object.shape_layer(shape_index) != p_layer;
             if (!ignore_object) {
-                for (int i = 0; i < p_ignore_net_nos.length; ++i) {
-                    if (!curr_object.is_obstacle(p_ignore_net_nos[i])) {
+                for (int no : p_ignore_net_nos) {
+                    if (!curr_object.is_obstacle(no)) {
                         ignore_object = true;
                     }
                 }
@@ -428,8 +424,8 @@ public class ShapeSearchTree extends datastructures.MinAreaTree {
             boolean ignore_item
                     = p_layer >= 0 && curr_item.shape_layer(shape_index) != p_layer;
             if (!ignore_item) {
-                for (int i = 0; i < p_ignore_net_nos.length; ++i) {
-                    if (!curr_item.is_obstacle(p_ignore_net_nos[i])) {
+                for (int no : p_ignore_net_nos) {
+                    if (!curr_item.is_obstacle(no)) {
                         ignore_item = true;
                     }
                 }

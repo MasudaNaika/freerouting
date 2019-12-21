@@ -29,6 +29,7 @@ import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.List;
 
 /**
  *
@@ -116,13 +117,13 @@ public class WindowRouteStubs extends WindowObjectListWithFilter {
 
     @Override
     protected void select_instances() {
-        Object[] selected_list_values = list.getSelectedValuesList().toArray();
-        if (selected_list_values.length <= 0) {
+        List selected_list_values = list.getSelectedValuesList();
+        if (selected_list_values.isEmpty()) {
             return;
         }
         Set<board.Item> selected_items = new TreeSet<>();
-        for (int i = 0; i < selected_list_values.length; ++i) {
-            selected_items.add(((RouteStubInfo) selected_list_values[i]).stub_item);
+        for (Object obj : selected_list_values) {
+            selected_items.add(((RouteStubInfo) obj).stub_item);
         }
         interactive.BoardHandling board_handling = board_frame.board_panel.board_handling;
         board_handling.select_items(selected_items);

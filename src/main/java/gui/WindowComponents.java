@@ -26,6 +26,7 @@ import java.util.Collection;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.List;
 
 /**
  * Window displaying the components on the board.
@@ -56,16 +57,17 @@ public class WindowComponents extends WindowObjectListWithFilter {
             sorted_arr[i] = components.get(i + 1);
         }
         Arrays.sort(sorted_arr);
-        for (int i = 0; i < sorted_arr.length; ++i) {
-            add_to_list(sorted_arr[i]);
+        for (Component c : sorted_arr) {
+            add_to_list(c);
         }
+
         list.setVisibleRowCount(Math.min(components.count(), DEFAULT_TABLE_SIZE));
     }
 
     @Override
     protected void select_instances() {
-        Object[] selected_components = list.getSelectedValuesList().toArray();
-        if (selected_components.length <= 0) {
+        List selected_components = list.getSelectedValuesList();
+        if (selected_components.isEmpty()) {
             return;
         }
         board.RoutingBoard routing_board = board_frame.board_panel.board_handling.get_routing_board();
@@ -75,8 +77,8 @@ public class WindowComponents extends WindowObjectListWithFilter {
             if (curr_item.get_component_no() > 0) {
                 board.Component curr_component = routing_board.components.get(curr_item.get_component_no());
                 boolean component_matches = false;
-                for (int i = 0; i < selected_components.length; ++i) {
-                    if (curr_component == selected_components[i]) {
+                for (Object selected : selected_components) {
+                    if (curr_component == selected) {
                         component_matches = true;
                         break;
                     }

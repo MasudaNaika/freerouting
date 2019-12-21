@@ -109,10 +109,10 @@ public class MoveComponent {
         }
         TimeLimit time_limit = new TimeLimit(CHECK_TIME_LIMIT);
         Collection<Item> ignore_items = new LinkedList<>();
-        for (int i = 0; i < item_group_arr.length; ++i) {
+        for (SortedItem sortedItem : item_group_arr) {
             boolean move_ok;
-            if (item_group_arr[i].item instanceof DrillItem) {
-                DrillItem curr_drill_item = (DrillItem) item_group_arr[i].item;
+            if (sortedItem.item instanceof DrillItem) {
+                DrillItem curr_drill_item = (DrillItem) sortedItem.item;
                 if (translate_vector.length_approx() >= curr_drill_item.min_width()) {
                     // a clearance violation with a connecting trace may occur
                     move_ok = false;
@@ -122,7 +122,7 @@ public class MoveComponent {
                             ignore_items, board, time_limit);
                 }
             } else {
-                move_ok = board.check_move_item(item_group_arr[i].item, translate_vector, ignore_items);
+                move_ok = board.check_move_item(sortedItem.item, translate_vector, ignore_items);
             }
             if (!move_ok) {
                 return false;
@@ -146,9 +146,9 @@ public class MoveComponent {
             // let the observers syncronize the moving
             board.communication.observers.notify_moved(component);
         }
-        for (int i = 0; i < item_group_arr.length; ++i) {
-            if (item_group_arr[i].item instanceof DrillItem) {
-                DrillItem curr_drill_item = (DrillItem) item_group_arr[i].item;
+        for (SortedItem sortedItem : item_group_arr) {
+            if (sortedItem.item instanceof DrillItem) {
+                DrillItem curr_drill_item = (DrillItem) sortedItem.item;
                 boolean move_ok = board.move_drill_item(curr_drill_item,
                         translate_vector, max_recursion_depth, max_via_recursion_depth,
                         p_tidy_width, p_pull_tight_accuracy, PULL_TIGHT_TIME_LIMIT);
@@ -160,7 +160,7 @@ public class MoveComponent {
                     return false;
                 }
             } else {
-                item_group_arr[i].item.move_by(translate_vector);
+                sortedItem.item.move_by(translate_vector);
             }
         }
         return true;

@@ -464,16 +464,14 @@ public class PolylineTrace extends Trace implements Serializable {
                     boolean found_trace_split = false;
 
                     if (found_trace != this) {
-                        for (int j = 0; j < intersecting_lines.length; ++j) {
+                        for (Line line : intersecting_lines) {
                             int line_no = found_entry.shape_index_in_object + 1;
-                            PolylineTrace[] curr_split_pieces = found_trace.split(line_no, intersecting_lines[j]);
+                            PolylineTrace[] curr_split_pieces = found_trace.split(line_no, line);
                             if (curr_split_pieces != null) {
-
                                 for (int k = 0; k < 2; ++k) {
                                     if (curr_split_pieces[k] != null) {
                                         found_trace_split = true;
                                         split_pieces.add(curr_split_pieces[k]);
-
                                     }
                                 }
                                 if (found_trace_split) {
@@ -492,8 +490,8 @@ public class PolylineTrace extends Trace implements Serializable {
                     // now try splitting the own trace
 
                     intersecting_lines = curr_line_segment.intersection(found_line_segment);
-                    for (int j = 0; j < intersecting_lines.length; ++j) {
-                        PolylineTrace[] curr_split_pieces = split(i + 1, intersecting_lines[j]);
+                    for (Line line : intersecting_lines) {
+                        PolylineTrace[] curr_split_pieces = split(i + 1, line);
                         if (curr_split_pieces != null) {
                             own_trace_split = true;
                             // this trace was split itself into 2.

@@ -31,6 +31,7 @@ import java.awt.Graphics;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Locale;
 
 /**
@@ -116,9 +117,7 @@ public class ComponentOutline extends Item implements Serializable {
     public Color[] get_draw_colors(GraphicsContext p_graphics_context) {
         Color[] color_arr = new Color[board.layer_structure.arr.length];
         Color front_draw_color = p_graphics_context.get_component_color(true);
-        for (int i = 0; i < color_arr.length - 1; ++i) {
-            color_arr[i] = front_draw_color;
-        }
+        Arrays.fill(color_arr, 0, color_arr.length - 1, front_draw_color);
         if (color_arr.length > 1) {
             color_arr[color_arr.length - 1] = p_graphics_context.get_component_color(false);
         }

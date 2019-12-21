@@ -29,6 +29,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import library.Padstack;
 import library.Padstacks;
+import java.util.List;
 
 /**
  * Window displaying the library padstacks.
@@ -59,21 +60,21 @@ public class WindowPadstacks extends WindowObjectListWithFilter {
             sorted_arr[i] = padstacks.get(i + 1);
         }
         Arrays.sort(sorted_arr);
-        for (int i = 0; i < sorted_arr.length; ++i) {
-            add_to_list(sorted_arr[i]);
+        for (Padstack p : sorted_arr) {
+            add_to_list(p);
         }
         list.setVisibleRowCount(Math.min(padstacks.count(), DEFAULT_TABLE_SIZE));
     }
 
     @Override
     protected void select_instances() {
-        Object[] selected_padstacks = list.getSelectedValuesList().toArray();
-        if (selected_padstacks.length <= 0) {
+        List selected_padstacks = list.getSelectedValuesList();
+        if (selected_padstacks.isEmpty()) {
             return;
         }
         Collection<Padstack> padstack_list = new LinkedList<>();
-        for (int i = 0; i < selected_padstacks.length; ++i) {
-            padstack_list.add((Padstack) selected_padstacks[i]);
+        for (Object obj : selected_padstacks) {
+            padstack_list.add((Padstack) obj);
         }
         board.RoutingBoard routing_board = board_frame.board_panel.board_handling.get_routing_board();
         Set<board.Item> board_instances = new TreeSet<>();

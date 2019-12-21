@@ -832,8 +832,8 @@ public class GUIDefaultsFile {
     }
 
     private void write_color(Color[] p_colors) throws IOException {
-        for (int i = 0; i < p_colors.length; ++i) {
-            write_color_scope(p_colors[i]);
+        for (Color c : p_colors) {
+            write_color_scope(c);
         }
     }
 
@@ -1310,9 +1310,9 @@ public class GUIDefaultsFile {
         ItemSelectionFilter item_selection_filter = board_handling.settings.get_item_selection_filter();
         ItemSelectionFilter.SelectableChoices[] selectable_choices
                 = ItemSelectionFilter.SelectableChoices.values();
-        for (int i = 0; i < selectable_choices.length; ++i) {
-            if (item_selection_filter.is_selected(selectable_choices[i])) {
-                out_file.write(selectable_choices[i].toString());
+        for (ItemSelectionFilter.SelectableChoices choice : selectable_choices) {
+            if (item_selection_filter.is_selected(choice)) {
+                out_file.write(choice.toString());
                 out_file.write(" ");
             }
         }

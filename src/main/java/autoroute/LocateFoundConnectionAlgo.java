@@ -222,12 +222,12 @@ public abstract class LocateFoundConnectionAlgo {
      * Test display of the baktrack rooms.
      */
     public void draw(Graphics p_graphics, boardgraphics.GraphicsContext p_graphics_context) {
-        for (int i = 0; i < backtrack_array.length; ++i) {
-            CompleteExpansionRoom next_room = backtrack_array[i].next_room;
+        for (BacktrackElement elem : backtrack_array) {
+            CompleteExpansionRoom next_room = elem.next_room;
             if (next_room != null) {
                 next_room.draw(p_graphics, p_graphics_context, 0.2);
             }
-            ExpandableObject next_door = backtrack_array[i].door;
+            ExpandableObject next_door = elem.door;
             if (next_door instanceof ExpansionDrill) {
                 ((ExpansionDrill) next_door).draw(p_graphics, p_graphics_context, 0.2);
             }

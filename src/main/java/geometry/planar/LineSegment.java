@@ -613,8 +613,8 @@ public class LineSegment implements Serializable {
                         } else {
                             next_corner = p_shape.corner(edge_line_no + 1);
                         }
-// check, that prev_prev_corner and next_corner
-// are on different sides of this line segment.
+                        // check, that prev_prev_corner and next_corner
+                        // are on different sides of this line segment.
                         Side prev_prev_corner_side
                                 = middle.side_of(prev_prev_corner);
                         Side next_corner_side
@@ -640,8 +640,8 @@ public class LineSegment implements Serializable {
                         } else {
                             next_next_corner = p_shape.corner(edge_line_no + 2);
                         }
-// check, that prev_corner and next_next_corner
-// are on different sides of this line segment.
+                        // check, that prev_corner and next_next_corner
+                        // are on different sides of this line segment.
                         Side prev_corner_side
                                 = middle.side_of(prev_corner);
                         Side next_next_corner_side
@@ -654,14 +654,11 @@ public class LineSegment implements Serializable {
 
                     }
                     boolean intersection_already_handeled = false;
-                    for (int i = 0; i
-                            < intersection_count; ++i) {
-                        if (is.equals(intersection[i])) {
+                    for (Point p : intersection) {
+                        if (is.equals(p)) {
                             intersection_already_handeled = true;
                             break;
-
                         }
-
                     }
                     if (!intersection_already_handeled) {
                         if (intersection_count < result.length) {

@@ -217,8 +217,8 @@ public class BoardFrame extends JFrame {
 
             allocate_permanent_subwindows();
 
-            for (int i = 0; i < permanent_subwindows.length; ++i) {
-                permanent_subwindows[i].read(object_stream);
+            for (BoardSavableSubWindow w : permanent_subwindows) {
+                w.read(object_stream);
             }
         }
         try {
@@ -304,8 +304,8 @@ public class BoardFrame extends JFrame {
             screen_messages.set_status_message(resources.getString("error_4"));
             return false;
         }
-        for (int i = 0; i < permanent_subwindows.length; ++i) {
-            permanent_subwindows[i].save(object_stream);
+        for (BoardSavableSubWindow w : permanent_subwindows) {
+            w.save(object_stream);
         }
         try {
             object_stream.flush();
@@ -523,9 +523,9 @@ public class BoardFrame extends JFrame {
      * Refreshs all displayed coordinates after the user unit has changed.
      */
     public void refresh_windows() {
-        for (int i = 0; i < permanent_subwindows.length; ++i) {
-            if (permanent_subwindows[i] != null) {
-                permanent_subwindows[i].refresh();
+        for (BoardSavableSubWindow w : permanent_subwindows) {
+            if (w != null) {
+                w.refresh();
             }
         }
     }
@@ -595,8 +595,8 @@ public class BoardFrame extends JFrame {
      */
     public void repaint_all() {
         repaint();
-        for (int i = 0; i < permanent_subwindows.length; ++i) {
-            permanent_subwindows[i].repaint();
+        for (BoardSavableSubWindow w : permanent_subwindows) {
+            w.repaint();
         }
     }
 
@@ -710,8 +710,8 @@ public class BoardFrame extends JFrame {
 
         @Override
         public void windowIconified(WindowEvent evt) {
-            for (int i = 0; i < permanent_subwindows.length; ++i) {
-                permanent_subwindows[i].parent_iconified();
+            for (BoardSavableSubWindow w : permanent_subwindows) {
+                w.parent_iconified();
             }
             for (BoardSubWindow curr_subwindow : temporary_subwindows) {
                 if (curr_subwindow != null) {
@@ -722,9 +722,9 @@ public class BoardFrame extends JFrame {
 
         @Override
         public void windowDeiconified(WindowEvent evt) {
-            for (int i = 0; i < permanent_subwindows.length; ++i) {
-                if (permanent_subwindows[i] != null) {
-                    permanent_subwindows[i].parent_deiconified();
+            for (BoardSavableSubWindow w : permanent_subwindows) {
+                if (w!= null) {
+                    w.parent_deiconified();
                 }
             }
             for (BoardSubWindow curr_subwindow : temporary_subwindows) {

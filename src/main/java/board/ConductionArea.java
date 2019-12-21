@@ -81,9 +81,8 @@ public class ConductionArea extends ObstacleArea implements Connectable {
 
     @Override
     public Point[] get_ratsnest_corners() {
-        Point[] result;
         FloatPoint[] corners = get_area().corner_approx_arr();
-        result = new Point[corners.length];
+        Point[] result = new Point[corners.length];
         for (int i = 0; i < corners.length; ++i) {
             result[i] = corners[i].round();
         }

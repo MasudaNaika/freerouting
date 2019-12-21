@@ -20,6 +20,7 @@
 package library;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -53,10 +54,7 @@ public class BoardLibrary implements Serializable {
      */
     public void set_via_padstacks(Padstack[] p_padstacks) {
 
-        via_padstacks = new LinkedList<>();
-        for (int i = 0; i < p_padstacks.length; ++i) {
-            via_padstacks.add(p_padstacks[i]);
-        }
+        via_padstacks = new LinkedList<>(Arrays.asList(p_padstacks));
     }
 
     /**
@@ -102,10 +100,7 @@ public class BoardLibrary implements Serializable {
         if (via_padstacks == null) {
             return new Padstack[0];
         }
-        Padstack[] result = new Padstack[via_padstacks.size()];
-        for (int i = 0; i < result.length; ++i) {
-            result[i] = via_padstacks.get(i);
-        }
+        Padstack[] result = via_padstacks.toArray(Padstack[]::new);
         return result;
     }
 

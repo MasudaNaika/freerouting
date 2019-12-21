@@ -33,6 +33,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 import javax.swing.*;
+import java.util.List;
 
 /**
  * Abstract class for windows displaying a list of objects
@@ -190,13 +191,13 @@ public abstract class WindowObjectList extends BoardSavableSubWindow {
 
         @Override
         public void actionPerformed(ActionEvent p_evt) {
-            Object[] selected_objects = list.getSelectedValuesList().toArray();
-            if (selected_objects.length <= 0) {
+            List selected_objects = list.getSelectedValuesList();
+            if (selected_objects.isEmpty()) {
                 return;
             }
             Collection<WindowObjectInfo.Printable> object_list = new LinkedList<>();
-            for (int i = 0; i < selected_objects.length; ++i) {
-                object_list.add((WindowObjectInfo.Printable) (selected_objects[i]));
+            for (Object obj : selected_objects) {
+                object_list.add((WindowObjectInfo.Printable) obj);
             }
             board.CoordinateTransform coordinate_transform = board_frame.board_panel.board_handling.coordinate_transform;
             WindowObjectInfo new_window

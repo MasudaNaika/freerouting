@@ -88,8 +88,8 @@ public class Plane extends ScopeKeyword {
         if (dsn_shape != null) {
             dsn_shape.write_scope(p_par.file, p_par.identifier_type);
         }
-        for (int i = 0; i < holes.length; ++i) {
-            Shape dsn_hole = p_par.coordinate_transform.board_to_dsn(holes[i], plane_layer);
+        for (geometry.planar.Shape hole : holes) {
+            Shape dsn_hole = p_par.coordinate_transform.board_to_dsn(hole, plane_layer);
             dsn_hole.write_hole_scope(p_par.file, p_par.identifier_type);
         }
         p_par.file.end_scope();

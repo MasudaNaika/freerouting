@@ -24,6 +24,7 @@ import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.List;
 
 /**
  *
@@ -52,25 +53,25 @@ public class WindowIncompletes extends WindowObjectListWithFilter {
         RatsNest.AirLine[] sorted_arr = ratsnest.get_airlines();
 
         Arrays.sort(sorted_arr);
-        for (int i = 0; i < sorted_arr.length; ++i) {
-            add_to_list(sorted_arr[i]);
+        for (RatsNest.AirLine airLine : sorted_arr) {
+            add_to_list(airLine);
         }
         list.setVisibleRowCount(Math.min(sorted_arr.length, DEFAULT_TABLE_SIZE));
     }
 
     @Override
     protected void select_instances() {
-        Object[] selected_incompletes = list.getSelectedValuesList().toArray();
-        if (selected_incompletes.length <= 0) {
+        List selected_incompletes = list.getSelectedValuesList();
+        if (selected_incompletes.isEmpty()) {
             return;
         }
         Set<board.Item> selected_items = new TreeSet<>();
-        for (int i = 0; i < selected_incompletes.length; ++i) {
-            RatsNest.AirLine curr_airline = (RatsNest.AirLine) selected_incompletes[i];
+        for (Object obj : selected_incompletes) {
+            RatsNest.AirLine curr_airline = (RatsNest.AirLine) obj;
             selected_items.add(curr_airline.from_item);
             selected_items.add(curr_airline.to_item);
-
         }
+
         board_frame.board_panel.board_handling.select_items(selected_items);
         board_frame.board_panel.board_handling.zoom_selection();
     }

@@ -150,8 +150,7 @@ public class ShoveTraceAlgo {
                 Direction curr_dir = curr_substitute_trace.polyline().arr[i + 1].direction();
                 boolean is_in_front = p_dir == null || p_dir.equals(curr_dir);
                 if (is_in_front) {
-                    CalcShapeAndFromSide curr
-                            = new CalcShapeAndFromSide(curr_substitute_trace, i, is_orthogonal_mode, true);
+                    CalcShapeAndFromSide curr = new CalcShapeAndFromSide(curr_substitute_trace, i, is_orthogonal_mode, true);
                     if (!check(curr.shape, curr.from_side, curr_dir, p_layer, curr_substitute_trace.net_no_arr,
                             curr_substitute_trace.clearance_class_no(),
                             p_max_recursion_depth - 1, p_max_via_recursion_depth,
@@ -376,16 +375,14 @@ public class ShoveTraceAlgo {
             }
             int[] curr_net_no_arr = curr_substitute_trace.net_no_arr;
             for (int i = 0; i < curr_substitute_trace.tile_shape_count(); ++i) {
-                CalcShapeAndFromSide curr
-                        = new CalcShapeAndFromSide(curr_substitute_trace, i, is_orthogonal_mode, false);
+                CalcShapeAndFromSide curr = new CalcShapeAndFromSide(curr_substitute_trace, i, is_orthogonal_mode, false);
                 if (!insert(curr.shape, curr.from_side, p_layer, curr_net_no_arr, curr_substitute_trace.clearance_class_no(),
                         p_ignore_items, p_max_recursion_depth - 1, p_max_via_recursion_depth, p_max_spring_over_recursion_depth)) {
                     return false;
                 }
             }
             for (int i = 0; i < curr_substitute_trace.corner_count(); ++i) {
-                board.join_changed_area(
-                        curr_substitute_trace.polyline().corner_approx(i), p_layer);
+                board.join_changed_area(curr_substitute_trace.polyline().corner_approx(i), p_layer);
             }
             Point[] end_corners = null;
             if (!tails_exist_before) {
@@ -594,9 +591,7 @@ public class ShoveTraceAlgo {
         substitute_lines[0] = p_polyline.arr[first_intersection_line_no];
         int curr_edge_line_no = first_intersection_side_no;
 
-        for (int i = 1;
-                i <= side_diff + 1;
-                ++i) {
+        for (int i = 1; i <= side_diff + 1; ++i) {
             substitute_lines[i] = offset_shape.border_line(curr_edge_line_no);
             if (curr_edge_line_no == offset_shape.border_line_count() - 1) {
                 curr_edge_line_no = 0;

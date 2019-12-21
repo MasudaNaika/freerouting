@@ -53,9 +53,8 @@ public abstract class DragState extends InteractiveState {
         for (int i = 0; i < try_count; ++i) {
             if (i == 0 || pick_layer != curr_layer
                     && (p_board_handling.graphics_context.get_layer_visibility(pick_layer)) > 0) {
-                Collection<Item> found_items
-                        = p_board_handling.get_routing_board().pick_items(p_location.round(),
-                                pick_layer, p_board_handling.settings.item_selection_filter);
+                Collection<Item> found_items = p_board_handling.get_routing_board()
+                        .pick_items(p_location.round(), pick_layer, p_board_handling.settings.item_selection_filter);
                 for (Item curr_item : found_items) {
                     item_found = true;
                     if (curr_item instanceof Trace) {

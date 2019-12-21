@@ -216,8 +216,7 @@ public class ForcedPadAlgo {
                 }
             }
             for (int i = 0; i < curr_substitute_trace.corner_count(); ++i) {
-                board.join_changed_area(
-                        curr_substitute_trace.polyline().corner_approx(i), p_layer);
+                board.join_changed_area(curr_substitute_trace.polyline().corner_approx(i), p_layer);
             }
             Point[] end_corners = null;
             if (!tails_exist_before) {

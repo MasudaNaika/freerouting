@@ -145,8 +145,8 @@ public class Polyline implements Serializable {
      * checks, if all lines of this polyline are orthogonal
      */
     public boolean is_orthogonal() {
-        for (int i = 0; i < arr.length; ++i) {
-            if (!arr[i].is_orthogonal()) {
+        for (Line line : arr) {
+            if (!line.is_orthogonal()) {
                 return false;
             }
         }
@@ -157,8 +157,8 @@ public class Polyline implements Serializable {
      * checks, if all lines of this polyline are multiples of 45 degree
      */
     public boolean is_multiple_of_45_degree() {
-        for (int i = 0; i < arr.length; ++i) {
-            if (!arr[i].is_multiple_of_45_degree()) {
+        for (Line line : arr) {
+            if (!line.is_multiple_of_45_degree()) {
                 return false;
             }
         }
@@ -385,8 +385,7 @@ public class Polyline implements Serializable {
             Vector tmp_curr_dir = next_dir;
             boolean direction_changed = false;
             for (int j = i + 2; j < arr.length - 1; ++j) {
-                if (corner_approx(j - 1).distance_square(check_distance_corner)
-                        > check_dist_square) {
+                if (corner_approx(j - 1).distance_square(check_distance_corner) > check_dist_square) {
                     break;
                 }
                 if (!direction_changed) {
@@ -425,8 +424,7 @@ public class Polyline implements Serializable {
             tmp_curr_dir = prev_dir;
             direction_changed = false;
             for (int j = i - 2; j >= 1; --j) {
-                if (corner_approx(j).distance_square(check_distance_corner)
-                        > check_dist_square) {
+                if (corner_approx(j).distance_square(check_distance_corner) > check_dist_square) {
                     break;
                 }
                 if (!direction_changed) {
@@ -540,7 +538,6 @@ public class Polyline implements Serializable {
         }
         IntPoint[] new_corners = new IntPoint[corner_count()];
         for (int i = 0; i < new_corners.length; ++i) {
-
             new_corners[i] = corner_approx(i).rotate(p_angle, p_pole).round();
         }
         return new Polyline(new_corners);
@@ -647,11 +644,11 @@ public class Polyline implements Serializable {
         FloatPoint nearest_point = null;
         // calculate the nearest corner point
         FloatPoint[] corners = corner_approx_arr();
-        for (int i = 0; i < corners.length; ++i) {
-            double curr_distance = corners[i].distance(p_from_point);
+        for (FloatPoint corner : corners) {
+            double curr_distance = corner.distance(p_from_point);
             if (curr_distance < min_distance) {
                 min_distance = curr_distance;
-                nearest_point = corners[i];
+                nearest_point = corner;
             }
         }
         final double c_tolerance = 1;
@@ -721,24 +718,17 @@ public class Polyline implements Serializable {
                 }
             } else {
                 // skip the last line of p_other
-                for (int i = 0; i < p_other.arr.length - 1; ++i) {
-                    line_arr[i] = p_other.arr[i];
-                }
+                System.arraycopy(p_other.arr, 0, line_arr, 0, p_other.arr.length - 1);
             }
             // append the lines of this polyline, skip the first line
-            for (int i = 1; i < arr.length; ++i) {
-                line_arr[p_other.arr.length + i - 2] = arr[i];
-            }
+            System.arraycopy(arr, 1, line_arr, p_other.arr.length - 2 + 1, arr.length - 1);
+
         } else {
             // insert the lines of this polyline in front, skip the last line
-            for (int i = 0; i < arr.length - 1; ++i) {
-                line_arr[i] = arr[i];
-            }
+            System.arraycopy(arr, 0, line_arr, 0, arr.length - 1);
             if (combine_other_at_start) {
                 // skip the first line of p_other
-                for (int i = 1; i < p_other.arr.length; ++i) {
-                    line_arr[arr.length + i - 2] = p_other.arr[i];
-                }
+                System.arraycopy(p_other.arr, 1, line_arr, arr.length - 2 + 1, p_other.arr.length - 1);
             } else {
                 // insert in reverse order, skip the last line of p_other
                 for (int i = 1; i < p_other.arr.length; ++i) {

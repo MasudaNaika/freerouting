@@ -312,9 +312,8 @@ public class Simplex extends TileShape implements Serializable {
         double max_distance_2 = Integer.MIN_VALUE;
         FloatPoint gravity_point = centre_of_gravity();
 
-        for (int i = 0; i < border_line_count(); ++i) {
-            double curr_distance = Math.abs(arr[i].signed_distance(gravity_point));
-
+        for (Line line : arr) {
+            double curr_distance = Math.abs(line.signed_distance(gravity_point));
             if (curr_distance > max_distance) {
                 max_distance_2 = max_distance;
                 max_distance = curr_distance;
@@ -334,9 +333,8 @@ public class Simplex extends TileShape implements Serializable {
         double min_distance_2 = Integer.MAX_VALUE;
         FloatPoint gravity_point = centre_of_gravity();
 
-        for (int i = 0; i < border_line_count(); ++i) {
-            double curr_distance = Math.abs(arr[i].signed_distance(gravity_point));
-
+        for (Line line : arr) {
+            double curr_distance = Math.abs(line.signed_distance(gravity_point));
             if (curr_distance < min_distance) {
                 min_distance_2 = min_distance;
                 min_distance = curr_distance;
@@ -413,8 +411,7 @@ public class Simplex extends TileShape implements Serializable {
         int ly = -Limits.CRIT_INT;
         int llx = -Limits.CRIT_INT;
         int ulx = -Limits.CRIT_INT;
-        for (int i = 0; i < arr.length; ++i) {
-            Line curr_line = arr[i];
+        for (Line curr_line : arr) {
             IntPoint a = (IntPoint) curr_line.a;
             IntPoint b = (IntPoint) curr_line.b;
             if (a.y == b.y) {

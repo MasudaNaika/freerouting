@@ -267,9 +267,7 @@ public class WindowVia extends BoardSavableSubWindow {
                 layers_selected = true;
             } else {
                 Layer[] possible_start_layers = new board.Layer[pcb.layer_structure.arr.length - 1];
-                for (int i = 0; i < possible_start_layers.length; ++i) {
-                    possible_start_layers[i] = pcb.layer_structure.arr[i];
-                }
+                System.arraycopy(pcb.layer_structure.arr, 0, possible_start_layers, 0, possible_start_layers.length);
                 Object selected_value = JOptionPane.showInputDialog(null, resources.getString("select_start_layer"),
                         resources.getString("start_layer_selection"),
                         JOptionPane.INFORMATION_MESSAGE, null, possible_start_layers, possible_start_layers[0]);
@@ -284,9 +282,9 @@ public class WindowVia extends BoardSavableSubWindow {
             if (!layers_selected) {
                 int first_possible_end_layer_no = pcb.layer_structure.get_no(start_layer) + 1;
                 Layer[] possible_end_layers = new board.Layer[pcb.layer_structure.arr.length - first_possible_end_layer_no];
-                for (int i = first_possible_end_layer_no; i < pcb.layer_structure.arr.length; ++i) {
-                    possible_end_layers[i - first_possible_end_layer_no] = pcb.layer_structure.arr[i];
-                }
+                System.arraycopy(pcb.layer_structure.arr, first_possible_end_layer_no, 
+                        possible_end_layers, 0, pcb.layer_structure.arr.length - first_possible_end_layer_no);
+
                 Object selected_value = JOptionPane.showInputDialog(null, resources.getString("select_end_layer"),
                         resources.getString("end_layer_selection"),
                         JOptionPane.INFORMATION_MESSAGE, null, possible_end_layers,
@@ -446,8 +444,8 @@ public class WindowVia extends BoardSavableSubWindow {
                 return;
             }
             Collection<WindowObjectInfo.Printable> object_list = new LinkedList<>();
-            for (int i = 0; i < selected_objects.length; ++i) {
-                object_list.add((WindowObjectInfo.Printable) (selected_objects[i]));
+            for (Object obj : selected_objects) {
+                object_list.add((WindowObjectInfo.Printable) obj);
             }
             board.CoordinateTransform coordinate_transform = board_frame.board_panel.board_handling.coordinate_transform;
             WindowObjectInfo new_window

@@ -133,8 +133,9 @@ public class BasicBoard implements Serializable {
      */
     public void insert_trace(Point[] p_points, int p_layer,
             int p_half_width, int[] p_net_no_arr, int p_clearance_class, FixedState p_fixed_state) {
-        for (int i = 0; i < p_points.length; ++i) {
-            if (!bounding_box.contains(p_points[i])) {
+        
+        for (Point p : p_points) {
+            if (!bounding_box.contains(p)) {
                 System.out.println("LayeredBoard.insert_trace: input point out of range");
             }
         }
@@ -742,8 +743,8 @@ public class BasicBoard implements Serializable {
     public Set<Item> overlapping_items(Area p_area, int p_layer) {
         Set<Item> result = new TreeSet<>();
         TileShape[] tile_shapes = p_area.split_to_convex();
-        for (int i = 0; i < tile_shapes.length; ++i) {
-            Set<SearchTreeObject> curr_overlaps = overlapping_objects(tile_shapes[i], p_layer);
+        for (TileShape ts : tile_shapes) {
+            Set<SearchTreeObject> curr_overlaps = overlapping_objects(ts, p_layer);
             for (SearchTreeObject curr_overlap : curr_overlaps) {
                 if (curr_overlap instanceof Item) {
                     result.add((Item) curr_overlap);
@@ -759,10 +760,10 @@ public class BasicBoard implements Serializable {
      * clearance violation.
      */
     public boolean check_shape(Area p_shape, int p_layer, int[] p_net_no_arr, int p_cl_class) {
+        
         TileShape[] tiles = p_shape.split_to_convex();
         ShapeSearchTree default_tree = search_tree_manager.get_default_tree();
-        for (int i = 0; i < tiles.length; ++i) {
-            TileShape curr_shape = tiles[i];
+        for (TileShape curr_shape : tiles) {
             if (!curr_shape.is_contained_in(bounding_box)) {
                 return false;
             }
@@ -771,8 +772,8 @@ public class BasicBoard implements Serializable {
                     p_net_no_arr, p_cl_class, obstacles);
             for (SearchTreeObject curr_ob : obstacles) {
                 boolean is_obstacle = true;
-                for (int j = 0; j < p_net_no_arr.length; ++j) {
-                    if (!curr_ob.is_obstacle(p_net_no_arr[j])) {
+                for (int p_net_no : p_net_no_arr) {
+                    if (!curr_ob.is_obstacle(p_net_no)) {
                         is_obstacle = false;
                     }
                 }
@@ -820,8 +821,8 @@ public class BasicBoard implements Serializable {
                 }
             }
             boolean is_obstacle = true;
-            for (int i = 0; i < p_net_no_arr.length; ++i) {
-                if (!curr_item.is_trace_obstacle(p_net_no_arr[i])) {
+            for (int p_net_no : p_net_no_arr) {
+                if (!curr_item.is_trace_obstacle(p_net_no)) {
                     is_obstacle = false;
                 }
             }

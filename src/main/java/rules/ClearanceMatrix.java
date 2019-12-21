@@ -16,6 +16,7 @@
 package rules;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -97,7 +98,6 @@ public class ClearanceMatrix implements Serializable {
     public void set_default_value(int p_layer, int p_value) {
         for (int i = 1; i < class_count; ++i) {
             for (int j = 1; j < class_count; ++j) {
-
                 set_value(i, j, p_layer, p_value);
             }
         }
@@ -251,7 +251,6 @@ public class ClearanceMatrix implements Serializable {
             for (int j = 0; j < old_class_count; ++j) {
                 curr_new_row.column[j] = curr_old_row.column[j];
             }
-
             curr_new_row.column[old_class_count] = new MatrixEntry();
         }
 
@@ -394,9 +393,7 @@ public class ClearanceMatrix implements Serializable {
 
         private MatrixEntry() {
             layer = new int[layer_structure.arr.length];
-            for (int i = 0; i < layer_structure.arr.length; ++i) {
-                layer[i] = 0;
-            }
+            Arrays.fill(layer, 0);
         }
 
         /**

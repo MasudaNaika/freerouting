@@ -283,8 +283,8 @@ public class WindowNetClasses extends BoardSavableSubWindow {
                     if (curr_net_class == null) {
                         continue;
                     }
-                    for (int j = 0; j < selected_class_arr.length; ++j) {
-                        if (curr_net_class == selected_class_arr[i]) {
+                    for (NetClass nc : selected_class_arr) {
+                        if (curr_net_class == nc) {
                             item_matches = true;
                             break;
                         }
@@ -320,8 +320,8 @@ public class WindowNetClasses extends BoardSavableSubWindow {
             for (int i = 1; i <= max_net_no; ++i) {
                 board_handling.set_incompletes_filter(i, true);
                 NetClass curr_net_class = board_rules.nets.get(i).get_class();
-                for (int j = 0; j < selected_class_arr.length; ++j) {
-                    if (curr_net_class == selected_class_arr[j]) {
+                for (NetClass nc : selected_class_arr) {
+                    if (curr_net_class == nc) {
                         board_handling.set_incompletes_filter(i, false);
                         break;
                     }
@@ -351,8 +351,8 @@ public class WindowNetClasses extends BoardSavableSubWindow {
             for (int i = 1; i <= max_net_no; ++i) {
                 rules.Net curr_net = board_rules.nets.get(i);
                 NetClass curr_net_class = curr_net.get_class();
-                for (int j = 0; j < selected_class_arr.length; ++j) {
-                    if (curr_net_class == selected_class_arr[j]) {
+                for (NetClass nc : selected_class_arr) {
+                    if (curr_net_class == nc) {
                         contained_nets.add(curr_net);
                         break;
                     }

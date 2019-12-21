@@ -339,9 +339,7 @@ public class SessionFile {
         }
         if (corner_index < coors.length) {
             int[] adjusted_coors = new int[corner_index];
-            for (int i = 0; i < adjusted_coors.length; ++i) {
-                adjusted_coors[i] = coors[i];
-            }
+            System.arraycopy(coors, 0, adjusted_coors, 0, adjusted_coors.length);
             coors = adjusted_coors;
         }
         write_path(board_layer.name, wire_width, coors, p_identifier_type, p_file);
@@ -425,8 +423,8 @@ public class SessionFile {
         if (dsn_shape != null) {
             dsn_shape.write_scope_int(p_file, p_identifier_type);
         }
-        for (int i = 0; i < holes.length; ++i) {
-            Shape dsn_hole = p_coordinate_transform.board_to_dsn(holes[i], conduction_layer);
+        for (geometry.planar.Shape hole : holes) {
+            Shape dsn_hole = p_coordinate_transform.board_to_dsn(hole, conduction_layer);
             dsn_hole.write_hole_scope(p_file, p_identifier_type);
         }
         p_file.end_scope();

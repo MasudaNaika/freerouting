@@ -22,6 +22,7 @@ package library;
 import geometry.planar.ConvexShape;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -109,9 +110,7 @@ public class Padstacks implements Serializable {
         ConvexShape[] shape_arr = new ConvexShape[board_layer_structure.arr.length];
         int from_layer = Math.max(p_from_layer, 0);
         int to_layer = Math.min(p_to_layer, board_layer_structure.arr.length - 1);
-        for (int i = from_layer; i <= to_layer; ++i) {
-            shape_arr[i] = p_shape;
-        }
+        Arrays.fill(shape_arr, from_layer, to_layer + 1, p_shape);
         return add(shape_arr);
     }
 

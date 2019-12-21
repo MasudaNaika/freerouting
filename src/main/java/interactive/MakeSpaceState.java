@@ -24,6 +24,7 @@ import board.BasicBoard;
 import geometry.planar.FloatPoint;
 import geometry.planar.Point;
 import java.awt.Graphics;
+import java.util.Arrays;
 
 /**
  * Class for shoving items out of a region to make space to insert something
@@ -43,10 +44,9 @@ public class MakeSpaceState extends DragState {
         boolean[] layer_active_arr = new boolean[shove_trace_width_arr.length];
         int shove_trace_width = Math.min(100, hdlg.get_routing_board().get_min_trace_half_width() / 10);
         shove_trace_width = Math.max(shove_trace_width, 5);
-        for (int i = 0; i < shove_trace_width_arr.length; ++i) {
-            shove_trace_width_arr[i] = shove_trace_width;
-            layer_active_arr[i] = true;
-        }
+        Arrays.fill(shove_trace_width_arr, shove_trace_width);
+        Arrays.fill(layer_active_arr, true);
+
         int[] route_net_no_arr = new int[1];
         route_net_no_arr[0] = rules.Nets.hidden_net_no;
         route = new Route(p_location.round(), hdlg.settings.layer, shove_trace_width_arr, layer_active_arr,

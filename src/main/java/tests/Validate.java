@@ -114,10 +114,9 @@ public class Validate {
             int p_layer, int p_half_width, int[] p_net_no_arr, int p_cl_type) {
         TileShape[] offset_shapes = p_polyline.offset_shapes(p_half_width,
                 0, p_polyline.arr.length - 1);
-        for (int i = 0; i < offset_shapes.length; ++i) {
-            Collection<Item> obstacles
-                    = p_board.search_tree_manager.get_default_tree().overlapping_items_with_clearance(offset_shapes[i],
-                            p_layer, p_net_no_arr, p_cl_type);
+        for (TileShape ts : offset_shapes) {
+            Collection<Item> obstacles = p_board.search_tree_manager.get_default_tree()
+                    .overlapping_items_with_clearance(ts, p_layer, p_net_no_arr, p_cl_type);
             for (Item curr_obs : obstacles) {
                 if (!curr_obs.shares_net_no(p_net_no_arr)) {
                     System.out.println(p_s + ": cannot insert trace without violations");

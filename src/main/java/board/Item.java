@@ -15,6 +15,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Locale;
@@ -58,8 +59,8 @@ public abstract class Item implements Drawable, SearchTreeObject, ObjectInfoPane
         if (p_net_no <= 0) {
             return false;
         }
-        for (int i = 0; i < net_no_arr.length; ++i) {
-            if (net_no_arr[i] == p_net_no) {
+        for (int net_no : net_no_arr) {
+            if (net_no == p_net_no) {
                 return true;
             }
         }
@@ -94,9 +95,9 @@ public abstract class Item implements Drawable, SearchTreeObject, ObjectInfoPane
      * common number.
      */
     public boolean shares_net_no(int[] p_net_no_arr) {
-        for (int i = 0; i < net_no_arr.length; ++i) {
-            for (int j = 0; j < p_net_no_arr.length; ++j) {
-                if (net_no_arr[i] == p_net_no_arr[j]) {
+        for (int net_no : net_no_arr) {
+            for (int p_net_no : p_net_no_arr) {
+                if (net_no == p_net_no) {
                     return true;
                 }
             }
@@ -695,9 +696,7 @@ public abstract class Item implements Drawable, SearchTreeObject, ObjectInfoPane
     @Override
     public void draw(Graphics p_g, GraphicsContext p_graphics_context, Color p_color, double p_intensity) {
         Color[] color_arr = new Color[board.get_layer_count()];
-        for (int i = 0; i < color_arr.length; ++i) {
-            color_arr[i] = p_color;
-        }
+        Arrays.fill(color_arr, p_color);
         draw(p_g, p_graphics_context, color_arr, p_intensity);
     }
 
@@ -1151,8 +1150,8 @@ public abstract class Item implements Drawable, SearchTreeObject, ObjectInfoPane
      * Checks, if all nets of this items are normal.
      */
     public boolean nets_normal() {
-        for (int i = 0; i < net_no_arr.length; ++i) {
-            if (!Nets.is_normal_net_no(net_no_arr[i])) {
+        for (int net_no : net_no_arr) {
+            if (!Nets.is_normal_net_no(net_no)) {
                 return false;
             }
         }

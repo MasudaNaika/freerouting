@@ -20,6 +20,7 @@
 package geometry.planar;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 
@@ -84,8 +85,8 @@ public class PolylineArea implements Area, Serializable {
         if (!border_shape.contains(p_point)) {
             return false;
         }
-        for (int i = 0; i < hole_arr.length; ++i) {
-            if (hole_arr[i].contains(p_point)) {
+        for (geometry.planar.Shape hole : hole_arr) {
+            if (hole.contains(p_point)) {
                 return false;
             }
         }
@@ -97,8 +98,8 @@ public class PolylineArea implements Area, Serializable {
         if (!border_shape.contains(p_point)) {
             return false;
         }
-        for (int i = 0; i < hole_arr.length; ++i) {
-            if (hole_arr[i].contains_inside(p_point)) {
+        for (geometry.planar.Shape hole : hole_arr) {
+            if (hole.contains_inside(p_point)) {
                 return false;
             }
         }
@@ -110,8 +111,8 @@ public class PolylineArea implements Area, Serializable {
         double min_dist = Double.MAX_VALUE;
         FloatPoint result = null;
         TileShape[] convex_shapes = split_to_convex();
-        for (int i = 0; i < convex_shapes.length; ++i) {
-            FloatPoint curr_nearest_point = convex_shapes[i].nearest_point_approx(p_from_point);
+        for (TileShape ts : convex_shapes) {
+            FloatPoint curr_nearest_point = ts.nearest_point_approx(p_from_point);
             double curr_dist = curr_nearest_point.distance_square(p_from_point);
             if (curr_dist < min_dist) {
                 min_dist = curr_dist;
@@ -137,15 +138,15 @@ public class PolylineArea implements Area, Serializable {
     @Override
     public FloatPoint[] corner_approx_arr() {
         int corner_count = border_shape.border_line_count();
-        for (int i = 0; i < hole_arr.length; ++i) {
-            corner_count += hole_arr[i].border_line_count();
+        for (PolylineShape hole : hole_arr) {
+            corner_count += hole.border_line_count();
         }
         FloatPoint[] result = new FloatPoint[corner_count];
         FloatPoint[] curr_corner_arr = border_shape.corner_approx_arr();
         System.arraycopy(curr_corner_arr, 0, result, 0, curr_corner_arr.length);
         int dest_pos = curr_corner_arr.length;
-        for (int i = 0; i < hole_arr.length; ++i) {
-            curr_corner_arr = hole_arr[i].corner_approx_arr();
+        for (PolylineShape hole : hole_arr) {
+            curr_corner_arr = hole.corner_approx_arr();
             System.arraycopy(curr_corner_arr, 0, result, dest_pos, curr_corner_arr.length);
             dest_pos += curr_corner_arr.length;
         }
@@ -178,20 +179,18 @@ public class PolylineArea implements Area, Serializable {
                 return null;
             }
             Collection<TileShape> curr_piece_list = new LinkedList<>();
-            for (int i = 0; i < convex_border_pieces.length; ++i) {
-                curr_piece_list.add(convex_border_pieces[i]);
-            }
-            for (int i = 0; i < hole_arr.length; ++i) {
-                if (hole_arr[i].dimension() < 2) {
+            curr_piece_list.addAll(Arrays.asList(convex_border_pieces));
+
+            for (PolylineShape hole : hole_arr) {
+                if (hole.dimension() < 2) {
                     System.out.println("PolylineArea. split_to_convex: dimennsion 2 for hole expected");
                     continue;
                 }
-                TileShape[] convex_hole_pieces = hole_arr[i].split_to_convex();
+                TileShape[] convex_hole_pieces = hole.split_to_convex();
                 if (convex_hole_pieces == null) {
                     return null;
                 }
-                for (int j = 0; j < convex_hole_pieces.length; ++j) {
-                    TileShape curr_hole_piece = convex_hole_pieces[j];
+                for (TileShape curr_hole_piece : convex_hole_pieces) {
                     Collection<TileShape> new_piece_list = new LinkedList<>();
                     for (TileShape curr_divide_piece : curr_piece_list) {
                         if (p_stoppable_thread != null && p_stoppable_thread.is_stop_requested()) {
@@ -252,8 +251,7 @@ public class PolylineArea implements Area, Serializable {
     static private void cutout_hole_piece(TileShape p_divide_piece, TileShape p_hole_piece,
             Collection<TileShape> p_result_pieces) {
         TileShape[] result_pieces = p_divide_piece.cutout(p_hole_piece);
-        for (int i = 0; i < result_pieces.length; ++i) {
-            TileShape curr_piece = result_pieces[i];
+        for (TileShape curr_piece : result_pieces) {
             if (curr_piece.dimension() == 2) {
                 p_result_pieces.add(curr_piece);
             }

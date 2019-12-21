@@ -134,8 +134,8 @@ public class PolygonShape extends PolylineShape {
     @Override
     public boolean intersects(Circle p_circle) {
         TileShape[] convex_pieces = split_to_convex();
-        for (int i = 0; i < convex_pieces.length; ++i) {
-            if (convex_pieces[i].intersects(p_circle)) {
+        for (TileShape ts : convex_pieces) {
+            if (ts.intersects(p_circle)) {
                 return true;
             }
         }
@@ -145,8 +145,8 @@ public class PolygonShape extends PolylineShape {
     @Override
     public boolean intersects(Simplex p_simplex) {
         TileShape[] convex_pieces = split_to_convex();
-        for (int i = 0; i < convex_pieces.length; ++i) {
-            if (convex_pieces[i].intersects(p_simplex)) {
+        for (TileShape ts : convex_pieces) {
+            if (ts.intersects(p_simplex)) {
                 return true;
             }
         }
@@ -156,8 +156,8 @@ public class PolygonShape extends PolylineShape {
     @Override
     public boolean intersects(IntOctagon p_oct) {
         TileShape[] convex_pieces = split_to_convex();
-        for (int i = 0; i < convex_pieces.length; ++i) {
-            if (convex_pieces[i].intersects(p_oct)) {
+        for (TileShape ts : convex_pieces) {
+            if (ts.intersects(p_oct)) {
                 return true;
             }
         }
@@ -167,8 +167,8 @@ public class PolygonShape extends PolylineShape {
     @Override
     public boolean intersects(IntBox p_box) {
         TileShape[] convex_pieces = split_to_convex();
-        for (int i = 0; i < convex_pieces.length; ++i) {
-            if (convex_pieces[i].intersects(p_box)) {
+        for (TileShape ts : convex_pieces) {
+            if (ts.intersects(p_box)) {
                 return true;
             }
         }
@@ -204,8 +204,8 @@ public class PolygonShape extends PolylineShape {
     @Override
     public boolean contains(FloatPoint p_point) {
         TileShape[] convex_pieces = split_to_convex();
-        for (int i = 0; i < convex_pieces.length; ++i) {
-            if (convex_pieces[i].contains(p_point)) {
+        for (TileShape ts : convex_pieces) {
+            if (ts.contains(p_point)) {
                 return true;
             }
         }
@@ -223,8 +223,8 @@ public class PolygonShape extends PolylineShape {
     @Override
     public boolean is_outside(Point p_point) {
         TileShape[] convex_pieces = split_to_convex();
-        for (int i = 0; i < convex_pieces.length; ++i) {
-            if (!convex_pieces[i].is_outside(p_point)) {
+        for (TileShape ts : convex_pieces) {
+            if (!ts.is_outside(p_point)) {
                 return false;
             }
         }
@@ -272,8 +272,8 @@ public class PolygonShape extends PolylineShape {
             double lly = Integer.MAX_VALUE;
             double urx = Integer.MIN_VALUE;
             double ury = Integer.MIN_VALUE;
-            for (int i = 0; i < corners.length; ++i) {
-                FloatPoint curr = corners[i].to_float();
+            for (Point corner : corners) {
+                FloatPoint curr = corner.to_float();
                 llx = Math.min(llx, curr.x);
                 lly = Math.min(lly, curr.y);
                 urx = Math.max(urx, curr.x);
@@ -297,8 +297,8 @@ public class PolygonShape extends PolylineShape {
             double lrx = Integer.MIN_VALUE;
             double llx = Integer.MAX_VALUE;
             double urx = Integer.MIN_VALUE;
-            for (int i = 0; i < corners.length; ++i) {
-                FloatPoint curr = corners[i].to_float();
+            for (Point corner : corners) {
+                FloatPoint curr = corner.to_float();
                 lx = Math.min(lx, curr.x);
                 ly = Math.min(ly, curr.y);
                 rx = Math.max(rx, curr.x);

@@ -514,9 +514,9 @@ class PullTightAlgoAnyAngle extends PullTightAlgo {
         if (p_line_arr.length - p_start_no < 5) {
             return null;
         }
-        if (curr_clip_shape != null) // check, that the corners of the line to translate are inside
-        // the clip shape
-        {
+        if (curr_clip_shape != null) {
+            // check, that the corners of the line to translate are inside
+            // the clip shape
             for (int i = 1; i < 3; ++i) {
                 FloatPoint curr_corner
                         = p_line_arr[p_start_no + i].intersection_approx(p_line_arr[p_start_no + i + 1]);
@@ -609,9 +609,9 @@ class PullTightAlgoAnyAngle extends PullTightAlgo {
                 // tightening function can solve. For example when 3 ore more
                 // consecutive corners are equal.
                 Line prev_translated_line = new_line;
-                for (int i = 0; i < corners_skipped_before; ++i) // Translate the previous lines onto or past the
-                // intersection of new_line with the first untranslated line.
-                {
+                for (int i = 0; i < corners_skipped_before; ++i) {
+                    // Translate the previous lines onto or past the
+                    // intersection of new_line with the first untranslated line.
                     int prev_line_no = p_start_no + 1 - corners_skipped_before;
                     FloatPoint curr_prev_corner
                             = prev_translated_line.intersection_approx(curr_lines[prev_line_no]);
@@ -621,9 +621,9 @@ class PullTightAlgoAnyAngle extends PullTightAlgo {
                     curr_lines[p_start_no + 1 - i] = prev_translated_line;
                 }
                 prev_translated_line = new_line;
-                for (int i = 0; i < corners_skipped_after; ++i) // Translate the next lines onto or past the
-                // intersection of new_line with the first untranslated line.
-                {
+                for (int i = 0; i < corners_skipped_after; ++i) {
+                    // Translate the next lines onto or past the
+                    // intersection of new_line with the first untranslated line.
                     int next_line_no = p_start_no + 3 + corners_skipped_after;
                     FloatPoint curr_next_corner
                             = prev_translated_line.intersection_approx(curr_lines[next_line_no]);
@@ -870,26 +870,20 @@ class PullTightAlgoAnyAngle extends PullTightAlgo {
                 Line[] new_lines = new Line[new_line_count];
                 new_lines[0] = other_trace_line;
                 new_lines[1] = add_line;
-                for (int i = 2; i < new_lines.length; ++i) {
-                    new_lines[i] = trace_polyline.arr[i - diff];
-                }
+                System.arraycopy(trace_polyline.arr, 2 - diff, new_lines, 2, new_lines.length - 2);
                 return new Polyline(new_lines);
             }
         } else if (bend) {
             Line[] check_line_arr = new Line[new_line_count];
             check_line_arr[0] = other_prev_trace_line;
             check_line_arr[1] = other_trace_line;
-            for (int i = 2; i < check_line_arr.length; ++i) {
-                check_line_arr[i] = trace_polyline.arr[i - diff];
-            }
+            System.arraycopy(trace_polyline.arr, 2 - diff, check_line_arr, 2, check_line_arr.length - 2);
             Line new_line = reposition_line(check_line_arr, 0);
             if (new_line != null) {
                 Line[] new_lines = new Line[trace_polyline.arr.length];
                 new_lines[0] = other_trace_line;
                 new_lines[1] = new_line;
-                for (int i = 2; i < new_lines.length; ++i) {
-                    new_lines[i] = trace_polyline.arr[i];
-                }
+                System.arraycopy(trace_polyline.arr, 2, new_lines, 2, new_lines.length - 2);
                 return new Polyline(new_lines);
             }
         }

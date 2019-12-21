@@ -53,9 +53,7 @@ public class ColorIntensityTable implements Serializable {
      */
     public ColorIntensityTable(ColorIntensityTable p_color_intesity_table) {
         arr = new double[p_color_intesity_table.arr.length];
-        for (int i = 0; i < arr.length; ++i) {
-            arr[i] = p_color_intesity_table.arr[i];
-        }
+        System.arraycopy(p_color_intesity_table, 0, arr, 0, arr.length);
     }
 
     public double get_value(int p_no) {

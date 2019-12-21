@@ -923,7 +923,6 @@ public class Network extends ScopeKeyword {
         }
         // initalise the clearance values of p_new_class_name from p_net_class_name
         for (int i = 1; i < p_clearance_matrix.get_class_count(); ++i) {
-
             for (int j = 0; j < p_clearance_matrix.get_layer_count(); ++j) {
                 int curr_value = p_clearance_matrix.value(net_class_no, i, j);
                 p_clearance_matrix.set_value(result, i, j, curr_value);
@@ -1138,8 +1137,7 @@ public class Network extends ScopeKeyword {
                     curr_keepout_infos = p_location.place_keepout_infos;
                     break;
             }
-            for (int i = 0; i < keepout_arr.length; ++i) {
-                library.Package.Keepout curr_keepout = keepout_arr[i];
+            for (library.Package.Keepout curr_keepout : keepout_arr) {
                 int layer = curr_keepout.layer;
                 if (layer >= routing_board.get_layer_count()) {
                     System.out.println("Network.insert_component: keepout layer is to big");
@@ -1202,9 +1200,8 @@ public class Network extends ScopeKeyword {
             }
         }
         // insert the outline as component keepout
-        for (int i = 0; i < curr_package.outline.length; ++i) {
-
-            routing_board.insert_component_outline(curr_package.outline[i], p_location.is_front, component_translation,
+        for (geometry.planar.Shape s : curr_package.outline) {
+            routing_board.insert_component_outline(s, p_location.is_front, component_translation,
                     rotation_in_degree, new_component.no, fixed_state);
         }
     }

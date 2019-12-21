@@ -63,8 +63,8 @@ public class IdentifierType {
             System.out.println("IdentifierType.is_legal: p_string is null");
             return false;
         }
-        for (int i = 0; i < reserved_chars.length; ++i) {
-            if (p_string.contains(reserved_chars[i])) {
+        for (String str : reserved_chars) {
+            if (p_string.contains(str)) {
                 return false;
             }
         }

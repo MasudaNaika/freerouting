@@ -252,8 +252,8 @@ public class WindowClearanceMatrix extends BoardSavableSubWindow {
         if (p_string.isEmpty()) {
             return false;
         }
-        for (int i = 0; i < reserved_name_chars.length; ++i) {
-            if (p_string.contains(reserved_name_chars[i])) {
+        for (String str : reserved_name_chars) {
+            if (p_string.contains(str)) {
                 return false;
             }
         }

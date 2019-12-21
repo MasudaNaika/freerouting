@@ -175,8 +175,8 @@ public class Parser extends ScopeKeyword {
             for (String[] curr_constant : p_parser_info.constants) {
                 p_file.new_line();
                 p_file.write("(constant ");
-                for (int i = 0; i < curr_constant.length; ++i) {
-                    p_identifier_type.write(curr_constant[i], p_file);
+                for (String str : curr_constant) {
+                    p_identifier_type.write(str, p_file);
                     p_file.write(" ");
                 }
                 p_file.write(")");

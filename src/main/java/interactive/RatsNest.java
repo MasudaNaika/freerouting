@@ -97,8 +97,8 @@ public class RatsNest {
 
     public int incomplete_count() {
         int result = 0;
-        for (int i = 0; i < net_incompletes.length; ++i) {
-            result += net_incompletes[i].count();
+        for (NetIncompletes ni : net_incompletes) {
+            result += ni.count();
         }
         return result;
     }
@@ -112,8 +112,8 @@ public class RatsNest {
 
     public int length_violation_count() {
         int result = 0;
-        for (int i = 0; i < net_incompletes.length; ++i) {
-            if (net_incompletes[i].get_length_violation() != 0) {
+        for (NetIncompletes ni : net_incompletes) {
+            if (ni.get_length_violation() != 0) {
                 ++result;
             }
         }
@@ -139,8 +139,8 @@ public class RatsNest {
     public AirLine[] get_airlines() {
         AirLine[] result = new AirLine[incomplete_count()];
         int curr_index = 0;
-        for (int i = 0; i < net_incompletes.length; ++i) {
-            Collection<AirLine> curr_list = net_incompletes[i].incompletes;
+        for (NetIncompletes ni : net_incompletes) {
+            Collection<AirLine> curr_list = ni.incompletes;
             for (AirLine curr_line : curr_list) {
                 result[curr_index] = curr_line;
                 ++curr_index;
@@ -163,8 +163,8 @@ public class RatsNest {
      */
     public boolean recalculate_length_violations() {
         boolean result = false;
-        for (int i = 0; i < net_incompletes.length; ++i) {
-            if (net_incompletes[i].calc_length_violation()) {
+        for (NetIncompletes ni : net_incompletes) {
+            if (ni.calc_length_violation()) {
                 result = true;
             }
         }

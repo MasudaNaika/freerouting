@@ -33,6 +33,7 @@ import java.awt.Graphics;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -192,9 +193,7 @@ public class BoardOutline extends Item implements Serializable {
     public Color[] get_draw_colors(GraphicsContext p_graphics_context) {
         Color[] color_arr = new Color[board.layer_structure.arr.length];
         Color draw_color = p_graphics_context.get_outline_color();
-        for (int i = 0; i < color_arr.length; ++i) {
-            color_arr[i] = draw_color;
-        }
+        Arrays.fill(color_arr, draw_color);
         return color_arr;
     }
 
@@ -205,9 +204,7 @@ public class BoardOutline extends Item implements Serializable {
     Area get_keepout_area() {
         if (keepout_area == null) {
             PolylineShape[] hole_arr = new PolylineShape[shapes.length];
-            for (int i = 0; i < hole_arr.length; ++i) {
-                hole_arr[i] = shapes[i];
-            }
+            System.arraycopy(shapes, 0, hole_arr, 0, hole_arr.length);
             keepout_area = new PolylineArea(board.bounding_box, hole_arr);
         }
         return keepout_area;

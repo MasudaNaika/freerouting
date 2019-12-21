@@ -131,9 +131,8 @@ public class GraphicsContext implements Serializable {
             draw_path = new GeneralPath();
         }
 
-        for (int i = 0; i < (p_points.length - 1); i++) {
-            if (line_outside_update_box(p_points[i], p_points[i + 1],
-                    p_half_width + update_offset, clip_box)) {
+        for (int i = 0; i < p_points.length - 1; ++i) {
+            if (line_outside_update_box(p_points[i], p_points[i + 1], p_half_width + update_offset, clip_box)) {
                 // this check should be unnessersary here,
                 // the system should do it in the draw(line) function
                 continue;
@@ -341,13 +340,11 @@ public class GraphicsContext implements Serializable {
             return;
         }
         GeneralPath draw_path = new GeneralPath(GeneralPath.WIND_EVEN_ODD);
-        for (int j = 0; j < p_point_lists.length; ++j) {
+        for (FloatPoint[] curr_point_list : p_point_lists) {
             Polygon draw_polygon = new Polygon();
-            FloatPoint[] curr_point_list = p_point_lists[j];
             for (FloatPoint curr_point_list1 : curr_point_list) {
                 Point2D curr_corner = coordinate_transform.board_to_screen(curr_point_list1);
-                draw_polygon.addPoint((int) Math.round(curr_corner.getX()),
-                        (int) Math.round(curr_corner.getY()));
+                draw_polygon.addPoint((int) Math.round(curr_corner.getX()), (int) Math.round(curr_corner.getY()));
             }
             draw_path.append(draw_polygon, false);
         }

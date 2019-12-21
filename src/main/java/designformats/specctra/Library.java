@@ -24,6 +24,7 @@ import geometry.planar.PolygonShape;
 import geometry.planar.Simplex;
 import geometry.planar.Vector;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -85,12 +86,10 @@ public class Library extends ScopeKeyword {
 
         // Set the via padstacks.
         if (p_par.via_padstack_names != null) {
-            library.Padstack[] via_padstacks = new library.Padstack[p_par.via_padstack_names.size()];
-            Iterator<String> it = p_par.via_padstack_names.iterator();
             int found_padstack_count = 0;
-            for (int i = 0; i < via_padstacks.length; ++i) {
-                String curr_padstack_name = it.next();
-                library.Padstack curr_padstack = board.library.padstacks.get(curr_padstack_name);
+            library.Padstack[] via_padstacks = new library.Padstack[p_par.via_padstack_names.size()];
+            for (String curr_padstack_name : p_par.via_padstack_names) {
+                 library.Padstack curr_padstack = board.library.padstacks.get(curr_padstack_name);
                 if (curr_padstack != null) {
                     via_padstacks[found_padstack_count] = curr_padstack;
                     ++found_padstack_count;
@@ -316,10 +315,8 @@ public class Library extends ScopeKeyword {
             }
 
             if (pad_shape.layer == Layer.PCB || pad_shape.layer == Layer.SIGNAL) {
-                for (int i = 0; i < padstack_shapes.length; ++i) {
-                    padstack_shapes[i] = padstack_shape;
-                }
-            } else {
+                Arrays.fill(padstack_shapes, padstack_shape);
+             } else {
                 int shape_layer = p_layer_structure.get_no(pad_shape.layer.name);
                 if (shape_layer < 0 || shape_layer >= padstack_shapes.length) {
                     System.out.println("Library.read_padstack_scope: layer number found");

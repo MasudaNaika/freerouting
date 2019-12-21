@@ -164,8 +164,7 @@ public class Component extends ScopeKeyword {
                     keepout_type = "(place_keepout ";
                     break;
             }
-            for (int i = 0; i < curr_keepout_arr.length; ++i) {
-                library.Package.Keepout curr_keepout = curr_keepout_arr[i];
+            for (library.Package.Keepout curr_keepout : curr_keepout_arr) {
                 board.ObstacleArea curr_obstacle_area = get_keepout(p_par.board, p_component.no, curr_keepout.name);
                 if (curr_obstacle_area == null || curr_obstacle_area.clearance_class_no() == 0) {
                     continue;

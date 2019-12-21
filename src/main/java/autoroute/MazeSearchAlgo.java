@@ -407,6 +407,7 @@ public class MazeSearchAlgo {
      */
     private boolean expand_to_door(ExpansionDoor p_to_door, MazeListElement p_list_element, int p_add_costs,
             boolean p_next_room_is_thick, MazeSearchElement.Adjustment p_adjustment) {
+        
         double half_width = ctrl.compensated_trace_half_width[p_list_element.next_room.get_layer()];
         boolean something_expanded = false;
         FloatLine[] line_sections = p_to_door.get_section_segments(half_width);
@@ -702,11 +703,14 @@ public class MazeSearchAlgo {
                 curr_last_layer = to_layer;
             }
             boolean mask_found = false;
-            for (int i = 0; i < ctrl.via_info_arr.length; ++i) {
-                AutorouteControl.ViaMask curr_via_info = ctrl.via_info_arr[i];
-                if (curr_first_layer >= curr_via_info.from_layer && curr_last_layer <= curr_via_info.to_layer && curr_via_info.from_layer >= via_lower_bound && curr_via_info.to_layer <= via_upper_bound) {
+            for (AutorouteControl.ViaMask curr_via_info : ctrl.via_info_arr) {
+                if (curr_first_layer >= curr_via_info.from_layer 
+                        && curr_last_layer <= curr_via_info.to_layer 
+                        && curr_via_info.from_layer >= via_lower_bound 
+                        && curr_via_info.to_layer <= via_upper_bound) {
                     boolean mask_ok = true;
-                    if (curr_via_info.from_layer == 0 && smd_attached_on_component_side || curr_via_info.to_layer == ctrl.layer_count - 1 && smd_attached_on_solder_side) {
+                    if (curr_via_info.from_layer == 0 && smd_attached_on_component_side 
+                            || curr_via_info.to_layer == ctrl.layer_count - 1 && smd_attached_on_solder_side) {
                         mask_ok = curr_via_info.attach_smd_allowed;
                     }
                     if (mask_ok) {

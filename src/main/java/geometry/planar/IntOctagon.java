@@ -16,6 +16,7 @@
 package geometry.planar;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  *
@@ -1063,9 +1064,8 @@ public class IntOctagon extends RegularTileShape implements Serializable {
         p_max_result_points = Math.min(p_max_result_points, 8);
         IntPoint[] result = new IntPoint[p_max_result_points];
         double[] min_dist = new double[p_max_result_points];
-        for (int i = 0; i < p_max_result_points; ++i) {
-            min_dist[i] = Double.MAX_VALUE;
-        }
+        Arrays.fill(min_dist, Double.MAX_VALUE);
+
         FloatPoint inside_point = p_point.to_float();
         for (FortyfiveDegreeDirection curr_dir : FortyfiveDegreeDirection.values()) {
             IntPoint curr_border_point = border_point(p_point, curr_dir);

@@ -111,14 +111,15 @@ public abstract class PrintableShape {
         public String toString() {
             ResourceBundle resources
                     = ResourceBundle.getBundle("board.resources.ObjectInfoPanel", locale);
-            String result = resources.getString("polygon") + ": ";
+            StringBuilder sb = new StringBuilder();
+            sb.append(resources.getString("polygon")).append(": ");
             for (int i = 0; i < corner_arr.length; ++i) {
                 if (i > 0) {
-                    result += ", ";
+                    sb.append(", ");
                 }
-                result += corner_arr[i].to_string(locale);
+                sb.append(corner_arr[i].to_string(locale));
             }
-            return result;
+            return sb.toString();
         }
 
         public final FloatPoint[] corner_arr;

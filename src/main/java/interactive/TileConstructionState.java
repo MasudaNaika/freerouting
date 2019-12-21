@@ -27,6 +27,7 @@ import geometry.planar.IntPoint;
 import geometry.planar.Line;
 import geometry.planar.Side;
 import geometry.planar.TileShape;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 import rules.BoardRules;
@@ -166,10 +167,7 @@ public class TileConstructionState extends CornerItemConstructionState {
         }
         if (new_length < corner_arr.length) {
             // somthing skipped, update corner_list
-            corner_list = new LinkedList<>();
-            for (int i = 0; i < new_length; ++i) {
-                corner_list.add(corner_arr[i]);
-            }
+            corner_list = new LinkedList<>(Arrays.asList(corner_arr));
         }
     }
 
@@ -197,10 +195,7 @@ public class TileConstructionState extends CornerItemConstructionState {
 
         if (new_length != corner_arr.length) {
             // recalculate the corner_list
-            corner_list = new LinkedList<>();
-            for (int i = 0; i < new_length; ++i) {
-                corner_list.add(corner_arr[i]);
-            }
+            corner_list = new LinkedList<>(Arrays.asList(corner_arr));
             add_corner_for_snap_angle();
         }
     }
