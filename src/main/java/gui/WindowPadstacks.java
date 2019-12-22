@@ -24,12 +24,12 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeSet;
 import library.Padstack;
 import library.Padstacks;
-import java.util.List;
 
 /**
  * Window displaying the library padstacks.

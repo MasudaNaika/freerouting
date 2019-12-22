@@ -458,34 +458,33 @@ public class WindowClearanceMatrix extends BoardSavableSubWindow {
             ClearanceMatrix clearance_matrix = board_handling.get_routing_board().rules.clearance_matrix;
 
             for (int i = 0; i < clearance_matrix.get_class_count(); ++i) {
+                Object[] curr_data = data[i];
                 for (int j = 0; j < clearance_matrix.get_class_count(); ++j) {
                     switch (p_layer) {
                         case ComboBoxLayer.ALL_LAYER_INDEX:
                             // all layers
-
                             if (clearance_matrix.is_layer_dependent(i, j)) {
-                                data[i][j + 1] = -1;
+                                curr_data[j + 1] = -1;
                             } else {
                                 Float curr_table_value
                                         = (float) board_handling.coordinate_transform.board_to_user(clearance_matrix.value(i, j, 0));
-                                data[i][j + 1] = curr_table_value;
+                                curr_data[j + 1] = curr_table_value;
                             }
                             break;
                         case ComboBoxLayer.INNER_LAYER_INDEX:
                             // all layers
-
                             if (clearance_matrix.is_inner_layer_dependent(i, j)) {
-                                data[i][j + 1] = -1;
+                                curr_data[j + 1] = -1;
                             } else {
                                 Float curr_table_value
                                         = (float) board_handling.coordinate_transform.board_to_user(clearance_matrix.value(i, j, 1));
-                                data[i][j + 1] = curr_table_value;
+                                curr_data[j + 1] = curr_table_value;
                             }
                             break;
                         default:
                             Float curr_table_value
                                     = (float) board_handling.coordinate_transform.board_to_user(clearance_matrix.value(i, j, p_layer));
-                            data[i][j + 1] = curr_table_value;
+                            curr_data[j + 1] = curr_table_value;
                             break;
                     }
                 }

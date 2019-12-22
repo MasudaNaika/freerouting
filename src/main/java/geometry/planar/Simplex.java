@@ -725,19 +725,17 @@ public class Simplex extends TileShape implements Serializable {
         Simplex inner_simplex = intersection(p_outer_simplex);
         if (inner_simplex.dimension() < 2) {
             // nothing to cutout from p_outer_simplex
-            Simplex[] result = new Simplex[1];
-            result[0] = p_outer_simplex;
+            Simplex[] result = {p_outer_simplex};
             return result;
         }
         int inner_corner_count = inner_simplex.arr.length;
         Line[][] division_line_arr = new Line[inner_corner_count][];
         for (int inner_corner_no = 0; inner_corner_no < inner_corner_count; ++inner_corner_no) {
-            division_line_arr[inner_corner_no]
-                    = inner_simplex.calc_division_lines(inner_corner_no, p_outer_simplex);
-            if (division_line_arr[inner_corner_no] == null) {
+            Line[] division_line = inner_simplex.calc_division_lines(inner_corner_no, p_outer_simplex);
+            division_line_arr[inner_corner_no] = division_line;
+            if (division_line == null) {
                 System.out.println("Simplex.cutout_from: division line is null");
-                Simplex[] result = new Simplex[1];
-                result[0] = p_outer_simplex;
+                Simplex[] result = {p_outer_simplex};
                 return result;
             }
         }

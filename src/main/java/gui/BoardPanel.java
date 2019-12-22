@@ -32,8 +32,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
 import java.awt.geom.Point2D;
 import java.util.Locale;
 import javax.swing.JPanel;
@@ -69,7 +67,7 @@ public class BoardPanel extends JPanel {
         scroll_pane = board_frame.scroll_pane;
         default_init(p_locale);
     }
-
+    
     private void default_init(Locale p_locale) {
         setLayout(new BorderLayout());
 
@@ -111,11 +109,8 @@ public class BoardPanel extends JPanel {
                 middle_drag_position = null;
             }
         });
-        addMouseWheelListener(new MouseWheelListener() {
-            @Override
-            public void mouseWheelMoved(MouseWheelEvent evt) {
-                board_handling.mouse_wheel_moved(evt.getWheelRotation());
-            }
+        addMouseWheelListener(evt -> {
+            board_handling.mouse_wheel_moved(evt.getWheelRotation());
         });
         board_handling = new BoardHandling(this, p_locale);
         setAutoscrolls(true);

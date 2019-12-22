@@ -14,7 +14,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 /**
  * Delegaion class of MainApplication
  *
- * @author masuda
+ * @author masuda, Masuda Naika
  */
 public class Freerouter {
 

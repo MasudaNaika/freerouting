@@ -143,8 +143,8 @@ public class MoveDrillItemAlgo {
                 return false;
             }
             IntBox curr_bounding_box = curr_shape.bounding_box();
-            for (int j = 0; j < 4; ++j) {
-                p_board.join_changed_area(curr_bounding_box.corner_approx(j), curr_layer);
+            for (int i = 0; i < 4; ++i) {
+                p_board.join_changed_area(curr_bounding_box.corner_approx(i), curr_layer);
             }
         }
         p_drill_item.move_by(p_vector);

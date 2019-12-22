@@ -69,13 +69,12 @@ public class BoardHandlingImpl implements IBoardHandling {
                 outline_cl_class_no = p_rules.clearance_matrix.get_no(p_outline_clearance_class_name);
                 outline_cl_class_no = Math.max(outline_cl_class_no, 0);
             } else {
-                outline_cl_class_no
-                        = p_rules.get_default_net_class().default_item_clearance_classes.get(rules.DefaultItemClearanceClasses.ItemClass.AREA);
+                outline_cl_class_no = p_rules.get_default_net_class().default_item_clearance_classes
+                        .get(rules.DefaultItemClearanceClasses.ItemClass.AREA);
             }
         }
-        board
-                = new RoutingBoard(p_bounding_box, p_layer_structure, p_outline_shapes, outline_cl_class_no,
-                        p_rules, p_board_communication, p_test_level);
+        board = new RoutingBoard(p_bounding_box, p_layer_structure, p_outline_shapes, outline_cl_class_no,
+                p_rules, p_board_communication, p_test_level);
 
         settings = new Settings(board, logfile);
     }

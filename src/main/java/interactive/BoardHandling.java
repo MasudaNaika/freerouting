@@ -392,7 +392,8 @@ public class BoardHandling extends BoardHandlingImpl {
         if (length_violation_count == 0) {
             curr_message = incomplete_count.toString() + " " + resources.getString("incomplete_connections_to_route");
         } else {
-            curr_message = incomplete_count.toString() + " " + resources.getString("incompletes") + " " + length_violation_count.toString() + " " + resources.getString("length_violations");
+            curr_message = incomplete_count.toString() + " " + resources.getString("incompletes") + 
+                    " " + length_violation_count.toString() + " " + resources.getString("length_violations");
         }
         screen_messages.set_status_message(curr_message);
     }
@@ -465,12 +466,9 @@ public class BoardHandling extends BoardHandlingImpl {
     }
 
     public void recalculate_length_violations() {
-        if (ratsnest != null) {
-            if (ratsnest.recalculate_length_violations()) {
-                if (!ratsnest.is_hidden()) {
-                    repaint();
-                }
-            }
+        if (ratsnest != null && ratsnest.recalculate_length_violations() 
+                && !ratsnest.is_hidden()) {
+            repaint();
         }
     }
 
@@ -491,6 +489,7 @@ public class BoardHandling extends BoardHandlingImpl {
     public void create_board(IntBox p_bounding_box, LayerStructure p_layer_structure,
             PolylineShape[] p_outline_shapes, String p_outline_clearance_class_name,
             BoardRules p_rules, board.Communication p_board_communication, TestLevel p_test_level) {
+        
         super.create_board(p_bounding_box, p_layer_structure, p_outline_shapes, p_outline_clearance_class_name, p_rules,
                 p_board_communication, p_test_level);
 
@@ -508,9 +507,8 @@ public class BoardHandling extends BoardHandlingImpl {
      */
     public void change_user_unit_factor(double p_new_factor) {
         CoordinateTransform old_transform = coordinate_transform;
-        coordinate_transform
-                = new CoordinateTransform(p_new_factor, old_transform.user_unit,
-                        old_transform.board_unit_factor, old_transform.board_unit);
+        coordinate_transform = new CoordinateTransform(p_new_factor, old_transform.user_unit,
+                old_transform.board_unit_factor, old_transform.board_unit);
     }
 
     /**
@@ -518,9 +516,8 @@ public class BoardHandling extends BoardHandlingImpl {
      */
     public void change_user_unit(Unit p_unit) {
         CoordinateTransform old_transform = coordinate_transform;
-        coordinate_transform
-                = new CoordinateTransform(old_transform.user_unit_factor, p_unit,
-                        old_transform.board_unit_factor, old_transform.board_unit);
+        coordinate_transform = new CoordinateTransform(old_transform.user_unit_factor, p_unit,
+                old_transform.board_unit_factor, old_transform.board_unit);
     }
 
     /**
@@ -667,10 +664,8 @@ public class BoardHandling extends BoardHandlingImpl {
             return;
         }
         if (interactive_state != null && graphics_context != null) {
-            FloatPoint location
-                    = graphics_context.coordinate_transform.screen_to_board(p_point);
-            InteractiveState return_state
-                    = interactive_state.left_button_clicked(location);
+            FloatPoint location = graphics_context.coordinate_transform.screen_to_board(p_point);
+            InteractiveState return_state = interactive_state.left_button_clicked(location);
             if (return_state != interactive_state && return_state != null) {
                 set_interactive_state(return_state);
                 repaint();
@@ -981,8 +976,7 @@ public class BoardHandling extends BoardHandlingImpl {
             // no interactive action when logfile is running
             return;
         }
-        FloatPoint location
-                = graphics_context.coordinate_transform.screen_to_board(p_point);
+        FloatPoint location = graphics_context.coordinate_transform.screen_to_board(p_point);
         InteractiveState new_state = RouteState.get_instance(location, interactive_state, this, logfile);
         set_interactive_state(new_state);
     }
@@ -994,10 +988,8 @@ public class BoardHandling extends BoardHandlingImpl {
         if (board_is_read_only || !(interactive_state instanceof MenuState)) {
             return;
         }
-        FloatPoint location
-                = graphics_context.coordinate_transform.screen_to_board(p_point);
-        InteractiveState return_state
-                = ((MenuState) interactive_state).select_items(location);
+        FloatPoint location = graphics_context.coordinate_transform.screen_to_board(p_point);
+        InteractiveState return_state = ((MenuState) interactive_state).select_items(location);
         set_interactive_state(return_state);
     }
 

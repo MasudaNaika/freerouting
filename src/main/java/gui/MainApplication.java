@@ -77,13 +77,13 @@ public class MainApplication extends JFrame {
                     = create_board_frame(design_file, null, board_option, startupOptions.test_version_option, startupOptions.current_locale);
             welcome_window.dispose();
             if (new_frame == null) {
-                System.exit(1);
+                exit(1);
                 return;
             }
             new_frame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosed(WindowEvent evt) {
-                    System.exit(0);
+                    exit(0);
                 }
             });
         } else {
@@ -231,8 +231,8 @@ public class MainApplication extends JFrame {
     /**
      * Exit the Application
      */
-    private void exitForm(WindowEvent evt) {
-        System.exit(0);
+    private static void exit(int code) {
+        System.exit(code);
     }
 
     /**
@@ -357,7 +357,7 @@ public class MainApplication extends JFrame {
                 }
             }
             if (exit_program) {
-                exitForm(evt);
+                exit(0);
             }
         }
 

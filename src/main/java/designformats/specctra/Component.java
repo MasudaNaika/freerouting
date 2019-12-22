@@ -149,8 +149,8 @@ public class Component extends ScopeKeyword {
         }
         library.Package.Keepout[] curr_keepout_arr;
         String keepout_type;
-        for (int j = 0; j < 3; ++j) {
-            switch (j) {
+        for (int i = 0; i < 3; ++i) {
+            switch (i) {
                 case 0:
                     curr_keepout_arr = p_component.get_package().keepout_arr;
                     keepout_type = "(keepout ";

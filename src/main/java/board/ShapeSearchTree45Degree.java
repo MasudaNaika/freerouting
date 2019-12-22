@@ -169,8 +169,7 @@ public class ShapeSearchTree45Degree extends ShapeSearchTree {
         int curr_border_line_no = p_obstacle_border_line_no;
         int curr_obstacle_corner_x = p_obstacle_shape.corner_x(p_obstacle_border_line_no);
         int curr_obstacle_corner_y = p_obstacle_shape.corner_y(p_obstacle_border_line_no);
-        for (int j = 0; j < 5; ++j) {
-
+        for (int i = 0; i < 5; ++i) {
             if (p_room_shape.side_of_border_line(curr_obstacle_corner_x, curr_obstacle_corner_y,
                     curr_border_line_no) != Side.ON_THE_LEFT) {
                 return false;
@@ -182,7 +181,7 @@ public class ShapeSearchTree45Degree extends ShapeSearchTree {
         int next_obstacle_corner_x = p_obstacle_shape.corner_x(next_obstacle_border_line_no);
         int next_obstacle_corner_y = p_obstacle_shape.corner_y(next_obstacle_border_line_no);
         curr_border_line_no = (p_obstacle_border_line_no + 5) % 8;
-        for (int j = 0; j < 3; ++j) {
+        for (int i = 0; i < 3; ++i) {
             if (p_room_shape.side_of_border_line(next_obstacle_corner_x, next_obstacle_corner_y,
                     curr_border_line_no) != Side.ON_THE_LEFT) {
                 return false;

@@ -36,6 +36,7 @@ import geometry.planar.ShapeBoundingDirections;
 import geometry.planar.Side;
 import geometry.planar.Simplex;
 import geometry.planar.TileShape;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Set;
@@ -818,15 +819,11 @@ public class ShapeSearchTree extends datastructures.MinAreaTree {
         }
 
         Collection<TileShape> tree_shape_list = new LinkedList<>();
-        for (int i = 0; i < convex_shapes.length; ++i) {
-            TileShape curr_convex_shape = convex_shapes[i];
-
+        for (TileShape curr_convex_shape : convex_shapes) {
             int offset_width = clearance_compensation_value(p_obstacle_area.clearance_class_no(), p_obstacle_area.get_layer());
             curr_convex_shape = (TileShape) curr_convex_shape.enlarge(offset_width);
             TileShape[] curr_tree_shapes = curr_convex_shape.divide_into_sections(max_tree_shape_width);
-            for (int j = 0; j < curr_tree_shapes.length; ++j) {
-                tree_shape_list.add(curr_tree_shapes[j]);
-            }
+            tree_shape_list.addAll(Arrays.asList(curr_tree_shapes));
         }
         TileShape[] result = tree_shape_list.toArray(TileShape[]::new);
         return result;

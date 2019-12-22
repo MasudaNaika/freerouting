@@ -137,9 +137,9 @@ public class AutorouteControl {
             }
             via_info_arr[i] = new ViaMask(from_layer, to_layer, curr_via.attach_smd_allowed());
         }
-        for (int j = 0; j < layer_count; ++j) {
-            via_radius_arr[j] = Math.max(via_radius_arr[j], trace_half_width[j]);
-            max_via_radius = Math.max(max_via_radius, via_radius_arr[j]);
+        for (int i = 0; i < layer_count; ++i) {
+            via_radius_arr[i] = Math.max(via_radius_arr[i], trace_half_width[i]);
+            max_via_radius = Math.max(max_via_radius, via_radius_arr[i]);
         }
         double via_cost_factor = max_via_radius;
         via_cost_factor = Math.max(via_cost_factor, 1);

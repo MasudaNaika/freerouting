@@ -317,7 +317,6 @@ public class ShapeTraceEntries {
                             return false;
                         }
                         if (contact_item instanceof Trace) {
-
                             if (contact_item.is_shove_fixed() || ((Trace) contact_item).get_half_width() != p_trace.get_half_width()
                                     || contact_item.clearance_class_no() != p_trace.clearance_class_no()) {
                                 if (offset_shape.contains_inside(end_corner)) {
@@ -327,7 +326,6 @@ public class ShapeTraceEntries {
                             }
                         } else if (contact_item instanceof Via) {
                             TileShape via_shape = ((Via) contact_item).get_tile_shape_on_layer(layer);
-
                             double via_trace_diff = via_shape.smallest_radius() - p_trace.get_compensated_half_width(search_tree);
                             if (!search_tree.is_clearance_compensation_used()) {
                                 int via_clearance = board.clearance_value(contact_item.clearance_class_no(), cl_class, layer);
@@ -351,20 +349,17 @@ public class ShapeTraceEntries {
                     }
                     if (contact_count == 1 && store_end_corner) {
                         Point projection = offset_shape.nearest_border_point(end_corner);
-                        {
-                            int projection_side = offset_shape.contains_on_border_line_no(projection);
-                            int trace_line_segment_no;
-                            // the following may not be correct because the trace may not conntain a suitable
-                            // line for the construction oof the end line of the substitute trace.
-                            if (i == 0) {
-                                trace_line_segment_no = 0;
-                            } else {
-                                trace_line_segment_no = p_trace.polyline().arr.length - 1;
-                            }
-
-                            if (projection_side >= 0) {
-                                insert_entry_point(p_trace, trace_line_segment_no, projection_side, projection.to_float());
-                            }
+                        int projection_side = offset_shape.contains_on_border_line_no(projection);
+                        int trace_line_segment_no;
+                        // the following may not be correct because the trace may not conntain a suitable
+                        // line for the construction oof the end line of the substitute trace.
+                        if (i == 0) {
+                            trace_line_segment_no = 0;
+                        } else {
+                            trace_line_segment_no = p_trace.polyline().arr.length - 1;
+                        }
+                        if (projection_side >= 0) {
+                            insert_entry_point(p_trace, trace_line_segment_no, projection_side, projection.to_float());
                         }
                     } else if (contact_count == 0 && offset_shape.contains_inside(end_corner)) {
                         shape_contains_trace_tails = true;

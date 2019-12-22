@@ -298,8 +298,8 @@ public class ShapeSearchTree90Degree extends ShapeSearchTree {
         int to_no = Math.min(p_to_no, p_polyline.arr.length - 1);
         int shape_count = Math.max(to_no - from_no - 1, 0);
         TileShape[] shape_arr = new TileShape[shape_count];
-        for (int j = from_no; j < to_no - 1; ++j) {
-            shape_arr[j - from_no] = p_polyline.offset_box(p_half_width, j);
+        for (int i = from_no; i < to_no - 1; ++i) {
+            shape_arr[i - from_no] = p_polyline.offset_box(p_half_width, i);
         }
         return shape_arr;
     }

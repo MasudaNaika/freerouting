@@ -133,16 +133,13 @@ public class ColorManager extends BoardSavableSubWindow {
                 resources.getString("pick_a_color"), true, colorChooser, okListener, null);
 
         //Here's the code that brings up the dialog.
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                button.setBackground(colorEditor.currentColor);
-                colorChooser.setColor(colorEditor.currentColor);
-                //Without the following line, the dialog comes up
-                //in the middle of the screen.
-                //dialog.setLocationRelativeTo(button);
-                dialog.setVisible(true);
-            }
+        button.addActionListener((ActionEvent e) -> {
+            button.setBackground(colorEditor.currentColor);
+            colorChooser.setColor(colorEditor.currentColor);
+            //Without the following line, the dialog comes up
+            //in the middle of the screen.
+            //dialog.setLocationRelativeTo(button);
+            dialog.setVisible(true);
         });
     }
 
@@ -205,11 +202,8 @@ public class ColorManager extends BoardSavableSubWindow {
             setClickCountToStart(1); //This is usually 1 or 2.
 
             //Must do this so that editing stops when appropriate.
-            b.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    fireEditingStopped();
-                }
+            b.addActionListener((ActionEvent e) -> {
+                fireEditingStopped();
             });
         }
 

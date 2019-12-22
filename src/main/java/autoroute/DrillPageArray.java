@@ -99,7 +99,7 @@ public class DrillPageArray {
                 DrillPage curr_page = page_arr[j][i];
                 TileShape intersection = p_shape.intersection(curr_page.shape);
                 if (intersection.dimension() > 1) {
-                    result.add(page_arr[j][i]);
+                    result.add(curr_page);
                 }
             }
         }

@@ -44,8 +44,8 @@ public abstract class TileShape extends PolylineShape implements ConvexShape, Se
      */
     public static TileShape get_instance(Point[] p_convex_polygon) {
         Line[] line_arr = new Line[p_convex_polygon.length];
-        for (int j = 0; j < line_arr.length - 1; ++j) {
-            line_arr[j] = new Line(p_convex_polygon[j], p_convex_polygon[j + 1]);
+        for (int i = 0; i < line_arr.length - 1; ++i) {
+            line_arr[i] = new Line(p_convex_polygon[i], p_convex_polygon[i + 1]);
         }
         line_arr[line_arr.length - 1]
                 = new Line(p_convex_polygon[line_arr.length - 1], p_convex_polygon[0]);
@@ -846,11 +846,13 @@ public abstract class TileShape extends PolylineShape implements ConvexShape, Se
             }
         }
         int[][] normalized_result = new int[intersection_count][2];
-        for (int j = 0; j < intersection_count; ++j) {
-            for (int i = 0; i < 2; ++i) {
-                normalized_result[j][i] = result[j][i];
-            }
-        }
+        // shallow copy is enough. just splice result array. 2019/12/22
+        System.arraycopy(result, 0, normalized_result, 0, intersection_count);
+//        for (int j = 0; j < intersection_count; ++j) {
+//            for (int i = 0; i < 2; ++i) {
+//                normalized_result[j][i] = result[j][i];
+//            }
+//        }
         return normalized_result;
     }
 
@@ -864,26 +866,25 @@ public abstract class TileShape extends PolylineShape implements ConvexShape, Se
         int[][] intersection_no = entrance_points(p_polyline);
         Point first_corner = p_polyline.first_corner();
         boolean first_corner_is_inside = contains_inside(first_corner);
-        if (intersection_no.length == 0) // no intersections
-        {
-            if (first_corner_is_inside) // p_polyline is contained completely in this shape
-            {
+        if (intersection_no.length == 0) {
+            // no intersections
+            if (first_corner_is_inside) {
+                // p_polyline is contained completely in this shape
                 return new Polyline[0];
             }
             // p_polyline is completely outside
-            Polyline[] result = new Polyline[1];
-            result[0] = p_polyline;
+            Polyline[] result = {p_polyline};
             return result;
         }
         Collection<Polyline> pieces = new LinkedList<>();
         int curr_intersection_no = 0;
         int[] curr_intersection_tuple = intersection_no[curr_intersection_no];
-        Point first_intersection
-                = p_polyline.arr[curr_intersection_tuple[0]].intersection(border_line(curr_intersection_tuple[1]));
-        if (!first_corner_is_inside) // calculate outside piece at start
-        {
-            if (!first_corner.equals(first_intersection)) // otherwise skip 1 point outside polyline at the start
-            {
+        Point first_intersection = p_polyline.arr[curr_intersection_tuple[0]]
+                .intersection(border_line(curr_intersection_tuple[1]));
+        if (!first_corner_is_inside) {
+            // calculate outside piece at start
+            if (!first_corner.equals(first_intersection)) {
+                // otherwise skip 1 point outside polyline at the start
                 int curr_polyline_intersection_no = curr_intersection_tuple[0];
                 Line[] curr_lines = new Line[curr_polyline_intersection_no + 2];
                 System.arraycopy(p_polyline.arr, 0, curr_lines, 0, curr_polyline_intersection_no + 1);
@@ -896,8 +897,8 @@ public abstract class TileShape extends PolylineShape implements ConvexShape, Se
             }
             ++curr_intersection_no;
         }
-        while (curr_intersection_no < intersection_no.length - 1) // calculate the next outside polyline piece
-        {
+        while (curr_intersection_no < intersection_no.length - 1) {
+            // calculate the next outside polyline piece
             curr_intersection_tuple = intersection_no[curr_intersection_no];
             int[] next_intersection_tuple = intersection_no[curr_intersection_no + 1];
             int curr_intersection_no_of_polyline = curr_intersection_tuple[0];
@@ -919,8 +920,7 @@ public abstract class TileShape extends PolylineShape implements ConvexShape, Se
             if (insert_piece) {
                 Line[] curr_lines = new Line[next_intersection_no_of_polyline - curr_intersection_no_of_polyline + 3];
                 curr_lines[0] = border_line(curr_intersection_tuple[1]);
-                System.arraycopy(p_polyline.arr, curr_intersection_no_of_polyline, curr_lines,
-                        1, curr_lines.length - 2);
+                System.arraycopy(p_polyline.arr, curr_intersection_no_of_polyline, curr_lines, 1, curr_lines.length - 2);
                 curr_lines[curr_lines.length - 1] = border_line(next_intersection_tuple[1]);
                 Polyline curr_piece = new Polyline(curr_lines);
                 if (!curr_piece.is_empty()) {
@@ -935,8 +935,7 @@ public abstract class TileShape extends PolylineShape implements ConvexShape, Se
             int curr_polyline_intersection_no = curr_intersection_tuple[0];
             Line[] curr_lines = new Line[p_polyline.arr.length - curr_polyline_intersection_no + 1];
             curr_lines[0] = border_line(curr_intersection_tuple[1]);
-            System.arraycopy(p_polyline.arr, curr_polyline_intersection_no, curr_lines,
-                    1, curr_lines.length - 1);
+            System.arraycopy(p_polyline.arr, curr_polyline_intersection_no, curr_lines, 1, curr_lines.length - 1);
             Polyline curr_piece = new Polyline(curr_lines);
             if (!curr_piece.is_empty()) {
                 pieces.add(curr_piece);

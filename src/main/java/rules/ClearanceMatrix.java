@@ -268,9 +268,9 @@ public class ClearanceMatrix implements Serializable {
             }
         }
 
-        for (int j = 0; j < layer_structure.arr.length; ++j) {
-            int default_value = value(1, 1, j);
-            set_value(old_class_count, old_class_count, j, default_value);
+        for (int i = 0; i < layer_structure.arr.length; ++i) {
+            int default_value = value(1, 1, i);
+            set_value(old_class_count, old_class_count, i, default_value);
         }
         return true;
     }

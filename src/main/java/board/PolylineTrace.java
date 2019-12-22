@@ -987,8 +987,8 @@ public class PolylineTrace extends Trace implements Serializable {
             return false;
         }
         int[] latest_entry_tuple = entries[entries.length - 1];
-        FloatPoint trace_entry_location_approx
-                = trace_polyline.arr[latest_entry_tuple[0]].intersection_approx(offset_pin_shape.border_line(latest_entry_tuple[1]));
+        FloatPoint trace_entry_location_approx = trace_polyline.arr[latest_entry_tuple[0]]
+                .intersection_approx(offset_pin_shape.border_line(latest_entry_tuple[1]));
         // calculate the nearest legal pin exit point to trace_entry_location_approx
         double min_exit_corner_distance = Double.MAX_VALUE;
         Line nearest_pin_exit_ray = null;

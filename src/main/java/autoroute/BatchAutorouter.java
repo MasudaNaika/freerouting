@@ -106,7 +106,8 @@ public class BatchAutorouter {
                 is_interrupted = true;
             }
             Integer curr_pass_no = hdlg.get_settings().autoroute_settings.get_pass_no();
-            String start_message = resources.getString("batch_autorouter") + " " + resources.getString("stop_message") + "        " + resources.getString("pass") + " " + curr_pass_no.toString() + ": ";
+            String start_message = resources.getString("batch_autorouter") + " " + resources.getString("stop_message") 
+                    + "        " + resources.getString("pass") + " " + curr_pass_no.toString() + ": ";
             hdlg.screen_messages.set_status_message(start_message);
             still_unrouted_items = autoroute_pass(curr_pass_no, true);
             if (still_unrouted_items && !is_interrupted) {
@@ -136,20 +137,18 @@ public class BatchAutorouter {
                 }
                 if (curr_ob instanceof Connectable && curr_ob instanceof Item) {
                     Item curr_item = (Item) curr_ob;
-                    if (!curr_item.is_route()) {
-                        if (!handeled_items.contains(curr_item)) {
-                            for (int i = 0; i < curr_item.net_count(); ++i) {
-                                int curr_net_no = curr_item.get_net_no(i);
-                                Set<Item> connected_set = curr_item.get_connected_set(curr_net_no);
-                                for (Item curr_connected_item : connected_set) {
-                                    if (curr_connected_item.net_count() <= 1) {
-                                        handeled_items.add(curr_connected_item);
-                                    }
+                    if (!curr_item.is_route() && !handeled_items.contains(curr_item)) {
+                        for (int i = 0; i < curr_item.net_count(); ++i) {
+                            int curr_net_no = curr_item.get_net_no(i);
+                            Set<Item> connected_set = curr_item.get_connected_set(curr_net_no);
+                            for (Item curr_connected_item : connected_set) {
+                                if (curr_connected_item.net_count() <= 1) {
+                                    handeled_items.add(curr_connected_item);
                                 }
-                                int net_item_count = routing_board.connectable_item_count(curr_net_no);
-                                if (connected_set.size() < net_item_count) {
-                                    autoroute_item_list.add(curr_item);
-                                }
+                            }
+                            int net_item_count = routing_board.connectable_item_count(curr_net_no);
+                            if (connected_set.size() < net_item_count) {
+                                autoroute_item_list.add(curr_item);
                             }
                         }
                     }
@@ -245,7 +244,6 @@ public class BatchAutorouter {
                 for (Item curr_item : connected_set) {
                     if (curr_item instanceof board.ConductionArea) {
                         return true; // already connected to plane
-
                     }
                 }
             }

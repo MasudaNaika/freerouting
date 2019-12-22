@@ -64,26 +64,24 @@ public class AutorouteEngine {
     }
 
     public void init_connection(int p_net_no, Stoppable p_stoppable_thread, TimeLimit p_time_limit) {
-        if (maintain_database) {
-            if (p_net_no != net_no) {
-                if (complete_expansion_rooms != null) {
-                    // invalidate the net dependent complete free space expansion rooms.
-                    Collection<CompleteFreeSpaceExpansionRoom> rooms_to_remove = new LinkedList<>();
-                    for (CompleteFreeSpaceExpansionRoom curr_room : complete_expansion_rooms) {
-                        if (curr_room.is_net_dependent()) {
-                            rooms_to_remove.add(curr_room);
-                        }
-                    }
-                    for (CompleteFreeSpaceExpansionRoom curr_room : rooms_to_remove) {
-                        remove_complete_expansion_room(curr_room);
+        if (maintain_database && p_net_no != net_no) {
+            if (complete_expansion_rooms != null) {
+                // invalidate the net dependent complete free space expansion rooms.
+                Collection<CompleteFreeSpaceExpansionRoom> rooms_to_remove = new LinkedList<>();
+                for (CompleteFreeSpaceExpansionRoom curr_room : complete_expansion_rooms) {
+                    if (curr_room.is_net_dependent()) {
+                        rooms_to_remove.add(curr_room);
                     }
                 }
-                // invalidate the neighbour rooms of the items of p_net_no
-                Collection<Item> item_list = board.get_items();
-                for (Item curr_item : item_list) {
-                    if (curr_item.contains_net(p_net_no)) {
-                        board.additional_update_after_change(curr_item);
-                    }
+                for (CompleteFreeSpaceExpansionRoom curr_room : rooms_to_remove) {
+                    remove_complete_expansion_room(curr_room);
+                }
+            }
+            // invalidate the neighbour rooms of the items of p_net_no
+            Collection<Item> item_list = board.get_items();
+            for (Item curr_item : item_list) {
+                if (curr_item.contains_net(p_net_no)) {
+                    board.additional_update_after_change(curr_item);
                 }
             }
         }
@@ -187,10 +185,8 @@ public class AutorouteEngine {
      * Returns if the user has stopped the autorouter.
      */
     public boolean is_stop_requested() {
-        if (time_limit != null) {
-            if (time_limit.limit_exceeded()) {
-                return true;
-            }
+        if (time_limit != null && time_limit.limit_exceeded()) {
+            return true;
         }
         if (stoppable_thread == null) {
             return false;
@@ -334,10 +330,9 @@ public class AutorouteEngine {
             Collection<IncompleteFreeSpaceExpansionRoom> completed_shapes
                     = autoroute_search_tree.complete_shape(p_room, net_no, ignore_object, from_door_shape);
             remove_incomplete_expansion_room(p_room);
-            Iterator<IncompleteFreeSpaceExpansionRoom> it = completed_shapes.iterator();
+            
             boolean is_first_completed_room = true;
-            while (it.hasNext()) {
-                IncompleteFreeSpaceExpansionRoom curr_incomplete_room = it.next();
+            for (IncompleteFreeSpaceExpansionRoom curr_incomplete_room : completed_shapes) {
                 if (curr_incomplete_room.get_shape().dimension() != 2) {
                     continue;
                 }
