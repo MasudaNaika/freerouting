@@ -7,7 +7,6 @@ import geometry.planar.Point;
 import geometry.planar.Shape;
 import geometry.planar.TileShape;
 import geometry.planar.Vector;
-import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.io.Serializable;
@@ -70,7 +69,7 @@ public abstract class DrillItem extends Item implements Connectable, Serializabl
     public void move_by(Vector p_vector) {
         Point old_center = get_center();
         // remember the contact situation of this drillitem  to traces on each layer
-        Set<TraceInfo> contact_trace_info = new ObjectAVLTreeSet<>();
+        Set<TraceInfo> contact_trace_info = new TreeSet<>();
         Collection<Item> contacts = get_normal_contacts();
         for (Item curr_contact : contacts) {
             if (curr_contact instanceof Trace) {

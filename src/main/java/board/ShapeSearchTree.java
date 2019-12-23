@@ -36,7 +36,6 @@ import geometry.planar.ShapeBoundingDirections;
 import geometry.planar.Side;
 import geometry.planar.Simplex;
 import geometry.planar.TileShape;
-import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -418,7 +417,7 @@ public class ShapeSearchTree extends datastructures.MinAreaTree {
         Collection<Leaf> tmp_list = overlaps(offset_bounds);
 
         // sort the found items by its clearances tp p_cl_type on layer p_layer
-        Set<EntrySortedByClearance> sorted_items = new ObjectAVLTreeSet<>();
+        Set<EntrySortedByClearance> sorted_items = new TreeSet<>();
 
         for (Leaf curr_leaf : tmp_list) {
             Item curr_item = (Item) curr_leaf.object;
@@ -491,7 +490,7 @@ public class ShapeSearchTree extends datastructures.MinAreaTree {
      */
     public Set<Item> overlapping_items_with_clearance(ConvexShape p_shape, int p_layer, int[] p_ignore_net_nos,
             int p_clearance_class) {
-        Set<SearchTreeObject> overlaps = new ObjectAVLTreeSet<>();
+        Set<SearchTreeObject> overlaps = new TreeSet<>();
 
         overlapping_objects_with_clearance(p_shape, p_layer,
                 p_ignore_net_nos, p_clearance_class, overlaps);

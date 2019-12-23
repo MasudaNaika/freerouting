@@ -28,13 +28,13 @@ import geometry.planar.FloatPoint;
 import geometry.planar.IntPoint;
 import geometry.planar.Point;
 import geometry.planar.Vector;
-import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.TreeSet;
 import javax.swing.JPopupMenu;
 import library.BoardLibrary;
 
@@ -56,8 +56,8 @@ public class MoveItemState extends InteractiveState {
             return null;
         }
         // extend p_item_list to full  components
-        Set<Item> item_list = new ObjectAVLTreeSet<>();
-        Set<Component> component_list = new ObjectAVLTreeSet<>();
+        Set<Item> item_list = new TreeSet<>();
+        Set<Component> component_list = new TreeSet<>();
         board.BasicBoard routing_board = p_board_handling.get_routing_board();
         Component grid_snap_component = null;
         for (Item curr_item : p_item_list) {
@@ -83,9 +83,9 @@ public class MoveItemState extends InteractiveState {
                 item_list.add(curr_item);
             }
         }
-        Set<Item> fixed_items = new ObjectAVLTreeSet<>();
-        Set<Item> obstacle_items = new ObjectAVLTreeSet<>();
-        Set<Item> add_items = new ObjectAVLTreeSet<>();
+        Set<Item> fixed_items = new TreeSet<>();
+        Set<Item> obstacle_items = new TreeSet<>();
+        Set<Item> add_items = new TreeSet<>();
         boolean move_ok = true;
         for (Item curr_item : item_list) {
             if (curr_item.is_user_fixed()) {
@@ -170,7 +170,7 @@ public class MoveItemState extends InteractiveState {
             routing_board.remove_item(curr_item);
         }
         net_items_list = new LinkedList<>();
-        item_list = new ObjectAVLTreeSet<>();
+        item_list = new TreeSet<>();
 
         for (Item curr_item : p_item_list) {
             // Copy the items in p_item_list, because otherwise the undo algorithm will not work.

@@ -24,11 +24,11 @@ import board.Via;
 import datastructures.UndoableObjects;
 import geometry.planar.FloatPoint;
 import interactive.InteractiveActionThread;
-import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * To optimize the vias and traces after the batch autorouter has completed the
@@ -110,7 +110,7 @@ public class BatchOptRoute {
         thread.hdlg.remove_ratsnest();
         int incomplete_count_before = thread.hdlg.get_ratsnest().incomplete_count();
         int via_count_before = routing_board.get_vias().size();
-        Set<Item> ripped_items = new ObjectAVLTreeSet<>();
+        Set<Item> ripped_items = new TreeSet<>();
         ripped_items.add(p_item);
         if (p_item instanceof Trace) {
             // add also the fork items, especially because not all fork items may be 
@@ -124,7 +124,7 @@ public class BatchOptRoute {
                 curr_contact_list = curr_trace.get_end_contacts();
             }
         }
-        Set<Item> ripped_connections = new ObjectAVLTreeSet<>();
+        Set<Item> ripped_connections = new TreeSet<>();
         for (Item curr_item : ripped_items) {
             ripped_connections.addAll(curr_item.get_connection_items(Item.StopConnectionOption.NONE));
         }

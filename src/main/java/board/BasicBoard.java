@@ -29,7 +29,6 @@ import geometry.planar.PolylineShape;
 import geometry.planar.TileShape;
 import geometry.planar.Vector;
 import it.unimi.dsi.fastutil.ints.IntSortedSet;
-import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.awt.Graphics;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -769,7 +768,7 @@ public class BasicBoard implements Serializable {
             if (!curr_shape.is_contained_in(bounding_box)) {
                 return false;
             }
-            Set<SearchTreeObject> obstacles = new ObjectAVLTreeSet<>();
+            Set<SearchTreeObject> obstacles = new TreeSet<>();
             default_tree.overlapping_objects_with_clearance(curr_shape, p_layer,
                     p_net_no_arr, p_cl_class, obstacles);
             for (SearchTreeObject curr_ob : obstacles) {

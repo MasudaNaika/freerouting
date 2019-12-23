@@ -36,12 +36,12 @@ import geometry.planar.Vector;
 import it.unimi.dsi.fastutil.ints.IntAVLTreeSet;
 import it.unimi.dsi.fastutil.ints.IntBidirectionalIterator;
 import it.unimi.dsi.fastutil.ints.IntSortedSet;
-import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.SortedSet;
+import java.util.TreeSet;
 import rules.BoardRules;
 import rules.ViaInfo;
 
@@ -803,7 +803,7 @@ public class RoutingBoard extends BasicBoard implements Serializable {
         if (route_dest_set.isEmpty()) {
             return AutorouteEngine.AutorouteResult.ALREADY_CONNECTED; // p_item is already routed.
         }
-        SortedSet<Item> ripped_item_list = new ObjectAVLTreeSet<>();
+        SortedSet<Item> ripped_item_list = new TreeSet<>();
         AutorouteEngine curr_autoroute_engine = init_autoroute(p_item.get_net_no(0),
                 ctrl_settings.trace_clearance_class_no, p_stoppable_thread, p_time_limit, false);
         AutorouteEngine.AutorouteResult result
@@ -844,7 +844,7 @@ public class RoutingBoard extends BasicBoard implements Serializable {
             ctrl_settings.ripup_allowed = true;
             ctrl_settings.ripup_costs = p_ripup_costs;
         }
-        SortedSet<Item> ripped_item_list = new ObjectAVLTreeSet<>();
+        SortedSet<Item> ripped_item_list = new TreeSet<>();
         AutorouteEngine curr_autoroute_engine = init_autoroute(pin_net_no,
                 ctrl_settings.trace_clearance_class_no, p_stoppable_thread, p_time_limit, false);
         AutorouteEngine.AutorouteResult result
@@ -935,7 +935,7 @@ public class RoutingBoard extends BasicBoard implements Serializable {
      * all nets are removed. Returns true, if something was removed.
      */
     public boolean remove_trace_tails(int p_net_no, Item.StopConnectionOption p_stop_connection_option) {
-        SortedSet<Item> stub_set = new ObjectAVLTreeSet<>();
+        SortedSet<Item> stub_set = new TreeSet<>();
         Collection<Item> board_items = get_items();
         for (Item curr_item : board_items) {
             if (!curr_item.is_route()) {
@@ -961,7 +961,7 @@ public class RoutingBoard extends BasicBoard implements Serializable {
                 stub_set.add(curr_item);
             }
         }
-        SortedSet<Item> stub_connections = new ObjectAVLTreeSet<>();
+        SortedSet<Item> stub_connections = new TreeSet<>();
         for (Item curr_item : stub_set) {
             int item_contact_count = curr_item.get_normal_contacts().size();
             if (item_contact_count == 1) {
