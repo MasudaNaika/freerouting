@@ -133,7 +133,7 @@ public class BasicBoard implements Serializable {
      */
     public void insert_trace(Point[] p_points, int p_layer,
             int p_half_width, int[] p_net_no_arr, int p_clearance_class, FixedState p_fixed_state) {
-        
+
         for (Point p : p_points) {
             if (!bounding_box.contains(p)) {
                 System.out.println("LayeredBoard.insert_trace: input point out of range");
@@ -760,7 +760,7 @@ public class BasicBoard implements Serializable {
      * clearance violation.
      */
     public boolean check_shape(Area p_shape, int p_layer, int[] p_net_no_arr, int p_cl_class) {
-        
+
         TileShape[] tiles = p_shape.split_to_convex();
         ShapeSearchTree default_tree = search_tree_manager.get_default_tree();
         for (TileShape curr_shape : tiles) {

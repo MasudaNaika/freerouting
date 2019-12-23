@@ -67,7 +67,7 @@ public class BoardPanel extends JPanel {
         scroll_pane = board_frame.scroll_pane;
         default_init(p_locale);
     }
-    
+
     private void default_init(Locale p_locale) {
         setLayout(new BorderLayout());
 

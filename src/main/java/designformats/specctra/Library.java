@@ -89,7 +89,7 @@ public class Library extends ScopeKeyword {
             int found_padstack_count = 0;
             library.Padstack[] via_padstacks = new library.Padstack[p_par.via_padstack_names.size()];
             for (String curr_padstack_name : p_par.via_padstack_names) {
-                 library.Padstack curr_padstack = board.library.padstacks.get(curr_padstack_name);
+                library.Padstack curr_padstack = board.library.padstacks.get(curr_padstack_name);
                 if (curr_padstack != null) {
                     via_padstacks[found_padstack_count] = curr_padstack;
                     ++found_padstack_count;
@@ -316,7 +316,7 @@ public class Library extends ScopeKeyword {
 
             if (pad_shape.layer == Layer.PCB || pad_shape.layer == Layer.SIGNAL) {
                 Arrays.fill(padstack_shapes, padstack_shape);
-             } else {
+            } else {
                 int shape_layer = p_layer_structure.get_no(pad_shape.layer.name);
                 if (shape_layer < 0 || shape_layer >= padstack_shapes.length) {
                     System.out.println("Library.read_padstack_scope: layer number found");

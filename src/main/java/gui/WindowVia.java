@@ -282,7 +282,7 @@ public class WindowVia extends BoardSavableSubWindow {
             if (!layers_selected) {
                 int first_possible_end_layer_no = pcb.layer_structure.get_no(start_layer) + 1;
                 Layer[] possible_end_layers = new board.Layer[pcb.layer_structure.arr.length - first_possible_end_layer_no];
-                System.arraycopy(pcb.layer_structure.arr, first_possible_end_layer_no, 
+                System.arraycopy(pcb.layer_structure.arr, first_possible_end_layer_no,
                         possible_end_layers, 0, pcb.layer_structure.arr.length - first_possible_end_layer_no);
 
                 Object selected_value = JOptionPane.showInputDialog(null, resources.getString("select_end_layer"),

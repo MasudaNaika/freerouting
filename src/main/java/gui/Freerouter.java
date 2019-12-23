@@ -25,21 +25,21 @@ public class Freerouter {
 
     // https://icon-icons.com/ja/アイコン/回路/2679
     public static ImageIcon ICON;
-    
+
     private static ImageIcon getImageIcon(String fileName) {
         URL url = Freerouter.class.getResource("/gui/resources/" + fileName);
         ImageIcon icon = new ImageIcon(url);
         return icon;
     }
-    
+
     public static void setWindowIcon(Window w) {
         w.setIconImage(ICON.getImage());
     }
 
     public static void main(String... args) {
-        
+
         System.setProperty("awt.useSystemAAFontSettings", "on");
-        
+
         boolean isMac = System.getProperty("os.name").toLowerCase().startsWith("mac");
 
         if (isMac) {
@@ -62,7 +62,7 @@ public class Freerouter {
 
         // shoud load after Sytem.setProperty
         ICON = getImageIcon("circuit_3241.png");
-        
+
         if (isMac) {
             Desktop desktop = Desktop.getDesktop();
 
@@ -86,7 +86,7 @@ public class Freerouter {
             // Dock Icon
             Taskbar.getTaskbar().setIconImage(ICON.getImage());
         }
-        
+
         MainApplication.main(args);
     }
 

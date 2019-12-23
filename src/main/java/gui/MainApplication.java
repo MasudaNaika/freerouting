@@ -97,9 +97,9 @@ public class MainApplication extends JFrame {
      * designs as optional argument.
      */
     public MainApplication(StartupOptions startupOptions) {
-        
+
         Freerouter.setWindowIcon(this);
-        
+
         design_dir_name = startupOptions.getDesignDir();
         is_test_version = startupOptions.isTestVersion();
         is_webstart = startupOptions.getWebstartOption();
@@ -179,7 +179,7 @@ public class MainApplication extends JFrame {
         message_field.setRequestFocusEnabled(false);
         gridbag.setConstraints(message_field, gridbag_constraints);
         main_panel.add(message_field, gridbag_constraints);
-        
+
         main_panel.add(new JLabel(resources.getString("title") + " " + VERSION_NUMBER_STRING));
 
         addWindowListener(new WindowStateListener());
@@ -212,9 +212,9 @@ public class MainApplication extends JFrame {
         message_field.setText(message);
         WindowMessage welcome_window = WindowMessage.show(message);
         welcome_window.setTitle(message);
-        
+
         Freerouter.setWindowIcon(welcome_window);
-        
+
         BoardFrame new_frame
                 = create_board_frame(design_file, message_field, option, is_test_version, locale);
         welcome_window.dispose();
@@ -224,7 +224,7 @@ public class MainApplication extends JFrame {
         message_field.setText(resources.getString("message_4") + " " + design_file.get_name() + " " + resources.getString("message_5"));
         board_frames.add(new_frame);
         new_frame.addWindowListener(new BoardFrameWindowListener(new_frame));
-        
+
         new_frame.setLocationRelativeTo(null);
     }
 
@@ -338,7 +338,7 @@ public class MainApplication extends JFrame {
         public void windowOpened(WindowEvent e) {
             board_frame.toFront();
         }
-        
+
         private BoardFrame board_frame;
     }
 

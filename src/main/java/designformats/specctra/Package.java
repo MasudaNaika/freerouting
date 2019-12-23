@@ -142,7 +142,7 @@ public class Package {
             p_par.file.write(" ");
             p_par.identifier_type.write(curr_pin.name, p_par.file);
             double[] rel_coor = p_par.coordinate_transform.board_to_dsn(curr_pin.relative_location);
-            
+
             for (double d : rel_coor) {
                 p_par.file.write(" ");
                 p_par.file.write(Double.toString(d));
@@ -159,7 +159,7 @@ public class Package {
         for (library.Package.Keepout keepout : p_package.keepout_arr) {
             write_package_keepout(keepout, p_par, false);
         }
-        for (library.Package.Keepout keepout :p_package.via_keepout_arr) {
+        for (library.Package.Keepout keepout : p_package.via_keepout_arr) {
             write_package_keepout(keepout, p_par, true);
         }
         // write the package outline.

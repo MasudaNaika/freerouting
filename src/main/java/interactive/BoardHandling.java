@@ -392,8 +392,8 @@ public class BoardHandling extends BoardHandlingImpl {
         if (length_violation_count == 0) {
             curr_message = incomplete_count.toString() + " " + resources.getString("incomplete_connections_to_route");
         } else {
-            curr_message = incomplete_count.toString() + " " + resources.getString("incompletes") + 
-                    " " + length_violation_count.toString() + " " + resources.getString("length_violations");
+            curr_message = incomplete_count.toString() + " " + resources.getString("incompletes")
+                    + " " + length_violation_count.toString() + " " + resources.getString("length_violations");
         }
         screen_messages.set_status_message(curr_message);
     }
@@ -466,7 +466,7 @@ public class BoardHandling extends BoardHandlingImpl {
     }
 
     public void recalculate_length_violations() {
-        if (ratsnest != null && ratsnest.recalculate_length_violations() 
+        if (ratsnest != null && ratsnest.recalculate_length_violations()
                 && !ratsnest.is_hidden()) {
             repaint();
         }
@@ -489,7 +489,7 @@ public class BoardHandling extends BoardHandlingImpl {
     public void create_board(IntBox p_bounding_box, LayerStructure p_layer_structure,
             PolylineShape[] p_outline_shapes, String p_outline_clearance_class_name,
             BoardRules p_rules, board.Communication p_board_communication, TestLevel p_test_level) {
-        
+
         super.create_board(p_bounding_box, p_layer_structure, p_outline_shapes, p_outline_clearance_class_name, p_rules,
                 p_board_communication, p_test_level);
 

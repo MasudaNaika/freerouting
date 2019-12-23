@@ -25,6 +25,7 @@ import datastructures.IndentFileWriter;
 import geometry.planar.IntPoint;
 import geometry.planar.Point;
 import geometry.planar.Vector;
+import it.unimi.dsi.fastutil.ints.IntArrayList;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
@@ -1076,7 +1077,7 @@ public class Network extends ScopeKeyword {
                 return;
             }
             Collection<Net> pin_nets = p_par.netlist.get_nets(p_location.name, curr_pin.name);
-            Collection<Integer> net_numbers = new LinkedList<>();
+            IntArrayList net_numbers = new IntArrayList();
             for (Net curr_pin_net : pin_nets) {
                 rules.Net curr_board_net = routing_board.rules.nets.get(curr_pin_net.id.name, curr_pin_net.id.subnet_number);
                 if (curr_board_net == null) {
@@ -1087,11 +1088,8 @@ public class Network extends ScopeKeyword {
                 }
             }
             int[] net_no_arr = new int[net_numbers.size()];
-            int net_index = 0;
-            for (Integer curr_net_no : net_numbers) {
-                net_no_arr[net_index] = curr_net_no;
-                ++net_index;
-            }
+            net_numbers.toArray(net_no_arr);
+
             rules.NetClass net_class;
             rules.Net board_net;
             if (net_no_arr.length > 0) {

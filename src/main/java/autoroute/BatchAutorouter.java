@@ -106,7 +106,7 @@ public class BatchAutorouter {
                 is_interrupted = true;
             }
             Integer curr_pass_no = hdlg.get_settings().autoroute_settings.get_pass_no();
-            String start_message = resources.getString("batch_autorouter") + " " + resources.getString("stop_message") 
+            String start_message = resources.getString("batch_autorouter") + " " + resources.getString("stop_message")
                     + "        " + resources.getString("pass") + " " + curr_pass_no.toString() + ": ";
             hdlg.screen_messages.set_status_message(start_message);
             still_unrouted_items = autoroute_pass(curr_pass_no, true);

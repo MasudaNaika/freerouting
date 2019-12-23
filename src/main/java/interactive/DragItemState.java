@@ -25,9 +25,10 @@ import board.MoveComponent;
 import geometry.planar.FloatPoint;
 import geometry.planar.IntPoint;
 import geometry.planar.Vector;
+import it.unimi.dsi.fastutil.ints.IntAVLTreeSet;
+import it.unimi.dsi.fastutil.ints.IntBidirectionalIterator;
+import it.unimi.dsi.fastutil.ints.IntSortedSet;
 import java.util.Collection;
-import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * Class for interactive dragging items with the mouse on a routing board
@@ -134,13 +135,14 @@ public class DragItemState extends DragState {
                 }
             } else {
                 Collection<Item> moved_items = hdlg.get_routing_board().get_component_items(item_to_move.get_component_no());
-                Set<Integer> changed_nets = new TreeSet<>();
+                IntSortedSet changed_nets = new IntAVLTreeSet();
                 for (Item curr_moved_item : moved_items) {
                     for (int i = 0; i < curr_moved_item.net_count(); ++i) {
                         changed_nets.add(curr_moved_item.get_net_no(i));
                     }
                 }
-                for (Integer curr_net_no : changed_nets) {
+                for (IntBidirectionalIterator it = changed_nets.iterator(); it.hasNext();) {
+                    int curr_net_no = it.nextInt();
                     hdlg.update_ratsnest(curr_net_no);
                 }
             }

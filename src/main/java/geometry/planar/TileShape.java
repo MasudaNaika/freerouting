@@ -401,7 +401,7 @@ public abstract class TileShape extends PolylineShape implements ConvexShape, Se
 
         for (int next_ind = 0; next_ind < line_count; ++next_ind) {
             Point projection = border_line(curr_ind).perpendicular_projection(p_from_point);
-            if ((!corner_is_bounded(curr_ind)  || border_line(prev_ind).side_of(projection) == Side.ON_THE_RIGHT) 
+            if ((!corner_is_bounded(curr_ind) || border_line(prev_ind).side_of(projection) == Side.ON_THE_RIGHT)
                     && (!corner_is_bounded(next_ind) || border_line(next_ind).side_of(projection) == Side.ON_THE_RIGHT)) {
                 FloatPoint projection_f = projection.to_float();
                 double curr_dist = projection_f.distance_square(from_point_f);

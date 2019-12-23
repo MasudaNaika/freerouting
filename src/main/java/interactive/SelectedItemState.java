@@ -37,6 +37,9 @@ import geometry.planar.FloatPoint;
 import geometry.planar.IntPoint;
 import geometry.planar.Point;
 import geometry.planar.Vector;
+import it.unimi.dsi.fastutil.ints.IntAVLTreeSet;
+import it.unimi.dsi.fastutil.ints.IntBidirectionalIterator;
+import it.unimi.dsi.fastutil.ints.IntSortedSet;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.util.Collection;
@@ -280,7 +283,7 @@ public class SelectedItemState extends InteractiveState {
         hdlg.get_routing_board().generate_snapshot();
 
         // calculate the changed nets for updating the ratsnest
-        Set<Integer> changed_nets = new TreeSet<>();
+        IntSortedSet changed_nets = new IntAVLTreeSet();
         for (Item curr_item : item_list) {
             if (curr_item instanceof Connectable) {
                 for (int i = 0; i < curr_item.net_count(); ++i) {
@@ -302,8 +305,8 @@ public class SelectedItemState extends InteractiveState {
         if (logfile != null) {
             logfile.start_scope(LogfileScope.DELETE_SELECTED);
         }
-
-        for (Integer curr_net_no : changed_nets) {
+        for (IntBidirectionalIterator it = changed_nets.iterator(); it.hasNext();) {
+            int curr_net_no = it.nextInt();
             hdlg.update_ratsnest(curr_net_no);
         }
         hdlg.repaint();
@@ -562,7 +565,7 @@ public class SelectedItemState extends InteractiveState {
     public InteractiveState extent_to_whole_nets() {
 
         // collect all net numbers of the selected items
-        Set<Integer> curr_net_no_set = new TreeSet<>();
+        IntSortedSet curr_net_no_set = new IntAVLTreeSet();
         for (Item curr_item : item_list) {
             if (curr_item instanceof Connectable) {
                 for (int i = 0; i < curr_item.net_count(); ++i) {
@@ -571,7 +574,8 @@ public class SelectedItemState extends InteractiveState {
             }
         }
         Set<Item> new_selected_items = new TreeSet<>();
-        for (Integer curr_net_no : curr_net_no_set) {
+        for (IntBidirectionalIterator it = curr_net_no_set.iterator(); it.hasNext();) {
+            int curr_net_no = it.nextInt();
             new_selected_items.addAll(hdlg.get_routing_board().get_connectable_items(curr_net_no));
         }
         item_list = new_selected_items;
@@ -593,7 +597,7 @@ public class SelectedItemState extends InteractiveState {
     public InteractiveState extent_to_whole_components() {
 
         // collect all group numbers of the selected items
-        Set<Integer> curr_group_no_set = new TreeSet<>();
+        IntSortedSet curr_group_no_set = new IntAVLTreeSet();
         for (Item curr_item : item_list) {
             if (curr_item.get_component_no() > 0) {
                 curr_group_no_set.add(curr_item.get_component_no());
@@ -601,7 +605,8 @@ public class SelectedItemState extends InteractiveState {
         }
         Set<Item> new_selected_items = new TreeSet<>();
         new_selected_items.addAll(item_list);
-        for (Integer curr_group_no : curr_group_no_set) {
+        for (IntBidirectionalIterator it = curr_group_no_set.iterator(); it.hasNext();) {
+            int curr_group_no = it.nextInt();
             new_selected_items.addAll(hdlg.get_routing_board().get_component_items(curr_group_no));
         }
         if (new_selected_items.isEmpty()) {

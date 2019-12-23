@@ -29,10 +29,11 @@ import board.Via;
 import geometry.planar.FloatPoint;
 import geometry.planar.IntPoint;
 import geometry.planar.Point;
+import it.unimi.dsi.fastutil.ints.IntAVLTreeSet;
+import it.unimi.dsi.fastutil.ints.IntSortedSet;
 import java.awt.Graphics;
 import java.util.Collection;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * Interactive routing state.
@@ -422,7 +423,8 @@ public class RouteState extends InteractiveState {
      * to this pin on p_layer.
      */
     static int[] get_route_net_numbers_at_tie_pin(board.Pin p_pin, int p_layer) {
-        Set<Integer> net_number_list = new TreeSet<>();
+
+        IntSortedSet net_number_list = new IntAVLTreeSet();
         for (int i = 0; i < p_pin.net_count(); ++i) {
             net_number_list.add(p_pin.get_net_no(i));
         }
@@ -435,11 +437,8 @@ public class RouteState extends InteractiveState {
             }
         }
         int[] result = new int[net_number_list.size()];
-        int curr_ind = 0;
-        for (Integer curr_net_number : net_number_list) {
-            result[curr_ind] = curr_net_number;
-            ++curr_ind;
-        }
+        net_number_list.toArray(result);
+
         return result;
     }
 

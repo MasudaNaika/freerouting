@@ -31,7 +31,7 @@ import javax.swing.*;
  * @author Alfons Wirtz
  */
 public class WindowMessage extends JFrame {
-    
+
     public WindowMessage() {
         Freerouter.setWindowIcon(this);
     }

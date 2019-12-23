@@ -31,6 +31,9 @@ import datastructures.TimeLimit;
 import geometry.planar.Line;
 import geometry.planar.Simplex;
 import geometry.planar.TileShape;
+import it.unimi.dsi.fastutil.ints.IntAVLTreeSet;
+import it.unimi.dsi.fastutil.ints.IntBidirectionalIterator;
+import it.unimi.dsi.fastutil.ints.IntSortedSet;
 import java.awt.Graphics;
 import java.util.Collection;
 import java.util.Iterator;
@@ -136,8 +139,6 @@ public class AutorouteEngine {
             return AutorouteResult.ALREADY_CONNECTED;
         }
         // Delete the ripped  connections.
-        SortedSet<Item> ripped_connections = new TreeSet<>();
-        Set<Integer> changed_nets = new TreeSet<>();
         Item.StopConnectionOption stop_connection_option;
         if (p_ctrl.remove_unconnected_vias) {
             stop_connection_option = Item.StopConnectionOption.NONE;
@@ -145,6 +146,8 @@ public class AutorouteEngine {
             stop_connection_option = Item.StopConnectionOption.FANOUT_VIA;
         }
 
+        SortedSet<Item> ripped_connections = new TreeSet<>();
+        IntSortedSet changed_nets = new IntAVLTreeSet();
         for (Item curr_ripped_item : p_ripped_item_list) {
             ripped_connections.addAll(curr_ripped_item.get_connection_items(stop_connection_option));
             for (int i = 0; i < curr_ripped_item.net_count(); ++i) {
@@ -159,7 +162,8 @@ public class AutorouteEngine {
 
         board.remove_items(ripped_connections, false);
 
-        for (int curr_net_no : changed_nets) {
+        for (IntBidirectionalIterator it = changed_nets.iterator(); it.hasNext();) {
+            int curr_net_no = it.nextInt();
             board.remove_trace_tails(curr_net_no, stop_connection_option);
         }
         InsertFoundConnectionAlgo insert_found_connection_algo
@@ -330,7 +334,7 @@ public class AutorouteEngine {
             Collection<IncompleteFreeSpaceExpansionRoom> completed_shapes
                     = autoroute_search_tree.complete_shape(p_room, net_no, ignore_object, from_door_shape);
             remove_incomplete_expansion_room(p_room);
-            
+
             boolean is_first_completed_room = true;
             for (IncompleteFreeSpaceExpansionRoom curr_incomplete_room : completed_shapes) {
                 if (curr_incomplete_room.get_shape().dimension() != 2) {

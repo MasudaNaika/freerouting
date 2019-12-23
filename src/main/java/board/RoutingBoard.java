@@ -33,6 +33,9 @@ import geometry.planar.Polyline;
 import geometry.planar.PolylineShape;
 import geometry.planar.TileShape;
 import geometry.planar.Vector;
+import it.unimi.dsi.fastutil.ints.IntAVLTreeSet;
+import it.unimi.dsi.fastutil.ints.IntBidirectionalIterator;
+import it.unimi.dsi.fastutil.ints.IntSortedSet;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
@@ -108,7 +111,7 @@ public class RoutingBoard extends BasicBoard implements Serializable {
             calculate_tidy_region = false;
         }
         start_marking_changed_area();
-        Set<Integer> changed_nets = new TreeSet<>();
+        IntSortedSet changed_nets = new IntAVLTreeSet();
         for (Item curr_item : p_item_list) {
             if (!p_with_delete_fixed && curr_item.is_delete_fixed() || curr_item.is_user_fixed()) {
                 result = false;
@@ -126,7 +129,8 @@ public class RoutingBoard extends BasicBoard implements Serializable {
                 }
             }
         }
-        for (int curr_net_no : changed_nets) {
+        for (IntBidirectionalIterator it = changed_nets.iterator(); it.hasNext();) {
+            int curr_net_no = it.nextInt();
             combine_traces(curr_net_no);
         }
         if (calculate_tidy_region) {

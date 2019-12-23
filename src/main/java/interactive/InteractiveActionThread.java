@@ -64,7 +64,7 @@ public abstract class InteractiveActionThread implements datastructures.Stoppabl
     protected abstract void thread_action();
 
     public void start() {
-        
+
         SwingWorker<Void, Void> worker = new SwingWorker<>() {
             @Override
             protected Void doInBackground() throws Exception {
