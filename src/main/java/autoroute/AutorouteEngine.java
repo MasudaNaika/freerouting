@@ -34,14 +34,15 @@ import geometry.planar.TileShape;
 import it.unimi.dsi.fastutil.ints.IntAVLTreeSet;
 import it.unimi.dsi.fastutil.ints.IntBidirectionalIterator;
 import it.unimi.dsi.fastutil.ints.IntSortedSet;
+import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.awt.Graphics;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
-import java.util.TreeSet;
 
 /**
  * Temporary autoroute data stored on the RoutingBoard.
@@ -146,7 +147,7 @@ public class AutorouteEngine {
             stop_connection_option = Item.StopConnectionOption.FANOUT_VIA;
         }
 
-        SortedSet<Item> ripped_connections = new TreeSet<>();
+        Set<Item> ripped_connections = new HashSet<>();
         IntSortedSet changed_nets = new IntAVLTreeSet();
         for (Item curr_ripped_item : p_ripped_item_list) {
             ripped_connections.addAll(curr_ripped_item.get_connection_items(stop_connection_option));
@@ -464,8 +465,8 @@ public class AutorouteEngine {
      * Returns all complete free space expansion rooms with a target door to an
      * item in the set p_items.
      */
-    Set<CompleteFreeSpaceExpansionRoom> get_rooms_with_target_items(Set<Item> p_items) {
-        Set<CompleteFreeSpaceExpansionRoom> result = new TreeSet<>();
+    Collection<CompleteFreeSpaceExpansionRoom> get_rooms_with_target_items(Set<Item> p_items) {
+        Set<CompleteFreeSpaceExpansionRoom> result = new ObjectAVLTreeSet<>();
         if (complete_expansion_rooms != null) {
             for (CompleteFreeSpaceExpansionRoom curr_room : complete_expansion_rooms) {
                 Collection<TargetItemExpansionDoor> target_door_list = curr_room.get_target_doors();

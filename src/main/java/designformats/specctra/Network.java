@@ -26,6 +26,7 @@ import geometry.planar.IntPoint;
 import geometry.planar.Point;
 import geometry.planar.Vector;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
@@ -33,7 +34,6 @@ import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
 import rules.BoardRules;
 import rules.DefaultItemClearanceClasses.ItemClass;
 
@@ -315,7 +315,7 @@ public class Network extends ScopeKeyword {
                             return false;
                         }
                     } else if (next_token == Keyword.FROMTO) {
-                        Set<Net.Pin> curr_subnet_pin_list = new TreeSet<>();
+                        Set<Net.Pin> curr_subnet_pin_list = new ObjectAVLTreeSet<>();
                         if (!read_net_pins(p_scanner, curr_subnet_pin_list)) {
                             return false;
                         }
@@ -397,7 +397,7 @@ public class Network extends ScopeKeyword {
         Net.Pin prev_pin = it.next();
         while (it.hasNext()) {
             Net.Pin next_pin = it.next();
-            Set<Net.Pin> curr_subnet_pin_list = new TreeSet<>();
+            Set<Net.Pin> curr_subnet_pin_list = new ObjectAVLTreeSet<>();
             curr_subnet_pin_list.add(prev_pin);
             curr_subnet_pin_list.add(next_pin);
             result.add(curr_subnet_pin_list);

@@ -19,11 +19,11 @@
  */
 package designformats.specctra;
 
+import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.SortedSet;
-import java.util.TreeSet;
 
 /**
  *
@@ -158,7 +158,7 @@ public class PartLibrary extends ScopeKeyword {
                 System.out.println("PartLibrary.read_logical_part_mapping: Keyword.COMPONENT_SCOPE expected");
                 return null;
             }
-            SortedSet<String> result = new TreeSet<>();
+            SortedSet<String> result = new ObjectAVLTreeSet<>();
             while (true) {
                 p_scanner.yybegin(SpecctraFileScanner.NAME);
                 next_token = p_scanner.next_token();

@@ -11,6 +11,7 @@ import geometry.planar.IntPoint;
 import geometry.planar.Point;
 import geometry.planar.TileShape;
 import geometry.planar.Vector;
+import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.io.ObjectOutputStream;
@@ -596,7 +597,7 @@ public abstract class Item implements Drawable, SearchTreeObject, ObjectInfoPane
      */
     public Set<Item> get_connection_items(StopConnectionOption p_stop_option) {
         Set<Item> contacts = get_normal_contacts();
-        Set<Item> result = new TreeSet<>();
+        Set<Item> result = new ObjectAVLTreeSet<>();
         if (is_route()) {
             result.add(this);
         }

@@ -35,6 +35,9 @@ import geometry.planar.FloatPoint;
 import geometry.planar.IntBox;
 import geometry.planar.IntPoint;
 import geometry.planar.PolylineShape;
+import it.unimi.dsi.fastutil.ints.IntAVLTreeSet;
+import it.unimi.dsi.fastutil.ints.IntBidirectionalIterator;
+import it.unimi.dsi.fastutil.ints.IntSortedSet;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Rectangle;
@@ -49,7 +52,6 @@ import java.util.Collection;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.TreeSet;
 import javax.swing.JPopupMenu;
 import rules.BoardRules;
 
@@ -613,7 +615,7 @@ public class BoardHandling extends BoardHandlingImpl {
         if (board_is_read_only || !(interactive_state instanceof MenuState)) {
             return;
         }
-        Set<Integer> changed_nets = new TreeSet<>();
+        IntSortedSet changed_nets = new IntAVLTreeSet();
         if (board.undo(changed_nets)) {
             for (Integer changed_net : changed_nets) {
                 update_ratsnest(changed_net);
@@ -638,9 +640,10 @@ public class BoardHandling extends BoardHandlingImpl {
         if (board_is_read_only || !(interactive_state instanceof MenuState)) {
             return;
         }
-        Set<Integer> changed_nets = new TreeSet<>();
+        IntSortedSet changed_nets = new IntAVLTreeSet();
         if (board.redo(changed_nets)) {
-            for (Integer changed_net : changed_nets) {
+            for (IntBidirectionalIterator it = changed_nets.iterator(); it.hasNext();){
+                int changed_net = it.nextInt();
                 update_ratsnest(changed_net);
             }
             screen_messages.set_status_message(resources.getString("redo"));

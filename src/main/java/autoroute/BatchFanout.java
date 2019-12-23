@@ -19,6 +19,7 @@ import board.RoutingBoard;
 import datastructures.TimeLimit;
 import geometry.planar.FloatPoint;
 import interactive.InteractiveActionThread;
+import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.SortedSet;
@@ -46,7 +47,7 @@ public class BatchFanout {
         thread = p_thread;
         routing_board = p_thread.hdlg.get_routing_board();
         Collection<board.Pin> board_smd_pin_list = routing_board.get_smd_pins();
-        sorted_components = new TreeSet<>();
+        sorted_components = new ObjectAVLTreeSet<>();
         for (int i = 1; i <= routing_board.components.count(); ++i) {
             board.Component curr_board_component = routing_board.components.get(i);
             Component curr_component = new Component(curr_board_component, board_smd_pin_list);

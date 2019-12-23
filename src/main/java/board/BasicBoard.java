@@ -28,6 +28,8 @@ import geometry.planar.Polyline;
 import geometry.planar.PolylineShape;
 import geometry.planar.TileShape;
 import geometry.planar.Vector;
+import it.unimi.dsi.fastutil.ints.IntSortedSet;
+import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.awt.Graphics;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -767,7 +769,7 @@ public class BasicBoard implements Serializable {
             if (!curr_shape.is_contained_in(bounding_box)) {
                 return false;
             }
-            Set<SearchTreeObject> obstacles = new TreeSet<>();
+            Set<SearchTreeObject> obstacles = new ObjectAVLTreeSet<>();
             default_tree.overlapping_objects_with_clearance(curr_shape, p_layer,
                     p_net_no_arr, p_cl_class, obstacles);
             for (SearchTreeObject curr_ob : obstacles) {
@@ -1087,7 +1089,7 @@ public class BasicBoard implements Serializable {
      * more undo is possible. Puts the numbers of the changed nets into the set
      * p_changed_nets, if p_changed_nets != null
      */
-    public boolean undo(Set<Integer> p_changed_nets) {
+    public boolean undo(IntSortedSet p_changed_nets) {
         components.undo(communication.observers);
         Collection<UndoableObjects.Storable> cancelled_objects = new LinkedList<>();
         Collection<UndoableObjects.Storable> restored_objects = new LinkedList<>();
@@ -1125,7 +1127,7 @@ public class BasicBoard implements Serializable {
      * redo is possible. Puts the numbers of the changed nets into the set
      * p_changed_nets, if p_changed_nets != null
      */
-    public boolean redo(Set<Integer> p_changed_nets) {
+    public boolean redo(IntSortedSet p_changed_nets) {
         components.redo(communication.observers);
         Collection<UndoableObjects.Storable> cancelled_objects = new LinkedList<>();
         Collection<UndoableObjects.Storable> restored_objects = new LinkedList<>();
@@ -1231,7 +1233,7 @@ public class BasicBoard implements Serializable {
             Trace tail = get_trace_tail(end_corners[i], curr_layer, curr_net_no_arr);
             tail_at_endpoint_before[i] = (tail != null);
         }
-        Set<Item> connection_items = p_trace.get_connection_items();
+        Collection<Item> connection_items = p_trace.get_connection_items();
         remove_items(connection_items, false);
         for (int i = 0; i < 2; ++i) {
             if (!tail_at_endpoint_before[i]) {

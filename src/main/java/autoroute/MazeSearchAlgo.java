@@ -37,6 +37,7 @@ import geometry.planar.Line;
 import geometry.planar.Point;
 import geometry.planar.Polyline;
 import geometry.planar.TileShape;
+import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -1153,7 +1154,7 @@ public class MazeSearchAlgo {
         TileShape check_shape = check_polyline.offset_shape(check_radius, 0);
         int[] ignore_net_nos = new int[1];
         ignore_net_nos[0] = ctrl.net_no;
-        Set<SearchTreeObject> overlapping_objects = new TreeSet<>();
+        Set<SearchTreeObject> overlapping_objects = new ObjectAVLTreeSet<>();
         autoroute_engine.autoroute_search_tree.overlapping_objects(check_shape, curr_layer,
                 ignore_net_nos, overlapping_objects);
 

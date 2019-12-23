@@ -23,9 +23,10 @@ import board.DrillItem;
 import board.Item;
 import board.Trace;
 import geometry.planar.FloatPoint;
+import it.unimi.dsi.fastutil.ints.IntAVLTreeSet;
+import it.unimi.dsi.fastutil.ints.IntBidirectionalIterator;
+import it.unimi.dsi.fastutil.ints.IntSortedSet;
 import java.util.Collection;
-import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * Class implementing functionality when the mouse is dragged on a routing board
@@ -104,9 +105,10 @@ public abstract class DragState extends InteractiveState {
         InteractiveState result = move_to(p_point);
         if (result != this) {
             // an error occured
-            Set<Integer> changed_nets = new TreeSet<>();
+            IntSortedSet changed_nets = new IntAVLTreeSet();
             hdlg.get_routing_board().undo(changed_nets);
-            for (Integer changed_net : changed_nets) {
+            for (IntBidirectionalIterator it = changed_nets.iterator(); it.hasNext();){
+                int changed_net = it.nextInt();
                 hdlg.update_ratsnest(changed_net);
             }
         }

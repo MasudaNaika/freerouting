@@ -27,10 +27,10 @@ import datastructures.ShapeTree;
 import geometry.planar.IntBox;
 import geometry.planar.Limits;
 import geometry.planar.TileShape;
+import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.SortedSet;
-import java.util.TreeSet;
 
 /**
  *
@@ -335,7 +335,7 @@ public class SortedOrthogonalRoomNeighbours {
         completed_room = p_completed_room;
         is_obstacle_expansion_room = p_from_room instanceof ObstacleExpansionRoom;
         room_shape = (IntBox) p_completed_room.get_shape();
-        sorted_neighbours = new TreeSet<>();
+        sorted_neighbours = new ObjectAVLTreeSet<>();
         edge_interiour_touches_obstacle = new boolean[4];
         for (int i = 0; i < 4; ++i) {
             edge_interiour_touches_obstacle[i] = false;
@@ -439,8 +439,8 @@ public class SortedOrthogonalRoomNeighbours {
         sorted_neighbours.add(new_neighbour);
     }
 
-    public final CompleteExpansionRoom completed_room;
-    public final SortedSet<SortedRoomNeighbour> sorted_neighbours;
+    private final CompleteExpansionRoom completed_room;
+    private final SortedSet<SortedRoomNeighbour> sorted_neighbours;
     private final ExpansionRoom from_room;
     private final boolean is_obstacle_expansion_room;
     private final IntBox room_shape;

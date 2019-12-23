@@ -7,6 +7,7 @@ import geometry.planar.TileShape;
 import java.awt.Color;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -301,7 +302,7 @@ public abstract class Trace extends Item implements Connectable, Serializable {
         if (is_overlap()) {
             return true;
         }
-        Set<Item> visited_items = new TreeSet<>();
+        Set<Item> visited_items = new HashSet<>();
         Collection<Item> start_contacts = get_start_contacts();
         // a cycle exists if through expanding the start contact we reach
         // this trace again via an end contact

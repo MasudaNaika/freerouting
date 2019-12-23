@@ -36,10 +36,10 @@ import geometry.planar.Point;
 import geometry.planar.Side;
 import geometry.planar.Simplex;
 import geometry.planar.TileShape;
+import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.SortedSet;
-import java.util.TreeSet;
 
 /**
  * To calculate the neigbour rooms of an expansion room. The neighbour rooms
@@ -260,7 +260,7 @@ public class SortedRoomNeighbours {
         from_room = p_from_room;
         completed_room = p_completed_room;
         room_shape = p_completed_room.get_shape();
-        sorted_neighbours = new TreeSet<>();
+        sorted_neighbours = new ObjectAVLTreeSet<>();
         own_net_objects = new LinkedList<>();
     }
 
