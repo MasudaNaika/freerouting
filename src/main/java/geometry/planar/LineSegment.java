@@ -547,8 +547,7 @@ public class LineSegment implements Serializable {
         Point line_start = start_point();
         Point line_end = end_point();
 
-        for (int edge_line_no = 0; edge_line_no
-                < edge_count; ++edge_line_no) {
+        for (int edge_line_no = 0; edge_line_no < edge_count; ++edge_line_no) {
             Line next_line;
             if (edge_line_no == edge_count - 1) {
                 next_line = p_shape.border_line(0);
@@ -558,41 +557,32 @@ public class LineSegment implements Serializable {
 
             Side start_point_side = curr_line.side_of(line_start);
             Side end_point_side = curr_line.side_of(line_end);
-            if (start_point_side == Side.ON_THE_LEFT
-                    && end_point_side == Side.ON_THE_LEFT) {
+            if (start_point_side == Side.ON_THE_LEFT && end_point_side == Side.ON_THE_LEFT) {
                 // both endpoints are outside the border_line,
                 // no intersection possible
                 return empty_result;
             }
 
-            if (start_point_side == Side.COLLINEAR) {
+            if (start_point_side == Side.COLLINEAR && end_point_side != Side.ON_THE_RIGHT) {
                 // the start is on curr_line, check that the end point is inside
                 // the halfplane, because touches count only, if the interiour
                 // is entered
-                if (end_point_side != Side.ON_THE_RIGHT) {
-                    return empty_result;
-                }
-
+                return empty_result;
             }
 
-            if (end_point_side == Side.COLLINEAR) {
+            if (end_point_side == Side.COLLINEAR && start_point_side != Side.ON_THE_RIGHT) {
                 // the end is on curr_line, check that the start point is inside
                 // the halfplane, because touches count only, if the interiour
                 // is entered
-                if (start_point_side != Side.ON_THE_RIGHT) {
-                    return empty_result;
-                }
-
+                return empty_result;
             }
 
-            if (start_point_side != Side.ON_THE_RIGHT
-                    || end_point_side != Side.ON_THE_RIGHT) {
+            if (start_point_side != Side.ON_THE_RIGHT || end_point_side != Side.ON_THE_RIGHT) {
                 // not both points are inside the halplane defined by curr_line
                 Point is = middle.intersection(curr_line);
                 Side prev_line_side_of_is = prev_line.side_of(is);
                 Side next_line_side_of_is = next_line.side_of(is);
-                if (prev_line_side_of_is != Side.ON_THE_LEFT
-                        && next_line_side_of_is != Side.ON_THE_LEFT) {
+                if (prev_line_side_of_is != Side.ON_THE_LEFT && next_line_side_of_is != Side.ON_THE_LEFT) {
                     // this line segment intersects curr_line between the
                     // previous and the next corner of p_simplex
 
@@ -675,8 +665,7 @@ public class LineSegment implements Serializable {
             }
 
             prev_line = curr_line;
-            curr_line
-                    = next_line;
+            curr_line = next_line;
         }
 
         if (intersection_count == 0) {

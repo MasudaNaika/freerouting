@@ -24,6 +24,7 @@ import java.awt.Graphics;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ResourceBundle;
+import javax.swing.SwingWorker;
 
 /**
  * Used for running an interactive action in a seperate Thread, that can be
@@ -31,7 +32,7 @@ import java.util.ResourceBundle;
  *
  * @author Alfons Wirtz
  */
-public abstract class InteractiveActionThread extends Thread implements datastructures.Stoppable {
+public abstract class InteractiveActionThread implements datastructures.Stoppable {
 
     public static InteractiveActionThread get_autoroute_instance(BoardHandling p_board_handling) {
         return new AutorouteThread(p_board_handling);
@@ -62,10 +63,21 @@ public abstract class InteractiveActionThread extends Thread implements datastru
 
     protected abstract void thread_action();
 
-    @Override
-    public void run() {
-        thread_action();
-        hdlg.repaint();
+    public void start() {
+        
+        SwingWorker<Void, Void> worker = new SwingWorker<>() {
+            @Override
+            protected Void doInBackground() throws Exception {
+                thread_action();
+                return null;
+            }
+
+            @Override
+            protected void done() {
+                hdlg.repaint();
+            }
+        };
+        worker.execute();
     }
 
     @Override
