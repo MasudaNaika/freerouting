@@ -63,10 +63,10 @@ public class PlanarDelaunayTriangulation {
 
         // create a big triangle contaning all corners in the list to start with.
         int bounding_coor = Limits.CRIT_INT;
-        Corner[] bounding_corners = new Corner[3];
-        bounding_corners[0] = new Corner(null, new IntPoint(bounding_coor, 0));
-        bounding_corners[1] = new Corner(null, new IntPoint(0, bounding_coor));
-        bounding_corners[2] = new Corner(null, new IntPoint(-bounding_coor, -bounding_coor));
+        Corner[] bounding_corners = {
+            new Corner(null, new IntPoint(bounding_coor, 0)),
+            new Corner(null, new IntPoint(0, bounding_coor)),
+            new Corner(null, new IntPoint(-bounding_coor, -bounding_coor))};
 
         Edge[] edge_lines = new Edge[3];
         for (int i = 0; i < 2; ++i) {

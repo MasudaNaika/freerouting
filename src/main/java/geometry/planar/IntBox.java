@@ -641,11 +641,11 @@ public class IntBox extends RegularTileShape implements Serializable {
         if (is_empty()) {
             line_arr = new Line[0];
         } else {
-            line_arr = new Line[4];
-            line_arr[0] = Line.get_instance(ll, IntDirection.RIGHT);
-            line_arr[1] = Line.get_instance(ur, IntDirection.UP);
-            line_arr[2] = Line.get_instance(ur, IntDirection.LEFT);
-            line_arr[3] = Line.get_instance(ll, IntDirection.DOWN);
+            line_arr = new Line[]{
+                Line.get_instance(ll, IntDirection.RIGHT),
+                Line.get_instance(ur, IntDirection.UP),
+                Line.get_instance(ur, IntDirection.LEFT),
+                Line.get_instance(ll, IntDirection.DOWN)};
         }
         return new Simplex(line_arr);
     }
@@ -808,20 +808,15 @@ public class IntBox extends RegularTileShape implements Serializable {
         IntBox c = intersection(p_d);
         if (is_empty() || c.dimension() < dimension()) {
             // there is only an overlap at the border
-            IntBox[] result = new IntBox[1];
-            result[0] = p_d;
+            IntBox[] result = {p_d};
             return result;
         }
 
-        IntBox[] result = new IntBox[4];
-
-        result[0] = new IntBox(p_d.ll.x, p_d.ll.y, c.ur.x, c.ll.y);
-
-        result[1] = new IntBox(p_d.ll.x, c.ll.y, c.ll.x, p_d.ur.y);
-
-        result[2] = new IntBox(c.ur.x, p_d.ll.y, p_d.ur.x, c.ur.y);
-
-        result[3] = new IntBox(c.ll.x, c.ur.y, p_d.ur.x, p_d.ur.y);
+        IntBox[] result = {
+            new IntBox(p_d.ll.x, p_d.ll.y, c.ur.x, c.ll.y),
+            new IntBox(p_d.ll.x, c.ll.y, c.ll.x, p_d.ur.y),
+            new IntBox(c.ur.x, p_d.ll.y, p_d.ur.x, c.ur.y),
+            new IntBox(c.ll.x, c.ur.y, p_d.ur.x, p_d.ur.y)};
 
         // now the division will be optimised, so that the cumulative
         // circumference will be minimal.

@@ -424,9 +424,7 @@ public class Route {
             curr_info.pin.draw(p_graphics, p_graphics_context, highlight_color, 0.3 * highligt_color_intensity);
             if (curr_info.incomplete != null) {
                 // draw the swap pin incomplete
-                FloatPoint[] draw_points = new FloatPoint[2];
-                draw_points[0] = curr_info.incomplete.a;
-                draw_points[1] = curr_info.incomplete.b;
+                FloatPoint[] draw_points = {curr_info.incomplete.a, curr_info.incomplete.b};
                 Color draw_color = p_graphics_context.get_incomplete_color();
                 p_graphics_context.draw(draw_points, 1, draw_color, p_graphics, highligt_color_intensity);
             }
@@ -488,9 +486,7 @@ public class Route {
             }
 
             // draw the incomplete
-            FloatPoint[] draw_points = new FloatPoint[2];
-            draw_points[0] = from_corner;
-            draw_points[1] = nearest_target_point;
+            FloatPoint[] draw_points = {from_corner, nearest_target_point};
             Color draw_color = p_graphics_context.get_incomplete_color();
             double draw_width = Math.min(board.communication.get_resolution(Unit.MIL), 100);  // problem with low resolution on Kicad
             if (!curr_length_matching_ok) {

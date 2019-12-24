@@ -296,8 +296,7 @@ public abstract class DrillItem extends Item implements Connectable, Serializabl
 
     @Override
     public Point[] get_ratsnest_corners() {
-        Point[] result = new Point[1];
-        result[0] = get_center();
+        Point[] result = {get_center()};
         return result;
     }
 

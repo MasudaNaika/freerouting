@@ -116,9 +116,7 @@ public class BatchAutorouterThread extends InteractiveActionThread {
     public void draw(Graphics p_graphics) {
         FloatLine curr_air_line = batch_autorouter.get_air_line();
         if (curr_air_line != null) {
-            FloatPoint[] draw_line = new FloatPoint[2];
-            draw_line[0] = curr_air_line.a;
-            draw_line[1] = curr_air_line.b;
+            FloatPoint[] draw_line = {curr_air_line.a, curr_air_line.b};
             // draw the incomplete
             Color draw_color = hdlg.graphics_context.get_incomplete_color();
             double draw_width = Math.min(hdlg.get_routing_board().communication.get_resolution(Unit.MIL) * 3, 300);  // problem with low resolution on Kicad300;

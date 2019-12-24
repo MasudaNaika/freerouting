@@ -254,8 +254,7 @@ public class GraphicsContext implements Serializable {
      * Draws the interiour of an ellipse.
      */
     public void fill_ellipse(Ellipse p_ellipse, Graphics p_g, Color p_color, double p_translucency_factor) {
-        Ellipse[] ellipse_arr = new Ellipse[1];
-        ellipse_arr[0] = p_ellipse;
+        Ellipse[] ellipse_arr = {p_ellipse};
         fill_ellipse_arr(ellipse_arr, p_g, p_color, p_translucency_factor);
     }
 

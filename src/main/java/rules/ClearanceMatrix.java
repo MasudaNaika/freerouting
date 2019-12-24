@@ -35,9 +35,7 @@ public class ClearanceMatrix implements Serializable {
      * ans initializes it with p_default_value.
      */
     public static ClearanceMatrix get_default_instance(board.LayerStructure p_layer_structure, int p_default_value) {
-        String[] name_arr = new String[2];
-        name_arr[0] = "null";
-        name_arr[1] = "default";
+        String[] name_arr = {"null", "default"};
         ClearanceMatrix result = new ClearanceMatrix(2, p_layer_structure, name_arr);
         result.set_default_value(p_default_value);
         return result;

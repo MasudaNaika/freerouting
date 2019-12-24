@@ -155,15 +155,8 @@ public class RationalPoint extends Point implements Serializable {
 
     @Override
     Point translate_by(RationalVector p_vector) {
-        BigInteger v1[] = new BigInteger[3];
-        v1[0] = x;
-        v1[1] = y;
-        v1[2] = z;
-
-        BigInteger v2[] = new BigInteger[3];
-        v2[0] = p_vector.x;
-        v2[1] = p_vector.y;
-        v2[2] = p_vector.z;
+        BigInteger v1[] = {x, y, z};
+        BigInteger v2[] = {p_vector.x, p_vector.y, p_vector.z};
         BigInteger[] result = BigIntAux.add_rational_coordinates(v1, v2);
         return new RationalPoint(result[0], result[1], result[2]);
     }
@@ -185,15 +178,8 @@ public class RationalPoint extends Point implements Serializable {
 
     @Override
     Vector difference_by(RationalPoint p_other) {
-        BigInteger v1[] = new BigInteger[3];
-        v1[0] = x;
-        v1[1] = y;
-        v1[2] = z;
-
-        BigInteger v2[] = new BigInteger[3];
-        v2[0] = p_other.x.negate();
-        v2[1] = p_other.y.negate();
-        v2[2] = p_other.z;
+        BigInteger v1[] = {x, y, z};
+        BigInteger v2[] = {p_other.x.negate(), p_other.y.negate(), p_other.z};
         BigInteger[] result = BigIntAux.add_rational_coordinates(v1, v2);
         return new RationalVector(result[0], result[1], result[2]);
     }

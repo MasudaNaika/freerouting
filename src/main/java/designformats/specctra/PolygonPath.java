@@ -133,11 +133,11 @@ public class PolygonPath extends Path {
     @Override
     public Rectangle bounding_box() {
         double offset = width / 2;
-        double[] bounds = new double[4];
-        bounds[0] = Integer.MAX_VALUE;
-        bounds[1] = Integer.MAX_VALUE;
-        bounds[2] = Integer.MIN_VALUE;
-        bounds[3] = Integer.MIN_VALUE;
+        double[] bounds = {
+            Integer.MAX_VALUE,
+            Integer.MAX_VALUE,
+            Integer.MIN_VALUE,
+            Integer.MIN_VALUE};
         for (int i = 0; i < coordinate_arr.length; ++i) {
             if (i % 2 == 0) {
                 // x coordinate

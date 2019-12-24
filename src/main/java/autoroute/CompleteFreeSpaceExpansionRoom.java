@@ -181,8 +181,7 @@ public class CompleteFreeSpaceExpansionRoom extends FreeSpaceExpansionRoom imple
     public boolean validate(AutorouteEngine p_autoroute_engine) {
         boolean result = true;
         Collection<ShapeTree.TreeEntry> overlapping_objects = new LinkedList<>();
-        int[] net_no_arr = new int[1];
-        net_no_arr[0] = p_autoroute_engine.get_net_no();
+        int[] net_no_arr = {p_autoroute_engine.get_net_no()};
         p_autoroute_engine.autoroute_search_tree.overlapping_tree_entries(get_shape(), get_layer(),
                 net_no_arr, overlapping_objects);
         for (ShapeTree.TreeEntry curr_entry : overlapping_objects) {

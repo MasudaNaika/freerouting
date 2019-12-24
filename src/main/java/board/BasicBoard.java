@@ -1047,8 +1047,7 @@ public class BasicBoard implements Serializable {
         Vector translation = p_area.get_translation();
         double rotation = p_area.get_rotation_in_degree();
         boolean side_changed = p_area.get_side_changed();
-        int[] net_no_arr = new int[1];
-        net_no_arr[0] = p_net_no;
+        int[] net_no_arr = {p_net_no};
         new_item = new ConductionArea(curr_area, layer, translation, rotation, side_changed, net_no_arr,
                 p_area.clearance_class_no(), 0, p_area.get_component_no(), p_area.name, true, fixed_state, this);
         remove_item(p_area);
@@ -1221,12 +1220,9 @@ public class BasicBoard implements Serializable {
         // Remove tails at the endpoints after removing the cycle,
         // if there was no tail before.
         boolean[] tail_at_endpoint_before = null;
-        Point[] end_corners = null;
         int curr_layer = p_trace.get_layer();
         int[] curr_net_no_arr = p_trace.net_no_arr;
-        end_corners = new Point[2];
-        end_corners[0] = p_trace.first_corner();
-        end_corners[1] = p_trace.last_corner();
+        Point[] end_corners = {p_trace.first_corner(), p_trace.last_corner()};
         tail_at_endpoint_before = new boolean[2];
         for (int i = 0; i < 2; ++i) {
             Trace tail = get_trace_tail(end_corners[i], curr_layer, curr_net_no_arr);

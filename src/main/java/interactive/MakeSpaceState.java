@@ -47,8 +47,7 @@ public class MakeSpaceState extends DragState {
         Arrays.fill(shove_trace_width_arr, shove_trace_width);
         Arrays.fill(layer_active_arr, true);
 
-        int[] route_net_no_arr = new int[1];
-        route_net_no_arr[0] = rules.Nets.hidden_net_no;
+        int[] route_net_no_arr = {rules.Nets.hidden_net_no};
         route = new Route(p_location.round(), hdlg.settings.layer, shove_trace_width_arr, layer_active_arr,
                 route_net_no_arr, 0, rules.ViaRule.EMPTY, true, hdlg.settings.trace_pull_tight_region_width,
                 hdlg.settings.trace_pull_tight_accuracy, null, null, hdlg.get_routing_board(),

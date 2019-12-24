@@ -35,18 +35,18 @@ public class BigIntAux {
      * auxiliary function to implement addition and translation in the classes
      * RationalVector and RationalPoint
      */
-    public static final BigInteger[] add_rational_coordinates(BigInteger[] p_first,
-            BigInteger[] p_second) {
+    public static final BigInteger[] add_rational_coordinates(BigInteger[] p_first, BigInteger[] p_second) {
+
         BigInteger[] result = new BigInteger[3];
-        if (p_first[2].equals(p_second[2])) // both rational numbers have the same denominator
-        {
+        if (p_first[2].equals(p_second[2])) {
+            // both rational numbers have the same denominator
             result[2] = p_first[2];
             result[0] = p_first[0].add(p_second[0]);
             result[1] = p_first[1].add(p_second[1]);
-        } else // multiply both denominators for the new denominator
-        // to be on the save side:
-        // taking the leat common multiple whould be optimal
-        {
+        } else {
+            // multiply both denominators for the new denominator
+            // to be on the save side:
+            // taking the leat common multiple whould be optimal
             result[2] = p_first[2].multiply(p_second[2]);
             BigInteger tmp_1 = p_first[0].multiply(p_second[2]);
             BigInteger tmp_2 = p_second[0].multiply(p_first[2]);

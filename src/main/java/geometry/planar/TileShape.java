@@ -56,8 +56,7 @@ public abstract class TileShape extends PolylineShape implements ConvexShape, Se
      * creates a half_plane from a directed line
      */
     public static TileShape get_instance(Line p_line) {
-        Line[] lines = new Line[1];
-        lines[0] = p_line;
+        Line[] lines = {p_line};
         return Simplex.get_instance(lines);
     }
 
@@ -444,13 +443,11 @@ public abstract class TileShape extends PolylineShape implements ConvexShape, Se
             return new FloatPoint[0];
         }
         if (line_count == 1) {
-            FloatPoint[] result = new FloatPoint[1];
-            result[0] = p_from_point.projection_approx(border_line(0));
+            FloatPoint[] result = {p_from_point.projection_approx(border_line(0))};
             return result;
         }
         if (dimension() == 0) {
-            FloatPoint[] result = new FloatPoint[1];
-            result[0] = corner_approx(0);
+            FloatPoint[] result = {corner_approx(0)};
             return result;
         }
         FloatPoint[] nearest_points = new FloatPoint[result_count];
@@ -657,9 +654,7 @@ public abstract class TileShape extends PolylineShape implements ConvexShape, Se
             int compare = dir2.compareTo(dir1);
             if (compare == 0) {
                 if (border_line(side_no_1).is_equal_or_opposite(p_other.border_line(side_no_2))) {
-                    int[] result = new int[2];
-                    result[0] = side_no_1;
-                    result[1] = side_no_2;
+                    int[] result = {side_no_1, side_no_2};
                     return result;
                 }
             }
@@ -947,8 +942,7 @@ public abstract class TileShape extends PolylineShape implements ConvexShape, Se
 
     @Override
     public TileShape[] split_to_convex() {
-        TileShape[] result = new TileShape[1];
-        result[0] = this;
+        TileShape[] result = {this};
         return result;
     }
 
@@ -958,8 +952,7 @@ public abstract class TileShape extends PolylineShape implements ConvexShape, Se
      */
     public TileShape[] divide_into_sections(double p_max_section_width) {
         if (is_empty()) {
-            TileShape[] result = new TileShape[1];
-            result[0] = this;
+            TileShape[] result = {this};
             return result;
         }
         TileShape[] section_boxes = bounding_box().divide_into_sections(p_max_section_width);

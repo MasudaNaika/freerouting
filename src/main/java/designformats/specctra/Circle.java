@@ -43,10 +43,7 @@ public class Circle extends Shape {
 
     public Circle(Layer p_layer, double p_radius, double p_center_x, double p_center_y) {
         super(p_layer);
-        coor = new double[3];
-        coor[0] = p_radius;
-        coor[1] = p_center_x;
-        coor[2] = p_center_y;
+        coor = new double[]{p_radius, p_center_x, p_center_y};
     }
 
     @Override
@@ -71,11 +68,11 @@ public class Circle extends Shape {
 
     @Override
     public Rectangle bounding_box() {
-        double[] bounds = new double[4];
-        bounds[0] = coor[1] - coor[0];
-        bounds[1] = coor[2] - coor[0];
-        bounds[2] = coor[1] + coor[0];
-        bounds[3] = coor[2] + coor[0];
+        double[] bounds = {
+            coor[1] - coor[0],
+            coor[2] - coor[0],
+            coor[1] + coor[0],
+            coor[2] + coor[0]};
         return new Rectangle(layer, bounds);
     }
 

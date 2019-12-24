@@ -374,12 +374,9 @@ public class MazeSearchAlgo {
             FloatPoint connection_point = target_shape.nearest_point_approx(p_shape_entry_middle);
             if (!p_next_room_is_thick) {
                 // check the line from p_shape_entry_middle to the nearest point.
-                int[] curr_net_no_arr = new int[1];
-                curr_net_no_arr[0] = ctrl.net_no;
+                int[] curr_net_no_arr = {ctrl.net_no};
                 int curr_layer = p_list_element.next_room.get_layer();
-                IntPoint[] check_points = new IntPoint[2];
-                check_points[0] = p_shape_entry_middle.round();
-                check_points[1] = connection_point.round();
+                IntPoint[] check_points = {p_shape_entry_middle.round(), connection_point.round()};
                 if (!check_points[0].equals(check_points[1])) {
                     Polyline check_polyline = new Polyline(check_points);
                     boolean check_ok = autoroute_engine.board.check_forced_trace_polyline(check_polyline,
@@ -629,8 +626,7 @@ public class MazeSearchAlgo {
             via_upper_bound = curr_obstacle_padstack.to_layer();
             room_ripped = true;
         } else {
-            int[] net_no_arr = new int[1];
-            net_no_arr[0] = ctrl.net_no;
+            int[] net_no_arr = {ctrl.net_no};
 
             room_ripped = false;
             int via_lower_limit = Math.max(curr_drill.first_layer, ctrl.via_lower_bound);
@@ -1144,15 +1140,15 @@ public class MazeSearchAlgo {
         int check_radius
                 = ctrl.compensated_trace_half_width[curr_layer] + AutorouteEngine.TRACE_WIDTH_TOLERANCE;
         // create a perpendicular line segment of length 2 * check_radius through the door center
-        Line[] line_arr = new Line[3];
-        line_arr[0] = door_line.translate(check_radius);
-        line_arr[1] = new Line(door_center, door_line.direction().turn_45_degree(2));
-        line_arr[2] = door_line.translate(-check_radius);
+        Line[] line_arr = {
+            door_line.translate(check_radius),
+            new Line(door_center, door_line.direction().turn_45_degree(2)),
+            door_line.translate(-check_radius)
+        };
 
         Polyline check_polyline = new Polyline(line_arr);
         TileShape check_shape = check_polyline.offset_shape(check_radius, 0);
-        int[] ignore_net_nos = new int[1];
-        ignore_net_nos[0] = ctrl.net_no;
+        int[] ignore_net_nos = {ctrl.net_no};
         Set<SearchTreeObject> overlapping_objects = new TreeSet<>();
         autoroute_engine.autoroute_search_tree.overlapping_objects(check_shape, curr_layer,
                 ignore_net_nos, overlapping_objects);

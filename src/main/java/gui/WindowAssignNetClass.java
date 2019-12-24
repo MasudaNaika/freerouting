@@ -132,10 +132,10 @@ public class WindowAssignNetClass extends BoardSavableSubWindow {
     private class AssignRuleTableModel extends AbstractTableModel {
 
         public AssignRuleTableModel() {
-            column_names = new String[2];
-
-            column_names[0] = resources.getString("net_name");
-            column_names[1] = resources.getString("class_name");
+            column_names = new String[]{
+                resources.getString("net_name"),
+                resources.getString("class_name")
+            };
 
             rules.BoardRules board_rules = board_frame.board_panel.board_handling.get_routing_board().rules;
             data = new Object[board_rules.nets.max_net_no()][];

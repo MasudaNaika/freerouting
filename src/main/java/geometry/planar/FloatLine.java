@@ -271,8 +271,7 @@ public class FloatLine {
             return new FloatLine[0];
         }
         if (p_count == 1) {
-            FloatLine[] result = new FloatLine[1];
-            result[0] = this;
+            FloatLine[] result = {this};
             return result;
         }
         double line_length = b.distance(a);

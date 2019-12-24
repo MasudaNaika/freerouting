@@ -326,8 +326,7 @@ public class Circle implements ConvexShape, Serializable {
 
     @Override
     public TileShape[] split_to_convex() {
-        TileShape[] result = new TileShape[1];
-        result[0] = bounding_tile();
+        TileShape[] result = {bounding_tile()};
         return result;
     }
 

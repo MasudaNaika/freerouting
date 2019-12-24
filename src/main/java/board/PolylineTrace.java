@@ -638,11 +638,11 @@ public class PolylineTrace extends Trace implements Serializable {
             return null;
         }
         board.remove_item(this);
-        PolylineTrace[] result = new PolylineTrace[2];
-        result[0] = board.insert_trace_without_cleaning(split_polylines[0], get_layer(), get_half_width(),
-                net_no_arr, clearance_class_no(), get_fixed_state());
-        result[1] = board.insert_trace_without_cleaning(split_polylines[1], get_layer(), get_half_width(),
-                net_no_arr, clearance_class_no(), get_fixed_state());
+        PolylineTrace[] result = {
+            board.insert_trace_without_cleaning(
+            split_polylines[0], get_layer(), get_half_width(), net_no_arr, clearance_class_no(), get_fixed_state()),
+            board.insert_trace_without_cleaning(
+            split_polylines[1], get_layer(), get_half_width(), net_no_arr, clearance_class_no(), get_fixed_state())};
         return result;
     }
 
@@ -1077,10 +1077,10 @@ public class PolylineTrace extends Trace implements Serializable {
         change(changed_polyline);
 
         // create an shove_fixed exit line.
-        curr_lines = new Line[3];
-        curr_lines[0] = new Line(pin_center, pin_exit_direction.turn_45_degree(2));
-        curr_lines[1] = nearest_pin_exit_ray;
-        curr_lines[2] = offset_pin_shape.border_line(nearest_border_line_no);
+        curr_lines = new Line[]{
+            new Line(pin_center, pin_exit_direction.turn_45_degree(2)),
+            nearest_pin_exit_ray,
+            offset_pin_shape.border_line(nearest_border_line_no)};
         Polyline exit_line_segment = new Polyline(curr_lines);
         board.insert_trace(exit_line_segment, get_layer(), get_half_width(), net_no_arr,
                 clearance_class_no(), FixedState.SHOVE_FIXED);

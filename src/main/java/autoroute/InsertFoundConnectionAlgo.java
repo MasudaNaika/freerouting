@@ -124,8 +124,7 @@ public class InsertFoundConnectionAlgo {
                 curr_end_corner = p_trace.corners[p_trace.corners.length - 1];
             }
         }
-        int[] net_no_arr = new int[1];
-        net_no_arr[0] = ctrl.net_no;
+        int[] net_no_arr = {ctrl.net_no};
 
         int from_corner_no = 0;
         for (int i = 1; i < p_trace.corners.length; ++i) {
@@ -220,8 +219,7 @@ public class InsertFoundConnectionAlgo {
 
         final int TOLERANCE = 2;
 
-        int[] net_no_arr = new int[1];
-        net_no_arr[0] = ctrl.net_no;
+        int[] net_no_arr = {ctrl.net_no};
 
         double ok_length = board.check_trace_segment(p_from_corner, p_to_corner, p_layer, net_no_arr,
                 ctrl.trace_half_width[p_layer], ctrl.trace_clearance_class_no, true);
@@ -302,8 +300,7 @@ public class InsertFoundConnectionAlgo {
             from_layer = p_to_layer;
             to_layer = p_from_layer;
         }
-        int[] net_no_arr = new int[1];
-        net_no_arr[0] = ctrl.net_no;
+        int[] net_no_arr = {ctrl.net_no};
         ViaInfo via_info = null;
         for (int i = 0; i < ctrl.via_rule.via_count(); ++i) {
             ViaInfo curr_via_info = ctrl.via_rule.get_via(i);

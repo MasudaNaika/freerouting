@@ -167,8 +167,7 @@ public class MazeShoveTraceAlgo {
             }
         }
         int trace_half_width = p_ctrl.trace_half_width[trace_layer];
-        int[] net_no_arr = new int[1];
-        net_no_arr[0] = p_ctrl.net_no;
+        int[] net_no_arr = {p_ctrl.net_no};
 
         double shove_width
                 = p_board.check_trace_segment(shove_line_segment, trace_layer, net_no_arr, trace_half_width,

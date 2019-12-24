@@ -40,8 +40,7 @@ public class WindowMessage extends JFrame {
      * Displays a window with the input message at the center of the screen.
      */
     public static WindowMessage show(String p_message) {
-        String[] message_arr = new String[1];
-        message_arr[0] = p_message;
+        String[] message_arr = {p_message};
         return new WindowMessage(message_arr);
     }
 

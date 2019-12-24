@@ -51,11 +51,11 @@ public class Rectangle extends Shape {
      * Creates the smallest rectangle containing this rectangle and p_other
      */
     public Rectangle union(Rectangle p_other) {
-        double[] result_coor = new double[4];
-        result_coor[0] = Math.min(coor[0], p_other.coor[0]);
-        result_coor[1] = Math.min(coor[1], p_other.coor[1]);
-        result_coor[2] = Math.max(coor[2], p_other.coor[2]);
-        result_coor[3] = Math.max(coor[3], p_other.coor[3]);
+        double[] result_coor = {
+            Math.min(coor[0], p_other.coor[0]),
+            Math.min(coor[1], p_other.coor[1]),
+            Math.max(coor[2], p_other.coor[2]),
+            Math.max(coor[3], p_other.coor[3])};
         return new Rectangle(layer, result_coor);
     }
 

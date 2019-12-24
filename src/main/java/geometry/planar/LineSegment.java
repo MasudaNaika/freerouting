@@ -163,10 +163,7 @@ public class LineSegment implements Serializable {
      * Transforms this LinsSegment into a polyline of lenght 3.
      */
     public Polyline to_polyline() {
-        Line[] lines = new Line[3];
-        lines[0] = start;
-        lines[1] = middle;
-        lines[2] = end;
+        Line[] lines = {start, middle, end};
         return new Polyline(lines);
     }
 
@@ -324,8 +321,7 @@ public class LineSegment implements Serializable {
         }
         // now both start points and both end points are on different sides of the middle
         // line of the other segment.
-        Line[] result = new Line[1];
-        result[0] = p_other.middle;
+        Line[] result = {p_other.middle};
         return result;
     }
 
@@ -361,9 +357,7 @@ public class LineSegment implements Serializable {
         }
 
         if (start_point.x == end_point.x || start_point.y == end_point.y) {
-            IntPoint[] result = new IntPoint[2];
-            result[0] = start_point;
-            result[1] = end_point;
+            IntPoint[] result = {start_point, end_point};
             return result;
         }
 
@@ -446,9 +440,7 @@ public class LineSegment implements Serializable {
         }
         IntVector delta = end_point.difference_by(start_point);
         if (delta.is_multiple_of_45_degree()) {
-            IntPoint[] result = new IntPoint[2];
-            result[0] = start_point;
-            result[1] = end_point;
+            IntPoint[] result = {start_point, end_point};
             return result;
         }
         IntVector abs_delta = new IntVector(Math.abs(delta.x), Math.abs(delta.y));
@@ -677,8 +669,8 @@ public class LineSegment implements Serializable {
             FloatPoint is0 = intersection[0].to_float();
             FloatPoint is1 = intersection[1].to_float();
             FloatPoint curr_start = line_start.to_float();
-            if (curr_start.distance_square(is1) < curr_start.distance_square(is0)) // swap the result points
-            {
+            if (curr_start.distance_square(is1) < curr_start.distance_square(is0)) {
+                // swap the result points
                 int tmp = result[0];
                 result[0] = result[1];
                 result[1] = tmp;
@@ -691,8 +683,7 @@ public class LineSegment implements Serializable {
             System.out.println("LineSegment.border_intersections: intersection_count 1 expected");
         }
 
-        int[] normalised_result = new int[1];
-        normalised_result[0] = result[0];
+        int[] normalised_result = {result[0]};
         return normalised_result;
     }
 

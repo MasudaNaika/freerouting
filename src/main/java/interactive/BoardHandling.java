@@ -642,7 +642,7 @@ public class BoardHandling extends BoardHandlingImpl {
         }
         IntSortedSet changed_nets = new IntAVLTreeSet();
         if (board.redo(changed_nets)) {
-            for (IntBidirectionalIterator it = changed_nets.iterator(); it.hasNext();){
+            for (IntBidirectionalIterator it = changed_nets.iterator(); it.hasNext();) {
                 int changed_net = it.nextInt();
                 update_ratsnest(changed_net);
             }

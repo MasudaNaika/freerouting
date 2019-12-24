@@ -107,7 +107,7 @@ public abstract class DragState extends InteractiveState {
             // an error occured
             IntSortedSet changed_nets = new IntAVLTreeSet();
             hdlg.get_routing_board().undo(changed_nets);
-            for (IntBidirectionalIterator it = changed_nets.iterator(); it.hasNext();){
+            for (IntBidirectionalIterator it = changed_nets.iterator(); it.hasNext();) {
                 int changed_net = it.nextInt();
                 hdlg.update_ratsnest(changed_net);
             }

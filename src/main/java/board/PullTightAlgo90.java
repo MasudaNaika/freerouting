@@ -64,11 +64,11 @@ class PullTightAlgo90 extends PullTightAlgo {
         if (p_polyline.arr.length < 5) {
             return p_polyline;
         }
-        Line[] check_lines = new Line[4];
-        check_lines[0] = p_polyline.arr[1];
-        check_lines[1] = p_polyline.arr[0];
-        check_lines[2] = p_polyline.arr[3];
-        check_lines[3] = p_polyline.arr[4];
+        Line[] check_lines = {
+            p_polyline.arr[1],
+            p_polyline.arr[0],
+            p_polyline.arr[3],
+            p_polyline.arr[4]};
         Polyline check_polyline = new Polyline(check_lines);
         if (check_polyline.arr.length != 4
                 || curr_clip_shape != null

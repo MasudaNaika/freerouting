@@ -220,9 +220,7 @@ public class ForcedPadAlgo {
             }
             Point[] end_corners = null;
             if (!tails_exist_before) {
-                end_corners = new Point[2];
-                end_corners[0] = curr_substitute_trace.first_corner();
-                end_corners[1] = curr_substitute_trace.last_corner();
+                end_corners = new Point[]{curr_substitute_trace.first_corner(), curr_substitute_trace.last_corner()};
             }
             board.insert_item(curr_substitute_trace);
             IntOctagon opt_area;
@@ -278,11 +276,11 @@ public class ForcedPadAlgo {
         FloatPoint shape_center = p_shape_center.to_float();
         FloatPoint offset_projection = shape_center.projection_approx(p_border_line);
         // Make shure, that direction restrictions are retained.
-        Line[] line_arr = new Line[3];
         Direction curr_dir = p_border_line.direction();
-        line_arr[0] = new Line(p_shape_center, curr_dir);
-        line_arr[1] = new Line(p_shape_center, curr_dir.turn_45_degree(2));
-        line_arr[2] = new Line(offset_projection.round(), curr_dir);
+        Line[] line_arr = {
+            new Line(p_shape_center, curr_dir),
+            new Line(p_shape_center, curr_dir.turn_45_degree(2)),
+            new Line(offset_projection.round(), curr_dir)};
         Polyline check_line = new Polyline(line_arr);
         return check_line.offset_shape(1, 0);
     }

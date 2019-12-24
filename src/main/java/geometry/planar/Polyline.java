@@ -785,9 +785,9 @@ public class Polyline implements Serializable {
             second_piece[0] = p_end_line;
             System.arraycopy(arr, p_line_no, second_piece, 1, second_piece.length - 1);
         }
-        Polyline[] result = new Polyline[2];
-        result[0] = new Polyline(first_piece);
-        result[1] = new Polyline(second_piece);
+        Polyline[] result = {
+            new Polyline(first_piece),
+            new Polyline(second_piece)};
         if (result[0].is_point() || result[1].is_point()) {
             return null;
         }

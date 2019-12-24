@@ -1085,8 +1085,7 @@ public class Simplex extends TileShape implements Serializable {
             // the inner simplex with the outer simplex.
             // Because these corners lie on the border of the outer simplex,
             // no division is nessesary
-            Line[] result = new Line[1];
-            result[0] = prev_inner_line;
+            Line[] result = {prev_inner_line};
             return result;
         }
         IntDirection first_projection_dir = Direction.NULL;
@@ -1105,8 +1104,7 @@ public class Simplex extends TileShape implements Serializable {
             IntDirection curr_projection_dir
                     = (IntDirection) inner_corner.perpendicular_direction(outer_line);
             if (curr_projection_dir == Direction.NULL) {
-                Line[] result = new Line[1];
-                result[0] = new Line(inner_corner, inner_corner);
+                Line[] result = {new Line(inner_corner, inner_corner)};
                 return result;
             }
             boolean projection_visible = prev_inner_dir.determinant(curr_projection_dir) >= 0;
@@ -1134,8 +1132,7 @@ public class Simplex extends TileShape implements Serializable {
 
                         if (curr_second_projection_dir == Direction.NULL) // inner corner is on outer_line
                         {
-                            Line[] result = new Line[1];
-                            result[0] = new Line(inner_corner, inner_corner);
+                            Line[] result = {new Line(inner_corner, inner_corner)};
                             return result;
                         }
                         if (curr_projection_dir.determinant(curr_second_projection_dir) < 0) {
@@ -1172,12 +1169,11 @@ public class Simplex extends TileShape implements Serializable {
         }
         Line[] result;
         if (first_projection_dir.equals(second_projection_dir)) {
-            result = new Line[1];
-            result[0] = new Line(inner_corner, first_projection_dir);
+            result = new Line[]{new Line(inner_corner, first_projection_dir)};
         } else {
-            result = new Line[2];
-            result[0] = new Line(inner_corner, first_projection_dir);
-            result[1] = new Line(inner_corner, second_projection_dir);
+            result = new Line[]{
+                new Line(inner_corner, first_projection_dir),
+                new Line(inner_corner, second_projection_dir)};
         }
         return result;
     }

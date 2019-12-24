@@ -1228,24 +1228,19 @@ public class IntOctagon extends RegularTileShape implements Serializable {
 
         if (is_empty() || c.dimension() < dimension()) {
             // there is only an overlap at the border
-            IntOctagon[] result = new IntOctagon[1];
-            result[0] = p_d.to_IntOctagon();
+            IntOctagon[] result = {p_d.to_IntOctagon()};
             return result;
         }
 
-        IntBox[] boxes = new IntBox[4];
-
-        // construct left box
-        boxes[0] = new IntBox(p_d.ll.x, c.llx - c.lx, c.lx, c.lx - c.ulx);
-
-        // construct right box
-        boxes[1] = new IntBox(c.rx, c.rx - c.lrx, p_d.ur.x, c.urx - c.rx);
-
-        // construct lower box
-        boxes[2] = new IntBox(c.llx - c.ly, p_d.ll.y, c.lrx + c.ly, c.ly);
-
-        // construct upper box
-        boxes[3] = new IntBox(c.ulx + c.uy, c.uy, c.urx - c.uy, p_d.ur.y);
+        IntBox[] boxes = {
+            // construct left box
+            new IntBox(p_d.ll.x, c.llx - c.lx, c.lx, c.lx - c.ulx),
+            // construct right box
+            new IntBox(c.rx, c.rx - c.lrx, p_d.ur.x, c.urx - c.rx),
+            // construct lower box
+            new IntBox(c.llx - c.ly, p_d.ll.y, c.lrx + c.ly, c.ly),
+            // construct upper box
+            new IntBox(c.ulx + c.uy, c.uy, c.urx - c.uy, p_d.ur.y)};
 
         IntOctagon[] octagons = new IntOctagon[4];
 
@@ -1274,7 +1269,6 @@ public class IntOctagon extends RegularTileShape implements Serializable {
         IntOctagon o = octagons[0];
         if (b.ur.x - b.ll.x > o.uy - o.ly) {
             // switch the horizontal upper left divide line to vertical
-
             boxes[0] = new IntBox(b.ll.x, b.ll.y, b.ur.x, o.uy);
             curr_oct = new IntOctagon(b.ur.x, o.ly, o.rx, o.uy, o.ulx, o.lrx, o.llx, o.urx);
             octagons[0] = curr_oct.normalize();
@@ -1284,7 +1278,6 @@ public class IntOctagon extends RegularTileShape implements Serializable {
         o = octagons[0];
         if (b.ur.y - b.ll.y > o.rx - o.lx) {
             // switch the vertical upper left divide line to horizontal
-
             boxes[3] = new IntBox(o.lx, b.ll.y, b.ur.x, b.ur.y);
             curr_oct = new IntOctagon(o.lx, o.ly, o.rx, b.ll.y, o.ulx, o.lrx, o.llx, o.urx);
             octagons[0] = curr_oct.normalize();
@@ -1293,7 +1286,6 @@ public class IntOctagon extends RegularTileShape implements Serializable {
         o = octagons[3];
         if (b.ur.y - b.ll.y > o.rx - o.lx) {
             // switch the vertical upper right divide line to horizontal
-
             boxes[3] = new IntBox(b.ll.x, b.ll.y, o.rx, b.ur.y);
             curr_oct = new IntOctagon(o.lx, o.ly, o.rx, o.uy, o.ulx, o.lrx, o.llx, o.urx);
             octagons[3] = curr_oct.normalize();
@@ -1302,7 +1294,6 @@ public class IntOctagon extends RegularTileShape implements Serializable {
         o = octagons[3];
         if (b.ur.x - b.ll.x > o.uy - o.ly) {
             // switch the horizontal upper right divide line to vertical
-
             boxes[1] = new IntBox(b.ll.x, b.ll.y, b.ur.x, o.uy);
             curr_oct = new IntOctagon(o.lx, o.ly, b.ll.x, o.uy, o.ulx, o.lrx, o.llx, o.urx);
             octagons[3] = curr_oct.normalize();
@@ -1311,7 +1302,6 @@ public class IntOctagon extends RegularTileShape implements Serializable {
         o = octagons[2];
         if (b.ur.x - b.ll.x > o.uy - o.ly) {
             // switch the horizontal lower right divide line to vertical
-
             boxes[1] = new IntBox(b.ll.x, o.ly, b.ur.x, b.ur.y);
             curr_oct = new IntOctagon(o.lx, o.ly, b.ll.x, o.uy, o.ulx, o.lrx, o.llx, o.urx);
             octagons[2] = curr_oct.normalize();
@@ -1320,7 +1310,6 @@ public class IntOctagon extends RegularTileShape implements Serializable {
         o = octagons[2];
         if (b.ur.y - b.ll.y > o.rx - o.lx) {
             // switch the vertical lower right divide line to horizontal
-
             boxes[2] = new IntBox(b.ll.x, b.ll.y, o.rx, b.ur.y);
             curr_oct = new IntOctagon(o.lx, b.ur.y, o.rx, o.uy, o.ulx, o.lrx, o.llx, o.urx);
             octagons[2] = curr_oct.normalize();
@@ -1329,7 +1318,6 @@ public class IntOctagon extends RegularTileShape implements Serializable {
         o = octagons[1];
         if (b.ur.y - b.ll.y > o.rx - o.lx) {
             // switch the vertical lower  left divide line to horizontal
-
             boxes[2] = new IntBox(o.lx, b.ll.y, b.ur.x, b.ur.y);
             curr_oct = new IntOctagon(o.lx, b.ur.y, o.rx, o.uy, o.ulx, o.lrx, o.llx, o.urx);
             octagons[1] = curr_oct.normalize();

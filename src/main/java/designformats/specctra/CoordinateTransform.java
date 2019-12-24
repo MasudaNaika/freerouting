@@ -64,9 +64,9 @@ public class CoordinateTransform implements Serializable {
      * coordinate system.
      */
     public double[] board_to_dsn(FloatPoint p_point) {
-        double[] result = new double[2];
-        result[0] = board_to_dsn(p_point.x) + base_x;
-        result[1] = board_to_dsn(p_point.y) + base_y;
+        double[] result = {
+            board_to_dsn(p_point.x) + base_x,
+            board_to_dsn(p_point.y) + base_y};
         return result;
     }
 
@@ -75,9 +75,9 @@ public class CoordinateTransform implements Serializable {
      * coordinate system in relative (vector) coordinates.
      */
     public double[] board_to_dsn_rel(FloatPoint p_point) {
-        double[] result = new double[2];
-        result[0] = board_to_dsn(p_point.x);
-        result[1] = board_to_dsn(p_point.y);
+        double[] result = {
+            board_to_dsn(p_point.x),
+            board_to_dsn(p_point.y)};
         return result;
     }
 
@@ -129,10 +129,8 @@ public class CoordinateTransform implements Serializable {
      * coordinate system.
      */
     public double[] board_to_dsn(Vector p_vector) {
-        double[] result = new double[2];
         FloatPoint v = p_vector.to_float();
-        result[0] = board_to_dsn(v.x);
-        result[1] = board_to_dsn(v.y);
+        double[] result = {board_to_dsn(v.x), board_to_dsn(v.y)};
         return result;
     }
 
@@ -159,11 +157,11 @@ public class CoordinateTransform implements Serializable {
      * Transforms a geometry.planar.Intbox to the coordinates of a Rectangle.
      */
     public double[] board_to_dsn(IntBox p_box) {
-        double[] result = new double[4];
-        result[0] = p_box.ll.x / scale_factor + base_x;
-        result[1] = p_box.ll.y / scale_factor + base_y;
-        result[2] = p_box.ur.x / scale_factor + base_x;
-        result[3] = p_box.ur.y / scale_factor + base_y;
+        double[] result = {
+            p_box.ll.x / scale_factor + base_x,
+            p_box.ll.y / scale_factor + base_y,
+            p_box.ur.x / scale_factor + base_x,
+            p_box.ur.y / scale_factor + base_y};
         return result;
     }
 
@@ -172,11 +170,11 @@ public class CoordinateTransform implements Serializable {
      * coordinates.
      */
     public double[] board_to_dsn_rel(IntBox p_box) {
-        double[] result = new double[4];
-        result[0] = p_box.ll.x / scale_factor;
-        result[1] = p_box.ll.y / scale_factor;
-        result[2] = p_box.ur.x / scale_factor;
-        result[3] = p_box.ur.y / scale_factor;
+        double[] result = {
+            p_box.ll.x / scale_factor,
+            p_box.ll.y / scale_factor,
+            p_box.ur.x / scale_factor,
+            p_box.ur.y / scale_factor};
         return result;
     }
 

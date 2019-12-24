@@ -292,8 +292,7 @@ public class AutorouteEngine {
                 if (intersection.dimension() == 1) {
                     // add a new incomplete room to curr_neighbour.
                     int[] touching_sides = room_shape.touching_sides(neighbour_shape);
-                    Line[] line_arr = new Line[1];
-                    line_arr[0] = neighbour_shape.border_line(touching_sides[1]).opposite();
+                    Line[] line_arr = {neighbour_shape.border_line(touching_sides[1]).opposite()};
                     Simplex new_incomplete_room_shape = Simplex.get_instance(line_arr);
                     IncompleteFreeSpaceExpansionRoom new_incomplete_room
                             = add_incomplete_expansion_room(new_incomplete_room_shape, room_layer, intersection);

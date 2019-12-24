@@ -98,8 +98,7 @@ public class SortedRoomNeighbours {
         for (int i = 0; i < room_shape.border_line_count(); ++i) {
             Line curr_line = room_shape.border_line(i);
             if (SortedRoomNeighbours.insert_door_ok(p_room, curr_line)) {
-                Line[] shape_line = new Line[1];
-                shape_line[0] = curr_line.opposite();
+                Line[] shape_line = {curr_line.opposite()};
                 TileShape new_room_shape = new Simplex(shape_line);
                 TileShape new_contained_shape = room_shape.intersection(new_room_shape);
                 FreeSpaceExpansionRoom new_room = p_autoroute_engine.add_incomplete_expansion_room(new_room_shape, p_room.get_layer(), new_contained_shape);

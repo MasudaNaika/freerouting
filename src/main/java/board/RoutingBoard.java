@@ -163,11 +163,11 @@ public class RoutingBoard extends BasicBoard implements Serializable {
      */
     public void mark_all_changed_area() {
         start_marking_changed_area();
-        FloatPoint[] board_corners = new FloatPoint[4];
-        board_corners[0] = bounding_box.ll.to_float();
-        board_corners[1] = new FloatPoint(bounding_box.ur.x, bounding_box.ll.y);
-        board_corners[2] = bounding_box.ur.to_float();
-        board_corners[3] = new FloatPoint(bounding_box.ll.x, bounding_box.ur.y);
+        FloatPoint[] board_corners = {
+            bounding_box.ll.to_float(),
+            new FloatPoint(bounding_box.ur.x, bounding_box.ll.y),
+            bounding_box.ur.to_float(),
+            new FloatPoint(bounding_box.ll.x, bounding_box.ur.y)};
         for (int i = 0; i < get_layer_count(); ++i) {
             for (int j = 0; j < 4; ++j) {
                 join_changed_area(board_corners[j], i);
@@ -347,8 +347,7 @@ public class RoutingBoard extends BasicBoard implements Serializable {
      * clearance violations.
      */
     public boolean check_change_net(Item p_item, int p_new_net_no) {
-        int[] net_no_arr = new int[1];
-        net_no_arr[0] = p_new_net_no;
+        int[] net_no_arr = {p_new_net_no};
         for (int i = 0; i < p_item.tile_shape_count(); ++i) {
             TileShape curr_shape = p_item.get_tile_shape(i);
             Set<Item> obstacles = overlapping_items_with_clearance(curr_shape, p_item.shape_layer(i),

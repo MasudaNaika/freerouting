@@ -203,8 +203,7 @@ class Structure extends ScopeKeyword {
                 } else {
                     clearance_class_no = curr_net.get_class().default_item_clearance_classes.get(rules.DefaultItemClearanceClasses.ItemClass.AREA);
                 }
-                int[] net_numbers = new int[1];
-                net_numbers[0] = curr_net.net_number;
+                int[] net_numbers = {curr_net.net_number};
                 board.insert_conduction_area(plane_area, curr_layer.no, net_numbers, clearance_class_no,
                         false, FixedState.SYSTEM_FIXED);
             } else {
@@ -748,8 +747,7 @@ class Structure extends ScopeKeyword {
                         continue;
                     }
                 }
-                int[] net_numbers = new int[1];
-                net_numbers[0] = curr_net.net_number;
+                int[] net_numbers = {curr_net.net_number};
                 p_board.insert_conduction_area(p_board.bounding_box, curr_layer.no, net_numbers, BoardRules.clearance_class_none(),
                         false, FixedState.SYSTEM_FIXED);
             }
