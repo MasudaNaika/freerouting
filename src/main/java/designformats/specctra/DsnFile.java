@@ -25,7 +25,6 @@ import datastructures.IndentFileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 
@@ -112,8 +111,8 @@ public class DsnFile {
         }
         boolean[] layer_contains_wires_arr = new boolean[board_layer_structure.arr.length];
         boolean[] changed_layer_arr = new boolean[board_layer_structure.arr.length];
-        Arrays.fill(layer_contains_wires_arr, false);
-        Arrays.fill(changed_layer_arr, false);
+//        Arrays.fill(layer_contains_wires_arr, false);
+//        Arrays.fill(changed_layer_arr, false);
 
         Collection<board.ConductionArea> conduction_area_list = new LinkedList<>();
         Collection<board.Item> item_list = routing_board.get_items();

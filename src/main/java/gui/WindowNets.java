@@ -19,6 +19,7 @@
  */
 package gui;
 
+import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,7 +28,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.TreeSet;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -91,7 +91,7 @@ public class WindowNets extends WindowObjectListWithFilter {
             selected_net_numbers[i] = ((Net) selected_nets[i]).net_number;
         }
         board.RoutingBoard routing_board = board_frame.board_panel.board_handling.get_routing_board();
-        Set<board.Item> selected_items = new TreeSet<>();
+        Set<board.Item> selected_items = new ObjectAVLTreeSet<>();
         Collection<board.Item> board_items = routing_board.get_items();
         for (board.Item curr_item : board_items) {
             boolean item_matches = false;

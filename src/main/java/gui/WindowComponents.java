@@ -21,12 +21,12 @@ package gui;
 
 import board.Component;
 import board.Components;
+import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * Window displaying the components on the board.
@@ -71,7 +71,7 @@ public class WindowComponents extends WindowObjectListWithFilter {
             return;
         }
         board.RoutingBoard routing_board = board_frame.board_panel.board_handling.get_routing_board();
-        Set<board.Item> selected_items = new TreeSet<>();
+        Set<board.Item> selected_items = new ObjectAVLTreeSet<>();
         Collection<board.Item> board_items = routing_board.get_items();
         for (board.Item curr_item : board_items) {
             if (curr_item.get_component_no() > 0) {

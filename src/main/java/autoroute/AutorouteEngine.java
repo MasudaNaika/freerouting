@@ -34,15 +34,15 @@ import geometry.planar.TileShape;
 import it.unimi.dsi.fastutil.ints.IntAVLTreeSet;
 import it.unimi.dsi.fastutil.ints.IntBidirectionalIterator;
 import it.unimi.dsi.fastutil.ints.IntSortedSet;
+import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
+import it.unimi.dsi.fastutil.objects.ObjectLinkedOpenHashSet;
 import java.awt.Graphics;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
-import java.util.TreeSet;
 
 /**
  * Temporary autoroute data stored on the RoutingBoard.
@@ -245,7 +245,7 @@ public class AutorouteEngine {
     public IncompleteFreeSpaceExpansionRoom add_incomplete_expansion_room(TileShape p_shape, int p_layer, TileShape p_contained_shape) {
         IncompleteFreeSpaceExpansionRoom new_room = new IncompleteFreeSpaceExpansionRoom(p_shape, p_layer, p_contained_shape);
         if (incomplete_expansion_rooms == null) {
-            incomplete_expansion_rooms = new LinkedList<>();
+            incomplete_expansion_rooms = new ObjectLinkedOpenHashSet<>();   // LinkedList.remove(object) takes time.
         }
         incomplete_expansion_rooms.add(new_room);
         return new_room;
@@ -262,8 +262,7 @@ public class AutorouteEngine {
         if (incomplete_expansion_rooms.isEmpty()) {
             return null;
         }
-        Iterator<IncompleteFreeSpaceExpansionRoom> it = incomplete_expansion_rooms.iterator();
-        return it.next();
+        return incomplete_expansion_rooms.iterator().next();
     }
 
     /**
@@ -271,7 +270,7 @@ public class AutorouteEngine {
      */
     public void remove_incomplete_expansion_room(IncompleteFreeSpaceExpansionRoom p_room) {
         remove_all_doors(p_room);
-        incomplete_expansion_rooms.remove(p_room);
+        incomplete_expansion_rooms.remove(p_room);  // LinkedList.remove(object) takes time.
     }
 
     /**
@@ -377,7 +376,7 @@ public class AutorouteEngine {
         CompleteFreeSpaceExpansionRoom result;
         if (completed_room != null && completed_room.get_shape().dimension() == 2) {
             if (complete_expansion_rooms == null) {
-                complete_expansion_rooms = new LinkedList<>();
+                complete_expansion_rooms = new ObjectLinkedOpenHashSet<>(); // LinkedList
             }
             complete_expansion_rooms.add(completed_room);
             autoroute_search_tree.insert(completed_room);
@@ -465,7 +464,7 @@ public class AutorouteEngine {
      * item in the set p_items.
      */
     Collection<CompleteFreeSpaceExpansionRoom> get_rooms_with_target_items(Set<Item> p_items) {
-        Set<CompleteFreeSpaceExpansionRoom> result = new TreeSet<>();
+        Set<CompleteFreeSpaceExpansionRoom> result = new ObjectAVLTreeSet<>();
         if (complete_expansion_rooms != null) {
             for (CompleteFreeSpaceExpansionRoom curr_room : complete_expansion_rooms) {
                 Collection<TargetItemExpansionDoor> target_door_list = curr_room.get_target_doors();
@@ -555,11 +554,11 @@ public class AutorouteEngine {
     /**
      * The list of incomplete expansion rooms on the routing board
      */
-    private List<IncompleteFreeSpaceExpansionRoom> incomplete_expansion_rooms = null;
+    private Collection<IncompleteFreeSpaceExpansionRoom> incomplete_expansion_rooms = null;
     /**
      * The list of complete expansion rooms on the routing board
      */
-    private List<CompleteFreeSpaceExpansionRoom> complete_expansion_rooms = null;
+    private Collection<CompleteFreeSpaceExpansionRoom> complete_expansion_rooms = null;
     /**
      * The count of expansion rooms created so far
      */

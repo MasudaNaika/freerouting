@@ -27,10 +27,10 @@ import geometry.planar.Point;
 import geometry.planar.Polyline;
 import geometry.planar.TileShape;
 import geometry.planar.Vector;
+import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * Contains internal auxiliary functions of class RoutingBoard for shoving
@@ -409,7 +409,7 @@ public class ShoveTraceAlgo {
 
     Collection<Item> get_ignore_items_at_tie_pins(TileShape p_trace_shape, int p_layer, int[] p_net_no_arr) {
         Collection<SearchTreeObject> overlaps = board.overlapping_objects(p_trace_shape, p_layer);
-        Set<Item> result = new TreeSet<>();
+        Set<Item> result = new ObjectAVLTreeSet<>();
         for (SearchTreeObject curr_object : overlaps) {
             if (curr_object instanceof Pin) {
                 Pin curr_pin = (Pin) curr_object;

@@ -36,11 +36,11 @@ import geometry.planar.ShapeBoundingDirections;
 import geometry.planar.Side;
 import geometry.planar.Simplex;
 import geometry.planar.TileShape;
+import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Set;
-import java.util.TreeSet;
 import rules.ClearanceMatrix;
 
 /**
@@ -102,8 +102,8 @@ public class ShapeSearchTree extends datastructures.MinAreaTree {
         int old_shape_count = p_obj.tree_shape_count(this);
         int new_shape_count = changed_shapes.length + p_keep_at_start_count + p_keep_at_end_count;
         Leaf[] new_leaf_arr = new Leaf[new_shape_count];
-        TileShape[] new_precalculated_tree_shapes = new TileShape[new_shape_count];
         Leaf[] old_entries = p_obj.get_search_tree_entries(this);
+        TileShape[] new_precalculated_tree_shapes = new TileShape[new_shape_count];
         System.arraycopy(old_entries, 0, new_leaf_arr, 0, p_keep_at_start_count);
         for (int i = 0; i < p_keep_at_start_count; ++i) {
             new_precalculated_tree_shapes[i] = p_obj.get_tree_shape(this, i);
@@ -316,7 +316,7 @@ public class ShapeSearchTree extends datastructures.MinAreaTree {
      * p_shape. If p_layer < 0, the layer is ignored
      */
     public Set<SearchTreeObject> overlapping_objects(ConvexShape p_shape, int p_layer) {
-        Set<SearchTreeObject> result = new TreeSet<>();
+        Set<SearchTreeObject> result = new ObjectAVLTreeSet<>();
         overlapping_objects(p_shape, p_layer, new int[0], result);
         return result;
     }
@@ -417,7 +417,7 @@ public class ShapeSearchTree extends datastructures.MinAreaTree {
         Collection<Leaf> tmp_list = overlaps(offset_bounds);
 
         // sort the found items by its clearances tp p_cl_type on layer p_layer
-        Set<EntrySortedByClearance> sorted_items = new TreeSet<>();
+        Set<EntrySortedByClearance> sorted_items = new ObjectAVLTreeSet<>();
 
         for (Leaf curr_leaf : tmp_list) {
             Item curr_item = (Item) curr_leaf.object;
@@ -490,11 +490,11 @@ public class ShapeSearchTree extends datastructures.MinAreaTree {
      */
     public Set<Item> overlapping_items_with_clearance(ConvexShape p_shape, int p_layer, int[] p_ignore_net_nos,
             int p_clearance_class) {
-        Set<SearchTreeObject> overlaps = new TreeSet<>();
+        Set<SearchTreeObject> overlaps = new ObjectAVLTreeSet<>();
 
         overlapping_objects_with_clearance(p_shape, p_layer,
                 p_ignore_net_nos, p_clearance_class, overlaps);
-        Set<Item> result = new TreeSet<>();
+        Set<Item> result = new ObjectAVLTreeSet<>();
         for (SearchTreeObject curr_object : overlaps) {
             if (curr_object instanceof Item) {
                 result.add((Item) curr_object);

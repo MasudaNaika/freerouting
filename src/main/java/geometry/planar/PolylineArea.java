@@ -141,8 +141,8 @@ public class PolylineArea implements Area, Serializable {
         for (PolylineShape hole : hole_arr) {
             corner_count += hole.border_line_count();
         }
-        FloatPoint[] result = new FloatPoint[corner_count];
         FloatPoint[] curr_corner_arr = border_shape.corner_approx_arr();
+        FloatPoint[] result = new FloatPoint[corner_count];
         System.arraycopy(curr_corner_arr, 0, result, 0, curr_corner_arr.length);
         int dest_pos = curr_corner_arr.length;
         for (PolylineShape hole : hole_arr) {

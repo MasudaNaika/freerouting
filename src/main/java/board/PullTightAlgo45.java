@@ -251,8 +251,7 @@ class PullTightAlgo45 extends PullTightAlgo {
                         Line[] tmp_lines = new Line[line_arr.length + 1];
                         System.arraycopy(line_arr, 0, tmp_lines, 0, i + 1);
                         tmp_lines[i + 1] = new_line;
-                        System.arraycopy(line_arr, i + 1, tmp_lines, i + 2,
-                                tmp_lines.length - (i + 2));
+                        System.arraycopy(line_arr, i + 1, tmp_lines, i + 2, tmp_lines.length - (i + 2));
                         line_arr = tmp_lines;
                         ++i;
                     }
@@ -541,22 +540,22 @@ class PullTightAlgo45 extends PullTightAlgo {
                 Line add_line = translate_line.translate(translate_dist);
                 // constract the new trace polyline.
                 Line[] new_lines = new Line[trace_polyline.arr.length + 1];
+                System.arraycopy(trace_polyline.arr, 1, new_lines, 2, new_lines.length - 2);
                 new_lines[0] = other_trace_line;
                 new_lines[1] = add_line;
-                System.arraycopy(trace_polyline.arr, 1, new_lines, 2, new_lines.length - 2);
                 return new Polyline(new_lines);
             }
         } else if (bend) {
             Line[] check_line_arr = new Line[trace_polyline.arr.length + 1];
+            System.arraycopy(trace_polyline.arr, 1, check_line_arr, 2, check_line_arr.length - 2);
             check_line_arr[0] = other_prev_trace_line;
             check_line_arr[1] = other_trace_line;
-            System.arraycopy(trace_polyline.arr, 1, check_line_arr, 2, check_line_arr.length - 2);
             Line new_line = reposition_line(check_line_arr, 2);
             if (new_line != null) {
                 Line[] new_lines = new Line[trace_polyline.arr.length];
+                System.arraycopy(trace_polyline.arr, 2, new_lines, 2, new_lines.length - 2);
                 new_lines[0] = other_trace_line;
                 new_lines[1] = new_line;
-                System.arraycopy(trace_polyline.arr, 2, new_lines, 2, new_lines.length - 2);
                 return new Polyline(new_lines);
             }
         }

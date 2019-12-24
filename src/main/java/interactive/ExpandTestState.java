@@ -30,11 +30,11 @@ import board.Item;
 import board.RoutingBoard;
 import geometry.planar.FloatPoint;
 import geometry.planar.TileShape;
+import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.awt.Graphics;
 import java.util.Collection;
 import java.util.Set;
 import java.util.SortedSet;
-import java.util.TreeSet;
 
 /**
  * State for testing the expanding algorithm of the autorouter.
@@ -195,14 +195,14 @@ public class ExpandTestState extends InteractiveState {
     private void complete_autoroute() {
         MazeSearchAlgo.Result search_result = maze_search_algo.find_connection();
         if (search_result != null) {
-            SortedSet<Item> ripped_item_list = new TreeSet<>();
+            SortedSet<Item> ripped_item_list = new ObjectAVLTreeSet<>();
             autoroute_result
                     = LocateFoundConnectionAlgo.get_instance(search_result, control_settings,
                             autoroute_engine.autoroute_search_tree,
                             hdlg.get_routing_board().rules.get_trace_angle_restriction(),
                             ripped_item_list, board.TestLevel.ALL_DEBUGGING_OUTPUT);
             hdlg.get_routing_board().generate_snapshot();
-            SortedSet<Item> ripped_connections = new TreeSet<>();
+            SortedSet<Item> ripped_connections = new ObjectAVLTreeSet<>();
             for (Item curr_ripped_item : ripped_item_list) {
                 ripped_connections.addAll(curr_ripped_item.get_connection_items(Item.StopConnectionOption.VIA));
             }

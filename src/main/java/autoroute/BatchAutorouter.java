@@ -25,6 +25,7 @@ import geometry.planar.FloatLine;
 import geometry.planar.FloatPoint;
 import interactive.BoardHandling;
 import interactive.InteractiveActionThread;
+import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -32,7 +33,6 @@ import java.util.LinkedList;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.SortedSet;
-import java.util.TreeSet;
 
 /**
  * Handles the sequencing of the batch autoroute passes.
@@ -176,7 +176,7 @@ public class BatchAutorouter {
                         break;
                     }
                     routing_board.start_marking_changed_area();
-                    SortedSet<Item> ripped_item_list = new TreeSet<>();
+                    SortedSet<Item> ripped_item_list = new ObjectAVLTreeSet<>();
                     if (autoroute_item(curr_item, curr_item.get_net_no(i), ripped_item_list, p_pass_no)) {
                         ++routed;
                         hdlg.repaint();

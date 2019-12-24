@@ -20,6 +20,7 @@
 package gui;
 
 import datastructures.UndoableObjects;
+import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
@@ -27,7 +28,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.TreeSet;
 import library.Padstack;
 import library.Padstacks;
 
@@ -77,7 +77,7 @@ public class WindowPadstacks extends WindowObjectListWithFilter {
             padstack_list.add((Padstack) obj);
         }
         board.RoutingBoard routing_board = board_frame.board_panel.board_handling.get_routing_board();
-        Set<board.Item> board_instances = new TreeSet<>();
+        Set<board.Item> board_instances = new ObjectAVLTreeSet<>();
         Iterator<UndoableObjects.UndoableObjectNode> it = routing_board.item_list.start_read_object();
         while (true) {
             datastructures.UndoableObjects.Storable curr_object = routing_board.item_list.read_object(it);

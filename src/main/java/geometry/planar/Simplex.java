@@ -934,25 +934,24 @@ public class Simplex extends TileShape implements Serializable {
                 IntDirection prev_dir = (IntDirection) prev_line.direction();
                 IntDirection next_dir = (IntDirection) next_line.direction();
                 double det = prev_dir.determinant(next_dir);
-                if (det != 0) // prev_line and next_line are not parallel
-                {
+                if (det != 0) {
+                    // prev_line and next_line are not parallel
                     if (intersection_sides[ind] == null) {
                         // intersection_sides [ind] not precalculated
                         intersection_sides[ind] = curr_line.side_of_intersection(prev_line, next_line);
                     }
-                    if (det > 0) // direction of next_line is bigger than direction of prev_line
-                    {
+                    if (det > 0) {
+                        // direction of next_line is bigger than direction of prev_line
                         // if the intersection of prev_line and next_line
                         // is on the left of curr_line, curr_line does not
                         // contribute to the shape of the simplex
                         remove_line = (intersection_sides[ind] != Side.ON_THE_LEFT);
-                    } else // direction of next_line is smaller than direction of prev_line
-                    {
-
+                    } else {
+                        // direction of next_line is smaller than direction of prev_line
                         if (intersection_sides[ind] == Side.ON_THE_LEFT) {
                             IntDirection curr_dir = (IntDirection) curr_line.direction();
-                            if (prev_dir.determinant(curr_dir) > 0) // direction of curr_line is bigger than direction of prev_line
-                            {
+                            if (prev_dir.determinant(curr_dir) > 0) {
+                                // direction of curr_line is bigger than direction of prev_line
                                 // the halfplane defined by curr_line does not intersect
                                 // with the simplex defined by prev_line and nex_line,
                                 // hence this simplex must be empty
@@ -962,12 +961,12 @@ public class Simplex extends TileShape implements Serializable {
                             }
                         }
                     }
-                } else // prev_line and next_line are parallel
-                {
-                    if (prev_line.side_of(next_line.a) == Side.ON_THE_LEFT) // prev_line is to the left of next_line,
-                    // the halfplanes defined by prev_line and next_line
-                    // do not intersect
-                    {
+                } else {
+                    // prev_line and next_line are parallel
+                    if (prev_line.side_of(next_line.a) == Side.ON_THE_LEFT) {
+                        // prev_line is to the left of next_line,
+                        // the halfplanes defined by prev_line and next_line
+                        // do not intersect
                         new_length = 0;
                         try_again = false;
                         break;
@@ -1003,8 +1002,8 @@ public class Simplex extends TileShape implements Serializable {
                     prev_ind = ind;
                 }
                 curr_line = next_line;
-                if (!try_again && ind >= index_of_last_removed_line) // tried all lines without removing one
-                {
+                if (!try_again && ind >= index_of_last_removed_line) {
+                    // tried all lines without removing one
                     break;
                 }
             }
@@ -1012,15 +1011,15 @@ public class Simplex extends TileShape implements Serializable {
 
         if (new_length == 2) {
             if (line_arr[0].is_parallel(line_arr[1])) {
-                if (line_arr[0].direction().equals(line_arr[1].direction())) // one of the two remaining lines is redundant
-                {
+                if (line_arr[0].direction().equals(line_arr[1].direction())) {
+                    // one of the two remaining lines is redundant
                     if (line_arr[1].side_of(line_arr[0].a) == Side.ON_THE_LEFT) {
                         line_arr[0] = line_arr[1];
                     }
                     --new_length;
-                } else // the two remaining lines have opposite direction
-                // the simplex may be empty
-                {
+                } else {
+                    // the two remaining lines have opposite direction
+                    // the simplex may be empty
                     if (line_arr[1].side_of(line_arr[0].a) == Side.ON_THE_LEFT) {
                         new_length = 0;
                     }

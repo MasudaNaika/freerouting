@@ -29,6 +29,7 @@ import geometry.planar.Polyline;
 import geometry.planar.Shape;
 import geometry.planar.TileShape;
 import geometry.planar.Vector;
+import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.awt.Color;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -38,7 +39,6 @@ import java.util.LinkedList;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.TreeSet;
 import library.Package;
 import library.Padstack;
 
@@ -393,7 +393,7 @@ public class Pin extends DrillItem implements Serializable {
      * Return all Pins, that can be swapped with this pin.
      */
     public Set<Pin> get_swappable_pins() {
-        Set<Pin> result = new TreeSet<>();
+        Set<Pin> result = new ObjectAVLTreeSet<>();
         Component component = board.components.get(get_component_no());
         if (component == null) {
             return result;

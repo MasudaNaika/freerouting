@@ -21,8 +21,8 @@ package datastructures;
 
 import geometry.planar.RegularTileShape;
 import geometry.planar.ShapeBoundingDirections;
+import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * Binary search tree for shapes in the plane. The shapes are stored in the
@@ -50,7 +50,7 @@ public class MinAreaTree extends ShapeTree {
      * Calculates the objects in this tree, which overlap with p_shape
      */
     public Set<Leaf> overlaps(RegularTileShape p_shape) {
-        Set<Leaf> found_overlaps = new TreeSet<>();
+        Set<Leaf> found_overlaps = new ObjectAVLTreeSet<>();
         if (root == null) {
             return found_overlaps;
         }

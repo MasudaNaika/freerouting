@@ -4,6 +4,7 @@ import geometry.planar.FloatPoint;
 import geometry.planar.IntOctagon;
 import geometry.planar.Point;
 import geometry.planar.TileShape;
+import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.awt.Color;
 import java.io.Serializable;
 import java.util.Collection;
@@ -11,7 +12,6 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  *
@@ -116,7 +116,7 @@ public abstract class Trace extends Item implements Connectable, Serializable {
 
     @Override
     public Set<Item> get_normal_contacts() {
-        Set<Item> result = new TreeSet<>();
+        Set<Item> result = new ObjectAVLTreeSet<>();
         Point start_corner = first_corner();
         if (start_corner != null) {
             result.addAll(get_normal_contacts(start_corner, false));
@@ -169,11 +169,11 @@ public abstract class Trace extends Item implements Connectable, Serializable {
      */
     public Set<Item> get_normal_contacts(Point p_point, boolean p_ignore_net) {
         if (p_point == null || !(p_point.equals(first_corner()) || p_point.equals(last_corner()))) {
-            return new TreeSet<>();
+            return new ObjectAVLTreeSet<>();
         }
         TileShape search_shape = TileShape.get_instance(p_point);
         Set<SearchTreeObject> overlaps = board.overlapping_objects(search_shape, layer);
-        Set<Item> result = new TreeSet<>();
+        Set<Item> result = new ObjectAVLTreeSet<>();
         for (SearchTreeObject curr_ob : overlaps) {
             if (!(curr_ob instanceof Item)) {
                 continue;
@@ -385,7 +385,7 @@ public abstract class Trace extends Item implements Connectable, Serializable {
      * trace. Used to avoid acid traps.
      */
     Set<Pin> touching_pins_at_end_corners() {
-        Set<Pin> result = new TreeSet<>();
+        Set<Pin> result = new ObjectAVLTreeSet<>();
         if (board == null) {
             return result;
         }

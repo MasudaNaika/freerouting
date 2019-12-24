@@ -22,12 +22,12 @@ package gui;
 import board.ClearanceViolation;
 import geometry.planar.FloatPoint;
 import interactive.ClearanceViolations;
+import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.SortedSet;
-import java.util.TreeSet;
 
 /**
  *
@@ -52,7 +52,7 @@ public class WindowClearanceViolations extends WindowObjectListWithFilter {
 
         ClearanceViolations clearance_violations
                 = new ClearanceViolations(board_handling.get_routing_board().get_items());
-        SortedSet<ViolationInfo> sorted_set = new TreeSet<>();
+        SortedSet<ViolationInfo> sorted_set = new ObjectAVLTreeSet<>();
         for (ClearanceViolation curr_violation : clearance_violations.list) {
             sorted_set.add(new ViolationInfo(curr_violation));
         }
@@ -68,7 +68,7 @@ public class WindowClearanceViolations extends WindowObjectListWithFilter {
         if (selected_violations.isEmpty()) {
             return;
         }
-        Set<board.Item> selected_items = new TreeSet<>();
+        Set<board.Item> selected_items = new ObjectAVLTreeSet<>();
         for (Object obj : selected_violations) {
             ClearanceViolation curr_violation = ((ViolationInfo) obj).violation;
             selected_items.add(curr_violation.first_item);

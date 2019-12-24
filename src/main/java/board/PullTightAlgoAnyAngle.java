@@ -246,8 +246,7 @@ class PullTightAlgoAnyAngle extends PullTightAlgo {
                 Line[] tmp_lines = new Line[line_arr.length + 1];
                 System.arraycopy(line_arr, 0, tmp_lines, 0, i + 2);
                 tmp_lines[i + 2] = new_line;
-                System.arraycopy(line_arr, i + 2, tmp_lines, i + 3,
-                        tmp_lines.length - (i + 3));
+                System.arraycopy(line_arr, i + 2, tmp_lines, i + 3, tmp_lines.length - (i + 3));
                 line_arr = tmp_lines;
                 ++i;
             }
@@ -374,9 +373,9 @@ class PullTightAlgoAnyAngle extends PullTightAlgo {
                     continue;
                 }
             }
+            int keep_before_ind = i - crossed_corners_before_count;
             Line[] curr_lines = new Line[line_arr.length
                     - crossed_corners_before_count - crossed_corners_after_count];
-            int keep_before_ind = i - crossed_corners_before_count;
             System.arraycopy(line_arr, 0, curr_lines, 0, keep_before_ind);
             curr_lines[keep_before_ind] = new_line;
             System.arraycopy(line_arr, i + 1 + crossed_corners_after_count, curr_lines,
@@ -868,22 +867,22 @@ class PullTightAlgoAnyAngle extends PullTightAlgo {
                 Line add_line = translate_line.translate(translate_dist);
                 // constract the new trace polyline.
                 Line[] new_lines = new Line[new_line_count];
+                System.arraycopy(trace_polyline.arr, 2 - diff, new_lines, 2, new_lines.length - 2);
                 new_lines[0] = other_trace_line;
                 new_lines[1] = add_line;
-                System.arraycopy(trace_polyline.arr, 2 - diff, new_lines, 2, new_lines.length - 2);
                 return new Polyline(new_lines);
             }
         } else if (bend) {
             Line[] check_line_arr = new Line[new_line_count];
+            System.arraycopy(trace_polyline.arr, 2 - diff, check_line_arr, 2, check_line_arr.length - 2);
             check_line_arr[0] = other_prev_trace_line;
             check_line_arr[1] = other_trace_line;
-            System.arraycopy(trace_polyline.arr, 2 - diff, check_line_arr, 2, check_line_arr.length - 2);
             Line new_line = reposition_line(check_line_arr, 0);
             if (new_line != null) {
                 Line[] new_lines = new Line[trace_polyline.arr.length];
+                System.arraycopy(trace_polyline.arr, 2, new_lines, 2, new_lines.length - 2);
                 new_lines[0] = other_trace_line;
                 new_lines[1] = new_line;
-                System.arraycopy(trace_polyline.arr, 2, new_lines, 2, new_lines.length - 2);
                 return new Polyline(new_lines);
             }
         }

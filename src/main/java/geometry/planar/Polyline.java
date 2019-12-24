@@ -782,8 +782,8 @@ public class Polyline implements Serializable {
 
         } else {
             second_piece = new Line[arr.length - p_line_no + 1];
-            second_piece[0] = p_end_line;
             System.arraycopy(arr, p_line_no, second_piece, 1, second_piece.length - 1);
+            second_piece[0] = p_end_line;
         }
         Polyline[] result = {
             new Polyline(first_piece),

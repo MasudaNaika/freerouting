@@ -84,9 +84,9 @@ class PullTightAlgo90 extends PullTightAlgo {
         }
         // now the second corner can be skipped.
         Line[] new_lines = new Line[p_polyline.arr.length - 1];
+        System.arraycopy(p_polyline.arr, 3, new_lines, 2, new_lines.length - 2);
         new_lines[0] = p_polyline.arr[1];
         new_lines[1] = p_polyline.arr[0];
-        System.arraycopy(p_polyline.arr, 3, new_lines, 2, new_lines.length - 2);
         return new Polyline(new_lines);
     }
 

@@ -23,13 +23,13 @@ package gui;
 import board.Item;
 import datastructures.Signum;
 import geometry.planar.FloatPoint;
+import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.SortedSet;
-import java.util.TreeSet;
 
 /**
  *
@@ -52,7 +52,7 @@ public class WindowRouteStubs extends WindowObjectListWithFilter {
     protected void fill_list() {
         board.BasicBoard routing_board = board_frame.board_panel.board_handling.get_routing_board();
 
-        SortedSet<RouteStubInfo> route_stub_info_set = new TreeSet<>();
+        SortedSet<RouteStubInfo> route_stub_info_set = new ObjectAVLTreeSet<>();
 
         Collection<Item> board_items = routing_board.get_items();
         for (Item curr_item : board_items) {
@@ -121,7 +121,7 @@ public class WindowRouteStubs extends WindowObjectListWithFilter {
         if (selected_list_values.isEmpty()) {
             return;
         }
-        Set<board.Item> selected_items = new TreeSet<>();
+        Set<board.Item> selected_items = new ObjectAVLTreeSet<>();
         for (Object obj : selected_list_values) {
             selected_items.add(((RouteStubInfo) obj).stub_item);
         }

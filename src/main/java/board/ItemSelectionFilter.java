@@ -19,10 +19,10 @@
  */
 package board;
 
+import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * Filter for selecting items on the board.
@@ -56,7 +56,7 @@ public class ItemSelectionFilter implements Serializable {
      */
     public ItemSelectionFilter(SelectableChoices p_item_type) {
         values = new boolean[SelectableChoices.values().length];
-        Arrays.fill(values, false);
+//        Arrays.fill(values, false);
         values[p_item_type.ordinal()] = true;
         values[SelectableChoices.FIXED.ordinal()] = true;
         values[SelectableChoices.UNFIXED.ordinal()] = true;
@@ -67,7 +67,7 @@ public class ItemSelectionFilter implements Serializable {
      */
     public ItemSelectionFilter(SelectableChoices[] p_item_types) {
         values = new boolean[SelectableChoices.values().length];
-        Arrays.fill(values, false);
+//        Arrays.fill(values, false);
         for (int i = 0; i < p_item_types.length; ++i) {
             values[p_item_types[i].ordinal()] = true;
         }
@@ -110,7 +110,7 @@ public class ItemSelectionFilter implements Serializable {
      * Filters a collection of items with this filter.
      */
     public Set<Item> filter(Set<board.Item> p_items) {
-        Set<Item> result = new TreeSet<>();
+        Set<Item> result = new ObjectAVLTreeSet<>();
         for (board.Item curr_item : p_items) {
             if (curr_item.is_selected_by_filter(this)) {
                 result.add(curr_item);

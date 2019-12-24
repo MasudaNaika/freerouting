@@ -40,13 +40,13 @@ import geometry.planar.Vector;
 import it.unimi.dsi.fastutil.ints.IntAVLTreeSet;
 import it.unimi.dsi.fastutil.ints.IntBidirectionalIterator;
 import it.unimi.dsi.fastutil.ints.IntSortedSet;
+import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Set;
-import java.util.TreeSet;
 import javax.swing.JPopupMenu;
 import library.Package;
 import rules.Net;
@@ -347,7 +347,7 @@ public class SelectedItemState extends InteractiveState {
         int items_to_go_count = autoroute_item_list.size();
         hdlg.screen_messages.set_interactive_autoroute_info(found_count, not_found_count, items_to_go_count);
         // Empty item_list to avoid displaying the seected items.
-        item_list = new TreeSet<>();
+        item_list = new ObjectAVLTreeSet<>();
         boolean ratsnest_hidden_before = hdlg.get_ratsnest().is_hidden();
         if (!ratsnest_hidden_before) {
             hdlg.get_ratsnest().hide();
@@ -431,7 +431,7 @@ public class SelectedItemState extends InteractiveState {
         int items_to_go_count = fanout_list.size();
         hdlg.screen_messages.set_interactive_autoroute_info(found_count, not_found_count, items_to_go_count);
         // Empty item_list to avoid displaying the seected items.
-        item_list = new TreeSet<>();
+        item_list = new ObjectAVLTreeSet<>();
         boolean ratsnest_hidden_before = hdlg.get_ratsnest().is_hidden();
         if (!ratsnest_hidden_before) {
             hdlg.get_ratsnest().hide();
@@ -573,7 +573,7 @@ public class SelectedItemState extends InteractiveState {
                 }
             }
         }
-        Set<Item> new_selected_items = new TreeSet<>();
+        Set<Item> new_selected_items = new ObjectAVLTreeSet<>();
         for (IntBidirectionalIterator it = curr_net_no_set.iterator(); it.hasNext();) {
             int curr_net_no = it.nextInt();
             new_selected_items.addAll(hdlg.get_routing_board().get_connectable_items(curr_net_no));
@@ -603,7 +603,7 @@ public class SelectedItemState extends InteractiveState {
                 curr_group_no_set.add(curr_item.get_component_no());
             }
         }
-        Set<Item> new_selected_items = new TreeSet<>();
+        Set<Item> new_selected_items = new ObjectAVLTreeSet<>();
         new_selected_items.addAll(item_list);
         for (IntBidirectionalIterator it = curr_group_no_set.iterator(); it.hasNext();) {
             int curr_group_no = it.nextInt();
@@ -625,7 +625,7 @@ public class SelectedItemState extends InteractiveState {
      * selected items.
      */
     public InteractiveState extent_to_whole_connected_sets() {
-        Set<Item> new_selected_items = new TreeSet<>();
+        Set<Item> new_selected_items = new ObjectAVLTreeSet<>();
         for (Item curr_item : item_list) {
             if (curr_item instanceof Connectable) {
                 new_selected_items.addAll(curr_item.get_connected_set(-1));
@@ -648,7 +648,7 @@ public class SelectedItemState extends InteractiveState {
      * items.
      */
     public InteractiveState extent_to_whole_connections() {
-        Set<Item> new_selected_items = new TreeSet<>();
+        Set<Item> new_selected_items = new ObjectAVLTreeSet<>();
         for (Item curr_item : item_list) {
             if (curr_item instanceof Connectable) {
                 new_selected_items.addAll(curr_item.get_connection_items());

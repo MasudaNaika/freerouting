@@ -5,11 +5,11 @@ import geometry.planar.FloatPoint;
 import geometry.planar.Point;
 import geometry.planar.TileShape;
 import geometry.planar.Vector;
+import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.awt.Color;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * A ObstacleArea, which can be electrically conected to other items.
@@ -42,7 +42,7 @@ public class ConductionArea extends ObstacleArea implements Connectable {
 
     @Override
     public Set<Item> get_normal_contacts() {
-        Set<Item> result = new TreeSet<>();
+        Set<Item> result = new ObjectAVLTreeSet<>();
         for (int i = 0; i < tile_shape_count(); ++i) {
             TileShape curr_shape = get_tile_shape(i);
             Set<SearchTreeObject> overlaps = board.overlapping_objects(curr_shape, get_layer());

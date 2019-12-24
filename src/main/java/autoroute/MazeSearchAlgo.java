@@ -37,6 +37,7 @@ import geometry.planar.Line;
 import geometry.planar.Point;
 import geometry.planar.Polyline;
 import geometry.planar.TileShape;
+import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -77,7 +78,7 @@ public class MazeSearchAlgo {
         ctrl = p_ctrl;
         random_generator.setSeed(p_ctrl.ripup_costs); // To get reproducable random numbers in the ripup algorithm.
         search_tree = p_autoroute_engine.autoroute_search_tree;
-        maze_expansion_list = new TreeSet<>();
+        maze_expansion_list = new TreeSet<>();  // cannot use ObjectAVLTreeSet because of MazeListElement.compareTo implementation.
         destination_distance
                 = new DestinationDistance(ctrl.trace_costs, ctrl.layer_active,
                         ctrl.min_normal_via_cost, ctrl.min_cheap_via_cost);
@@ -1149,7 +1150,7 @@ public class MazeSearchAlgo {
         Polyline check_polyline = new Polyline(line_arr);
         TileShape check_shape = check_polyline.offset_shape(check_radius, 0);
         int[] ignore_net_nos = {ctrl.net_no};
-        Set<SearchTreeObject> overlapping_objects = new TreeSet<>();
+        Set<SearchTreeObject> overlapping_objects = new ObjectAVLTreeSet<>();
         autoroute_engine.autoroute_search_tree.overlapping_objects(check_shape, curr_layer,
                 ignore_net_nos, overlapping_objects);
 

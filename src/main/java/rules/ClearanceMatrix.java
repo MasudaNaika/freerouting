@@ -16,7 +16,6 @@
 package rules;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -391,7 +390,7 @@ public class ClearanceMatrix implements Serializable {
 
         private MatrixEntry() {
             layer = new int[layer_structure.arr.length];
-            Arrays.fill(layer, 0);
+//            Arrays.fill(layer, 0);
         }
 
         /**

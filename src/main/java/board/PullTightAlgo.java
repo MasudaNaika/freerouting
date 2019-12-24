@@ -322,8 +322,7 @@ public abstract class PullTightAlgo {
                 // result in a clearance violation
                 Line[] curr_lines = new Line[curr_polyline.arr.length - 1];
                 System.arraycopy(curr_polyline.arr, 0, curr_lines, 0, i);
-                System.arraycopy(curr_polyline.arr, i + 1, curr_lines,
-                        i, curr_lines.length - i);
+                System.arraycopy(curr_polyline.arr, i + 1, curr_lines, i, curr_lines.length - i);
                 Polyline tmp = new Polyline(curr_lines);
                 boolean check_ok = (tmp.arr.length == curr_lines.length);
                 if (check_ok && !curr_polyline.arr[i].is_multiple_of_45_degree()) {

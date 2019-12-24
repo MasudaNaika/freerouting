@@ -20,6 +20,7 @@
 package gui;
 
 import board.ObjectInfoPanel.Printable;
+import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -31,7 +32,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.TreeSet;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.JTableHeader;
@@ -274,7 +274,7 @@ public class WindowNetClasses extends BoardSavableSubWindow {
                 selected_class_arr[i] = routing_board.rules.net_classes.get((String) table.getValueAt(selected_rows[i], ColumnName.NAME.ordinal()));
             }
             rules.Nets nets = routing_board.rules.nets;
-            Set<board.Item> selected_items = new TreeSet<>();
+            Set<board.Item> selected_items = new ObjectAVLTreeSet<>();
             Collection<board.Item> board_items = routing_board.get_items();
             for (board.Item curr_item : board_items) {
                 boolean item_matches = false;

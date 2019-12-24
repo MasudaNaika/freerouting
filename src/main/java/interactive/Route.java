@@ -36,12 +36,12 @@ import geometry.planar.IntPoint;
 import geometry.planar.Point;
 import geometry.planar.Polyline;
 import geometry.planar.Vector;
+import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Set;
-import java.util.TreeSet;
 import library.Padstack;
 import rules.Net;
 import rules.ViaInfo;
@@ -376,7 +376,7 @@ public class Route {
      * target pin.
      */
     private Set<SwapPinInfo> calculate_swap_pin_infos() {
-        Set<SwapPinInfo> result = new TreeSet<>();
+        Set<SwapPinInfo> result = new ObjectAVLTreeSet<>();
         if (target_set == null) {
             return result;
         }

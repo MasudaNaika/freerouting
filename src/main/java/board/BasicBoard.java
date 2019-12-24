@@ -29,6 +29,7 @@ import geometry.planar.PolylineShape;
 import geometry.planar.TileShape;
 import geometry.planar.Vector;
 import it.unimi.dsi.fastutil.ints.IntSortedSet;
+import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.awt.Graphics;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -39,7 +40,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Set;
 import java.util.SortedSet;
-import java.util.TreeSet;
 import library.BoardLibrary;
 import library.Padstack;
 import rules.BoardRules;
@@ -694,7 +694,7 @@ public class BasicBoard implements Serializable {
         if (p_net_no <= 0) {
             return result;
         }
-        SortedSet<Item> items_to_handle = new TreeSet<>();
+        SortedSet<Item> items_to_handle = new ObjectAVLTreeSet<>();
         Iterator<UndoableObjects.UndoableObjectNode> it = item_list.start_read_object();
         while (true) {
             Item curr_item = (Item) item_list.read_object(it);
@@ -742,7 +742,7 @@ public class BasicBoard implements Serializable {
      * < 0, the layer is ignored
      */
     public Set<Item> overlapping_items(Area p_area, int p_layer) {
-        Set<Item> result = new TreeSet<>();
+        Set<Item> result = new ObjectAVLTreeSet<>();
         TileShape[] tile_shapes = p_area.split_to_convex();
         for (TileShape ts : tile_shapes) {
             Set<SearchTreeObject> curr_overlaps = overlapping_objects(ts, p_layer);
@@ -768,7 +768,7 @@ public class BasicBoard implements Serializable {
             if (!curr_shape.is_contained_in(bounding_box)) {
                 return false;
             }
-            Set<SearchTreeObject> obstacles = new TreeSet<>();
+            Set<SearchTreeObject> obstacles = new ObjectAVLTreeSet<>();
             default_tree.overlapping_objects_with_clearance(curr_shape, p_layer,
                     p_net_no_arr, p_cl_class, obstacles);
             for (SearchTreeObject curr_ob : obstacles) {
@@ -916,7 +916,7 @@ public class BasicBoard implements Serializable {
     public Set<Item> pick_items(Point p_location, int p_layer, ItemSelectionFilter p_filter) {
         TileShape point_shape = TileShape.get_instance(p_location);
         Collection<SearchTreeObject> overlaps = overlapping_objects(point_shape, p_layer);
-        Set<Item> result = new TreeSet<>();
+        Set<Item> result = new ObjectAVLTreeSet<>();
         for (SearchTreeObject curr_object : overlaps) {
             if (curr_object instanceof Item) {
                 result.add((Item) curr_object);

@@ -19,10 +19,10 @@ import board.RoutingBoard;
 import datastructures.TimeLimit;
 import geometry.planar.FloatPoint;
 import interactive.InteractiveActionThread;
+import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.SortedSet;
-import java.util.TreeSet;
 
 /**
  * Handles the sequencing of the fanout inside the batch autorouter.
@@ -46,7 +46,7 @@ public class BatchFanout {
         thread = p_thread;
         routing_board = p_thread.hdlg.get_routing_board();
         Collection<board.Pin> board_smd_pin_list = routing_board.get_smd_pins();
-        sorted_components = new TreeSet<>();
+        sorted_components = new ObjectAVLTreeSet<>();
         for (int i = 1; i <= routing_board.components.count(); ++i) {
             board.Component curr_board_component = routing_board.components.get(i);
             Component curr_component = new Component(curr_board_component, board_smd_pin_list);
@@ -134,7 +134,7 @@ public class BatchFanout {
             gravity_center_of_smd_pins = new FloatPoint(x, y);
 
             // calculate the sorted SMD pins of this component
-            smd_pins = new TreeSet<>();
+            smd_pins = new ObjectAVLTreeSet<>();
 
             for (board.Pin curr_board_pin : curr_pin_list) {
                 smd_pins.add(new Pin(curr_board_pin));

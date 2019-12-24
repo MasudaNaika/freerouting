@@ -1143,9 +1143,7 @@ class GUIDefaultsScanner {
 
         /* first: make room (if you can) */
         if (zzStartRead > 0) {
-            System.arraycopy(zzBuffer, zzStartRead,
-                    zzBuffer, 0,
-                    zzEndRead - zzStartRead);
+            System.arraycopy(zzBuffer, zzStartRead, zzBuffer, 0, zzEndRead - zzStartRead);
 
             /* translate stored positions */
             zzEndRead -= zzStartRead;

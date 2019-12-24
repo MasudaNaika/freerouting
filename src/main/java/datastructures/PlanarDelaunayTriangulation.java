@@ -23,13 +23,13 @@ import geometry.planar.IntPoint;
 import geometry.planar.Limits;
 import geometry.planar.Point;
 import geometry.planar.Side;
+import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * Creates a Delaunay triangulation in the plane for the input objects. The
@@ -103,7 +103,7 @@ public class PlanarDelaunayTriangulation {
                     curr_edge.end_corner.coor, curr_edge.end_corner.object));
         }
         if (search_graph.anchor != null) {
-            Set<Edge> result_edges = new TreeSet<>();
+            Set<Edge> result_edges = new ObjectAVLTreeSet<>();
             search_graph.anchor.get_leaf_edges(result_edges);
             for (Edge curr_edge : result_edges) {
                 result.add(new ResultEdge(curr_edge.start_corner.coor, curr_edge.start_corner.object,

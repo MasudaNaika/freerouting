@@ -21,10 +21,10 @@ package designformats.specctra;
 
 import datastructures.IdentifierType;
 import datastructures.IndentFileWriter;
+import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * Class for reading and writing net scopes from dsn-files.
@@ -82,7 +82,7 @@ public class Net {
     }
 
     public void set_pins(Collection<Pin> p_pin_list) {
-        pin_list = new TreeSet<>();
+        pin_list = new ObjectAVLTreeSet<>();
         for (Pin curr_pin : p_pin_list) {
             pin_list.add(curr_pin);
         }

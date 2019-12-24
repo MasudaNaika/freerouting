@@ -59,6 +59,7 @@ public class ShapeSearchTree45Degree extends ShapeSearchTree {
     @Override
     public Collection<IncompleteFreeSpaceExpansionRoom> complete_shape(IncompleteFreeSpaceExpansionRoom p_room,
             int p_net_no, SearchTreeObject p_ignore_object, TileShape p_ignore_shape) {
+        
         if (!(p_room.get_contained_shape().is_IntOctagon()) && board.get_test_level() != TestLevel.RELEASE_VERSION) {
             System.out.println("ShapeSearchTree45Degree.complete_shape: unexpected p_shape_to_be_contained");
             return new LinkedList<>();
