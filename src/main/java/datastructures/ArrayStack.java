@@ -27,14 +27,14 @@ package datastructures;
  *
  * @author Alfons Wirtz
  */
-public class ArrayStack<p_element_type> {
+public class ArrayStack<E> {
 
     /**
      * Creates a new instance of ArrayStack with an initial maximal capacity for
      * p_max_stack_depth elements.
      */
     public ArrayStack(int p_max_stack_depth) {
-        node_arr = (p_element_type[]) new Object[p_max_stack_depth];
+        node_arr = (E[]) new Object[p_max_stack_depth];
     }
 
     /**
@@ -47,7 +47,7 @@ public class ArrayStack<p_element_type> {
     /**
      * Pushed p_element onto the stack.
      */
-    public void push(p_element_type p_element) {
+    public void push(E p_element) {
 
         ++level;
 
@@ -62,22 +62,22 @@ public class ArrayStack<p_element_type> {
      * Pops the next element from the top of the stack. Returns null, if the
      * stack is exhausted.
      */
-    public p_element_type pop() {
+    public E pop() {
         if (level < 0) {
             return null;
         }
-        p_element_type result = node_arr[level];
+        E result = node_arr[level];
         --level;
         return result;
     }
 
     private void reallocate() {
-        p_element_type[] new_arr = (p_element_type[]) new Object[4 * node_arr.length];
+        E[] new_arr = (E[]) new Object[4 * node_arr.length];
         System.arraycopy(node_arr, 0, new_arr, 0, node_arr.length);
         node_arr = new_arr;
     }
 
     private int level = -1;
 
-    private p_element_type[] node_arr;
+    private E[] node_arr;
 }
