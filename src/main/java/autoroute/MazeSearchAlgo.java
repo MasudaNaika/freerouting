@@ -40,9 +40,10 @@ import geometry.planar.TileShape;
 import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Random;
 import java.util.Set;
-import java.util.concurrent.PriorityBlockingQueue;
 
 /**
  * Class for autorouting an incomplete connection via a maze search algorithm.
@@ -50,7 +51,7 @@ import java.util.concurrent.PriorityBlockingQueue;
  * @author Alfons Wirtz
  */
 public class MazeSearchAlgo {
-
+    
     /**
      * Initializes a new instance of MazeSearchAlgo for secrching a connection
      * between p_start_items and p_destination_items. Returns null, if the
@@ -76,7 +77,7 @@ public class MazeSearchAlgo {
         ctrl = p_ctrl;
         random_generator.setSeed(p_ctrl.ripup_costs); // To get reproducable random numbers in the ripup algorithm.
         search_tree = p_autoroute_engine.autoroute_search_tree;
-        maze_expansion_list = new PriorityBlockingQueue<>();
+        maze_expansion_list = new PriorityQueue<>();
         destination_distance = new DestinationDistance(ctrl.trace_costs, ctrl.layer_active,
                 ctrl.min_normal_via_cost, ctrl.min_cheap_via_cost);
     }
@@ -109,25 +110,22 @@ public class MazeSearchAlgo {
         MazeListElement list_element = null;
         MazeSearchElement curr_door_section = null;
         // Search the next element, which is not yet expanded.
-        boolean next_element_found = false;
         while (true) {
             if (autoroute_engine.is_stop_requested()) {
                 return false;
             }
             list_element = maze_expansion_list.poll();
             if (list_element == null) {
-                break;
+                // Next element not found.
+                return false;
             }
             int curr_section_no = list_element.section_no_of_door;
             curr_door_section = list_element.door.get_maze_search_element(curr_section_no);
             if (!curr_door_section.is_occupied) {
-                next_element_found = true;
                 break;
             }
         }
-        if (!next_element_found) {
-            return false;
-        }
+
         curr_door_section.backtrack_door = list_element.backtrack_door;
         curr_door_section.section_no_of_backtrack_door = list_element.section_no_of_backtrack_door;
         curr_door_section.room_ripped = list_element.room_ripped;
@@ -1192,8 +1190,8 @@ public class MazeSearchAlgo {
     /**
      * The autoroute engine of this expansion algorithm.
      */
-    public final AutorouteEngine autoroute_engine;
-    final AutorouteControl ctrl;
+    private final AutorouteEngine autoroute_engine;
+    private final AutorouteControl ctrl;
     /**
      * The seach tree for expanding. It is the tree compensated for the current
      * net.
@@ -1202,12 +1200,12 @@ public class MazeSearchAlgo {
     /**
      * The queue of of expanded elements used in this search algorithm.
      */
-    final PriorityBlockingQueue<MazeListElement> maze_expansion_list;
+    private final Queue<MazeListElement> maze_expansion_list;
     /**
      * Used for calculating of a good lower bound for the distance between a new
      * MazeExpansionElement and the destination set of the expansion.
      */
-    final DestinationDistance destination_distance;
+    private final DestinationDistance destination_distance;
     /**
      * The destination door found by the expanding algorithm.
      */

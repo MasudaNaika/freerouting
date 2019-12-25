@@ -262,13 +262,16 @@ public class BatchAutorouter {
             TimeLimit time_limit = new TimeLimit((int) max_milliseconds);
             AutorouteEngine autoroute_engine = routing_board.init_autoroute(p_route_net_no,
                     autoroute_control.trace_clearance_class_no, thread, time_limit, retain_autoroute_database);
-            AutorouteEngine.AutorouteResult autoroute_result = autoroute_engine.autoroute_connection(route_start_set, route_dest_set, autoroute_control,
-                    p_ripped_item_list);
+            AutorouteEngine.AutorouteResult autoroute_result = autoroute_engine
+                    .autoroute_connection(route_start_set, route_dest_set, autoroute_control, p_ripped_item_list);
             if (autoroute_result == AutorouteEngine.AutorouteResult.ROUTED) {
-                routing_board.opt_changed_area(new int[0], null, hdlg.get_settings().get_trace_pull_tight_accuracy(), autoroute_control.trace_costs, thread, TIME_LIMIT_TO_PREVENT_ENDLESS_LOOP);
+                routing_board.opt_changed_area(new int[0], null,
+                        hdlg.get_settings().get_trace_pull_tight_accuracy(),
+                        autoroute_control.trace_costs, thread, TIME_LIMIT_TO_PREVENT_ENDLESS_LOOP);
             }
             // tests.Validate.check("Autoroute  ", hdlg.get_routing_board());
-            boolean result = autoroute_result == AutorouteEngine.AutorouteResult.ROUTED || autoroute_result == AutorouteEngine.AutorouteResult.ALREADY_CONNECTED;
+            boolean result = autoroute_result == AutorouteEngine.AutorouteResult.ROUTED
+                    || autoroute_result == AutorouteEngine.AutorouteResult.ALREADY_CONNECTED;
             return result;
         } catch (Exception e) {
             return false;

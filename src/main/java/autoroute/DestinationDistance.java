@@ -339,9 +339,8 @@ public class DestinationDistance {
         // calculate distance to inner layer box
         // calculate one layer distance
         if (!inner_side_box_is_empty) {
-            result
-                    = p_box.weighted_distance(inner_side_box,
-                            trace_costs[p_layer].horizontal, trace_costs[p_layer].vertical);
+            result = p_box.weighted_distance(inner_side_box,
+                    trace_costs[p_layer].horizontal, trace_costs[p_layer].vertical);
         }
 
         // calculate two layer distance
