@@ -24,10 +24,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.text.NumberFormat;
 import java.util.ResourceBundle;
 import javax.swing.*;
@@ -98,8 +94,7 @@ public class WindowManualRules extends BoardSavableSubWindow {
         gridbag_constraints.gridwidth = GridBagConstraints.REMAINDER;
         gridbag.setConstraints(trace_width_field, gridbag_constraints);
         main_panel.add(trace_width_field);
-        trace_width_field.addKeyListener(new TraceWidthFieldKeyListener());
-        trace_width_field.addFocusListener(new TraceWidthFieldFocusListener());
+        trace_width_field.addActionListener(new TraceWidthFieldListener());
 
         JLabel layer_label = new JLabel(resources.getString("on_layer"));
         gridbag_constraints.gridwidth = 2;
@@ -205,7 +200,6 @@ public class WindowManualRules extends BoardSavableSubWindow {
     private final ComboBoxClearance clearance_combo_box;
     private final JComboBox via_rule_combo_box;
     private final JFormattedTextField trace_width_field;
-    private boolean key_input_completed = true;
     private static final int max_slider_value = 15000;
     private static double scale_factor = 1;
 
@@ -236,17 +230,13 @@ public class WindowManualRules extends BoardSavableSubWindow {
         }
     }
 
-    private class TraceWidthFieldKeyListener extends KeyAdapter {
+    private class TraceWidthFieldListener implements ActionListener {
 
         @Override
-        public void keyTyped(KeyEvent p_evt) {
-            if (p_evt.getKeyChar() == '\n') {
-                key_input_completed = true;
-                Object input = trace_width_field.getValue();
-                if (!(input instanceof Number)) {
-                    return;
-                }
-                double input_value = ((Number) input).doubleValue();
+        public void actionPerformed(ActionEvent e) {
+            String input = trace_width_field.getText();
+            try {
+                double input_value = Double.parseDouble(input);
                 if (input_value <= 0) {
                     return;
                 }
@@ -254,25 +244,11 @@ public class WindowManualRules extends BoardSavableSubWindow {
                 int new_half_width = (int) Math.round(0.5 * board_value);
                 board_handling.set_manual_trace_half_width(layer_combo_box.get_selected_layer().index, new_half_width);
                 set_trace_width_field(new_half_width);
-            } else {
-                key_input_completed = false;
-            }
-        }
-    }
-
-    private class TraceWidthFieldFocusListener implements FocusListener {
-
-        @Override
-        public void focusLost(FocusEvent p_evt) {
-            if (!key_input_completed) {
+            } catch (NumberFormatException ex) {
                 // restore the text field.
                 set_selected_layer(layer_combo_box.get_selected_layer());
-                key_input_completed = true;
             }
         }
-
-        @Override
-        public void focusGained(FocusEvent p_evt) {
-        }
     }
+
 }

@@ -24,10 +24,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.text.NumberFormat;
@@ -230,8 +226,7 @@ public class WindowRouteParameter extends BoardSavableSubWindow {
         gridbag_constraints.gridwidth = GridBagConstraints.REMAINDER;
         gridbag.setConstraints(edge_to_turn_dist_field, gridbag_constraints);
         main_panel.add(edge_to_turn_dist_field);
-        edge_to_turn_dist_field.addKeyListener(new EdgeToTurnDistFieldKeyListener());
-        edge_to_turn_dist_field.addFocusListener(new EdgeToTurnDistFieldFocusListener());
+        edge_to_turn_dist_field.addActionListener(new EdgeToTurnDistFieldListener());
 
         gridbag_constraints.gridwidth = GridBagConstraints.REMAINDER;
         separator = new JLabel("----------------------------------------  ");
@@ -250,8 +245,7 @@ public class WindowRouteParameter extends BoardSavableSubWindow {
         gridbag_constraints.gridwidth = GridBagConstraints.REMAINDER;
         gridbag.setConstraints(region_width_field, gridbag_constraints);
         main_panel.add(region_width_field);
-        region_width_field.addKeyListener(new RegionWidthFieldKeyListener());
-        region_width_field.addFocusListener(new RegionWidthFieldFocusListener());
+        region_width_field.addActionListener(new RegionWidthFieldListener());
 
         region_slider = new JSlider();
         region_slider.setMaximum(c_max_slider_value);
@@ -624,75 +618,44 @@ public class WindowRouteParameter extends BoardSavableSubWindow {
         }
     }
 
-    private class EdgeToTurnDistFieldKeyListener extends KeyAdapter {
+    private class EdgeToTurnDistFieldListener implements ActionListener {
 
         @Override
-        public void keyTyped(KeyEvent p_evt) {
-            if (p_evt.getKeyChar() == '\n') {
-                key_input_completed = true;
-                Object input = edge_to_turn_dist_field.getValue();
-                if (!(input instanceof Number)) {
-                    return;
+        public void actionPerformed(ActionEvent p_evt) {
+            try {
+                String input = edge_to_turn_dist_field.getText();
+                float input_value = Float.parseFloat(input);
+                if (input_value <= 0) {
+                    throw new NumberFormatException();
                 }
-                float input_value = ((Number) input).floatValue();
                 board_handling.set_pin_edge_to_turn_dist(input_value);
                 restrict_pin_exit_directions_check_box.setSelected(input_value > 0);
                 refresh();
-            } else {
-                key_input_completed = false;
-            }
-        }
-    }
-
-    private class EdgeToTurnDistFieldFocusListener implements FocusListener {
-
-        @Override
-        public void focusLost(FocusEvent p_evt) {
-            if (!key_input_completed) {
+            } catch (NumberFormatException ex) {
                 // restore the text field.
                 double edge_to_turn_dist = board_handling.get_routing_board().rules.get_pin_edge_to_turn_dist();
                 edge_to_turn_dist = board_handling.coordinate_transform.board_to_user(edge_to_turn_dist);
                 edge_to_turn_dist_field.setValue(edge_to_turn_dist);
-                key_input_completed = true;
             }
-        }
 
-        @Override
-        public void focusGained(FocusEvent p_evt) {
         }
     }
 
-    private class RegionWidthFieldKeyListener extends KeyAdapter {
+    private class RegionWidthFieldListener implements ActionListener {
 
         @Override
-        public void keyTyped(KeyEvent p_evt) {
-            if (p_evt.getKeyChar() == '\n') {
-                key_input_completed = true;
-                Object input = region_width_field.getValue();
-                if (!(input instanceof Number)) {
-                    return;
+        public void actionPerformed(ActionEvent p_evt) {
+            try {
+                String input = region_width_field.getText();
+                int input_value = Integer.parseInt(input);
+                if (input_value < 0 || input_value > c_max_slider_value) {
+                    throw new NumberFormatException();
                 }
-                int input_value = ((Number) input).intValue();
                 set_pull_tight_region_width(input_value);
-            } else {
-                key_input_completed = false;
-            }
-        }
-    }
-
-    private class RegionWidthFieldFocusListener implements FocusListener {
-
-        @Override
-        public void focusLost(FocusEvent p_evt) {
-            if (!key_input_completed) {
+            } catch (NumberFormatException ex) {
                 // restore the text field.
                 region_width_field.setValue(region_slider.getValue());
-                key_input_completed = true;
             }
-        }
-
-        @Override
-        public void focusGained(FocusEvent p_evt) {
         }
     }
 

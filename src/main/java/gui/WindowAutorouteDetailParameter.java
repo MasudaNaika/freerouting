@@ -25,10 +25,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.text.NumberFormat;
 import java.util.ResourceBundle;
 import javax.swing.*;
@@ -66,16 +62,14 @@ public class WindowAutorouteDetailParameter extends BoardSavableSubWindow {
         NumberFormat number_format = NumberFormat.getIntegerInstance(p_board_frame.get_locale());
         via_cost_field = new JFormattedTextField(number_format);
         via_cost_field.setColumns(3);
-        via_cost_field.addKeyListener(new ViaCostFieldKeyListener());
-        via_cost_field.addFocusListener(new ViaCostFieldFocusListener());
+        via_cost_field.addActionListener(new ViaCostFieldListener());
         gridbag_constraints.gridwidth = GridBagConstraints.REMAINDER;
         gridbag.setConstraints(via_cost_field, gridbag_constraints);
         main_panel.add(via_cost_field);
 
         plane_via_cost_field = new JFormattedTextField(number_format);
         plane_via_cost_field.setColumns(3);
-        plane_via_cost_field.addKeyListener(new PlaneViaCostFieldKeyListener());
-        plane_via_cost_field.addFocusListener(new PlaneViaCostFieldFocusListener());
+        plane_via_cost_field.addActionListener(new PlaneViaCostFieldListener());
 
         gridbag_constraints.gridwidth = 2;
         JLabel plane_via_cost_label = new JLabel(resources.getString("plane_via_costs"));
@@ -93,8 +87,7 @@ public class WindowAutorouteDetailParameter extends BoardSavableSubWindow {
 
         start_pass_no = new JFormattedTextField(number_format);
         start_pass_no.setColumns(2);
-        start_pass_no.addKeyListener(new StartPassFieldKeyListener());
-        start_pass_no.addFocusListener(new StartPassFieldFocusListener());
+        start_pass_no.addActionListener(new StartPassFieldListener());
         gridbag_constraints.gridwidth = GridBagConstraints.REMAINDER;
         gridbag.setConstraints(start_pass_no, gridbag_constraints);
         main_panel.add(start_pass_no);
@@ -108,8 +101,7 @@ public class WindowAutorouteDetailParameter extends BoardSavableSubWindow {
 
         start_ripup_costs = new JFormattedTextField(number_format);
         start_ripup_costs.setColumns(3);
-        start_ripup_costs.addKeyListener(new StartRipupCostFieldKeyListener());
-        start_ripup_costs.addFocusListener(new StartRipupCostFieldFocusListener());
+        start_ripup_costs.addActionListener(new StartRipupCostFieldListener());
         gridbag_constraints.gridwidth = GridBagConstraints.REMAINDER;
         gridbag.setConstraints(start_ripup_costs, gridbag_constraints);
         main_panel.add(start_ripup_costs);
@@ -159,8 +151,6 @@ public class WindowAutorouteDetailParameter extends BoardSavableSubWindow {
         layer_name_arr = new JLabel[signal_layer_count];
         preferred_direction_trace_cost_arr = new JFormattedTextField[signal_layer_count];
         against_preferred_direction_trace_cost_arr = new JFormattedTextField[signal_layer_count];
-        preferred_direction_trace_costs_input_completed = new boolean[signal_layer_count];
-        against_preferred_direction_trace_costs_input_completed = new boolean[signal_layer_count];
         number_format = NumberFormat.getInstance(p_board_frame.get_locale());
         number_format.setMaximumFractionDigits(2);
         final int TEXT_FIELD_LENGTH = 2;
@@ -173,19 +163,16 @@ public class WindowAutorouteDetailParameter extends BoardSavableSubWindow {
             main_panel.add(layer_name_arr[i]);
             preferred_direction_trace_cost_arr[i] = new JFormattedTextField(number_format);
             preferred_direction_trace_cost_arr[i].setColumns(TEXT_FIELD_LENGTH);
-            preferred_direction_trace_cost_arr[i].addKeyListener(new PreferredDirectionTraceCostKeyListener(i));
-            preferred_direction_trace_cost_arr[i].addFocusListener(new PreferredDirectionTraceCostFocusListener(i));
+            preferred_direction_trace_cost_arr[i].addActionListener(new PreferredDirectionTraceCostListener(i));
             gridbag.setConstraints(preferred_direction_trace_cost_arr[i], gridbag_constraints);
             main_panel.add(preferred_direction_trace_cost_arr[i]);
             against_preferred_direction_trace_cost_arr[i] = new JFormattedTextField(number_format);
             against_preferred_direction_trace_cost_arr[i].setColumns(TEXT_FIELD_LENGTH);
-            against_preferred_direction_trace_cost_arr[i].addKeyListener(new AgainstPreferredDirectionTraceCostKeyListener(i));
-            against_preferred_direction_trace_cost_arr[i].addFocusListener(new AgainstPreferredDirectionTraceCostFocusListener(i));
+            against_preferred_direction_trace_cost_arr[i].addActionListener(new AgainstPreferredDirectionTraceCostListener(i));
             gridbag_constraints.gridwidth = GridBagConstraints.REMAINDER;
             gridbag.setConstraints(against_preferred_direction_trace_cost_arr[i], gridbag_constraints);
             main_panel.add(against_preferred_direction_trace_cost_arr[i]);
-            preferred_direction_trace_costs_input_completed[i] = true;
-            against_preferred_direction_trace_costs_input_completed[i] = true;
+
         }
 
         p_board_frame.set_context_sensitive_help(this, "WindowAutorouteDetailParameter");
@@ -224,175 +211,74 @@ public class WindowAutorouteDetailParameter extends BoardSavableSubWindow {
     private final JLabel[] layer_name_arr;
     private final JFormattedTextField[] preferred_direction_trace_cost_arr;
     private final JFormattedTextField[] against_preferred_direction_trace_cost_arr;
-    private boolean via_cost_input_completed = true;
-    private boolean plane_via_cost_input_completed = true;
-    private boolean start_ripup_cost_input_completed = true;
-    private final boolean[] preferred_direction_trace_costs_input_completed;
-    private final boolean[] against_preferred_direction_trace_costs_input_completed;
 
-    private class ViaCostFieldKeyListener extends KeyAdapter {
+    private class ViaCostFieldListener implements ActionListener {
 
         @Override
-        public void keyTyped(KeyEvent p_evt) {
-            if (p_evt.getKeyChar() == '\n') {
-                int old_value = board_handling.settings.autoroute_settings.get_via_costs();
-                Object input = via_cost_field.getValue();
-                int input_value;
-                if (input instanceof Number) {
-                    input_value = ((Number) input).intValue();
-                    if (input_value <= 0) {
-                        input_value = 1;
-                        via_cost_field.setValue(input_value);
-                    }
-                } else {
-                    input_value = old_value;
-                    via_cost_field.setValue(old_value);
-                }
-                board_handling.settings.autoroute_settings.set_via_costs(input_value);
+        public void actionPerformed(ActionEvent e) {
+            try {
+                String input = via_cost_field.getText();
+                int input_value = Math.max(Integer.parseInt(input), 1);
                 via_cost_field.setValue(input_value);
-                via_cost_input_completed = true;
-
-            } else {
-                via_cost_input_completed = false;
-            }
-        }
-    }
-
-    private class ViaCostFieldFocusListener implements FocusListener {
-
-        @Override
-        public void focusLost(FocusEvent p_evt) {
-            if (!via_cost_input_completed) {
-                via_cost_input_completed = true;
+                board_handling.settings.autoroute_settings.set_via_costs(input_value);
                 refresh();
+            } catch (NumberFormatException ex) {
+                int old_value = board_handling.settings.autoroute_settings.get_via_costs();
+                via_cost_field.setValue(old_value);
             }
-        }
-
-        @Override
-        public void focusGained(FocusEvent p_evt) {
         }
     }
 
-    private class PlaneViaCostFieldKeyListener extends KeyAdapter {
+    private class PlaneViaCostFieldListener implements ActionListener {
 
         @Override
-        public void keyTyped(KeyEvent p_evt) {
-            if (p_evt.getKeyChar() == '\n') {
-                int old_value = board_handling.settings.autoroute_settings.get_plane_via_costs();
-                Object input = plane_via_cost_field.getValue();
-                int input_value;
-                if (input instanceof Number) {
-                    input_value = ((Number) input).intValue();
-                    if (input_value <= 0) {
-                        input_value = 1;
-                        plane_via_cost_field.setValue(input_value);
-                    }
-                } else {
-                    input_value = old_value;
-                    plane_via_cost_field.setValue(old_value);
-                }
-                board_handling.settings.autoroute_settings.set_plane_via_costs(input_value);
+        public void actionPerformed(ActionEvent e) {
+            try {
+                String input = plane_via_cost_field.getText();
+                int input_value = Math.max(Integer.parseInt(input), 1);
                 plane_via_cost_field.setValue(input_value);
-                plane_via_cost_input_completed = true;
-
-            } else {
-                plane_via_cost_input_completed = false;
-            }
-        }
-    }
-
-    private class PlaneViaCostFieldFocusListener implements FocusListener {
-
-        @Override
-        public void focusLost(FocusEvent p_evt) {
-            if (!plane_via_cost_input_completed) {
-                plane_via_cost_input_completed = true;
+                board_handling.settings.autoroute_settings.set_plane_via_costs(input_value);
                 refresh();
+            } catch (NumberFormatException ex) {
+                int old_value = board_handling.settings.autoroute_settings.get_plane_via_costs();
+                plane_via_cost_field.setValue(old_value);
             }
-        }
-
-        @Override
-        public void focusGained(FocusEvent p_evt) {
         }
     }
 
-    private class StartRipupCostFieldKeyListener extends KeyAdapter {
+    private class StartRipupCostFieldListener implements ActionListener {
 
         @Override
-        public void keyTyped(KeyEvent p_evt) {
-            if (p_evt.getKeyChar() == '\n') {
-                int old_value = board_handling.settings.autoroute_settings.get_start_ripup_costs();
-                Object input = start_ripup_costs.getValue();
-                int input_value;
-                if (input instanceof Number) {
-                    input_value = ((Number) input).intValue();
-                    if (input_value <= 0) {
-                        input_value = 1;
-                    }
-                } else {
-                    input_value = old_value;
-                }
+        public void actionPerformed(ActionEvent e) {
+            try {
+                String input = start_ripup_costs.getText();
+                int input_value = Math.max(Integer.parseInt(input), 1);
                 board_handling.settings.autoroute_settings.set_start_ripup_costs(input_value);
                 start_ripup_costs.setValue(input_value);
-                start_ripup_cost_input_completed = true;
-            } else {
-                start_ripup_cost_input_completed = false;
-            }
-        }
-    }
-
-    private class StartRipupCostFieldFocusListener implements FocusListener {
-
-        @Override
-        public void focusLost(FocusEvent p_evt) {
-            if (!start_ripup_cost_input_completed) {
-                start_ripup_cost_input_completed = true;
                 refresh();
-            }
-        }
+            } catch (NumberFormatException ex) {
+                int old_value = board_handling.settings.autoroute_settings.get_start_ripup_costs();
+                start_ripup_costs.setValue(old_value);
 
-        @Override
-        public void focusGained(FocusEvent p_evt) {
+            }
         }
     }
 
-    private class StartPassFieldKeyListener extends KeyAdapter {
+    private class StartPassFieldListener implements ActionListener {
 
         @Override
-        public void keyTyped(KeyEvent p_evt) {
-            if (p_evt.getKeyChar() == '\n') {
-                int old_value = board_handling.settings.autoroute_settings.get_pass_no();
-                Object input = start_pass_no.getValue();
-                int input_value;
-                if (input instanceof Number) {
-                    input_value = ((Number) input).intValue();
-                    if (input_value < 1) {
-                        input_value = 1;
-                    }
-                    if (input_value > 99) {
-                        input_value = 99;
-                    }
-                } else {
-                    input_value = old_value;
-                }
+        public void actionPerformed(ActionEvent e) {
+            try {
+                String input = start_pass_no.getText();
+                int input_value = Math.max(Integer.parseInt(input), 1);
+                input_value = Math.min(input_value, 99);
                 board_handling.settings.autoroute_settings.set_pass_no(input_value);
                 start_pass_no.setValue(input_value);
-
-            }
-        }
-    }
-
-    private class StartPassFieldFocusListener implements FocusListener {
-
-        @Override
-        public void focusLost(FocusEvent p_evt) {
-            if (!start_ripup_cost_input_completed) {
                 refresh();
+            } catch (NumberFormatException ex) {
+                int old_value = board_handling.settings.autoroute_settings.get_pass_no();
+                start_pass_no.setValue(old_value);
             }
-        }
-
-        @Override
-        public void focusGained(FocusEvent p_evt) {
         }
     }
 
@@ -409,107 +295,59 @@ public class WindowAutorouteDetailParameter extends BoardSavableSubWindow {
         }
     }
 
-    private class PreferredDirectionTraceCostKeyListener extends KeyAdapter {
+    private class PreferredDirectionTraceCostListener implements ActionListener {
 
-        public PreferredDirectionTraceCostKeyListener(int p_layer_no) {
+        private final int signal_layer_no;
+
+        public PreferredDirectionTraceCostListener(int p_layer_no) {
             signal_layer_no = p_layer_no;
         }
 
         @Override
-        public void keyTyped(KeyEvent p_evt) {
-            if (p_evt.getKeyChar() == '\n') {
-                int curr_layer_no = board_handling.get_routing_board().layer_structure.get_layer_no(signal_layer_no);
-                double old_value = board_handling.settings.autoroute_settings.get_preferred_direction_trace_costs(curr_layer_no);
-                Object input = preferred_direction_trace_cost_arr[signal_layer_no].getValue();
-                double input_value;
-                if (input instanceof Number) {
-                    input_value = ((Number) input).doubleValue();
-                    if (input_value <= 0) {
-                        input_value = old_value;
-                    }
-                } else {
-                    input_value = old_value;
+        public void actionPerformed(ActionEvent e) {
+            int curr_layer_no = board_handling.get_routing_board().layer_structure.get_layer_no(signal_layer_no);
+            try {
+                String input = preferred_direction_trace_cost_arr[signal_layer_no].getText();
+                double input_value = Double.parseDouble(input);
+                if (input_value <= 0) {
+                    throw new NumberFormatException();
                 }
                 board_handling.settings.autoroute_settings.set_preferred_direction_trace_costs(curr_layer_no, input_value);
                 preferred_direction_trace_cost_arr[signal_layer_no].setValue(input_value);
-                preferred_direction_trace_costs_input_completed[signal_layer_no] = true;
-
-            } else {
-                preferred_direction_trace_costs_input_completed[signal_layer_no] = false;
-            }
-        }
-        private final int signal_layer_no;
-    }
-
-    private class PreferredDirectionTraceCostFocusListener implements FocusListener {
-
-        public PreferredDirectionTraceCostFocusListener(int p_layer_no) {
-            signal_layer_no = p_layer_no;
-        }
-
-        @Override
-        public void focusLost(FocusEvent p_evt) {
-            if (!preferred_direction_trace_costs_input_completed[signal_layer_no]) {
-                start_ripup_cost_input_completed = true;
                 refresh();
+            } catch (NumberFormatException ex) {
+                double old_value = board_handling.settings.autoroute_settings.get_preferred_direction_trace_costs(curr_layer_no);
+                preferred_direction_trace_cost_arr[signal_layer_no].setValue(old_value);
             }
         }
-
-        @Override
-        public void focusGained(FocusEvent p_evt) {
-        }
-        private final int signal_layer_no;
     }
 
-    private class AgainstPreferredDirectionTraceCostKeyListener extends KeyAdapter {
+    private class AgainstPreferredDirectionTraceCostListener implements ActionListener {
 
-        public AgainstPreferredDirectionTraceCostKeyListener(int p_layer_no) {
+        private final int signal_layer_no;
+
+        public AgainstPreferredDirectionTraceCostListener(int p_layer_no) {
             signal_layer_no = p_layer_no;
         }
 
         @Override
-        public void keyTyped(KeyEvent p_evt) {
-            if (p_evt.getKeyChar() == '\n') {
-                int curr_layer_no = board_handling.get_routing_board().layer_structure.get_layer_no(signal_layer_no);
-                double old_value = board_handling.settings.autoroute_settings.get_against_preferred_direction_trace_costs(curr_layer_no);
-                Object input = against_preferred_direction_trace_cost_arr[signal_layer_no].getValue();
-                double input_value;
-                if (input instanceof Number) {
-                    input_value = ((Number) input).doubleValue();
-                    if (input_value <= 0) {
-                        input_value = old_value;
-                    }
-                } else {
-                    input_value = old_value;
+        public void actionPerformed(ActionEvent e) {
+            int curr_layer_no = board_handling.get_routing_board().layer_structure.get_layer_no(signal_layer_no);
+            try {
+                String input = against_preferred_direction_trace_cost_arr[signal_layer_no].getText();
+                double input_value = Double.parseDouble(input);
+                if (input_value <= 0) {
+                    throw new NumberFormatException();
                 }
                 board_handling.settings.autoroute_settings.set_against_preferred_direction_trace_costs(curr_layer_no, input_value);
                 against_preferred_direction_trace_cost_arr[signal_layer_no].setValue(input_value);
-                against_preferred_direction_trace_costs_input_completed[signal_layer_no] = true;
-
-            } else {
-                against_preferred_direction_trace_costs_input_completed[signal_layer_no] = false;
-            }
-        }
-        private final int signal_layer_no;
-    }
-
-    private class AgainstPreferredDirectionTraceCostFocusListener implements FocusListener {
-
-        public AgainstPreferredDirectionTraceCostFocusListener(int p_layer_no) {
-            signal_layer_no = p_layer_no;
-        }
-
-        @Override
-        public void focusLost(FocusEvent p_evt) {
-            if (!against_preferred_direction_trace_costs_input_completed[signal_layer_no]) {
-                start_ripup_cost_input_completed = true;
                 refresh();
+            } catch (NumberFormatException ex) {
+                double old_value = board_handling.settings.autoroute_settings.get_against_preferred_direction_trace_costs(curr_layer_no);
+                against_preferred_direction_trace_cost_arr[signal_layer_no].setValue(old_value);
             }
         }
 
-        @Override
-        public void focusGained(FocusEvent p_evt) {
-        }
-        private final int signal_layer_no;
     }
+
 }

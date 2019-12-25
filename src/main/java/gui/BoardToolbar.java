@@ -21,8 +21,6 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.text.NumberFormat;
 import java.util.ResourceBundle;
 import javax.swing.*;
@@ -196,25 +194,23 @@ class BoardToolbar extends JPanel {
         unit_factor_field.setMaximumSize(new Dimension(100, 18));
         unit_factor_field.setMinimumSize(new Dimension(40, 18));
         unit_factor_field.setPreferredSize(new Dimension(80, 18));
-        unit_factor_field.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent evt) {
-                if (evt.getKeyChar() == '\n') {
-                    Object input = unit_factor_field.getValue();
-                    if (input instanceof Number) {
-                        double input_value = ((Number) input).doubleValue();
-                        if (input_value > 0) {
-                            board_frame.board_panel.board_handling.change_user_unit_factor(input_value);
-                        }
-                    }
-                    double unit_factor = board_frame.board_panel.board_handling.coordinate_transform.user_unit_factor;
-                    unit_factor_field.setValue(unit_factor);
 
-                    board_frame.refresh_windows();
+        unit_factor_field.addActionListener(ae -> {
+            try {
+                String input = unit_factor_field.getText();
+                double input_value = Double.parseDouble(input);
+                if (input_value <= 0) {
+                    throw new NumberFormatException();
                 }
+                board_frame.board_panel.board_handling.change_user_unit_factor(input_value);
+                double unit_factor = board_frame.board_panel.board_handling.coordinate_transform.user_unit_factor;
+                unit_factor_field.setValue(unit_factor);
+                board_frame.refresh_windows();
+            } catch (NumberFormatException ex) {
+                double unit_factor = board_frame.board_panel.board_handling.coordinate_transform.user_unit_factor;
+                unit_factor_field.setValue(unit_factor);
             }
         });
-
         right_toolbar.add(unit_factor_field);
 
         unit_combo_box.setModel(new DefaultComboBoxModel(board.Unit.values()));

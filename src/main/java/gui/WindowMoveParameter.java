@@ -25,10 +25,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.text.NumberFormat;
 import java.util.ResourceBundle;
 import javax.swing.*;
@@ -72,8 +68,7 @@ public class WindowMoveParameter extends BoardSavableSubWindow {
         gridbag.setConstraints(horizontal_grid_field, gridbag_constraints);
         main_panel.add(horizontal_grid_field);
         set_horizontal_grid_field(board_handling.settings.get_horizontal_component_grid());
-        horizontal_grid_field.addKeyListener(new HorizontalGridFieldKeyListener());
-        horizontal_grid_field.addFocusListener(new HorizontalGridFieldFocusListener());
+        horizontal_grid_field.addActionListener(new HorizontalGridFieldListener());
 
         gridbag_constraints.gridwidth = 2;
         JLabel vertical_grid_label = new JLabel(resources.getString("vertical_component_grid"));
@@ -86,8 +81,7 @@ public class WindowMoveParameter extends BoardSavableSubWindow {
         gridbag.setConstraints(vertical_grid_field, gridbag_constraints);
         main_panel.add(vertical_grid_field);
         set_vertical_grid_field(board_handling.settings.get_vertical_component_grid());
-        vertical_grid_field.addKeyListener(new VerticalGridFieldKeyListener());
-        vertical_grid_field.addFocusListener(new VerticalGridFieldFocusListener());
+        vertical_grid_field.addActionListener(new VerticalGridFieldListener());
 
         JLabel separator = new JLabel("  -----------------------------------------------  ");
         gridbag.setConstraints(separator, gridbag_constraints);
@@ -151,85 +145,44 @@ public class WindowMoveParameter extends BoardSavableSubWindow {
     private final interactive.BoardHandling board_handling;
     private final JFormattedTextField horizontal_grid_field;
     private final JFormattedTextField vertical_grid_field;
-    private boolean key_input_completed = true;
     private final JRadioButton zoom_button;
     private final JRadioButton rotate_button;
 
-    private class HorizontalGridFieldKeyListener extends KeyAdapter {
+    private class HorizontalGridFieldListener implements ActionListener {
 
         @Override
-        public void keyTyped(KeyEvent p_evt) {
-            if (p_evt.getKeyChar() == '\n') {
-                key_input_completed = true;
-                Object input = horizontal_grid_field.getValue();
-                double input_value;
-                if (!(input instanceof Number)) {
-                    input_value = 0;
-                }
-                input_value = ((Number) input).doubleValue();
+        public void actionPerformed(ActionEvent e) {
+            String input = horizontal_grid_field.getText();
+            try {
+                double input_value = Double.parseDouble(input);
                 if (input_value < 0) {
                     input_value = 0;
                 }
                 board_handling.settings.set_horizontal_component_grid((int) Math.round(board_handling.coordinate_transform.user_to_board(input_value)));
                 set_horizontal_grid_field(board_handling.settings.get_horizontal_component_grid());
-            } else {
-                key_input_completed = false;
-            }
-        }
-    }
-
-    private class HorizontalGridFieldFocusListener implements FocusListener {
-
-        @Override
-        public void focusLost(FocusEvent p_evt) {
-            if (!key_input_completed) {
-                // restore the text field.
+            } catch (NumberFormatException ex) {
                 set_horizontal_grid_field(board_handling.settings.get_horizontal_component_grid());
-                key_input_completed = true;
             }
-        }
-
-        @Override
-        public void focusGained(FocusEvent p_evt) {
         }
     }
 
-    private class VerticalGridFieldKeyListener extends KeyAdapter {
+    private class VerticalGridFieldListener implements ActionListener {
 
         @Override
-        public void keyTyped(KeyEvent p_evt) {
-            if (p_evt.getKeyChar() == '\n') {
-                key_input_completed = true;
-                Object input = vertical_grid_field.getValue();
-                double input_value;
-                if (!(input instanceof Number)) {
-                    input_value = 0;
-                }
-                input_value = ((Number) input).doubleValue();
+        public void actionPerformed(ActionEvent e) {
+            String input = vertical_grid_field.getText();
+            try {
+                double input_value = Double.parseDouble(input);
                 if (input_value < 0) {
                     input_value = 0;
                 }
                 board_handling.settings.set_vertical_component_grid((int) Math.round(board_handling.coordinate_transform.user_to_board(input_value)));
                 set_vertical_grid_field(board_handling.settings.get_vertical_component_grid());
-            } else {
-                key_input_completed = false;
-            }
-        }
-    }
-
-    private class VerticalGridFieldFocusListener implements FocusListener {
-
-        @Override
-        public void focusLost(FocusEvent p_evt) {
-            if (!key_input_completed) {
+            } catch (NumberFormatException ex) {
                 // restore the text field.
                 set_vertical_grid_field(board_handling.settings.get_vertical_component_grid());
-                key_input_completed = true;
             }
-        }
 
-        @Override
-        public void focusGained(FocusEvent p_evt) {
         }
     }
 
