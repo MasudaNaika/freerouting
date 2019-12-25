@@ -23,6 +23,7 @@ package gui;
 import board.Item;
 import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -49,7 +50,7 @@ public class WindowUnconnectedRoute extends WindowObjectListWithFilter {
     protected void fill_list() {
         board.BasicBoard routing_board = board_frame.board_panel.board_handling.get_routing_board();
 
-        Set<Item> handled_items = new ObjectAVLTreeSet<>();
+        Set<Item> handled_items = new HashSet<>();
 
         SortedSet<UnconnectedRouteInfo> unconnected_route_info_set = new ObjectAVLTreeSet<>();
 

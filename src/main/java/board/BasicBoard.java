@@ -36,6 +36,7 @@ import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.ConcurrentModificationException;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Set;
@@ -768,9 +769,8 @@ public class BasicBoard implements Serializable {
             if (!curr_shape.is_contained_in(bounding_box)) {
                 return false;
             }
-            Set<SearchTreeObject> obstacles = new ObjectAVLTreeSet<>();
-            default_tree.overlapping_objects_with_clearance(curr_shape, p_layer,
-                    p_net_no_arr, p_cl_class, obstacles);
+            Set<SearchTreeObject> obstacles = new HashSet<>();
+            default_tree.overlapping_objects_with_clearance(curr_shape, p_layer, p_net_no_arr, p_cl_class, obstacles);
             for (SearchTreeObject curr_ob : obstacles) {
                 boolean is_obstacle = true;
                 for (int p_net_no : p_net_no_arr) {

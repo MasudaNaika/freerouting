@@ -39,6 +39,7 @@ import geometry.planar.TileShape;
 import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 import rules.ClearanceMatrix;
@@ -490,10 +491,9 @@ public class ShapeSearchTree extends datastructures.MinAreaTree {
      */
     public Set<Item> overlapping_items_with_clearance(ConvexShape p_shape, int p_layer, int[] p_ignore_net_nos,
             int p_clearance_class) {
-        Set<SearchTreeObject> overlaps = new ObjectAVLTreeSet<>();
-
-        overlapping_objects_with_clearance(p_shape, p_layer,
-                p_ignore_net_nos, p_clearance_class, overlaps);
+        
+        Set<SearchTreeObject> overlaps = new HashSet<>();
+        overlapping_objects_with_clearance(p_shape, p_layer, p_ignore_net_nos, p_clearance_class, overlaps);
         Set<Item> result = new ObjectAVLTreeSet<>();
         for (SearchTreeObject curr_object : overlaps) {
             if (curr_object instanceof Item) {
