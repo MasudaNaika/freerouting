@@ -54,7 +54,7 @@ public class AutorouteSettings implements Serializable {
         with_fanout = false;
         with_autoroute = true;
         with_postroute = true;
-        via_costs = 50;
+        via_costs = 25;     // reduce via_costs 50 to 25
         plane_via_costs = 5;
 
         double horizontal_width = p_board.bounding_box.width();
