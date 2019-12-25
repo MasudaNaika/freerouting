@@ -191,9 +191,9 @@ class BoardToolbar extends JPanel {
 
         unit_factor_field.setHorizontalAlignment(JTextField.CENTER);
         unit_factor_field.setValue(1);
-        unit_factor_field.setMaximumSize(new Dimension(100, 18));
-        unit_factor_field.setMinimumSize(new Dimension(40, 18));
-        unit_factor_field.setPreferredSize(new Dimension(80, 18));
+        unit_factor_field.setMaximumSize(new Dimension(100, 21));   // 18 -> 21
+        unit_factor_field.setMinimumSize(new Dimension(40, 21));
+        unit_factor_field.setPreferredSize(new Dimension(80, 21));
 
         unit_factor_field.addActionListener(ae -> {
             try {
@@ -216,10 +216,10 @@ class BoardToolbar extends JPanel {
         unit_combo_box.setModel(new DefaultComboBoxModel(board.Unit.values()));
         unit_combo_box.setFocusTraversalPolicyProvider(true);
         unit_combo_box.setInheritsPopupMenu(true);
-        unit_combo_box.setMaximumSize(new Dimension(60, 18));
-        unit_combo_box.setMinimumSize(new Dimension(60, 18));
+        unit_combo_box.setMaximumSize(new Dimension(60, 21));   // 18 -> 21
+        unit_combo_box.setMinimumSize(new Dimension(60, 21));
         unit_combo_box.setOpaque(false);
-        unit_combo_box.setPreferredSize(new Dimension(60, 18));
+        unit_combo_box.setPreferredSize(new Dimension(60, 21));
         unit_combo_box.addActionListener(e -> {
             board.Unit new_unit = (board.Unit) unit_combo_box.getSelectedItem();
             board_frame.board_panel.board_handling.change_user_unit(new_unit);
