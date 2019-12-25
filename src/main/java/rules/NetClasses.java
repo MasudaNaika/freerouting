@@ -20,7 +20,7 @@
 package rules;
 
 import java.io.Serializable;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -43,7 +43,7 @@ public class NetClasses implements Serializable {
      * Returns the net class with index p_index.
      */
     public NetClass get(int p_index) {
-        assert p_index >= 0 && p_index <= class_arr.size() - 1;
+        assert p_index >= 0 && p_index <= class_arr.size() - 1; // called during autoroute
         return class_arr.get(p_index);
     }
 
@@ -145,5 +145,5 @@ public class NetClasses implements Serializable {
         return class_arr.remove(p_net_class);
     }
 
-    private final List<NetClass> class_arr = new LinkedList<>();
+    private final List<NetClass> class_arr = new ArrayList<>();
 }

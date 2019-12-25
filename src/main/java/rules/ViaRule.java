@@ -20,7 +20,7 @@
 package rules;
 
 import java.io.Serializable;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -43,7 +43,7 @@ public class ViaRule implements Serializable, board.ObjectInfoPanel.Printable {
     }
 
     public void append_via(ViaInfo p_via) {
-        list.add(p_via);
+        via_info_arr.add(p_via);
     }
 
     /**
@@ -51,16 +51,16 @@ public class ViaRule implements Serializable, board.ObjectInfoPanel.Printable {
      * the rule.
      */
     public boolean remove_via(ViaInfo p_via) {
-        return list.remove(p_via);
+        return via_info_arr.remove(p_via);
     }
 
     public int via_count() {
-        return list.size();
+        return via_info_arr.size();
     }
 
     public ViaInfo get_via(int p_index) {
-        assert p_index >= 0 && p_index < list.size();
-        return list.get(p_index);
+        assert p_index >= 0 && p_index < via_info_arr.size();   // called during autoroute
+        return via_info_arr.get(p_index);
     }
 
     @Override
@@ -72,7 +72,7 @@ public class ViaRule implements Serializable, board.ObjectInfoPanel.Printable {
      * Returns true, if p_via_info is contained in the via list of this rule.
      */
     public boolean contains(ViaInfo p_via_info) {
-        for (ViaInfo curr_info : list) {
+        for (ViaInfo curr_info : via_info_arr) {
             if (p_via_info == curr_info) {
                 return true;
             }
@@ -84,7 +84,7 @@ public class ViaRule implements Serializable, board.ObjectInfoPanel.Printable {
      * Returns true, if this rule contains a via with padstack p_padstack
      */
     public boolean contains_padstack(library.Padstack p_padstack) {
-        for (ViaInfo curr_info : list) {
+        for (ViaInfo curr_info : via_info_arr) {
             if (curr_info.get_padstack() == p_padstack) {
                 return true;
             }
@@ -97,7 +97,7 @@ public class ViaRule implements Serializable, board.ObjectInfoPanel.Printable {
      * = p_to_layer. Returns null, if no such via exists.
      */
     public ViaInfo get_layer_range(int p_from_layer, int p_to_layer) {
-        for (ViaInfo curr_info : list) {
+        for (ViaInfo curr_info : via_info_arr) {
             if (curr_info.get_padstack().from_layer() == p_from_layer && curr_info.get_padstack().to_layer() == p_to_layer) {
                 return curr_info;
             }
@@ -110,16 +110,16 @@ public class ViaRule implements Serializable, board.ObjectInfoPanel.Printable {
      * p_2 were not found in the list.
      */
     public boolean swap(ViaInfo p_1, ViaInfo p_2) {
-        int index_1 = list.indexOf(p_1);
-        int index_2 = list.indexOf(p_2);
+        int index_1 = via_info_arr.indexOf(p_1);
+        int index_2 = via_info_arr.indexOf(p_2);
         if (index_1 < 0 || index_2 < 0) {
             return false;
         }
         if (index_1 == index_2) {
             return true;
         }
-        list.set(index_1, p_2);
-        list.set(index_2, p_1);
+        via_info_arr.set(index_1, p_2);
+        via_info_arr.set(index_2, p_1);
         return true;
     }
 
@@ -133,7 +133,7 @@ public class ViaRule implements Serializable, board.ObjectInfoPanel.Printable {
         int counter = 0;
         boolean first_time = true;
         final int max_vias_per_row = 5;
-        for (ViaInfo curr_via : list) {
+        for (ViaInfo curr_via : via_info_arr) {
             if (first_time) {
                 first_time = false;
             } else {
@@ -149,5 +149,5 @@ public class ViaRule implements Serializable, board.ObjectInfoPanel.Printable {
     }
 
     public final String name;
-    private List<ViaInfo> list = new LinkedList<>();
+    private List<ViaInfo> via_info_arr = new ArrayList<>();
 }

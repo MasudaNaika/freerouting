@@ -22,7 +22,6 @@ package library;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -53,8 +52,7 @@ public class BoardLibrary implements Serializable {
      * routing for inserting vias.
      */
     public void set_via_padstacks(Padstack[] p_padstacks) {
-
-        via_padstacks = new LinkedList<>(Arrays.asList(p_padstacks));
+        via_padstacks = Arrays.asList(p_padstacks);
     }
 
     /**

@@ -20,7 +20,7 @@
 package rules;
 
 import java.io.Serializable;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -42,7 +42,7 @@ public class ViaInfos implements Serializable, board.ObjectInfoPanel.Printable {
         if (name_exists(p_via_info.get_name())) {
             return false;
         }
-        list.add(p_via_info);
+        via_info_arr.add(p_via_info);
         return true;
     }
 
@@ -50,22 +50,22 @@ public class ViaInfos implements Serializable, board.ObjectInfoPanel.Printable {
      * Returns the number of different vias, which can be used for routing.
      */
     public int count() {
-        return list.size();
+        return via_info_arr.size();
     }
 
     /**
      * Returns the p_no-th via af the via types, which can be used for routing.
      */
     public ViaInfo get(int p_no) {
-        assert p_no >= 0 && p_no < list.size();
-        return list.get(p_no);
+        assert p_no >= 0 && p_no < via_info_arr.size();
+        return via_info_arr.get(p_no);
     }
 
     /**
      * Returns the via info with name p_name, or null, if no such via exists.
      */
     public ViaInfo get(String p_name) {
-        for (ViaInfo curr_via : list) {
+        for (ViaInfo curr_via : via_info_arr) {
             if (curr_via.get_name().equals(p_name)) {
                 return curr_via;
             }
@@ -78,7 +78,7 @@ public class ViaInfos implements Serializable, board.ObjectInfoPanel.Printable {
      * list.
      */
     public boolean name_exists(String p_name) {
-        for (ViaInfo curr_via : list) {
+        for (ViaInfo curr_via : via_info_arr) {
             if (curr_via.get_name().equals(p_name)) {
                 return true;
             }
@@ -91,7 +91,7 @@ public class ViaInfos implements Serializable, board.ObjectInfoPanel.Printable {
      * contained in the list.
      */
     public boolean remove(ViaInfo p_via_info) {
-        return list.remove(p_via_info);
+        return via_info_arr.remove(p_via_info);
     }
 
     @Override
@@ -102,7 +102,7 @@ public class ViaInfos implements Serializable, board.ObjectInfoPanel.Printable {
         int counter = 0;
         boolean first_time = true;
         final int max_vias_per_row = 5;
-        for (ViaInfo curr_via : list) {
+        for (ViaInfo curr_via : via_info_arr) {
             if (first_time) {
                 first_time = false;
             } else {
@@ -116,5 +116,5 @@ public class ViaInfos implements Serializable, board.ObjectInfoPanel.Printable {
             counter = (counter + 1) % max_vias_per_row;
         }
     }
-    private List<ViaInfo> list = new LinkedList<>();
+    private List<ViaInfo> via_info_arr = new ArrayList<>();
 }

@@ -24,8 +24,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -241,7 +242,7 @@ public class BoardRules implements Serializable {
      * Returns the default via rule for routing or null, if no via rule exists.
      */
     public ViaRule get_default_via_rule() {
-        if (via_rules.isEmpty()) {
+        if (via_rules.isEmpty()) {  // called during autoroute
             return null;
         }
         return via_rules.get(0);
@@ -478,7 +479,7 @@ public class BoardRules implements Serializable {
 
     public final ViaInfos via_infos = new ViaInfos();
 
-    public final LinkedList<ViaRule> via_rules = new LinkedList<>();
+    public final List<ViaRule> via_rules = new ArrayList<>();
 
     public final NetClasses net_classes = new NetClasses();
 
