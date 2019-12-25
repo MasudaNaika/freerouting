@@ -44,7 +44,6 @@ import java.util.LinkedList;
 import java.util.Random;
 import java.util.Set;
 import java.util.SortedSet;
-import java.util.TreeSet;
 
 /**
  * Class for autorouting an incomplete connection via a maze search algorithm.
@@ -78,10 +77,9 @@ public class MazeSearchAlgo {
         ctrl = p_ctrl;
         random_generator.setSeed(p_ctrl.ripup_costs); // To get reproducable random numbers in the ripup algorithm.
         search_tree = p_autoroute_engine.autoroute_search_tree;
-        maze_expansion_list = new TreeSet<>();  // cannot use ObjectAVLTreeSet because of MazeListElement.compareTo implementation.
-        destination_distance
-                = new DestinationDistance(ctrl.trace_costs, ctrl.layer_active,
-                        ctrl.min_normal_via_cost, ctrl.min_cheap_via_cost);
+        maze_expansion_list = new MazeListElementSet();
+        destination_distance = new DestinationDistance(ctrl.trace_costs, ctrl.layer_active,
+                ctrl.min_normal_via_cost, ctrl.min_cheap_via_cost);
     }
 
     /**
@@ -106,7 +104,8 @@ public class MazeSearchAlgo {
      */
     public boolean occupy_next_element() {
         if (destination_door != null) {
-            return false; // destination already reached
+            // destination already reached
+            return false;
         }
         MazeListElement list_element = null;
         MazeSearchElement curr_door_section = null;
@@ -161,9 +160,10 @@ public class MazeSearchAlgo {
 
         if (list_element.next_room != null) {
             if (!expand_to_room_doors(list_element)) {
-                return true; // occupation by ripup is delayed or nothing was expanded
+                // occupation by ripup is delayed or nothing was expanded
                 // In case nothing was expanded allow the section to be occupied from
                 // somewhere else, if the next room is thin.
+                return true;
             }
         }
         curr_door_section.is_occupied = true;
@@ -1215,7 +1215,7 @@ public class MazeSearchAlgo {
     private int section_no_of_destination_door = 0;
     private final Random random_generator = new Random();
     private static final int ALREADY_RIPPED_COSTS = 1;
-
+    
     /**
      * The result type of MazeSearchAlgo.find_connection
      */
