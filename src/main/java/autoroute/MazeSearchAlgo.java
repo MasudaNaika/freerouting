@@ -39,11 +39,10 @@ import geometry.planar.Polyline;
 import geometry.planar.TileShape;
 import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.Set;
-import java.util.SortedSet;
+import java.util.concurrent.PriorityBlockingQueue;
 
 /**
  * Class for autorouting an incomplete connection via a maze search algorithm.
@@ -77,7 +76,7 @@ public class MazeSearchAlgo {
         ctrl = p_ctrl;
         random_generator.setSeed(p_ctrl.ripup_costs); // To get reproducable random numbers in the ripup algorithm.
         search_tree = p_autoroute_engine.autoroute_search_tree;
-        maze_expansion_list = new MazeListElementSet();
+        maze_expansion_list = new PriorityBlockingQueue<>();
         destination_distance = new DestinationDistance(ctrl.trace_costs, ctrl.layer_active,
                 ctrl.min_normal_via_cost, ctrl.min_cheap_via_cost);
     }
@@ -111,15 +110,16 @@ public class MazeSearchAlgo {
         MazeSearchElement curr_door_section = null;
         // Search the next element, which is not yet expanded.
         boolean next_element_found = false;
-        while (!maze_expansion_list.isEmpty()) {
+        while (true) {
             if (autoroute_engine.is_stop_requested()) {
                 return false;
             }
-            Iterator<MazeListElement> it = maze_expansion_list.iterator();
-            list_element = it.next();
+            list_element = maze_expansion_list.poll();
+            if (list_element == null) {
+                break;
+            }
             int curr_section_no = list_element.section_no_of_door;
             curr_door_section = list_element.door.get_maze_search_element(curr_section_no);
-            it.remove();
             if (!curr_door_section.is_occupied) {
                 next_element_found = true;
                 break;
@@ -1202,7 +1202,7 @@ public class MazeSearchAlgo {
     /**
      * The queue of of expanded elements used in this search algorithm.
      */
-    final SortedSet<MazeListElement> maze_expansion_list;
+    final PriorityBlockingQueue<MazeListElement> maze_expansion_list;
     /**
      * Used for calculating of a good lower bound for the distance between a new
      * MazeExpansionElement and the destination set of the expansion.

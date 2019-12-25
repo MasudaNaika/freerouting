@@ -61,9 +61,6 @@ public class MazeListElement implements Comparable<MazeListElement> {
 
     final boolean already_checked;
 
-    // Add id to keep order.
-    public int id;
-
     /**
      * Creates a new instance of ExpansionInfo
      */
@@ -89,23 +86,15 @@ public class MazeListElement implements Comparable<MazeListElement> {
     @Override
     public int compareTo(MazeListElement p_other) {
         double compare_value = sorting_value - p_other.sorting_value;
-        if (compare_value > 0) {
-            return 1;
-        } else if (compare_value < 0) {
-            return -1;
+        // make shure, that the result cannot be 0, so that no element in the set is
+        // skipped because of equal size.
+        int result;
+        if (compare_value >= 0) {
+            result = 1;
+        } else {
+            result = -1;
         }
-        // if distance is equal, compare id.
-        return id - p_other.id;
-
-//        // make shure, that the result cannot be 0, so that no element in the set is
-//        // skipped because of equal size.
-//        int result;
-//        if (compare_value >= 0) {
-//            result = 1;
-//        } else {
-//            result = -1;
-//        }
-//        return result;
+        return result;
     }
 
 }
