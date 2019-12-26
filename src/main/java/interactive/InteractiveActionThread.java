@@ -25,6 +25,10 @@ import java.awt.Graphics;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
 /**
@@ -34,6 +38,21 @@ import javax.swing.SwingWorker;
  * @author Alfons Wirtz
  */
 public abstract class InteractiveActionThread implements datastructures.Stoppable {
+    
+    private boolean stop_requested = false;
+    public final BoardHandling hdlg;
+    
+    private static final ExecutorService EXEC;
+    private Future future;
+    
+    static {
+        NamedThreadFactory factory = new NamedThreadFactory("Freerouter");
+        EXEC = Executors.newSingleThreadExecutor(factory);
+    }
+    
+    public static void shutdown() {
+        EXEC.shutdownNow();
+    }
 
     public static InteractiveActionThread get_autoroute_instance(BoardHandling p_board_handling) {
         return new AutorouteThread(p_board_handling);
@@ -65,29 +84,29 @@ public abstract class InteractiveActionThread implements datastructures.Stoppabl
     protected abstract void thread_action();
 
     public void start() {
-
-        SwingWorker<Void, Void> worker = new SwingWorker<>() {
-            @Override
-            protected Void doInBackground() throws Exception {
-                try {
-                    thread_action();
-                } catch (Exception ex) {
-                    Freerouter.logError(ex);
-                }
-                return null;
+        
+        if (stop_requested || future != null || (future != null && !future.isCancelled())) {
+            return;
+        }
+        
+        Runnable task = () -> {
+            try {
+                thread_action();
+            } catch (Exception ex) {
+                Freerouter.logError(ex);
             }
-
-            @Override
-            protected void done() {
-                hdlg.repaint();
-            }
+            future = null;
+            SwingUtilities.invokeLater(() -> hdlg.repaint());
         };
-        worker.execute();
+        future = EXEC.submit(task);
     }
 
     @Override
     public synchronized void request_stop() {
         stop_requested = true;
+        if (future != null && !future.isCancelled()) {
+            future.cancel(true);
+        }
     }
 
     @Override
@@ -98,8 +117,7 @@ public abstract class InteractiveActionThread implements datastructures.Stoppabl
     public synchronized void draw(Graphics p_graphics) {
         // Can be overwritten in derived classes.
     }
-    private boolean stop_requested = false;
-    public final BoardHandling hdlg;
+
 
     private static class AutorouteThread extends InteractiveActionThread {
 
@@ -150,7 +168,9 @@ public abstract class InteractiveActionThread implements datastructures.Stoppabl
     }
 
     private static class ReadLogfileThread extends InteractiveActionThread {
-
+        
+        private final InputStream input_stream;
+        
         private ReadLogfileThread(BoardHandling p_board_handling, InputStream p_input_stream) {
             super(p_board_handling);
             input_stream = p_input_stream;
@@ -221,6 +241,6 @@ public abstract class InteractiveActionThread implements datastructures.Stoppabl
             hdlg.set_board_read_only(saved_board_read_only);
             hdlg.get_panel().board_frame.repaint_all();
         }
-        private final InputStream input_stream;
+
     }
 }
