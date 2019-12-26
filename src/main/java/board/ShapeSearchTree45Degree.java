@@ -209,6 +209,10 @@ public class ShapeSearchTree45Degree extends ShapeSearchTree {
         // opposite of this line.
 
         Collection<IncompleteFreeSpaceExpansionRoom> result = new LinkedList<>();
+        // add null check
+        if (p_incomplete_room == null || p_incomplete_room.get_contained_shape() == null) {
+            return result;
+        }
         if (p_incomplete_room.get_contained_shape().is_empty()) {
             if (board.get_test_level().ordinal() >= TestLevel.ALL_DEBUGGING_OUTPUT.ordinal()) {
                 Freerouter.logInfo("ShapeSearchTree45Degree.restrain_shape: p_shape_to_be_contained is empty");

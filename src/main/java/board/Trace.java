@@ -5,7 +5,6 @@ import geometry.planar.IntOctagon;
 import geometry.planar.Point;
 import geometry.planar.TileShape;
 import gui.Freerouter;
-import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.awt.Color;
 import java.io.Serializable;
 import java.util.Collection;
@@ -116,7 +115,7 @@ public abstract class Trace extends Item implements Connectable, Serializable {
 
     @Override
     public Set<Item> get_normal_contacts() {
-        Set<Item> result = new ObjectAVLTreeSet<>();
+        Set<Item> result = Freerouter.newSortedSet();
         Point start_corner = first_corner();
         if (start_corner != null) {
             result.addAll(get_normal_contacts(start_corner, false));
@@ -169,11 +168,11 @@ public abstract class Trace extends Item implements Connectable, Serializable {
      */
     public Set<Item> get_normal_contacts(Point p_point, boolean p_ignore_net) {
         if (p_point == null || !(p_point.equals(first_corner()) || p_point.equals(last_corner()))) {
-            return new ObjectAVLTreeSet<>();
+            return Freerouter.newSortedSet();
         }
         TileShape search_shape = TileShape.get_instance(p_point);
         Set<SearchTreeObject> overlaps = board.overlapping_objects(search_shape, layer);
-        Set<Item> result = new ObjectAVLTreeSet<>();
+        Set<Item> result = Freerouter.newSortedSet();
         for (SearchTreeObject curr_ob : overlaps) {
             if (!(curr_ob instanceof Item)) {
                 continue;
@@ -302,7 +301,7 @@ public abstract class Trace extends Item implements Connectable, Serializable {
         if (is_overlap()) {
             return true;
         }
-        Set<Item> visited_items = new ObjectAVLTreeSet<>();
+        Set<Item> visited_items = Freerouter.newSortedSet();
         Collection<Item> start_contacts = get_start_contacts();
         // a cycle exists if through expanding the start contact we reach
         // this trace again via an end contact
@@ -385,7 +384,7 @@ public abstract class Trace extends Item implements Connectable, Serializable {
      * trace. Used to avoid acid traps.
      */
     Set<Pin> touching_pins_at_end_corners() {
-        Set<Pin> result = new ObjectAVLTreeSet<>();
+        Set<Pin> result = Freerouter.newSortedSet();
         if (board == null) {
             return result;
         }

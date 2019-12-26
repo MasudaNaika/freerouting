@@ -30,7 +30,6 @@ import geometry.planar.IntPoint;
 import geometry.planar.Limits;
 import geometry.planar.TileShape;
 import gui.Freerouter;
-import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.SortedSet;
@@ -158,7 +157,7 @@ public class Sorted45DegreeRoomNeighbours {
         from_room = p_from_room;
         completed_room = p_completed_room;
         room_shape = p_completed_room.get_shape().bounding_octagon();
-        sorted_neighbours = new ObjectAVLTreeSet<>();
+        sorted_neighbours = Freerouter.newSortedSet();
 
         edge_interiour_touches_obstacle = new boolean[8];
         for (int i = 0; i < 8; ++i) {

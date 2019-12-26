@@ -23,7 +23,7 @@ package autoroute;
 import board.Item;
 import board.Trace;
 import geometry.planar.Point;
-import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
+import gui.Freerouter;
 import java.util.Collection;
 import java.util.Set;
 
@@ -48,7 +48,7 @@ public class Connection {
             return precalculated_connection;
         }
         Set<Item> contacts = p_item.get_normal_contacts();
-        Set<Item> connection_items = new ObjectAVLTreeSet<>();
+        Set<Item> connection_items = Freerouter.newSortedSet();
         connection_items.add(p_item);
 
         Point start_point = null;

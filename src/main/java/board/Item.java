@@ -12,7 +12,6 @@ import geometry.planar.Point;
 import geometry.planar.TileShape;
 import geometry.planar.Vector;
 import gui.Freerouter;
-import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.io.ObjectOutputStream;
@@ -383,7 +382,7 @@ public abstract class Item implements Drawable, SearchTreeObject, ObjectInfoPane
      * result will be empty, if this item is not connectable.
      */
     public Set<Item> get_all_contacts() {
-        Set<Item> result = new ObjectAVLTreeSet<>();
+        Set<Item> result = Freerouter.newSortedSet();
         if (!(this instanceof Connectable)) {
             return result;
         }
@@ -407,7 +406,7 @@ public abstract class Item implements Drawable, SearchTreeObject, ObjectInfoPane
      * input layer. The result will be empty, if this item is not connectable.
      */
     public Set<Item> get_all_contacts(int p_layer) {
-        Set<Item> result = new ObjectAVLTreeSet<>();
+        Set<Item> result = Freerouter.newSortedSet();
         if (!(this instanceof Connectable)) {
             return result;
         }
@@ -452,7 +451,7 @@ public abstract class Item implements Drawable, SearchTreeObject, ObjectInfoPane
      * default implementation to be overwritten in the Connectable subclasses
      */
     public Set<Item> get_normal_contacts() {
-        return new ObjectAVLTreeSet<>();
+        return Freerouter.newSortedSet();
     }
 
     /**
@@ -494,7 +493,7 @@ public abstract class Item implements Drawable, SearchTreeObject, ObjectInfoPane
      * not belong to a component.
      */
     public Set<Item> get_connected_set(int p_net_no, boolean p_stop_at_plane) {
-        Set<Item> result = new ObjectAVLTreeSet<>();
+        Set<Item> result = Freerouter.newSortedSet();
         if (p_net_no > 0 && !contains_net(p_net_no)) {
             return result;
         }
@@ -566,7 +565,7 @@ public abstract class Item implements Drawable, SearchTreeObject, ObjectInfoPane
      * 0, the net numbers contained in this items are used instead of p_net_no.
      */
     public Set<Item> get_unconnected_set(int p_net_no) {
-        Set<Item> result = new ObjectAVLTreeSet<>();
+        Set<Item> result = Freerouter.newSortedSet();
         if (p_net_no > 0 && !contains_net(p_net_no)) {
             return result;
         }
@@ -597,7 +596,7 @@ public abstract class Item implements Drawable, SearchTreeObject, ObjectInfoPane
      */
     public Set<Item> get_connection_items(StopConnectionOption p_stop_option) {
         Set<Item> contacts = get_normal_contacts();
-        Set<Item> result = new ObjectAVLTreeSet<>();
+        Set<Item> result = Freerouter.newSortedSet();
         if (is_route()) {
             result.add(this);
         }

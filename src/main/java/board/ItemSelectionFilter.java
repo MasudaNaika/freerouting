@@ -19,7 +19,7 @@
  */
 package board;
 
-import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
+import gui.Freerouter;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Set;
@@ -110,7 +110,7 @@ public class ItemSelectionFilter implements Serializable {
      * Filters a collection of items with this filter.
      */
     public Set<Item> filter(Set<board.Item> p_items) {
-        Set<Item> result = new ObjectAVLTreeSet<>();
+        Set<Item> result = Freerouter.newSortedSet();
         for (board.Item curr_item : p_items) {
             if (curr_item.is_selected_by_filter(this)) {
                 result.add(curr_item);

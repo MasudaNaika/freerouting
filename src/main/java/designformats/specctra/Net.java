@@ -22,7 +22,6 @@ package designformats.specctra;
 import datastructures.IdentifierType;
 import datastructures.IndentFileWriter;
 import gui.Freerouter;
-import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Set;
@@ -83,7 +82,7 @@ public class Net {
     }
 
     public void set_pins(Collection<Pin> p_pin_list) {
-        pin_list = new ObjectAVLTreeSet<>();
+        pin_list = Freerouter.newSortedSet();
         for (Pin curr_pin : p_pin_list) {
             pin_list.add(curr_pin);
         }

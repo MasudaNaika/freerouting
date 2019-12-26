@@ -19,7 +19,6 @@
  */
 package gui;
 
-import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -70,7 +69,7 @@ public class WindowPackages extends WindowObjectListWithFilter {
             return;
         }
         board.RoutingBoard routing_board = board_frame.board_panel.board_handling.get_routing_board();
-        Set<board.Item> board_instances = new ObjectAVLTreeSet<>();
+        Set<board.Item> board_instances = Freerouter.newSortedSet();
         Collection<board.Item> board_items = routing_board.get_items();
         for (board.Item curr_item : board_items) {
             if (curr_item.get_component_no() > 0) {

@@ -22,7 +22,6 @@ package datastructures;
 import geometry.planar.RegularTileShape;
 import geometry.planar.ShapeBoundingDirections;
 import gui.Freerouter;
-import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.util.Set;
 
 /**
@@ -51,7 +50,7 @@ public class MinAreaTree extends ShapeTree {
      * Calculates the objects in this tree, which overlap with p_shape
      */
     public Set<Leaf> overlaps(RegularTileShape p_shape) {
-        Set<Leaf> found_overlaps = new ObjectAVLTreeSet<>();
+        Set<Leaf> found_overlaps = Freerouter.newSortedSet();
         if (root == null) {
             return found_overlaps;
         }

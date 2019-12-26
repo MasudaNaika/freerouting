@@ -8,7 +8,6 @@ import geometry.planar.Shape;
 import geometry.planar.TileShape;
 import geometry.planar.Vector;
 import gui.Freerouter;
-import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.io.Serializable;
@@ -70,7 +69,7 @@ public abstract class DrillItem extends Item implements Connectable, Serializabl
     public void move_by(Vector p_vector) {
         Point old_center = get_center();
         // remember the contact situation of this drillitem  to traces on each layer
-        Set<TraceInfo> contact_trace_info = new ObjectAVLTreeSet<>();
+        Set<TraceInfo> contact_trace_info = Freerouter.newSortedSet();
         Collection<Item> contacts = get_normal_contacts();
         for (Item curr_contact : contacts) {
             if (curr_contact instanceof Trace) {
@@ -241,7 +240,7 @@ public abstract class DrillItem extends Item implements Connectable, Serializabl
         Point drill_center = get_center();
         TileShape search_shape = TileShape.get_instance(drill_center);
         Set<SearchTreeObject> overlaps = board.overlapping_objects(search_shape, -1);
-        Set<Item> result = new ObjectAVLTreeSet<>();
+        Set<Item> result = Freerouter.newSortedSet();
         for (SearchTreeObject curr_ob : overlaps) {
             if (!(curr_ob instanceof Item)) {
                 continue;

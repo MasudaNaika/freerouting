@@ -32,12 +32,8 @@ import geometry.planar.Line;
 import geometry.planar.Simplex;
 import geometry.planar.TileShape;
 import gui.Freerouter;
-import it.unimi.dsi.fastutil.ints.IntAVLTreeSet;
 import it.unimi.dsi.fastutil.ints.IntBidirectionalIterator;
-import it.unimi.dsi.fastutil.ints.IntSortedSet;
-import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import it.unimi.dsi.fastutil.objects.ObjectLinkedOpenHashSet;
-import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import java.awt.Graphics;
 import java.util.Collection;
 import java.util.Iterator;
@@ -147,8 +143,8 @@ public class AutorouteEngine {
             stop_connection_option = Item.StopConnectionOption.FANOUT_VIA;
         }
 
-        Set<Item> ripped_connections = new ObjectOpenHashSet<>();
-        IntSortedSet changed_nets = new IntAVLTreeSet();
+        Set<Item> ripped_connections = Freerouter.newHashSet();
+        Set<Integer> changed_nets = Freerouter.newIntSortedSet();
         for (Item curr_ripped_item : p_ripped_item_list) {
             ripped_connections.addAll(curr_ripped_item.get_connection_items(stop_connection_option));
             for (int i = 0; i < curr_ripped_item.net_count(); ++i) {
@@ -163,8 +159,8 @@ public class AutorouteEngine {
 
         board.remove_items(ripped_connections, false);
 
-        for (IntBidirectionalIterator it = changed_nets.iterator(); it.hasNext();) {
-            int curr_net_no = it.nextInt();
+        for (Iterator it = changed_nets.iterator(); it.hasNext();) {
+            int curr_net_no = ((IntBidirectionalIterator)it).nextInt();
             board.remove_trace_tails(curr_net_no, stop_connection_option);
         }
         InsertFoundConnectionAlgo insert_found_connection_algo
@@ -245,7 +241,7 @@ public class AutorouteEngine {
     public IncompleteFreeSpaceExpansionRoom add_incomplete_expansion_room(TileShape p_shape, int p_layer, TileShape p_contained_shape) {
         IncompleteFreeSpaceExpansionRoom new_room = new IncompleteFreeSpaceExpansionRoom(p_shape, p_layer, p_contained_shape);
         if (incomplete_expansion_rooms == null) {
-            incomplete_expansion_rooms = new ObjectLinkedOpenHashSet<>();   // LinkedList.remove(object) takes time.
+            incomplete_expansion_rooms = Freerouter.newLinkedHashSet();   // LinkedList.remove(object) takes time.
         }
         incomplete_expansion_rooms.add(new_room);
         return new_room;
@@ -362,7 +358,8 @@ public class AutorouteEngine {
             }
             return result;
         } catch (Exception e) {
-            Freerouter.logError("AutorouteEngine.complete_expansion_room: " + e);
+            Freerouter.logError("AutorouteEngine.complete_expansion_room: ");
+            Freerouter.logError(e);
             return new LinkedList<>();
         }
 
@@ -464,7 +461,7 @@ public class AutorouteEngine {
      * item in the set p_items.
      */
     Collection<CompleteFreeSpaceExpansionRoom> get_rooms_with_target_items(Set<Item> p_items) {
-        Set<CompleteFreeSpaceExpansionRoom> result = new ObjectAVLTreeSet<>();
+        Set<CompleteFreeSpaceExpansionRoom> result = Freerouter.newSortedSet();
         if (complete_expansion_rooms != null) {
             for (CompleteFreeSpaceExpansionRoom curr_room : complete_expansion_rooms) {
                 Collection<TargetItemExpansionDoor> target_door_list = curr_room.get_target_doors();

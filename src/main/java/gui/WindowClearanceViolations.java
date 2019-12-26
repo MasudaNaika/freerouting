@@ -22,7 +22,6 @@ package gui;
 import board.ClearanceViolation;
 import geometry.planar.FloatPoint;
 import interactive.ClearanceViolations;
-import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -52,7 +51,7 @@ public class WindowClearanceViolations extends WindowObjectListWithFilter {
 
         ClearanceViolations clearance_violations
                 = new ClearanceViolations(board_handling.get_routing_board().get_items());
-        SortedSet<ViolationInfo> sorted_set = new ObjectAVLTreeSet<>();
+        SortedSet<ViolationInfo> sorted_set = Freerouter.newSortedSet();
         for (ClearanceViolation curr_violation : clearance_violations.list) {
             sorted_set.add(new ViolationInfo(curr_violation));
         }
@@ -68,7 +67,7 @@ public class WindowClearanceViolations extends WindowObjectListWithFilter {
         if (selected_violations.isEmpty()) {
             return;
         }
-        Set<board.Item> selected_items = new ObjectAVLTreeSet<>();
+        Set<board.Item> selected_items = Freerouter.newSortedSet();
         for (Object obj : selected_violations) {
             ClearanceViolation curr_violation = ((ViolationInfo) obj).violation;
             selected_items.add(curr_violation.first_item);

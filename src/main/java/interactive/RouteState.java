@@ -30,8 +30,6 @@ import geometry.planar.FloatPoint;
 import geometry.planar.IntPoint;
 import geometry.planar.Point;
 import gui.Freerouter;
-import it.unimi.dsi.fastutil.ints.IntAVLTreeSet;
-import it.unimi.dsi.fastutil.ints.IntSortedSet;
 import java.awt.Graphics;
 import java.util.Collection;
 import java.util.Set;
@@ -425,7 +423,7 @@ public class RouteState extends InteractiveState {
      */
     static int[] get_route_net_numbers_at_tie_pin(board.Pin p_pin, int p_layer) {
 
-        IntSortedSet net_number_list = new IntAVLTreeSet();
+        Set<Integer> net_number_list = Freerouter.newIntSortedSet();
         for (int i = 0; i < p_pin.net_count(); ++i) {
             net_number_list.add(p_pin.get_net_no(i));
         }
@@ -438,7 +436,7 @@ public class RouteState extends InteractiveState {
             }
         }
         int[] result = new int[net_number_list.size()];
-        net_number_list.toArray(result);
+        Freerouter.toArray(net_number_list, result);
 
         return result;
     }

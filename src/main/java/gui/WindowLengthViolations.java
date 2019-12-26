@@ -21,7 +21,6 @@
 package gui;
 
 import interactive.RatsNest;
-import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.SortedSet;
@@ -50,7 +49,7 @@ public class WindowLengthViolations extends WindowObjectListWithFilter {
     protected void fill_list() {
         RatsNest ratsnest = board_frame.board_panel.board_handling.get_ratsnest();
         Nets net_list = board_frame.board_panel.board_handling.get_routing_board().rules.nets;
-        SortedSet<LengthViolation> length_violations = new ObjectAVLTreeSet<>();
+        SortedSet<LengthViolation> length_violations = Freerouter.newSortedSet();
         for (int net_index = 1; net_index <= net_list.max_net_no(); ++net_index) {
             double curr_violation_length = ratsnest.get_length_violation(net_index);
             if (curr_violation_length != 0) {
@@ -71,7 +70,7 @@ public class WindowLengthViolations extends WindowObjectListWithFilter {
         if (selected_violations.length <= 0) {
             return;
         }
-        Set<board.Item> selected_items = new ObjectAVLTreeSet<>();
+        Set<board.Item> selected_items = Freerouter.newSortedSet();
         for (int i = 0; i < selected_violations.length; ++i) {
             LengthViolation curr_violation = ((LengthViolation) selected_violations[i]);
             selected_items.addAll(curr_violation.net.get_items());

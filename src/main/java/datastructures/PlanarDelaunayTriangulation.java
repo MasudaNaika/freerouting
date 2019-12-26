@@ -24,7 +24,6 @@ import geometry.planar.Limits;
 import geometry.planar.Point;
 import geometry.planar.Side;
 import gui.Freerouter;
-import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -104,7 +103,7 @@ public class PlanarDelaunayTriangulation {
                     curr_edge.end_corner.coor, curr_edge.end_corner.object));
         }
         if (search_graph.anchor != null) {
-            Set<Edge> result_edges = new ObjectAVLTreeSet<>();
+            Set<Edge> result_edges = Freerouter.newSortedSet();
             search_graph.anchor.get_leaf_edges(result_edges);
             for (Edge curr_edge : result_edges) {
                 result.add(new ResultEdge(curr_edge.start_corner.coor, curr_edge.start_corner.object,

@@ -30,7 +30,6 @@ import geometry.planar.Shape;
 import geometry.planar.TileShape;
 import geometry.planar.Vector;
 import gui.Freerouter;
-import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.awt.Color;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -394,7 +393,7 @@ public class Pin extends DrillItem implements Serializable {
      * Return all Pins, that can be swapped with this pin.
      */
     public Set<Pin> get_swappable_pins() {
-        Set<Pin> result = new ObjectAVLTreeSet<>();
+        Set<Pin> result = Freerouter.newSortedSet();
         Component component = board.components.get(get_component_no());
         if (component == null) {
             return result;

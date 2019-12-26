@@ -1,5 +1,11 @@
 package gui;
 
+import it.unimi.dsi.fastutil.ints.IntAVLTreeSet;
+import it.unimi.dsi.fastutil.ints.IntArrayList;
+import it.unimi.dsi.fastutil.ints.IntSet;
+import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
+import it.unimi.dsi.fastutil.objects.ObjectLinkedOpenHashSet;
+import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import java.awt.Desktop;
 import java.awt.Taskbar;
 import java.awt.Window;
@@ -8,6 +14,9 @@ import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.List;
+import java.util.Set;
+import java.util.SortedSet;
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -68,6 +77,39 @@ public class Freerouter {
             Configurator.initialize(null, src);
         } catch (IOException ex) {
         }
+    }
+    
+    public static <E> SortedSet<E> newSortedSet() {
+//        return new TreeSet<>();
+        return new ObjectAVLTreeSet<>();
+    }
+
+    public static <E> Set<E> newHashSet() {
+//        return new HashMap<>();
+        return new ObjectOpenHashSet<>();
+    }
+    
+    public static <E> Set<E> newLinkedHashSet() {
+//        return new LinkedHashSet<>();
+        return new ObjectLinkedOpenHashSet<>();
+    }
+
+    public static SortedSet newIntSortedSet() {
+//        return new TreeSet<Integer>();
+        return new IntAVLTreeSet();
+    }
+    
+    public static List<Integer> newIntArrayList() {
+//        return new ArrayList<>();
+        return new IntArrayList();
+    }
+    
+    public static void toArray(List<Integer> list, int[] array) {
+        ((IntArrayList) list).toArray(array);
+    }
+    
+    public static void toArray(Set<Integer> set, int[] array) {
+        ((IntSet) set).toArray(array);
     }
 
     public static void main(String... args) {

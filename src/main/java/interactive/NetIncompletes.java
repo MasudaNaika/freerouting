@@ -26,7 +26,6 @@ import datastructures.PlanarDelaunayTriangulation;
 import geometry.planar.FloatPoint;
 import geometry.planar.Point;
 import gui.Freerouter;
-import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Arrays;
@@ -66,7 +65,7 @@ public class NetIncompletes {
 
         // sort the result edges of the triangulation by length in ascending order.
         Collection<PlanarDelaunayTriangulation.ResultEdge> triangulation_lines = triangulation.get_edge_lines();
-        SortedSet<Edge> sorted_edges = new ObjectAVLTreeSet<>();
+        SortedSet<Edge> sorted_edges = Freerouter.newSortedSet();
 
         for (PlanarDelaunayTriangulation.ResultEdge curr_line : triangulation_lines) {
             Edge new_edge = new Edge((NetItem) curr_line.start_object, curr_line.start_point.to_float(),

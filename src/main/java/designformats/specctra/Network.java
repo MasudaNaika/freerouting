@@ -26,12 +26,11 @@ import geometry.planar.IntPoint;
 import geometry.planar.Point;
 import geometry.planar.Vector;
 import gui.Freerouter;
-import it.unimi.dsi.fastutil.ints.IntArrayList;
-import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -316,7 +315,7 @@ public class Network extends ScopeKeyword {
                             return false;
                         }
                     } else if (next_token == Keyword.FROMTO) {
-                        Set<Net.Pin> curr_subnet_pin_list = new ObjectAVLTreeSet<>();
+                        Set<Net.Pin> curr_subnet_pin_list = Freerouter.newSortedSet();
                         if (!read_net_pins(p_scanner, curr_subnet_pin_list)) {
                             return false;
                         }
@@ -398,7 +397,7 @@ public class Network extends ScopeKeyword {
         Net.Pin prev_pin = it.next();
         while (it.hasNext()) {
             Net.Pin next_pin = it.next();
-            Set<Net.Pin> curr_subnet_pin_list = new ObjectAVLTreeSet<>();
+            Set<Net.Pin> curr_subnet_pin_list = Freerouter.newSortedSet();
             curr_subnet_pin_list.add(prev_pin);
             curr_subnet_pin_list.add(next_pin);
             result.add(curr_subnet_pin_list);
@@ -1075,7 +1074,7 @@ public class Network extends ScopeKeyword {
                 return;
             }
             Collection<Net> pin_nets = p_par.netlist.get_nets(p_location.name, curr_pin.name);
-            IntArrayList net_numbers = new IntArrayList();
+            List<Integer> net_numbers = Freerouter.newIntArrayList();
             for (Net curr_pin_net : pin_nets) {
                 rules.Net curr_board_net = routing_board.rules.nets.get(curr_pin_net.id.name, curr_pin_net.id.subnet_number);
                 if (curr_board_net == null) {
@@ -1085,7 +1084,7 @@ public class Network extends ScopeKeyword {
                 }
             }
             int[] net_no_arr = new int[net_numbers.size()];
-            net_numbers.toArray(net_no_arr);
+            Freerouter.toArray(net_numbers, net_no_arr);
 
             rules.NetClass net_class;
             rules.Net board_net;

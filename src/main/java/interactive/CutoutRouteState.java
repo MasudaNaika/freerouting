@@ -25,12 +25,13 @@ import board.PolylineTrace;
 import geometry.planar.FloatPoint;
 import geometry.planar.IntBox;
 import geometry.planar.IntPoint;
-import it.unimi.dsi.fastutil.ints.IntAVLTreeSet;
+import gui.Freerouter;
 import it.unimi.dsi.fastutil.ints.IntBidirectionalIterator;
-import it.unimi.dsi.fastutil.ints.IntSortedSet;
 import java.awt.Graphics;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.SortedSet;
 
 /**
  *
@@ -107,7 +108,7 @@ public class CutoutRouteState extends SelectRegionState {
 
         IntBox cut_box = new IntBox(Math.min(p1.x, p2.x), Math.min(p1.y, p2.y), Math.max(p1.x, p2.x), Math.max(p1.y, p2.y));
 
-        IntSortedSet changed_nets = new IntAVLTreeSet();
+        SortedSet<Integer> changed_nets = Freerouter.newIntSortedSet();
 
         for (PolylineTrace curr_trace : trace_list) {
             board.ShapeTraceEntries.cutout_trace(curr_trace, cut_box, 0);
@@ -116,8 +117,8 @@ public class CutoutRouteState extends SelectRegionState {
             }
         }
 
-        for (IntBidirectionalIterator it = changed_nets.iterator(); it.hasNext();) {
-            int changed_net = it.nextInt();
+        for (Iterator it = changed_nets.iterator(); it.hasNext();) {
+            int changed_net = ((IntBidirectionalIterator) it).nextInt();
             hdlg.update_ratsnest(changed_net);
         }
     }

@@ -29,8 +29,6 @@ import geometry.planar.PolylineShape;
 import geometry.planar.TileShape;
 import geometry.planar.Vector;
 import gui.Freerouter;
-import it.unimi.dsi.fastutil.ints.IntSortedSet;
-import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.awt.Graphics;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -695,7 +693,7 @@ public class BasicBoard implements Serializable {
         if (p_net_no <= 0) {
             return result;
         }
-        SortedSet<Item> items_to_handle = new ObjectAVLTreeSet<>();
+        SortedSet<Item> items_to_handle = Freerouter.newSortedSet();
         Iterator<UndoableObjects.UndoableObjectNode> it = item_list.start_read_object();
         while (true) {
             Item curr_item = (Item) item_list.read_object(it);
@@ -743,7 +741,7 @@ public class BasicBoard implements Serializable {
      * < 0, the layer is ignored
      */
     public Set<Item> overlapping_items(Area p_area, int p_layer) {
-        Set<Item> result = new ObjectAVLTreeSet<>();
+        Set<Item> result = Freerouter.newSortedSet();
         TileShape[] tile_shapes = p_area.split_to_convex();
         for (TileShape ts : tile_shapes) {
             Set<SearchTreeObject> curr_overlaps = overlapping_objects(ts, p_layer);
@@ -769,7 +767,7 @@ public class BasicBoard implements Serializable {
             if (!curr_shape.is_contained_in(bounding_box)) {
                 return false;
             }
-            Set<SearchTreeObject> obstacles = new ObjectAVLTreeSet<>();
+            Set<SearchTreeObject> obstacles = Freerouter.newSortedSet();
             default_tree.overlapping_objects_with_clearance(curr_shape, p_layer, p_net_no_arr, p_cl_class, obstacles);
             for (SearchTreeObject curr_ob : obstacles) {
                 boolean is_obstacle = true;
@@ -916,7 +914,7 @@ public class BasicBoard implements Serializable {
     public Set<Item> pick_items(Point p_location, int p_layer, ItemSelectionFilter p_filter) {
         TileShape point_shape = TileShape.get_instance(p_location);
         Collection<SearchTreeObject> overlaps = overlapping_objects(point_shape, p_layer);
-        Set<Item> result = new ObjectAVLTreeSet<>();
+        Set<Item> result = Freerouter.newSortedSet();
         for (SearchTreeObject curr_object : overlaps) {
             if (curr_object instanceof Item) {
                 result.add((Item) curr_object);
@@ -1087,7 +1085,7 @@ public class BasicBoard implements Serializable {
      * more undo is possible. Puts the numbers of the changed nets into the set
      * p_changed_nets, if p_changed_nets != null
      */
-    public boolean undo(IntSortedSet p_changed_nets) {
+    public boolean undo(Set<Integer> p_changed_nets) {
         components.undo(communication.observers);
         Collection<UndoableObjects.Storable> cancelled_objects = new LinkedList<>();
         Collection<UndoableObjects.Storable> restored_objects = new LinkedList<>();
@@ -1125,7 +1123,7 @@ public class BasicBoard implements Serializable {
      * redo is possible. Puts the numbers of the changed nets into the set
      * p_changed_nets, if p_changed_nets != null
      */
-    public boolean redo(IntSortedSet p_changed_nets) {
+    public boolean redo(Set<Integer> p_changed_nets) {
         components.redo(communication.observers);
         Collection<UndoableObjects.Storable> cancelled_objects = new LinkedList<>();
         Collection<UndoableObjects.Storable> restored_objects = new LinkedList<>();

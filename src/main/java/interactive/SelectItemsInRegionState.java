@@ -23,7 +23,7 @@ import board.Item;
 import geometry.planar.FloatPoint;
 import geometry.planar.IntBox;
 import geometry.planar.IntPoint;
-import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
+import gui.Freerouter;
 import java.util.Set;
 
 /**
@@ -98,7 +98,7 @@ public class SelectItemsInRegionState extends SelectRegionState {
         Set<Item> found_items = hdlg.settings.item_selection_filter.filter(hdlg.get_routing_board().overlapping_items(b, select_layer));
         if (hdlg.settings.select_on_all_visible_layers) {
             // remove items, which are not visible
-            Set<Item> visible_items = new ObjectAVLTreeSet<>();
+            Set<Item> visible_items = Freerouter.newSortedSet();
             for (Item curr_item : found_items) {
                 for (int i = curr_item.first_layer(); i <= curr_item.last_layer(); ++i) {
                     if (hdlg.graphics_context.get_layer_visibility(i) > 0) {

@@ -37,7 +37,6 @@ import geometry.planar.Point;
 import geometry.planar.Polyline;
 import geometry.planar.Vector;
 import gui.Freerouter;
-import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Collection;
@@ -377,7 +376,7 @@ public class Route {
      * target pin.
      */
     private Set<SwapPinInfo> calculate_swap_pin_infos() {
-        Set<SwapPinInfo> result = new ObjectAVLTreeSet<>();
+        Set<SwapPinInfo> result = Freerouter.newSortedSet();
         if (target_set == null) {
             return result;
         }

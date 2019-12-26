@@ -29,6 +29,7 @@ import geometry.planar.FloatPoint;
 import gui.Freerouter;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.time.ZonedDateTime;
 import java.util.ResourceBundle;
 
 /**
@@ -44,14 +45,17 @@ public class BatchAutorouterThread extends InteractiveActionThread {
     protected BatchAutorouterThread(BoardHandling p_board_handling) {
         super(p_board_handling);
         AutorouteSettings autoroute_settings = p_board_handling.get_settings().autoroute_settings;
-        batch_autorouter = new BatchAutorouter(this, !autoroute_settings.get_with_fanout(), true, autoroute_settings.get_start_ripup_costs());
+        batch_autorouter = new BatchAutorouter(this, !autoroute_settings.get_with_fanout(),
+                true, autoroute_settings.get_start_ripup_costs());
         batch_opt_route = new BatchOptRoute(this);
-
     }
 
     @Override
     protected void thread_action() {
+
         try {
+            Freerouter.logInfo("Start BatchAutorouter at " + ZonedDateTime.now().toString());
+            
             ResourceBundle resources
                     = ResourceBundle.getBundle("interactive.resources.InteractiveState", hdlg.get_locale());
             boolean saved_board_read_only = hdlg.is_board_read_only();
@@ -72,6 +76,11 @@ public class BatchAutorouterThread extends InteractiveActionThread {
                 batch_autorouter.autoroute_passes();
             }
             hdlg.get_routing_board().finish_autoroute();
+            
+            Freerouter.logInfo("End BatchAutorouter at " + ZonedDateTime.now().toString());
+            
+            Freerouter.logInfo("Start BatchOptRoute at " + ZonedDateTime.now().toString());
+            
             if (hdlg.get_settings().autoroute_settings.get_with_postroute() && !is_stop_requested()) {
                 String opt_message = resources.getString("batch_optimizer") + " " + resources.getString("stop_message");
                 hdlg.screen_messages.set_status_message(opt_message);
@@ -108,9 +117,12 @@ public class BatchAutorouterThread extends InteractiveActionThread {
             if (hdlg.get_routing_board().rules.get_trace_angle_restriction() == board.AngleRestriction.FORTYFIVE_DEGREE && hdlg.get_routing_board().get_test_level() != board.TestLevel.RELEASE_VERSION) {
                 tests.Validate.multiple_of_45_degree("after autoroute: ", hdlg.get_routing_board());
             }
+            
+            Freerouter.logInfo("End BatchOptRoute at " + ZonedDateTime.now().toString());
         } catch (Exception e) {
-            Freerouter.logError(e);
+//            Freerouter.logError(e);
         }
+        
     }
 
     @Override

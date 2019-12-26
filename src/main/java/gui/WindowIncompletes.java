@@ -20,7 +20,6 @@
 package gui;
 
 import interactive.RatsNest;
-import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -65,7 +64,7 @@ public class WindowIncompletes extends WindowObjectListWithFilter {
         if (selected_incompletes.isEmpty()) {
             return;
         }
-        Set<board.Item> selected_items = new ObjectAVLTreeSet<>();
+        Set<board.Item> selected_items = Freerouter.newSortedSet();
         for (Object obj : selected_incompletes) {
             RatsNest.AirLine curr_airline = (RatsNest.AirLine) obj;
             selected_items.add(curr_airline.from_item);

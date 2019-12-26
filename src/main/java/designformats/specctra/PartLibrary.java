@@ -20,7 +20,6 @@
 package designformats.specctra;
 
 import gui.Freerouter;
-import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -159,7 +158,7 @@ public class PartLibrary extends ScopeKeyword {
                 Freerouter.logInfo("PartLibrary.read_logical_part_mapping: Keyword.COMPONENT_SCOPE expected");
                 return null;
             }
-            SortedSet<String> result = new ObjectAVLTreeSet<>();
+            SortedSet<String> result = Freerouter.newSortedSet();
             while (true) {
                 p_scanner.yybegin(SpecctraFileScanner.NAME);
                 next_token = p_scanner.next_token();

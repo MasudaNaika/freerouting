@@ -36,9 +36,7 @@ import geometry.planar.IntBox;
 import geometry.planar.IntPoint;
 import geometry.planar.PolylineShape;
 import gui.Freerouter;
-import it.unimi.dsi.fastutil.ints.IntAVLTreeSet;
 import it.unimi.dsi.fastutil.ints.IntBidirectionalIterator;
-import it.unimi.dsi.fastutil.ints.IntSortedSet;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Rectangle;
@@ -50,6 +48,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -616,9 +615,10 @@ public class BoardHandling extends BoardHandlingImpl {
         if (board_is_read_only || !(interactive_state instanceof MenuState)) {
             return;
         }
-        IntSortedSet changed_nets = new IntAVLTreeSet();
+        Set<Integer> changed_nets = Freerouter.newIntSortedSet();
         if (board.undo(changed_nets)) {
-            for (Integer changed_net : changed_nets) {
+            for (Iterator it = changed_nets.iterator(); it.hasNext();) {
+                int changed_net = ((IntBidirectionalIterator) it).nextInt();
                 update_ratsnest(changed_net);
             }
             if (changed_nets.size() > 0) {
@@ -641,10 +641,10 @@ public class BoardHandling extends BoardHandlingImpl {
         if (board_is_read_only || !(interactive_state instanceof MenuState)) {
             return;
         }
-        IntSortedSet changed_nets = new IntAVLTreeSet();
+        Set<Integer> changed_nets = Freerouter.newIntSortedSet();
         if (board.redo(changed_nets)) {
-            for (IntBidirectionalIterator it = changed_nets.iterator(); it.hasNext();) {
-                int changed_net = it.nextInt();
+            for (Iterator it = changed_nets.iterator(); it.hasNext();) {
+                int changed_net = ((IntBidirectionalIterator) it).nextInt();
                 update_ratsnest(changed_net);
             }
             screen_messages.set_status_message(resources.getString("redo"));

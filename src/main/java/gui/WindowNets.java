@@ -19,7 +19,6 @@
  */
 package gui;
 
-import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -91,7 +90,7 @@ public class WindowNets extends WindowObjectListWithFilter {
             selected_net_numbers[i] = ((Net) selected_nets[i]).net_number;
         }
         board.RoutingBoard routing_board = board_frame.board_panel.board_handling.get_routing_board();
-        Set<board.Item> selected_items = new ObjectAVLTreeSet<>();
+        Set<board.Item> selected_items = Freerouter.newSortedSet();
         Collection<board.Item> board_items = routing_board.get_items();
         for (board.Item curr_item : board_items) {
             boolean item_matches = false;

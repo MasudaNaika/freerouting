@@ -6,7 +6,6 @@ import geometry.planar.Point;
 import geometry.planar.TileShape;
 import geometry.planar.Vector;
 import gui.Freerouter;
-import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.awt.Color;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -43,7 +42,7 @@ public class ConductionArea extends ObstacleArea implements Connectable {
 
     @Override
     public Set<Item> get_normal_contacts() {
-        Set<Item> result = new ObjectAVLTreeSet<>();
+        Set<Item> result = Freerouter.newSortedSet();
         for (int i = 0; i < tile_shape_count(); ++i) {
             TileShape curr_shape = get_tile_shape(i);
             Set<SearchTreeObject> overlaps = board.overlapping_objects(curr_shape, get_layer());

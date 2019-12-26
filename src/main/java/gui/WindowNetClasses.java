@@ -20,7 +20,6 @@
 package gui;
 
 import board.ObjectInfoPanel.Printable;
-import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -274,7 +273,7 @@ public class WindowNetClasses extends BoardSavableSubWindow {
                 selected_class_arr[i] = routing_board.rules.net_classes.get((String) table.getValueAt(selected_rows[i], ColumnName.NAME.ordinal()));
             }
             rules.Nets nets = routing_board.rules.nets;
-            Set<board.Item> selected_items = new ObjectAVLTreeSet<>();
+            Set<board.Item> selected_items = Freerouter.newSortedSet();
             Collection<board.Item> board_items = routing_board.get_items();
             for (board.Item curr_item : board_items) {
                 boolean item_matches = false;

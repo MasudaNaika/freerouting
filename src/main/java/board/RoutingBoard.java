@@ -34,10 +34,7 @@ import geometry.planar.PolylineShape;
 import geometry.planar.TileShape;
 import geometry.planar.Vector;
 import gui.Freerouter;
-import it.unimi.dsi.fastutil.ints.IntAVLTreeSet;
 import it.unimi.dsi.fastutil.ints.IntBidirectionalIterator;
-import it.unimi.dsi.fastutil.ints.IntSortedSet;
-import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
@@ -112,7 +109,7 @@ public class RoutingBoard extends BasicBoard implements Serializable {
             calculate_tidy_region = false;
         }
         start_marking_changed_area();
-        IntSortedSet changed_nets = new IntAVLTreeSet();
+        Set<Integer> changed_nets = Freerouter.newIntSortedSet();
         for (Item curr_item : p_item_list) {
             if (!p_with_delete_fixed && curr_item.is_delete_fixed() || curr_item.is_user_fixed()) {
                 result = false;
@@ -130,8 +127,8 @@ public class RoutingBoard extends BasicBoard implements Serializable {
                 }
             }
         }
-        for (IntBidirectionalIterator it = changed_nets.iterator(); it.hasNext();) {
-            int curr_net_no = it.nextInt();
+        for (Iterator it = changed_nets.iterator(); it.hasNext();) {
+            int curr_net_no = ((IntBidirectionalIterator) it).nextInt();
             combine_traces(curr_net_no);
         }
         if (calculate_tidy_region) {
@@ -803,7 +800,7 @@ public class RoutingBoard extends BasicBoard implements Serializable {
         if (route_dest_set.isEmpty()) {
             return AutorouteEngine.AutorouteResult.ALREADY_CONNECTED; // p_item is already routed.
         }
-        SortedSet<Item> ripped_item_list = new ObjectAVLTreeSet<>();
+        SortedSet<Item> ripped_item_list = Freerouter.newSortedSet();
         AutorouteEngine curr_autoroute_engine = init_autoroute(p_item.get_net_no(0),
                 ctrl_settings.trace_clearance_class_no, p_stoppable_thread, p_time_limit, false);
         AutorouteEngine.AutorouteResult result
@@ -844,7 +841,7 @@ public class RoutingBoard extends BasicBoard implements Serializable {
             ctrl_settings.ripup_allowed = true;
             ctrl_settings.ripup_costs = p_ripup_costs;
         }
-        SortedSet<Item> ripped_item_list = new ObjectAVLTreeSet<>();
+        SortedSet<Item> ripped_item_list = Freerouter.newSortedSet();
         AutorouteEngine curr_autoroute_engine = init_autoroute(pin_net_no,
                 ctrl_settings.trace_clearance_class_no, p_stoppable_thread, p_time_limit, false);
         AutorouteEngine.AutorouteResult result
@@ -935,7 +932,7 @@ public class RoutingBoard extends BasicBoard implements Serializable {
      * all nets are removed. Returns true, if something was removed.
      */
     public boolean remove_trace_tails(int p_net_no, Item.StopConnectionOption p_stop_connection_option) {
-        SortedSet<Item> stub_set = new ObjectAVLTreeSet<>();
+        SortedSet<Item> stub_set = Freerouter.newSortedSet();
         Collection<Item> board_items = get_items();
         for (Item curr_item : board_items) {
             if (!curr_item.is_route()) {
@@ -961,7 +958,7 @@ public class RoutingBoard extends BasicBoard implements Serializable {
                 stub_set.add(curr_item);
             }
         }
-        SortedSet<Item> stub_connections = new ObjectAVLTreeSet<>();
+        SortedSet<Item> stub_connections = Freerouter.newSortedSet();
         for (Item curr_item : stub_set) {
             int item_contact_count = curr_item.get_normal_contacts().size();
             if (item_contact_count == 1) {
