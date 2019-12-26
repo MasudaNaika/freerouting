@@ -32,6 +32,7 @@ import geometry.planar.Point;
 import geometry.planar.Polyline;
 import geometry.planar.Side;
 import geometry.planar.TileShape;
+import gui.Freerouter;
 import java.util.Collection;
 
 /**
@@ -72,7 +73,7 @@ public class MazeShoveTraceAlgo {
         Polyline trace_polyline = obstacle_trace.polyline();
 
         if (trace_corner_no >= trace_polyline.arr.length - 1) {
-            System.out.println("MazeShoveTraceAlgo.check_shove_trace_line: trace_corner_no to big");
+            Freerouter.logInfo("MazeShoveTraceAlgo.check_shove_trace_line: trace_corner_no to big");
             return false;
         }
         Collection<ExpansionDoor> room_doors = p_obstacle_room.get_doors();
@@ -240,7 +241,7 @@ public class MazeShoveTraceAlgo {
                 FloatLine curr_door_segment = curr_door_shape.diagonal_corner_segment();
                 if (curr_door_segment == null) {
                     if (p_board.get_test_level() == board.TestLevel.ALL_DEBUGGING_OUTPUT) {
-                        System.out.println("MazeShoveTraceAlgo.check_shove_trace_line: door shape is empty");
+                        Freerouter.logInfo("MazeShoveTraceAlgo.check_shove_trace_line: door shape is empty");
                     }
                     continue;
                 }

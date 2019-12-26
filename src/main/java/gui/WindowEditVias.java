@@ -258,12 +258,12 @@ public class WindowEditVias extends BoardSavableSubWindow {
             BoardRules board_rules = routing_board.rules;
             Object via_name = getValueAt(p_row, ColumnName.NAME.ordinal());
             if (!(via_name instanceof String)) {
-                System.out.println("ViaVindow.setValueAt: String expected");
+                Freerouter.logInfo("ViaVindow.setValueAt: String expected");
                 return;
             }
             ViaInfo via_info = board_rules.via_infos.get((String) via_name);
             if (via_info == null) {
-                System.out.println("ViaVindow.setValueAt: via_info not found");
+                Freerouter.logInfo("ViaVindow.setValueAt: via_info not found");
                 return;
             }
 
@@ -284,7 +284,7 @@ public class WindowEditVias extends BoardSavableSubWindow {
                 String new_name = (String) p_value;
                 library.Padstack new_padstack = routing_board.library.get_via_padstack(new_name);
                 if (new_padstack == null) {
-                    System.out.println("ViaVindow.setValueAt: via padstack not found");
+                    Freerouter.logInfo("ViaVindow.setValueAt: via padstack not found");
                     return;
                 }
                 via_info.set_padstack(new_padstack);
@@ -296,14 +296,14 @@ public class WindowEditVias extends BoardSavableSubWindow {
                 int new_cl_class_index = board_rules.clearance_matrix.get_no(new_name);
                 {
                     if (new_cl_class_index < 0) {
-                        System.out.println("ViaVindow.setValueAt: clearance class not found");
+                        Freerouter.logInfo("ViaVindow.setValueAt: clearance class not found");
                         return;
                     }
                 }
                 via_info.set_clearance_class(new_cl_class_index);
             } else if (p_col == ColumnName.ATTACH_SMD.ordinal()) {
                 if (!(p_value instanceof Boolean)) {
-                    System.out.println("ViaVindow.setValueAt: Boolean expected");
+                    Freerouter.logInfo("ViaVindow.setValueAt: Boolean expected");
                     return;
                 }
                 Boolean attach_smd = (Boolean) p_value;

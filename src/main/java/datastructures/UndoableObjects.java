@@ -19,6 +19,7 @@
  */
 package datastructures;
 
+import gui.Freerouter;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
@@ -95,7 +96,7 @@ public class UndoableObjects implements Serializable {
             return false;
         }
         if (object_node.object != p_object) {
-            System.out.println("UndoableObjectList.delete: Object inconsistent");
+            Freerouter.logInfo("UndoableObjectList.delete: Object inconsistent");
             return false;
         }
 
@@ -197,7 +198,7 @@ public class UndoableObjects implements Serializable {
                 curr_deleted_node = curr_deleted_node.redo_object;
             }
             if (objects.remove(curr_deleted_node.object) == null) {
-                System.out.println("previous deleted object not found");
+                Freerouter.logInfo("previous deleted object not found");
             }
             if (p_restored_objects == null || !p_restored_objects.remove(curr_deleted_node.object)) {
                 // the object needs only be cancelled if it is already in the board
@@ -262,7 +263,7 @@ public class UndoableObjects implements Serializable {
         // search p_object in the map
         UndoableObjectNode curr_node = objects.get(p_object);
         if (curr_node == null) {
-            System.out.println("UndoableObjects.save_for_undo: object node not found");
+            Freerouter.logInfo("UndoableObjects.save_for_undo: object node not found");
             return;
         }
         if (curr_node.level < stack_level) {

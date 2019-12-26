@@ -29,6 +29,7 @@ import geometry.planar.IntOctagon;
 import geometry.planar.IntPoint;
 import geometry.planar.Limits;
 import geometry.planar.TileShape;
+import gui.Freerouter;
 import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -82,7 +83,7 @@ public class Sorted45DegreeRoomNeighbours {
         } else if (p_room instanceof ObstacleExpansionRoom) {
             completed_room = (ObstacleExpansionRoom) p_room;
         } else {
-            System.out.println("Sorted45DegreeRoomNeighbours.calculate_neighbours: unexpected expansion room type");
+            Freerouter.logInfo("Sorted45DegreeRoomNeighbours.calculate_neighbours: unexpected expansion room type");
             return null;
         }
         IntOctagon room_oct = room_shape.bounding_octagon();
@@ -178,7 +179,7 @@ public class Sorted45DegreeRoomNeighbours {
      */
     private void calculate_edge_incomplete_rooms_of_obstacle_expansion_room(int p_from_side_no, int p_to_side_no, AutorouteEngine p_autoroute_engine) {
         if (!(from_room instanceof ObstacleExpansionRoom)) {
-            System.out.println("Sorted45DegreeRoomNeighbours.calculate_side_incomplete_rooms_of_obstacle_expansion_room: ObstacleExpansionRoom expected for from_room");
+            Freerouter.logInfo("Sorted45DegreeRoomNeighbours.calculate_side_incomplete_rooms_of_obstacle_expansion_room: ObstacleExpansionRoom expected for from_room");
             return;
         }
         IntOctagon board_bounding_oct = p_autoroute_engine.board.get_bounding_box().bounding_octagon();
@@ -222,7 +223,7 @@ public class Sorted45DegreeRoomNeighbours {
                         urx = room_shape.llx;
                         break;
                     default:
-                        System.out.println("SortedOrthoganelRoomNeighbours.calculate_edge_incomplete_rooms_of_obstacle_expansion_room: curr_side_no illegal");
+                        Freerouter.logInfo("SortedOrthoganelRoomNeighbours.calculate_edge_incomplete_rooms_of_obstacle_expansion_room: curr_side_no illegal");
                         return;
                 }
                 insert_incomplete_room(p_autoroute_engine, lx, ly, rx, uy, ulx, lrx, llx, urx);
@@ -307,7 +308,7 @@ public class Sorted45DegreeRoomNeighbours {
         }
         IncompleteFreeSpaceExpansionRoom curr_incomplete_room = (IncompleteFreeSpaceExpansionRoom) from_room;
         if (!(curr_incomplete_room.get_shape() instanceof IntOctagon)) {
-            System.out.println("Sorted45DegreeRoomNeighbours.try_remove_edge_line: IntOctagon expected for room_shape type");
+            Freerouter.logInfo("Sorted45DegreeRoomNeighbours.try_remove_edge_line: IntOctagon expected for room_shape type");
             return false;
         }
         IntOctagon room_oct = (IntOctagon) curr_incomplete_room.get_shape();
@@ -684,7 +685,7 @@ public class Sorted45DegreeRoomNeighbours {
                             }
                             break;
                         default:
-                            System.out.println("Sorted45DegreeRoomNeighbour.calculate_new_incomplete: illegal touching side");
+                            Freerouter.logInfo("Sorted45DegreeRoomNeighbour.calculate_new_incomplete: illegal touching side");
                             break;
                     }
                     insert_incomplete_room(p_autoroute_engine, lx, ly, rx, uy, ulx, lrx, llx, urx);
@@ -833,7 +834,7 @@ public class Sorted45DegreeRoomNeighbours {
                     cmp_value = is2.corner(7).y - is1.corner(7).y;
                     break;
                 default:
-                    System.out.println("SortedRoomNeighbour.compareTo: first_touching_side out of range ");
+                    Freerouter.logInfo("SortedRoomNeighbour.compareTo: first_touching_side out of range ");
                     return 0;
             }
 

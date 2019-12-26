@@ -23,6 +23,7 @@ package board;
 import datastructures.UndoableObjects;
 import geometry.planar.IntPoint;
 import geometry.planar.Point;
+import gui.Freerouter;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -84,7 +85,7 @@ public class Components implements Serializable {
     public Component get(int p_component_no) {
         Component result = component_arr.get(p_component_no - 1);
         if (result != null && result.no != p_component_no) {
-            System.out.println("Components.get: inconsistent component number");
+            Freerouter.logInfo("Components.get: inconsistent component number");
         }
         return result;
     }

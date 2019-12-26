@@ -19,6 +19,7 @@
  */
 package designformats.specctra;
 
+import gui.Freerouter;
 import java.io.IOException;
 
 /**
@@ -41,30 +42,30 @@ public class Resolution extends ScopeKeyword {
             // read the unit
             Object next_token = p_par.scanner.next_token();
             if (!(next_token instanceof String)) {
-                System.out.println("Resolution.read_scope: string expected");
+                Freerouter.logInfo("Resolution.read_scope: string expected");
                 return false;
             }
             p_par.unit = board.Unit.from_string((String) next_token);
             if (p_par.unit == null) {
-                System.out.println("Resolution.read_scope: unit mil, inch or mm expected");
+                Freerouter.logInfo("Resolution.read_scope: unit mil, inch or mm expected");
                 return false;
             }
             // read the scale factor
             next_token = p_par.scanner.next_token();
             if (!(next_token instanceof Integer)) {
-                System.out.println("Resolution.read_scope: integer expected");
+                Freerouter.logInfo("Resolution.read_scope: integer expected");
                 return false;
             }
             p_par.resolution = ((Integer) next_token);
             // overread the closing bracket
             next_token = p_par.scanner.next_token();
             if (next_token != Keyword.CLOSED_BRACKET) {
-                System.out.println("Resolution.read_scope: closing bracket expected");
+                Freerouter.logInfo("Resolution.read_scope: closing bracket expected");
                 return false;
             }
             return true;
         } catch (IOException e) {
-            System.out.println("Resolution.read_scope: IO error scanning file");
+            Freerouter.logError("Resolution.read_scope: IO error scanning file");
             return false;
         }
     }

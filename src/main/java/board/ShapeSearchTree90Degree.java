@@ -27,6 +27,7 @@ import geometry.planar.OrthogonalBoundingDirections;
 import geometry.planar.Polyline;
 import geometry.planar.Shape;
 import geometry.planar.TileShape;
+import gui.Freerouter;
 import java.util.Collection;
 import java.util.LinkedList;
 
@@ -58,7 +59,7 @@ public class ShapeSearchTree90Degree extends ShapeSearchTree {
     public Collection<IncompleteFreeSpaceExpansionRoom> complete_shape(IncompleteFreeSpaceExpansionRoom p_room,
             int p_net_no, SearchTreeObject p_ignore_object, TileShape p_ignore_shape) {
         if (!(p_room.get_contained_shape() instanceof IntBox)) {
-            System.out.println("BoxShapeSearchTree.complete_shape: unexpected p_shape_to_be_contained");
+            Freerouter.logInfo("BoxShapeSearchTree.complete_shape: unexpected p_shape_to_be_contained");
             return new LinkedList<>();
         }
         IntBox shape_to_be_contained = (IntBox) p_room.get_contained_shape();
@@ -68,7 +69,7 @@ public class ShapeSearchTree90Degree extends ShapeSearchTree {
         IntBox start_shape = board.get_bounding_box();
         if (p_room.get_shape() != null) {
             if (!(p_room.get_shape() instanceof IntBox)) {
-                System.out.println("BoxShapeSearchTree.complete_shape: p_start_shape of type IntBox expected");
+                Freerouter.logInfo("BoxShapeSearchTree.complete_shape: p_start_shape of type IntBox expected");
                 return new LinkedList<>();
             }
             start_shape = ((IntBox) p_room.get_shape()).intersection(start_shape);
@@ -151,7 +152,7 @@ public class ShapeSearchTree90Degree extends ShapeSearchTree {
         Collection<IncompleteFreeSpaceExpansionRoom> result = new LinkedList<>();
         if (p_incomplete_room.get_contained_shape().is_empty()) {
             if (board.get_test_level().ordinal() >= TestLevel.ALL_DEBUGGING_OUTPUT.ordinal()) {
-                System.out.println("BoxShapeSearchTree.restrain_shape: p_shape_to_be_contained is empty");
+                Freerouter.logInfo("BoxShapeSearchTree.restrain_shape: p_shape_to_be_contained is empty");
             }
             return result;
         }
@@ -206,7 +207,7 @@ public class ShapeSearchTree90Degree extends ShapeSearchTree {
         // shape_to_be_contained and p_shape evtl. need to be divided in two.
         IntBox is = shape_to_be_contained.intersection(p_obstacle_shape);
         if (is.is_empty()) {
-            System.out.println("BoxShapeSearchTree.restrain_shape: Intersection between obstacle_shape and shape_to_be_contained expected");
+            Freerouter.logInfo("BoxShapeSearchTree.restrain_shape: Intersection between obstacle_shape and shape_to_be_contained expected");
             return result;
         }
         IntBox new_shape_1 = null;
@@ -252,7 +253,7 @@ public class ShapeSearchTree90Degree extends ShapeSearchTree {
                 IntBox curr_tile_shape = curr_shape.bounding_box();
                 int offset_width = clearance_compensation_value(p_drill_item.clearance_class_no(), p_drill_item.shape_layer(i));
                 if (curr_tile_shape == null) {
-                    System.out.println("BoxShapeSearchTree.calculate_tree_shapes: shape is null");
+                    Freerouter.logInfo("BoxShapeSearchTree.calculate_tree_shapes: shape is null");
                 } else {
                     curr_tile_shape = curr_tile_shape.offset(offset_width);
                 }

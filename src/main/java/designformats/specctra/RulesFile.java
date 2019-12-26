@@ -22,6 +22,7 @@ package designformats.specctra;
 
 import board.BasicBoard;
 import datastructures.IndentFileWriter;
+import gui.Freerouter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -45,12 +46,12 @@ public class RulesFile {
         try {
             write_rules(write_scope_parameter, p_design_name);
         } catch (IOException e) {
-            System.out.println("unable to write rules to file");
+            Freerouter.logError("unable to write rules to file");
         }
         try {
             output_file.close();
         } catch (IOException e) {
-            System.out.println("unable to close rules file");
+            Freerouter.logError("unable to close rules file");
         }
     }
 
@@ -61,27 +62,27 @@ public class RulesFile {
         try {
             Object curr_token = scanner.next_token();
             if (curr_token != Keyword.OPEN_BRACKET) {
-                System.out.println("RulesFile.read: open bracket expected");
+                Freerouter.logInfo("RulesFile.read: open bracket expected");
                 return false;
             }
             curr_token = scanner.next_token();
             if (curr_token != Keyword.RULES) {
-                System.out.println("RulesFile.read: keyword rules expected");
+                Freerouter.logInfo("RulesFile.read: keyword rules expected");
                 return false;
             }
             curr_token = scanner.next_token();
             if (curr_token != Keyword.PCB_SCOPE) {
-                System.out.println("RulesFile.read: keyword pcb expected");
+                Freerouter.logInfo("RulesFile.read: keyword pcb expected");
                 return false;
             }
             scanner.yybegin(SpecctraFileScanner.NAME);
             curr_token = scanner.next_token();
             if (!(curr_token instanceof String) || !((String) curr_token).equals(p_design_name)) {
-                System.out.println("RulesFile.read: design_name not matching");
+                Freerouter.logInfo("RulesFile.read: design_name not matching");
                 return false;
             }
         } catch (IOException e) {
-            System.out.println("RulesFile.read: IO error scanning file");
+            Freerouter.logError("RulesFile.read: IO error scanning file");
             return false;
         }
         LayerStructure layer_structure = new LayerStructure(routing_board.layer_structure);
@@ -92,11 +93,11 @@ public class RulesFile {
             try {
                 next_token = scanner.next_token();
             } catch (IOException e) {
-                System.out.println("RulesFile.read: IO error scanning file");
+                Freerouter.logError("RulesFile.read: IO error scanning file");
                 return false;
             }
             if (next_token == null) {
-                System.out.println("Structure.read_scope: unexpected end of file");
+                Freerouter.logInfo("Structure.read_scope: unexpected end of file");
                 return false;
             }
             if (next_token == Keyword.CLOSED_BRACKET) {
@@ -167,7 +168,7 @@ public class RulesFile {
         if (p_layer_name != null) {
             layer_no = p_board.layer_structure.get_no(p_layer_name);
             if (layer_no < 0) {
-                System.out.println("RulesFile.add_rules: layer not found");
+                Freerouter.logInfo("RulesFile.add_rules: layer not found");
             }
         }
         CoordinateTransform coordinate_transform = p_board.communication.coordinate_transform;
@@ -191,14 +192,14 @@ public class RulesFile {
         try {
             Object next_token = p_scanner.next_token();
             if (!(next_token instanceof String)) {
-                System.out.println("RulesFile.add_layer_rules: String expected");
+                Freerouter.logInfo("RulesFile.add_layer_rules: String expected");
                 return false;
             }
             String layer_string = (String) next_token;
             next_token = p_scanner.next_token();
             while (next_token != Keyword.CLOSED_BRACKET) {
                 if (next_token != Keyword.OPEN_BRACKET) {
-                    System.out.println("RulesFile.add_layer_rules: ( expected");
+                    Freerouter.logInfo("RulesFile.add_layer_rules: ( expected");
                     return false;
                 }
                 next_token = p_scanner.next_token();
@@ -212,7 +213,7 @@ public class RulesFile {
             }
             return true;
         } catch (IOException e) {
-            System.out.println("RulesFile.add_layer_rules: IO error scanning file");
+            Freerouter.logError("RulesFile.add_layer_rules: IO error scanning file");
             return false;
         }
     }

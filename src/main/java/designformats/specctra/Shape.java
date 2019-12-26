@@ -22,6 +22,7 @@ package designformats.specctra;
 import datastructures.IdentifierType;
 import datastructures.IndentFileWriter;
 import geometry.planar.PolylineShape;
+import gui.Freerouter;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
@@ -74,8 +75,8 @@ public abstract class Shape {
                 ScopeKeyword.skip_scope(p_scanner);
             }
         } catch (IOException e) {
-            System.out.println("Shape.read_scope: IO error scanning file");
-            System.out.println(e);
+            Freerouter.logError("Shape.read_scope: IO error scanning file");
+            Freerouter.logError(e);
             return result;
         }
         return result;
@@ -94,16 +95,16 @@ public abstract class Shape {
                 layer = Layer.SIGNAL;
             } else {
                 if (p_layer_structure == null) {
-                    System.out.println("PolylinePath.read_scope: only layer types pcb or signal expected");
+                    Freerouter.logInfo("PolylinePath.read_scope: only layer types pcb or signal expected");
                     return null;
                 }
                 if (!(next_token instanceof String)) {
-                    System.out.println("PolylinePath.read_scope: layer name string expected");
+                    Freerouter.logInfo("PolylinePath.read_scope: layer name string expected");
                     return null;
                 }
                 int layer_no = p_layer_structure.get_no((String) next_token);
                 if (layer_no < 0 || layer_no >= p_layer_structure.arr.length) {
-                    System.out.println("Shape.read_polyline_path_scope: layer name " + next_token + " not found in layer structure ");
+                    Freerouter.logInfo("Shape.read_polyline_path_scope: layer name " + next_token + " not found in layer structure ");
                     return null;
                 }
                 layer = p_layer_structure.arr[layer_no];
@@ -119,7 +120,7 @@ public abstract class Shape {
                 corner_list.add(next_token);
             }
             if (corner_list.size() < 5) {
-                System.out.println("PolylinePath.read_scope: to few numbers in scope");
+                Freerouter.logInfo("PolylinePath.read_scope: to few numbers in scope");
                 return null;
             }
             Iterator<Object> it = corner_list.iterator();
@@ -130,7 +131,7 @@ public abstract class Shape {
             } else if (next_object instanceof Integer) {
                 width = ((Integer) next_object);
             } else {
-                System.out.println("PolylinePath.read_scope: number expected");
+                Freerouter.logInfo("PolylinePath.read_scope: number expected");
                 return null;
             }
             double[] corner_arr = new double[corner_list.size() - 1];
@@ -141,15 +142,15 @@ public abstract class Shape {
                 } else if (next_object instanceof Integer) {
                     corner_arr[i] = ((Integer) next_object);
                 } else {
-                    System.out.println("Shape.read_polygon_path_scope: number expected");
+                    Freerouter.logInfo("Shape.read_polygon_path_scope: number expected");
                     return null;
                 }
 
             }
             return new PolylinePath(layer, width, corner_arr);
         } catch (IOException e) {
-            System.out.println("PolylinePath.read_scope: IO error scanning file");
-            System.out.println(e);
+            Freerouter.logError("PolylinePath.read_scope: IO error scanning file");
+            Freerouter.logError(e);
             return null;
         }
     }
@@ -169,7 +170,7 @@ public abstract class Shape {
         try {
             next_token = p_scanner.next_token();
         } catch (IOException e) {
-            System.out.println("Shape.read_area_scope: IO error scanning file");
+            Freerouter.logError("Shape.read_area_scope: IO error scanning file");
             return null;
         }
         if (next_token instanceof String) {
@@ -189,11 +190,11 @@ public abstract class Shape {
             try {
                 next_token = p_scanner.next_token();
             } catch (IOException e) {
-                System.out.println("Shape.read_area_scope: IO error scanning file");
+                Freerouter.logError("Shape.read_area_scope: IO error scanning file");
                 return null;
             }
             if (next_token == null) {
-                System.out.println("Shape.read_area_scope: unexpected end of file");
+                Freerouter.logInfo("Shape.read_area_scope: unexpected end of file");
                 return null;
             }
             if (next_token == Keyword.CLOSED_BRACKET) {
@@ -210,11 +211,11 @@ public abstract class Shape {
                     try {
                         next_token = p_scanner.next_token();
                     } catch (IOException e) {
-                        System.out.println("Shape.read_area_scope: IO error scanning file");
+                        Freerouter.logError("Shape.read_area_scope: IO error scanning file");
                         return null;
                     }
                     if (next_token != Keyword.CLOSED_BRACKET) {
-                        System.out.println("Shape.read_area_scope: closed bracket expected");
+                        Freerouter.logInfo("Shape.read_area_scope: closed bracket expected");
                         return null;
                     }
 
@@ -248,13 +249,13 @@ public abstract class Shape {
                 rect_layer = Layer.SIGNAL;
             } else if (p_layer_structure != null) {
                 if (!(next_token instanceof String)) {
-                    System.out.println("Shape.read_rectangle_scope: layer name string expected");
+                    Freerouter.logInfo("Shape.read_rectangle_scope: layer name string expected");
                     return null;
                 }
                 String layer_name = (String) next_token;
                 int layer_no = p_layer_structure.get_no(layer_name);
                 if (layer_no < 0 || layer_no >= p_layer_structure.arr.length) {
-                    System.out.println("Shape.read_rectangle_scope: layer name " + layer_name
+                    Freerouter.logInfo("Shape.read_rectangle_scope: layer name " + layer_name
                             + " not found in layer structure ");
                 } else {
                     rect_layer = p_layer_structure.arr[layer_no];
@@ -270,7 +271,7 @@ public abstract class Shape {
                 } else if (next_token instanceof Integer) {
                     rect_coor[i] = ((Integer) next_token);
                 } else {
-                    System.out.println("Shape.read_rectangle_scope: number expected");
+                    Freerouter.logInfo("Shape.read_rectangle_scope: number expected");
                     return null;
                 }
             }
@@ -278,7 +279,7 @@ public abstract class Shape {
 
             next_token = p_scanner.next_token();
             if (next_token != Keyword.CLOSED_BRACKET) {
-                System.out.println("Shape.read_rectangle_scope ) expected");
+                Freerouter.logInfo("Shape.read_rectangle_scope ) expected");
                 return null;
             }
             if (rect_layer == null) {
@@ -286,8 +287,8 @@ public abstract class Shape {
             }
             return new Rectangle(rect_layer, rect_coor);
         } catch (IOException e) {
-            System.out.println("Shape.read_rectangle_scope: IO error scanning file");
-            System.out.println(e);
+            Freerouter.logError("Shape.read_rectangle_scope: IO error scanning file");
+            Freerouter.logError(e);
             return null;
         }
     }
@@ -308,16 +309,16 @@ public abstract class Shape {
                 polygon_layer = Layer.SIGNAL;
             } else {
                 if (p_layer_structure == null) {
-                    System.out.println("Shape.read_polygon_scope: only layer types pcb or signal expected");
+                    Freerouter.logInfo("Shape.read_polygon_scope: only layer types pcb or signal expected");
                     return null;
                 }
                 if (!(next_token instanceof String)) {
-                    System.out.println("Shape.read_polygon_scope: layer name string expected");
+                    Freerouter.logInfo("Shape.read_polygon_scope: layer name string expected");
                     return null;
                 }
                 int layer_no = p_layer_structure.get_no((String) next_token);
                 if (layer_no < 0 || layer_no >= p_layer_structure.arr.length) {
-                    System.out.println("Shape.read_polygon_scope: layer name " + next_token + " not found in layer structure ");
+                    Freerouter.logInfo("Shape.read_polygon_scope: layer name " + next_token + " not found in layer structure ");
                     layer_ok = false;
                 } else {
                     polygon_layer = p_layer_structure.arr[layer_no];
@@ -333,7 +334,7 @@ public abstract class Shape {
             while (true) {
                 next_token = p_scanner.next_token();
                 if (next_token == null) {
-                    System.out.println("Shape.read_polygon_scope: unexpected end of file");
+                    Freerouter.logInfo("Shape.read_polygon_scope: unexpected end of file");
                     return null;
                 }
                 if (next_token == Keyword.OPEN_BRACKET) {
@@ -357,15 +358,15 @@ public abstract class Shape {
                 } else if (next_object instanceof Integer) {
                     coor_arr[i] = ((Integer) next_object);
                 } else {
-                    System.out.println("Shape.read_polygon_scope: number expected");
+                    Freerouter.logInfo("Shape.read_polygon_scope: number expected");
                     return null;
                 }
                 ++i;
             }
             return new Polygon(polygon_layer, coor_arr);
         } catch (IOException e) {
-            System.out.println("Rectangle.read_scope: IO error scanning file");
-            System.out.println(e);
+            Freerouter.logError("Rectangle.read_scope: IO error scanning file");
+            Freerouter.logError(e);
             return null;
         }
     }
@@ -386,16 +387,16 @@ public abstract class Shape {
                 circle_layer = Layer.SIGNAL;
             } else {
                 if (p_layer_structure == null) {
-                    System.out.println("Shape.read_circle_scope: p_layer_structure != null expected");
+                    Freerouter.logInfo("Shape.read_circle_scope: p_layer_structure != null expected");
                     return null;
                 }
                 if (!(next_token instanceof String)) {
-                    System.out.println("Shape.read_circle_scope: string for layer_name expected");
+                    Freerouter.logInfo("Shape.read_circle_scope: string for layer_name expected");
                     return null;
                 }
                 int layer_no = p_layer_structure.get_no((String) next_token);
                 if (layer_no < 0 || layer_no >= p_layer_structure.arr.length) {
-                    System.out.println("Shape.read_circle_scope: layer with name " + next_token + " not found in layer stracture ");
+                    Freerouter.logInfo("Shape.read_circle_scope: layer with name " + next_token + " not found in layer stracture ");
                     layer_ok = false;
                 } else {
                     circle_layer = p_layer_structure.arr[layer_no];
@@ -409,7 +410,7 @@ public abstract class Shape {
                     break;
                 }
                 if (curr_index > 2) {
-                    System.out.println("Shape.read_circle_scope: closed bracket expected");
+                    Freerouter.logInfo("Shape.read_circle_scope: closed bracket expected");
                     return null;
                 }
                 if (next_token instanceof Double) {
@@ -417,7 +418,7 @@ public abstract class Shape {
                 } else if (next_token instanceof Integer) {
                     circle_coor[curr_index] = ((Integer) next_token);
                 } else {
-                    System.out.println("Shape.read_circle_scope: number expected");
+                    Freerouter.logInfo("Shape.read_circle_scope: number expected");
                     return null;
                 }
                 ++curr_index;
@@ -427,8 +428,8 @@ public abstract class Shape {
             }
             return new Circle(circle_layer, circle_coor);
         } catch (IOException e) {
-            System.out.println("Shape.read_rectangle_scope: IO error scanning file");
-            System.out.println(e);
+            Freerouter.logError("Shape.read_rectangle_scope: IO error scanning file");
+            Freerouter.logError(e);
             return null;
         }
     }
@@ -447,16 +448,16 @@ public abstract class Shape {
                 layer = Layer.SIGNAL;
             } else {
                 if (p_layer_structure == null) {
-                    System.out.println("Shape.read_polygon_path_scope: only layer types pcb or signal expected");
+                    Freerouter.logInfo("Shape.read_polygon_path_scope: only layer types pcb or signal expected");
                     return null;
                 }
                 if (!(next_token instanceof String)) {
-                    System.out.println("Path.read_scope: layer name string expected");
+                    Freerouter.logInfo("Path.read_scope: layer name string expected");
                     return null;
                 }
                 int layer_no = p_layer_structure.get_no((String) next_token);
                 if (layer_no < 0 || layer_no >= p_layer_structure.arr.length) {
-                    System.out.println("Shape.read_polygon_path_scope: layer with name " + next_token + " not found in layer structure ");
+                    Freerouter.logInfo("Shape.read_polygon_path_scope: layer with name " + next_token + " not found in layer structure ");
                     layer_ok = false;
                 } else {
                     layer = p_layer_structure.arr[layer_no];
@@ -478,7 +479,7 @@ public abstract class Shape {
                 corner_list.add(next_token);
             }
             if (corner_list.size() < 5) {
-                System.out.println("Shape.read_polygon_path_scope: to few numbers in scope");
+                Freerouter.logInfo("Shape.read_polygon_path_scope: to few numbers in scope");
                 return null;
             }
             if (!layer_ok) {
@@ -492,7 +493,7 @@ public abstract class Shape {
             } else if (next_object instanceof Integer) {
                 width = ((Integer) next_object);
             } else {
-                System.out.println("Shape.read_polygon_path_scope: number expected");
+                Freerouter.logInfo("Shape.read_polygon_path_scope: number expected");
                 return null;
             }
             double[] coordinate_arr = new double[corner_list.size() - 1];
@@ -503,15 +504,15 @@ public abstract class Shape {
                 } else if (next_object instanceof Integer) {
                     coordinate_arr[i] = ((Integer) next_object);
                 } else {
-                    System.out.println("Shape.read_polygon_path_scope: number expected");
+                    Freerouter.logInfo("Shape.read_polygon_path_scope: number expected");
                     return null;
                 }
 
             }
             return new PolygonPath(layer, width, coordinate_arr);
         } catch (IOException e) {
-            System.out.println("Shape.read_polygon_path_scope: IO error scanning file");
-            System.out.println(e);
+            Freerouter.logError("Shape.read_polygon_path_scope: IO error scanning file");
+            Freerouter.logError(e);
             return null;
         }
     }
@@ -524,7 +525,7 @@ public abstract class Shape {
     public static geometry.planar.Area transform_area_to_board(Collection<Shape> p_area, CoordinateTransform p_coordinate_transform) {
         int hole_count = p_area.size() - 1;
         if (hole_count <= -1) {
-            System.out.println("Shape.transform_area_to_board: p_area.size() > 0 expected");
+            Freerouter.logInfo("Shape.transform_area_to_board: p_area.size() > 0 expected");
             return null;
         }
         Iterator<Shape> it = p_area.iterator();
@@ -536,7 +537,7 @@ public abstract class Shape {
         } else {
             // Area with holes
             if (!(boundary_shape instanceof geometry.planar.PolylineShape)) {
-                System.out.println("Shape.transform_area_to_board: PolylineShape expected");
+                Freerouter.logInfo("Shape.transform_area_to_board: PolylineShape expected");
                 return null;
             }
             PolylineShape border = (PolylineShape) boundary_shape;
@@ -544,7 +545,7 @@ public abstract class Shape {
             for (int i = 0; i < holes.length; ++i) {
                 geometry.planar.Shape hole_shape = it.next().transform_to_board(p_coordinate_transform);
                 if (!(hole_shape instanceof PolylineShape)) {
-                    System.out.println("Shape.transform_area_to_board: PolylineShape expected");
+                    Freerouter.logInfo("Shape.transform_area_to_board: PolylineShape expected");
                     return null;
                 }
                 holes[i] = (PolylineShape) hole_shape;
@@ -562,7 +563,7 @@ public abstract class Shape {
     public static geometry.planar.Area transform_area_to_board_rel(Collection<Shape> p_area, CoordinateTransform p_coordinate_transform) {
         int hole_count = p_area.size() - 1;
         if (hole_count <= -1) {
-            System.out.println("Shape.transform_area_to_board_rel: p_area.size() > 0 expected");
+            Freerouter.logInfo("Shape.transform_area_to_board_rel: p_area.size() > 0 expected");
             return null;
         }
         Iterator<Shape> it = p_area.iterator();
@@ -574,7 +575,7 @@ public abstract class Shape {
         } else {
             // Area with holes
             if (!(boundary_shape instanceof geometry.planar.PolylineShape)) {
-                System.out.println("Shape.transform_area_to_board_rel: PolylineShape expected");
+                Freerouter.logInfo("Shape.transform_area_to_board_rel: PolylineShape expected");
                 return null;
             }
             PolylineShape border = (PolylineShape) boundary_shape;
@@ -582,7 +583,7 @@ public abstract class Shape {
             for (int i = 0; i < holes.length; ++i) {
                 geometry.planar.Shape hole_shape = it.next().transform_to_board_rel(p_coordinate_transform);
                 if (!(hole_shape instanceof PolylineShape)) {
-                    System.out.println("Shape.transform_area_to_board: PolylineShape expected");
+                    Freerouter.logInfo("Shape.transform_area_to_board: PolylineShape expected");
                     return null;
                 }
                 holes[i] = (PolylineShape) hole_shape;

@@ -21,6 +21,7 @@ package geometry.planar;
 
 import datastructures.BigIntAux;
 import datastructures.Signum;
+import gui.Freerouter;
 import java.io.Serializable;
 import java.math.BigInteger;
 
@@ -161,7 +162,7 @@ public class RationalVector extends Vector implements Serializable {
 
     @Override
     public Vector change_length_approx(double p_lenght) {
-        System.out.println("RationalVector: change_length_approx not yet implemented");
+        Freerouter.logInfo("RationalVector: change_length_approx not yet implemented");
         return this;
     }
 

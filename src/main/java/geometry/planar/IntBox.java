@@ -19,6 +19,7 @@
  */
 package geometry.planar;
 
+import gui.Freerouter;
 import java.io.Serializable;
 
 /**
@@ -491,7 +492,7 @@ public class IntBox extends RegularTileShape implements Serializable {
 
     @Override
     public int border_line_index(Line p_line) {
-        System.out.println("edge_index_of_line not yet implemented for IntBoxes");
+        Freerouter.logInfo("edge_index_of_line not yet implemented for IntBoxes");
         return -1;
     }
 

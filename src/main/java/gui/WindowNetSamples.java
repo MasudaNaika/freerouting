@@ -127,6 +127,7 @@ public abstract class WindowNetSamples extends BoardSubWindow {
         try {
             zip_input_stream = new ZipInputStream(input_stream);
         } catch (Exception e) {
+            Freerouter.logError(e);
             WindowMessage.show("unable to get zip input stream");
             return null;
         }

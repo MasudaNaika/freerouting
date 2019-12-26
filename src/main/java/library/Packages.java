@@ -20,6 +20,7 @@
 package library;
 
 import geometry.planar.Shape;
+import gui.Freerouter;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +65,7 @@ public class Packages implements Serializable {
     public Package get(int p_package_no) {
         Package result = package_arr.get(p_package_no - 1);
         if (result != null && result.no != p_package_no) {
-            System.out.println("Padstacks.get: inconsistent padstack number");
+            Freerouter.logInfo("Padstacks.get: inconsistent padstack number");
         }
         return result;
     }

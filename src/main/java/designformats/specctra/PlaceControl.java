@@ -19,6 +19,7 @@
  */
 package designformats.specctra;
 
+import gui.Freerouter;
 import java.io.IOException;
 
 /**
@@ -47,11 +48,11 @@ public class PlaceControl extends ScopeKeyword {
             try {
                 next_token = p_par.scanner.next_token();
             } catch (IOException e) {
-                System.out.println("PlaceControl.read_scope: IO error scanning file");
+                Freerouter.logError("PlaceControl.read_scope: IO error scanning file");
                 return false;
             }
             if (next_token == null) {
-                System.out.println("PlaceControl.read_scope: unexpected end of file");
+                Freerouter.logInfo("PlaceControl.read_scope: unexpected end of file");
                 return false;
             }
             if (next_token == CLOSED_BRACKET) {
@@ -84,12 +85,12 @@ public class PlaceControl extends ScopeKeyword {
             }
             next_token = p_scanner.next_token();
             if (next_token != Keyword.CLOSED_BRACKET) {
-                System.out.println("Structure.read_flip_style: closing bracket expected");
+                Freerouter.logInfo("Structure.read_flip_style: closing bracket expected");
                 return false;
             }
             return result;
         } catch (IOException e) {
-            System.out.println("Structure.read_flip_style: IO error scanning file");
+            Freerouter.logError("Structure.read_flip_style: IO error scanning file");
             return false;
         }
     }

@@ -15,6 +15,7 @@
  */
 package geometry.planar;
 
+import gui.Freerouter;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
@@ -643,7 +644,7 @@ public abstract class TileShape extends PolylineShape implements ConvexShape, Se
             }
         }
         if (dir2 == null) {
-            System.out.println("touching_side : dir2 not found");
+            Freerouter.logInfo("touching_side : dir2 not found");
             return new int[0];
         }
         int side_no_1 = 0;

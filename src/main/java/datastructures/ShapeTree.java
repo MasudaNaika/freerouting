@@ -23,6 +23,7 @@ import geometry.planar.RegularTileShape;
 import geometry.planar.Shape;
 import geometry.planar.ShapeBoundingDirections;
 import geometry.planar.TileShape;
+import gui.Freerouter;
 
 /**
  * Abstract binary search tree for shapes in the plane. The shapes are stored in
@@ -68,7 +69,7 @@ public abstract class ShapeTree {
 
         RegularTileShape bounding_shape = object_shape.bounding_shape(bounding_directions);
         if (bounding_shape == null) {
-            System.out.println("ShapeTree.insert: bounding shape of TreeObject is null");
+            Freerouter.logInfo("ShapeTree.insert: bounding shape of TreeObject is null");
             return null;
         }
         // Construct a new KdLeaf and set it up
@@ -147,7 +148,7 @@ public abstract class ShapeTree {
             }
         }
         double everage_depth = cumulative_depth / leaf_arr.length;
-        System.out.println("MinAreaTree: Entry count: " + leaf_arr.length
+        Freerouter.logInfo("MinAreaTree: Entry count: " + leaf_arr.length
                 + " log: " + Math.round(Math.log(leaf_arr.length))
                 + " Everage depth: " + Math.round(everage_depth)
                 + "  Maximum depth: " + maximum_depth + " " + p_message);

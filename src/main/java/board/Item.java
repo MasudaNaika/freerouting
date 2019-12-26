@@ -11,6 +11,7 @@ import geometry.planar.IntPoint;
 import geometry.planar.Point;
 import geometry.planar.TileShape;
 import geometry.planar.Vector;
+import gui.Freerouter;
 import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -117,7 +118,7 @@ public abstract class Item implements Drawable, SearchTreeObject, ObjectInfoPane
      */
     public TileShape get_tile_shape(int p_index) {
         if (board == null) {
-            System.out.println("Item.get_tile_shape: board is null");
+            Freerouter.logInfo("Item.get_tile_shape: board is null");
             return null;
         }
         return get_tree_shape(board.search_tree_manager.get_default_tree(), p_index);
@@ -355,7 +356,7 @@ public abstract class Item implements Drawable, SearchTreeObject, ObjectInfoPane
                     TileShape shape_1 = curr_tile_shape;
                     TileShape shape_2 = curr_item.get_tree_shape(default_tree, curr_entry.shape_index_in_object);
                     if (shape_1 == null || shape_2 == null) {
-                        System.out.println("Item.clearance_violations: unexpected  null shape");
+                        Freerouter.logInfo("Item.clearance_violations: unexpected  null shape");
                         continue;
                     }
                     if (!board.search_tree_manager.is_clearance_compensation_used()) {
@@ -720,7 +721,7 @@ public abstract class Item implements Drawable, SearchTreeObject, ObjectInfoPane
         for (int i = 0; i < tile_shape_count(); ++i) {
             TileShape curr_shape = get_tile_shape(i);
             if (curr_shape.is_empty()) {
-                System.out.println("Item.validate: shape is empty");
+                Freerouter.logInfo("Item.validate: shape is empty");
                 result = false;
             }
         }
@@ -894,7 +895,7 @@ public abstract class Item implements Drawable, SearchTreeObject, ObjectInfoPane
      */
     public void set_clearance_class_no(int p_index) {
         if (p_index < 0 || p_index >= board.rules.clearance_matrix.get_class_count()) {
-            System.out.println("Item.set_clearance_class_no: p_index out of range");
+            Freerouter.logInfo("Item.set_clearance_class_no: p_index out of range");
             return;
         }
         clearance_class = p_index;
@@ -905,7 +906,7 @@ public abstract class Item implements Drawable, SearchTreeObject, ObjectInfoPane
      */
     public void change_clearance_class(int p_index) {
         if (p_index < 0 || p_index >= board.rules.clearance_matrix.get_class_count()) {
-            System.out.println("Item.set_clearance_class_no: p_index out of range");
+            Freerouter.logInfo("Item.set_clearance_class_no: p_index out of range");
             return;
         }
         clearance_class = p_index;
@@ -934,7 +935,7 @@ public abstract class Item implements Drawable, SearchTreeObject, ObjectInfoPane
             return;
         }
         if (p_net_no > board.rules.nets.max_net_no()) {
-            System.out.println("Item.assign_net_no: p_net_no to big");
+            Freerouter.logInfo("Item.assign_net_no: p_net_no to big");
             return;
         }
         board.item_list.save_for_undo(this);
@@ -944,7 +945,7 @@ public abstract class Item implements Drawable, SearchTreeObject, ObjectInfoPane
             if (net_no_arr.length == 0) {
                 net_no_arr = new int[1];
             } else if (net_no_arr.length > 1) {
-                System.out.println("Item.assign_net_no: unexpected net_count > 1");
+                Freerouter.logInfo("Item.assign_net_no: unexpected net_count > 1");
             }
             net_no_arr[0] = p_net_no;
         }
@@ -1004,7 +1005,7 @@ public abstract class Item implements Drawable, SearchTreeObject, ObjectInfoPane
             return;
         }
         if (search_trees_info == null) {
-            System.out.println("Item.set_precalculated_tree_shapes search_trees_info not allocated");
+            Freerouter.logInfo("Item.set_precalculated_tree_shapes search_trees_info not allocated");
             return;
         }
         search_trees_info.set_precalculated_tree_shapes(p_shapes, p_tree);

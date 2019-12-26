@@ -21,6 +21,7 @@ package interactive;
 
 import board.ItemSelectionFilter;
 import board.RoutingBoard;
+import gui.Freerouter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
@@ -224,7 +225,7 @@ public class Settings implements Serializable {
      */
     public int get_manual_trace_half_width(int p_layer_no) {
         if (p_layer_no < 0 || p_layer_no >= manual_trace_half_width_arr.length) {
-            System.out.println("Settings.get_manual_trace_half_width p_layer_no out of range");
+            Freerouter.logInfo("Settings.get_manual_trace_half_width p_layer_no out of range");
             return 0;
         }
         return manual_trace_half_width_arr[p_layer_no];
@@ -458,11 +459,11 @@ public class Settings implements Serializable {
             throws IOException, ClassNotFoundException {
         p_stream.defaultReadObject();
         if (item_selection_filter == null) {
-            System.out.println("Settings.readObject: item_selection_filter is null");
+            Freerouter.logInfo("Settings.readObject: item_selection_filter is null");
             item_selection_filter = new ItemSelectionFilter();
         }
         if (snapshot_attributes == null) {
-            System.out.println("Settings.readObject: snapshot_attributes is null");
+            Freerouter.logInfo("Settings.readObject: snapshot_attributes is null");
             snapshot_attributes = new SnapShot.Attributes();
         }
         read_only = false;

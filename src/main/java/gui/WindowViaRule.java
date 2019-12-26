@@ -153,7 +153,7 @@ public class WindowViaRule extends JFrame {
                 ViaInfo curr_via = via_list.get(i);
                 if (!via_rule.contains(curr_via)) {
                     if (curr_index >= possible_values.length) {
-                        System.out.println("ViaRuleWindow.AppendListener.actionPerformed: index inconsistent");
+                        Freerouter.logInfo("ViaRuleWindow.AppendListener.actionPerformed: index inconsistent");
                         break;
                     }
                     possible_values[curr_index] = curr_via;

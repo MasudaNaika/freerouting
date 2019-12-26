@@ -16,6 +16,7 @@
 package geometry.planar;
 
 import datastructures.Signum;
+import gui.Freerouter;
 import java.io.Serializable;
 import java.math.BigInteger;
 
@@ -35,7 +36,7 @@ public class Line implements Comparable<Line>, Serializable {
         b = p_b;
         dir = null;
         if (!(a instanceof IntPoint && b instanceof IntPoint)) {
-            System.out.println("Line(p_a, p_b) only implemented for IntPoints till now");
+            Freerouter.logInfo("Line(p_a, p_b) only implemented for IntPoints till now");
         }
     }
 
@@ -56,7 +57,7 @@ public class Line implements Comparable<Line>, Serializable {
         b = p_a.translate_by(p_dir.get_vector());
         dir = p_dir;
         if (!(a instanceof IntPoint && b instanceof IntPoint)) {
-            System.out.println("Line(p_a, p_dir) only implemented for IntPoints till now");
+            Freerouter.logInfo("Line(p_a, p_dir) only implemented for IntPoints till now");
         }
     }
 
@@ -547,7 +548,7 @@ public class Line implements Comparable<Line>, Serializable {
         FloatPoint p2 = b.to_float();
         double dx = p2.x - p1.x;
         if (dx == 0) {
-            System.out.println("function_value_approx: line is vertical");
+            Freerouter.logInfo("function_value_approx: line is vertical");
             return 0;
         }
         double dy = p2.y - p1.y;
@@ -565,7 +566,7 @@ public class Line implements Comparable<Line>, Serializable {
         FloatPoint p2 = b.to_float();
         double dy = p2.y - p1.y;
         if (dy == 0) {
-            System.out.println("function_in_y_value_approx: line is horizontal");
+            Freerouter.logInfo("function_in_y_value_approx: line is horizontal");
             return 0;
         }
         double dx = p2.x - p1.x;

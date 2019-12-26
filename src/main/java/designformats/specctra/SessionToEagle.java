@@ -55,7 +55,7 @@ public class SessionToEagle extends JFrame {
         try {
             result = new_instance.process_session_scope();
         } catch (IOException e) {
-            System.out.println("unable to process session scope");
+            Freerouter.logError("unable to process session scope");
             result = false;
         }
 
@@ -64,7 +64,7 @@ public class SessionToEagle extends JFrame {
             p_session.close();
             file_writer.close();
         } catch (IOException e) {
-            System.out.println("unable to close files");
+            Freerouter.logError("unable to close files");
         }
         return result;
     }
@@ -101,7 +101,7 @@ public class SessionToEagle extends JFrame {
                 scanner.yybegin(SpecctraFileScanner.NAME); // to overread the name of the pcb for i = 2
             }
             if (!keyword_ok) {
-                System.out.println("SessionToEagle.process_session_scope specctra session file format expected");
+                Freerouter.logInfo("SessionToEagle.process_session_scope specctra session file format expected");
                 return false;
             }
         }
@@ -305,7 +305,7 @@ public class SessionToEagle extends JFrame {
         // read the net name
         Object next_token = scanner.next_token();
         if (!(next_token instanceof String)) {
-            System.out.println("SessionToEagle.processnet_scope: String expected");
+            Freerouter.logInfo("SessionToEagle.processnet_scope: String expected");
             return false;
         }
         String net_name = (String) next_token;
@@ -349,7 +349,7 @@ public class SessionToEagle extends JFrame {
             Object prev_token = next_token;
             next_token = scanner.next_token();
             if (next_token == null) {
-                System.out.println("SessionToEagle.process_wire_scope: unexpected end of file");
+                Freerouter.logInfo("SessionToEagle.process_wire_scope: unexpected end of file");
                 return false;
             }
             if (next_token == Keyword.CLOSED_BRACKET) {
@@ -404,7 +404,7 @@ public class SessionToEagle extends JFrame {
         // read the padstack name
         Object next_token = scanner.next_token();
         if (!(next_token instanceof String)) {
-            System.out.println("SessionToEagle.process_via_scope: padstack name expected");
+            Freerouter.logInfo("SessionToEagle.process_via_scope: padstack name expected");
             return false;
         }
         String padstack_name = (String) next_token;
@@ -417,7 +417,7 @@ public class SessionToEagle extends JFrame {
             } else if (next_token instanceof Integer) {
                 location[i] = ((Integer) next_token);
             } else {
-                System.out.println("SessionToEagle.process_via_scope: number expected");
+                Freerouter.logInfo("SessionToEagle.process_via_scope: number expected");
                 return false;
             }
         }
@@ -428,19 +428,19 @@ public class SessionToEagle extends JFrame {
             next_token = scanner.next_token();
         }
         if (next_token != Keyword.CLOSED_BRACKET) {
-            System.out.println("SessionToEagle.process_via_scope: closing bracket expected");
+            Freerouter.logInfo("SessionToEagle.process_via_scope: closing bracket expected");
             return false;
         }
 
         if (padstack_name == null) {
-            System.out.println("SessionToEagle.process_via_scope: padstack_name missing");
+            Freerouter.logInfo("SessionToEagle.process_via_scope: padstack_name missing");
             return false;
         }
 
         library.Padstack via_padstack = board.library.padstacks.get(padstack_name);
 
         if (via_padstack == null) {
-            System.out.println("SessionToEagle.process_via_scope: via padstack not found");
+            Freerouter.logInfo("SessionToEagle.process_via_scope: via padstack not found");
             return false;
         }
 
@@ -538,7 +538,7 @@ public class SessionToEagle extends JFrame {
                     }
                 }
                 if (other_pin_info == null) {
-                    System.out.println("SessuinToEagle.process_swapped_pins: other_pin_info not found");
+                    Freerouter.logInfo("SessuinToEagle.process_swapped_pins: other_pin_info not found");
                     return false;
                 }
                 write_pin_swap(curr_pin_info.pin, other_pin_info.pin);

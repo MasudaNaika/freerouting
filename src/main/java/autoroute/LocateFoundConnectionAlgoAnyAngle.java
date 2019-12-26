@@ -27,6 +27,7 @@ import geometry.planar.FloatLine;
 import geometry.planar.FloatPoint;
 import geometry.planar.Side;
 import geometry.planar.TileShape;
+import gui.Freerouter;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.SortedSet;
@@ -107,14 +108,14 @@ class LocateFoundConnectionAlgoAnyAngle extends LocateFoundConnectionAlgo {
             left_tangent_point = current_from_point.right_tangential_point(door_left_corner, trace_halfwidth_max);
             if (door_left_corner != null && left_tangent_point == null) {
                 if (test_level.ordinal() >= TestLevel.ALL_DEBUGGING_OUTPUT.ordinal()) {
-                    System.out.println("LocateFoundConnectionAlgo.calculate_next_trace_corner: left tangent point is null");
+                    Freerouter.logInfo("LocateFoundConnectionAlgo.calculate_next_trace_corner: left tangent point is null");
                 }
                 left_tangent_point = door_left_corner;
             }
             right_tangent_point = current_from_point.left_tangential_point(door_right_corner, trace_halfwidth_max);
             if (door_right_corner != null && right_tangent_point == null) {
                 if (test_level.ordinal() >= TestLevel.ALL_DEBUGGING_OUTPUT.ordinal()) {
-                    System.out.println("LocateFoundConnectionAlgo.calculate_next_trace_corner: right tangent point is null");
+                    Freerouter.logInfo("LocateFoundConnectionAlgo.calculate_next_trace_corner: right tangent point is null");
                 }
                 right_tangent_point = door_right_corner;
             }
@@ -156,7 +157,7 @@ class LocateFoundConnectionAlgoAnyAngle extends LocateFoundConnectionAlgo {
                     // The door is completely passed.
                     // Should not happen because the previous door was not passed compledtely.
                     if (test_level.ordinal() >= TestLevel.ALL_DEBUGGING_OUTPUT.ordinal()) {
-                        System.out.println("LocateFoundConnectionAlgo.calculate_next_trace_corner: next door passed unexpected");
+                        Freerouter.logInfo("LocateFoundConnectionAlgo.calculate_next_trace_corner: next door passed unexpected");
                     }
                     ++current_to_door_index;
                     result.add(current_from_point);
@@ -320,7 +321,7 @@ class LocateFoundConnectionAlgoAnyAngle extends LocateFoundConnectionAlgo {
         FloatPoint curr_tangential_point = p_from_corner.left_tangential_point(p_to_corner, p_dist);
         if (curr_tangential_point == null) {
             if (test_level.ordinal() >= TestLevel.ALL_DEBUGGING_OUTPUT.ordinal()) {
-                System.out.println("LocateFoundConnectionAlgo.right_turn_next_corner: left tangential point is null");
+                Freerouter.logInfo("LocateFoundConnectionAlgo.right_turn_next_corner: left tangential point is null");
             }
             return p_from_corner;
         }
@@ -328,7 +329,7 @@ class LocateFoundConnectionAlgoAnyAngle extends LocateFoundConnectionAlgo {
         curr_tangential_point = p_to_corner.right_tangential_point(p_next_corner, 2 * p_dist + c_tolerance);
         if (curr_tangential_point == null) {
             if (test_level.ordinal() >= TestLevel.ALL_DEBUGGING_OUTPUT.ordinal()) {
-                System.out.println("LocateFoundConnectionAlgo.right_turn_next_corner: right tangential point is null");
+                Freerouter.logInfo("LocateFoundConnectionAlgo.right_turn_next_corner: right tangential point is null");
             }
             return p_from_corner;
         }
@@ -349,7 +350,7 @@ class LocateFoundConnectionAlgoAnyAngle extends LocateFoundConnectionAlgo {
         FloatPoint curr_tangential_point = p_from_corner.right_tangential_point(p_to_corner, p_dist);
         if (curr_tangential_point == null) {
             if (test_level.ordinal() >= TestLevel.ALL_DEBUGGING_OUTPUT.ordinal()) {
-                System.out.println("LocateFoundConnectionAlgo.left_turn_next_corner: right tangential point is null");
+                Freerouter.logInfo("LocateFoundConnectionAlgo.left_turn_next_corner: right tangential point is null");
             }
             return p_from_corner;
         }
@@ -357,7 +358,7 @@ class LocateFoundConnectionAlgoAnyAngle extends LocateFoundConnectionAlgo {
         curr_tangential_point = p_to_corner.left_tangential_point(p_next_corner, 2 * p_dist + c_tolerance);
         if (curr_tangential_point == null) {
             if (test_level.ordinal() >= TestLevel.ALL_DEBUGGING_OUTPUT.ordinal()) {
-                System.out.println("LocateFoundConnectionAlgo.left_turn_next_corner: left tangential point is null");
+                Freerouter.logInfo("LocateFoundConnectionAlgo.left_turn_next_corner: left tangential point is null");
             }
             return p_from_corner;
         }
@@ -375,7 +376,7 @@ class LocateFoundConnectionAlgoAnyAngle extends LocateFoundConnectionAlgo {
         FloatPoint curr_tangential_point = p_from_point.right_tangential_point(p_center, p_dist);
         if (curr_tangential_point == null) {
             if (test_level.ordinal() >= TestLevel.ALL_DEBUGGING_OUTPUT.ordinal()) {
-                System.out.println("LocateFoundConnectionAlgo. right_left_tangential_point: right tangential point is null");
+                Freerouter.logInfo("LocateFoundConnectionAlgo. right_left_tangential_point: right tangential point is null");
             }
             return null;
         }
@@ -383,7 +384,7 @@ class LocateFoundConnectionAlgoAnyAngle extends LocateFoundConnectionAlgo {
         curr_tangential_point = p_to_point.left_tangential_point(p_center, p_dist);
         if (curr_tangential_point == null) {
             if (test_level.ordinal() >= TestLevel.ALL_DEBUGGING_OUTPUT.ordinal()) {
-                System.out.println("LocateFoundConnectionAlgo. right_left_tangential_point: left tangential point is null");
+                Freerouter.logInfo("LocateFoundConnectionAlgo. right_left_tangential_point: left tangential point is null");
             }
             return null;
         }
@@ -400,7 +401,7 @@ class LocateFoundConnectionAlgoAnyAngle extends LocateFoundConnectionAlgo {
         FloatPoint curr_tangential_point = p_from_point.left_tangential_point(p_center, p_dist);
         if (curr_tangential_point == null) {
             if (test_level.ordinal() >= TestLevel.ALL_DEBUGGING_OUTPUT.ordinal()) {
-                System.out.println("LocateFoundConnectionAlgo. left_right_tangential_point: left tangential point is null");
+                Freerouter.logInfo("LocateFoundConnectionAlgo. left_right_tangential_point: left tangential point is null");
             }
             return null;
         }
@@ -408,7 +409,7 @@ class LocateFoundConnectionAlgoAnyAngle extends LocateFoundConnectionAlgo {
         curr_tangential_point = p_to_point.right_tangential_point(p_center, p_dist);
         if (curr_tangential_point == null) {
             if (test_level.ordinal() >= TestLevel.ALL_DEBUGGING_OUTPUT.ordinal()) {
-                System.out.println("LocateFoundConnectionAlgo. left_right_tangential_point: right tangential point is null");
+                Freerouter.logInfo("LocateFoundConnectionAlgo. left_right_tangential_point: right tangential point is null");
             }
             return null;
         }

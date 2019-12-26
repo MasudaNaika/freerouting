@@ -15,6 +15,7 @@
  */
 package rules;
 
+import gui.Freerouter;
 import java.io.Serializable;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -72,7 +73,7 @@ public class ClearanceMatrix implements Serializable {
      */
     public String get_name(int p_cl_class) {
         if (p_cl_class < 0 || p_cl_class >= row.length) {
-            System.out.println("CleatranceMatrix.get_name: p_cl_class out of range");
+            Freerouter.logInfo("CleatranceMatrix.get_name: p_cl_class out of range");
             return null;
         }
         return row[p_cl_class].name;
@@ -200,7 +201,7 @@ public class ClearanceMatrix implements Serializable {
      */
     public Row get_row(int p_no) {
         if (p_no < 0 || p_no >= row.length) {
-            System.out.println("ClearanceMatrix.get_row: p_no out of range");
+            Freerouter.logInfo("ClearanceMatrix.get_row: p_no out of range");
             return null;
         }
         return row[p_no];

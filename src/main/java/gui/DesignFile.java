@@ -275,7 +275,7 @@ public class DesignFile {
             try {
                 output_stream = new FileOutputStream(rules_file);
             } catch (FileNotFoundException e) {
-                System.out.println("unable to create rules file");
+                Freerouter.logError("unable to create rules file");
                 return false;
             }
         }
@@ -321,6 +321,7 @@ public class DesignFile {
                     }
                     rules_file.delete();
                 } catch (IOException e) {
+                    Freerouter.logError(e);
                     result = false;
                 }
             } catch (FileNotFoundException e) {

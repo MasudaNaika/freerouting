@@ -24,6 +24,7 @@ import geometry.planar.IntBox;
 import geometry.planar.Line;
 import geometry.planar.PolylineShape;
 import geometry.planar.Vector;
+import gui.Freerouter;
 import java.io.Serializable;
 
 /**
@@ -195,7 +196,7 @@ public class CoordinateTransform implements Serializable {
             double[] center_coor = board_to_dsn(board_circle.center.to_float());
             result = new Circle(p_layer, diameter, center_coor[0], center_coor[1]);
         } else {
-            System.out.println("CoordinateTransform.board_to_dsn not yet implemented for p_board_shape");
+            Freerouter.logInfo("CoordinateTransform.board_to_dsn not yet implemented for p_board_shape");
             result = null;
         }
         return result;
@@ -219,7 +220,7 @@ public class CoordinateTransform implements Serializable {
             double[] center_coor = board_to_dsn_rel(board_circle.center.to_float());
             result = new Circle(p_layer, diameter, center_coor[0], center_coor[1]);
         } else {
-            System.out.println("CoordinateTransform.board_to_dsn not yet implemented for p_board_shape");
+            Freerouter.logInfo("CoordinateTransform.board_to_dsn not yet implemented for p_board_shape");
             result = null;
         }
         return result;

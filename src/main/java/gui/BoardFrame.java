@@ -43,7 +43,6 @@ import java.util.LinkedList;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javax.swing.*;
-import logger.FRLogger;
 
 /**
  *
@@ -132,7 +131,7 @@ public class BoardFrame extends JFrame {
             // the system-file jh.jar may be missing
             curr_help_system_used = false;
             curr_menubar = BoardMenuBar.get_instance(this, false, session_file_option);
-            System.out.println("Online-Help deactivated because system file jh.jar is missing");
+            Freerouter.logInfo("Online-Help deactivated because system file jh.jar is missing");
         }
         menubar = curr_menubar;
         help_system_used = curr_help_system_used;
@@ -197,6 +196,7 @@ public class BoardFrame extends JFrame {
             try {
                 object_stream = new ObjectInputStream(p_input_stream);
             } catch (IOException e) {
+                Freerouter.logError(e);
                 return false;
             }
             boolean read_ok = board_panel.board_handling.read_design(object_stream, test_level);
@@ -210,6 +210,7 @@ public class BoardFrame extends JFrame {
                 frame_location = (java.awt.Point) object_stream.readObject();
                 frame_bounds = (java.awt.Rectangle) object_stream.readObject();
             } catch (IOException | ClassNotFoundException e) {
+                Freerouter.logError(e);
                 return false;
             }
             setLocation(frame_location);
@@ -224,6 +225,7 @@ public class BoardFrame extends JFrame {
         try {
             p_input_stream.close();
         } catch (IOException e) {
+            Freerouter.logError(e);
             return false;
         }
 
@@ -264,6 +266,7 @@ public class BoardFrame extends JFrame {
                 try {
                     input_stream.close();
                 } catch (IOException e) {
+                    Freerouter.logError(e);
                     return false;
                 }
             }
@@ -286,9 +289,11 @@ public class BoardFrame extends JFrame {
             output_stream = new FileOutputStream(design_file.get_output_file());
             object_stream = new ObjectOutputStream(output_stream);
         } catch (IOException e) {
+            Freerouter.logError(e);
             screen_messages.set_status_message(resources.getString("error_2"));
             return false;
         } catch (java.security.AccessControlException e) {
+            Freerouter.logError(e);
             screen_messages.set_status_message(resources.getString("error_3"));
             return false;
         }
@@ -301,6 +306,7 @@ public class BoardFrame extends JFrame {
             object_stream.writeObject(getLocation());
             object_stream.writeObject(getBounds());
         } catch (IOException e) {
+            Freerouter.logError(e);
             screen_messages.set_status_message(resources.getString("error_4"));
             return false;
         }
@@ -311,6 +317,7 @@ public class BoardFrame extends JFrame {
             object_stream.flush();
             output_stream.close();
         } catch (IOException e) {
+            Freerouter.logError(e);
             screen_messages.set_status_message(resources.getString("error_5"));
             return false;
         }
@@ -336,7 +343,7 @@ public class BoardFrame extends JFrame {
             String help_id = "html_files." + p_help_id;
             javax.help.CSH.setHelpIDString(curr_component, help_id);
             if (help_broker == null) {
-                FRLogger.warning("help_broker is null");
+                Freerouter.logWarn("help_broker is null");
                 return;
             }
             help_broker.enableHelpKey(curr_component, help_id, help_set);

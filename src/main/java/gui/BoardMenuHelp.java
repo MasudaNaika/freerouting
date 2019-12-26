@@ -26,7 +26,6 @@ import javax.help.CSH;
 import javax.help.HelpSet;
 import javax.help.HelpSetException;
 import javax.swing.*;
-import logger.FRLogger;
 
 /**
  *
@@ -69,13 +68,13 @@ public class BoardMenuHelp extends BoardMenuHelpReduced {
             try {
                 URL hsURL = HelpSet.findHelpSet(getClass().getClassLoader(), helpset_name);
                 if (hsURL == null) {
-                    FRLogger.warning("HelpSet " + helpset_name + " not found.");
+                    Freerouter.logWarn("HelpSet " + helpset_name + " not found.");
                 } else {
                     BoardFrame.help_set = new HelpSet(null, hsURL);
                 }
             } catch (HelpSetException ee) {
-                System.out.println("HelpSet " + helpset_name + " could not be opened.");
-                System.out.println(ee.getMessage());
+                Freerouter.logError("HelpSet " + helpset_name + " could not be opened.");
+                Freerouter.logError(ee);
             }
             if (BoardFrame.help_set != null) {
                 BoardFrame.help_broker = BoardFrame.help_set.createHelpBroker();

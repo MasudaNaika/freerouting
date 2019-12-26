@@ -30,6 +30,7 @@ import geometry.planar.FloatPoint;
 import geometry.planar.IntPoint;
 import geometry.planar.Point;
 import geometry.planar.Polyline;
+import gui.Freerouter;
 import java.util.Set;
 import library.Padstack;
 import rules.ViaInfo;
@@ -60,7 +61,7 @@ public class InsertFoundConnectionAlgo {
             curr_layer = curr_new_item.layer;
             if (!new_instance.insert_trace(curr_new_item)) {
                 if (p_board.get_test_level().ordinal() >= TestLevel.CRITICAL_DEBUGGING_OUTPUT.ordinal()) {
-                    System.out.println("InsertFoundConnectionAlgo: insert trace failed for net " + p_ctrl.net_no);
+                    Freerouter.logInfo("InsertFoundConnectionAlgo: insert trace failed for net " + p_ctrl.net_no);
                 }
                 return null;
             }
@@ -157,7 +158,7 @@ public class InsertFoundConnectionAlgo {
                     }
                 }
                 if (board.get_test_level().ordinal() >= TestLevel.ALL_DEBUGGING_OUTPUT.ordinal()) {
-                    System.out.println("InsertFoundConnectionAlgo: violation corrected");
+                    Freerouter.logInfo("InsertFoundConnectionAlgo: violation corrected");
                 }
             } else {
                 result = false;
@@ -316,7 +317,7 @@ public class InsertFoundConnectionAlgo {
         }
         if (via_info == null) {
             if (board.get_test_level().ordinal() >= TestLevel.CRITICAL_DEBUGGING_OUTPUT.ordinal()) {
-                System.out.println("InsertFoundConnectionAlgo: via mask not found for net " + ctrl.net_no);
+                Freerouter.logInfo("InsertFoundConnectionAlgo: via mask not found for net " + ctrl.net_no);
             }
             return false;
         }
@@ -325,7 +326,7 @@ public class InsertFoundConnectionAlgo {
                 ctrl.trace_clearance_class_no, ctrl.trace_half_width,
                 ctrl.max_shove_trace_recursion_depth, ctrl.max_shove_via_recursion_depth, board)) {
             if (board.get_test_level().ordinal() >= TestLevel.CRITICAL_DEBUGGING_OUTPUT.ordinal()) {
-                System.out.println("InsertFoundConnectionAlgo: forced via failed for net " + ctrl.net_no);
+                Freerouter.logInfo("InsertFoundConnectionAlgo: forced via failed for net " + ctrl.net_no);
             }
             return false;
         }

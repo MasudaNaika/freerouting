@@ -23,11 +23,12 @@ import datastructures.TimeLimit;
 import datastructures.UndoableObjects;
 import geometry.planar.FloatLine;
 import geometry.planar.FloatPoint;
+import gui.Freerouter;
 import interactive.BoardHandling;
 import interactive.InteractiveActionThread;
 import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
+import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
@@ -129,7 +130,7 @@ public class BatchAutorouter {
     private boolean autoroute_pass(int p_pass_no, boolean p_with_screen_message) {
         try {
             Collection<Item> autoroute_item_list = new LinkedList<>();
-            Set<Item> handeled_items = new HashSet<>();
+            Set<Item> handeled_items = new ObjectOpenHashSet<>();
             Iterator<UndoableObjects.UndoableObjectNode> it = routing_board.item_list.start_read_object();
             while (true) {
                 UndoableObjects.Storable curr_ob = routing_board.item_list.read_object(it);
@@ -202,6 +203,7 @@ public class BatchAutorouter {
             air_line = null;
             return true;
         } catch (Exception e) {
+            Freerouter.logError(e);
             air_line = null;
             return false;
         }
@@ -274,6 +276,7 @@ public class BatchAutorouter {
                     || autoroute_result == AutorouteEngine.AutorouteResult.ALREADY_CONNECTED;
             return result;
         } catch (Exception e) {
+            Freerouter.logError(e);
             return false;
         }
     }

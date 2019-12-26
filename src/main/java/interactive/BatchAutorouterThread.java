@@ -26,6 +26,7 @@ import autoroute.BatchOptRoute;
 import board.Unit;
 import geometry.planar.FloatLine;
 import geometry.planar.FloatPoint;
+import gui.Freerouter;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ResourceBundle;
@@ -108,7 +109,7 @@ public class BatchAutorouterThread extends InteractiveActionThread {
                 tests.Validate.multiple_of_45_degree("after autoroute: ", hdlg.get_routing_board());
             }
         } catch (Exception e) {
-
+            Freerouter.logError(e);
         }
     }
 

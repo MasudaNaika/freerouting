@@ -16,6 +16,7 @@
 package interactive;
 
 import geometry.planar.FloatPoint;
+import gui.Freerouter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -70,7 +71,7 @@ public class Logfile {
             try {
                 file_writer.close();
             } catch (IOException e) {
-                System.out.println("unable to close logfile");
+                Freerouter.logError("unable to close logfile");
             }
         }
         write_enabled = false;
@@ -83,7 +84,7 @@ public class Logfile {
         try {
             file_writer = new FileWriter(p_file);
         } catch (IOException e) {
-            System.out.println("unable to create logfile");
+            Freerouter.logError("unable to create logfile");
             return false;
         }
         write_enabled = true;
@@ -99,7 +100,7 @@ public class Logfile {
                 file_writer.write(p_logfile_scope.name);
                 file_writer.write("\n");
             } catch (IOException e2) {
-                System.out.println("Logfile.start_scope: write failed");
+                Freerouter.logError("Logfile.start_scope: write failed");
             }
         }
     }
@@ -147,7 +148,7 @@ public class Logfile {
             return null;
         }
         if (!(curr_ob instanceof String)) {
-            System.out.println("Logfile.start_read_scope: String expected");
+            Freerouter.logInfo("Logfile.start_read_scope: String expected");
             pending_token = curr_ob;
             return null;
         }
@@ -165,7 +166,7 @@ public class Logfile {
                 file_writer.write(Integer.toString(p_int));
                 file_writer.write("\n");
             } catch (IOException e2) {
-                System.out.println("unable to write integer to logfile");
+                Freerouter.logError("unable to write integer to logfile");
             }
         }
     }
@@ -177,7 +178,7 @@ public class Logfile {
     public int read_int() {
         Object curr_ob = next_token();
         if (!(curr_ob instanceof Integer)) {
-            System.out.println("Logfile.read_int: Integer expected");
+            Freerouter.logInfo("Logfile.read_int: Integer expected");
             pending_token = curr_ob;
             return -1;
         }
@@ -190,7 +191,7 @@ public class Logfile {
     public void add_corner(FloatPoint p_corner) {
         if (write_enabled) {
             if (p_corner == null) {
-                System.out.println("logfile.add_corner: p_corner is null");
+                Freerouter.logInfo("logfile.add_corner: p_corner is null");
                 return;
             }
             try {
@@ -199,7 +200,7 @@ public class Logfile {
                 file_writer.write(Double.toString(p_corner.y));
                 file_writer.write("\n");
             } catch (IOException e2) {
-                System.out.println("unable to write to logfile while adding corner");
+                Freerouter.logError("unable to write to logfile while adding corner");
             }
         }
     }
@@ -214,7 +215,7 @@ public class Logfile {
             Object result = scanner.next_token();
             return result;
         } catch (IOException e) {
-            System.out.println("Logfile.next_token: IO error scanning file");
+            Freerouter.logError("Logfile.next_token: IO error scanning file");
             return null;
         }
     }

@@ -28,6 +28,7 @@ import geometry.planar.PolylineArea;
 import geometry.planar.PolylineShape;
 import geometry.planar.TileShape;
 import geometry.planar.Vector;
+import gui.Freerouter;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.io.IOException;
@@ -79,7 +80,7 @@ public class BoardOutline extends Item implements Serializable {
             result = 0;
         }
         if (result < 0 || result >= board.layer_structure.arr.length) {
-            System.out.println("BoardOutline.shape_layer: p_index out of range");
+            Freerouter.logInfo("BoardOutline.shape_layer: p_index out of range");
         }
         return result;
     }
@@ -175,7 +176,7 @@ public class BoardOutline extends Item implements Serializable {
 
     public PolylineShape get_shape(int p_index) {
         if (p_index < 0 || p_index >= shapes.length) {
-            System.out.println("BoardOutline.get_shape: p_index out of range");
+            Freerouter.logInfo("BoardOutline.get_shape: p_index out of range");
             return null;
         }
         return shapes[p_index];
@@ -250,6 +251,7 @@ public class BoardOutline extends Item implements Serializable {
         try {
             p_stream.writeObject(this);
         } catch (IOException e) {
+            Freerouter.logError(e);
             return false;
         }
         return true;

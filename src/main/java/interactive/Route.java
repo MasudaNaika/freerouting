@@ -36,6 +36,7 @@ import geometry.planar.IntPoint;
 import geometry.planar.Point;
 import geometry.planar.Polyline;
 import geometry.planar.Vector;
+import gui.Freerouter;
 import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -211,7 +212,7 @@ public class Route {
             return true;
         }
         if (p_to_layer < 0 || p_to_layer >= layer_active.length) {
-            System.out.println("Route.change_layer: p_to_layer out of range");
+            Freerouter.logInfo("Route.change_layer: p_to_layer out of range");
             return false;
         }
         if (!layer_active[p_to_layer]) {

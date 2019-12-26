@@ -21,6 +21,7 @@ package autoroute;
 
 import board.Item;
 import board.ShapeSearchTree;
+import gui.Freerouter;
 import java.awt.Graphics;
 
 /**
@@ -76,7 +77,7 @@ public class ItemAutorouteInfo {
             expansion_room_arr = new ObstacleExpansionRoom[item.tree_shape_count(p_autoroute_tree)];
         }
         if (p_index < 0 || p_index >= expansion_room_arr.length) {
-            System.out.println("ItemAutorouteInfo.get_expansion_room: p_index out of range");
+            Freerouter.logInfo("ItemAutorouteInfo.get_expansion_room: p_index out of range");
             return null;
         }
         if (expansion_room_arr[p_index] == null) {

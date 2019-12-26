@@ -23,6 +23,7 @@ import geometry.planar.IntPoint;
 import geometry.planar.Limits;
 import geometry.planar.Point;
 import geometry.planar.Side;
+import gui.Freerouter;
 import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.util.Collection;
 import java.util.Collections;
@@ -135,7 +136,7 @@ public class PlanarDelaunayTriangulation {
             }
             if (curr_side == Side.ON_THE_RIGHT) {
                 // p_corner is outside this triangle
-                System.out.println("PlanarDelaunayTriangulation.split: p_corner is outside");
+                Freerouter.logInfo("PlanarDelaunayTriangulation.split: p_corner is outside");
                 return false;
             } else if (curr_side == Side.COLLINEAR) {
                 if (containing_edge != null) {
@@ -143,7 +144,7 @@ public class PlanarDelaunayTriangulation {
 
                     Corner common_corner = curr_edge.common_corner(containing_edge);
                     if (common_corner == null) {
-                        System.out.println("PlanarDelaunayTriangulation.split: common corner expected");
+                        Freerouter.logInfo("PlanarDelaunayTriangulation.split: common corner expected");
                         return false;
                     }
                     if (p_corner.object == common_corner.object) {
@@ -223,7 +224,7 @@ public class PlanarDelaunayTriangulation {
         } else if (p_edge.right_triangle.opposite_corner(p_edge) == p_corner) {
             triangle_to_change = p_edge.left_triangle;
         } else {
-            System.out.println("PlanarDelaunayTriangulation.legalize_edge: edge lines inconsistant");
+            Freerouter.logInfo("PlanarDelaunayTriangulation.legalize_edge: edge lines inconsistant");
             return false;
         }
         Edge flipped_edge = p_edge.flip();
@@ -251,9 +252,9 @@ public class PlanarDelaunayTriangulation {
     public boolean validate() {
         boolean result = search_graph.anchor.validate();
         if (result == true) {
-            System.out.println("Delauny triangulation check passed ok");
+            Freerouter.logInfo("Delauny triangulation check passed ok");
         } else {
-            System.out.println("Delauny triangulation check has detected problems");
+            Freerouter.logInfo("Delauny triangulation check has detected problems");
         }
         return result;
     }
@@ -416,7 +417,7 @@ public class PlanarDelaunayTriangulation {
             } else if (p_triangle == right_triangle) {
                 result = left_triangle;
             } else {
-                System.out.println("Edge.other_neighbour: inconsistant neigbour triangle");
+                Freerouter.logInfo("Edge.other_neighbour: inconsistant neigbour triangle");
                 result = null;
             }
             return result;
@@ -462,7 +463,7 @@ public class PlanarDelaunayTriangulation {
                 }
             }
             if (left_index < 0 || right_index < 0) {
-                System.out.println("Edge.flip: edge line inconsistant");
+                Freerouter.logInfo("Edge.flip: edge line inconsistant");
                 return null;
             }
             Edge left_prev_edge = left_triangle.edge_lines[(left_index + 2) % 3];
@@ -517,7 +518,7 @@ public class PlanarDelaunayTriangulation {
             boolean result = true;
             if (left_triangle == null) {
                 if (start_corner.object != null || end_corner.object != null) {
-                    System.out.println("Edge.validate: left triangle may be null only for bounding edges");
+                    Freerouter.logInfo("Edge.validate: left triangle may be null only for bounding edges");
                     result = false;
                 }
             } else {
@@ -530,13 +531,13 @@ public class PlanarDelaunayTriangulation {
                     }
                 }
                 if (!found) {
-                    System.out.println("Edge.validate: left triangle does not contain this edge");
+                    Freerouter.logInfo("Edge.validate: left triangle does not contain this edge");
                     result = false;
                 }
             }
             if (right_triangle == null) {
                 if (start_corner.object != null || end_corner.object != null) {
-                    System.out.println("Edge.validate: right triangle may be null only for bounding edges");
+                    Freerouter.logInfo("Edge.validate: right triangle may be null only for bounding edges");
                     result = false;
                 }
             } else {
@@ -549,7 +550,7 @@ public class PlanarDelaunayTriangulation {
                     }
                 }
                 if (!found) {
-                    System.out.println("Edge.validate: right triangle does not contain this edge");
+                    Freerouter.logInfo("Edge.validate: right triangle does not contain this edge");
                     result = false;
                 }
             }
@@ -602,7 +603,7 @@ public class PlanarDelaunayTriangulation {
          */
         public Corner get_corner(int p_no) {
             if (p_no < 0 || p_no >= 3) {
-                System.out.println("Triangle.get_corner: p_no out of range");
+                Freerouter.logInfo("Triangle.get_corner: p_no out of range");
                 return null;
             }
             Edge curr_edge = edge_lines[p_no];
@@ -612,7 +613,7 @@ public class PlanarDelaunayTriangulation {
             } else if (curr_edge.right_triangle == this) {
                 result = curr_edge.end_corner;
             } else {
-                System.out.println("Triangle.get_corner: inconsistant edge lines");
+                Freerouter.logInfo("Triangle.get_corner: inconsistant edge lines");
                 result = null;
             }
             return result;
@@ -631,7 +632,7 @@ public class PlanarDelaunayTriangulation {
                 }
             }
             if (edge_line_no < 0) {
-                System.out.println("Triangle.opposite_corner: p_edge_line not found");
+                Freerouter.logInfo("Triangle.opposite_corner: p_edge_line not found");
                 return null;
             }
             Edge next_edge = edge_lines[(edge_line_no + 1) % 3];
@@ -649,7 +650,7 @@ public class PlanarDelaunayTriangulation {
          */
         public boolean contains(Corner p_corner) {
             if (is_on_the_left_of_edge_line == null) {
-                System.out.println("Triangle.contains: array is_on_the_left_of_edge_line not initialized");
+                Freerouter.logInfo("Triangle.contains: array is_on_the_left_of_edge_line not initialized");
                 return false;
             }
             for (int i = 0; i < 3; ++i) {
@@ -780,11 +781,11 @@ public class PlanarDelaunayTriangulation {
                 }
             }
             if (this_touching_edge_no < 0 || neigbbour_touching_edge_no < 0) {
-                System.out.println("Triangle.split_at_border_point: touching edge not found");
+                Freerouter.logInfo("Triangle.split_at_border_point: touching edge not found");
                 return null;
             }
             if (touching_edge != other_touching_edge) {
-                System.out.println("Triangle.split_at_border_point: edges inconsistent");
+                Freerouter.logInfo("Triangle.split_at_border_point: edges inconsistent");
                 return null;
             }
 
@@ -907,11 +908,11 @@ public class PlanarDelaunayTriangulation {
                     } else if (curr_edge.right_triangle == this) {
                         curr_start_corner = curr_edge.end_corner;
                     } else {
-                        System.out.println("Triangle.validate: edge inconsistent");
+                        Freerouter.logInfo("Triangle.validate: edge inconsistent");
                         return false;
                     }
                     if (curr_start_corner != prev_end_corner) {
-                        System.out.println("Triangle.validate: corner inconsistent");
+                        Freerouter.logInfo("Triangle.validate: corner inconsistent");
                         result = false;
                     }
                     prev_edge = curr_edge;
@@ -1012,7 +1013,7 @@ public class PlanarDelaunayTriangulation {
                     return result;
                 }
             }
-            System.out.println("TriangleGraph.position_locate: containing triangle not found");
+            Freerouter.logInfo("TriangleGraph.position_locate: containing triangle not found");
             return null;
         }
 
@@ -1033,7 +1034,7 @@ public class PlanarDelaunayTriangulation {
                     return result;
                 }
             }
-            System.out.println("TriangleGraph.position_locate_reku: containing triangle not found");
+            Freerouter.logInfo("TriangleGraph.position_locate_reku: containing triangle not found");
             return null;
         }
 

@@ -19,6 +19,7 @@
  */
 package rules;
 
+import gui.Freerouter;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -85,7 +86,7 @@ public class Nets implements Serializable {
         }
         Net result = net_arr.get(p_net_no - 1);
         if (result != null && result.net_number != p_net_no) {
-            System.out.println("Nets.get: inconsistent net_no");
+            Freerouter.logInfo("Nets.get: inconsistent net_no");
         }
         return result;
     }
@@ -107,7 +108,7 @@ public class Nets implements Serializable {
     public Net add(String p_name, int p_subnet_number, boolean p_contains_plane) {
         int new_net_no = net_arr.size() + 1;
         if (new_net_no >= max_legal_net_no) {
-            System.out.println("Nets.add_net: max_net_no out of range");
+            Freerouter.logInfo("Nets.add_net: max_net_no out of range");
         }
         Net new_net = new Net(p_name, p_subnet_number, new_net_no, this, p_contains_plane);
         net_arr.add(new_net);

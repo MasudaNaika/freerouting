@@ -19,6 +19,7 @@
  */
 package library;
 
+import gui.Freerouter;
 import java.io.Serializable;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -51,7 +52,7 @@ public class LogicalPart implements board.ObjectInfoPanel.Printable, Serializabl
      */
     public PartPin get_pin(int p_no) {
         if (p_no < 0 || p_no >= part_pin_arr.length) {
-            System.out.println("LogicalPart.get_pin: p_no out of range");
+            Freerouter.logInfo("LogicalPart.get_pin: p_no out of range");
             return null;
         }
         return part_pin_arr[p_no];

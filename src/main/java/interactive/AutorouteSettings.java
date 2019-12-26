@@ -22,6 +22,7 @@ package interactive;
 
 import autoroute.AutorouteControl.ExpansionCostFactor;
 import board.RoutingBoard;
+import gui.Freerouter;
 import java.io.Serializable;
 
 /**
@@ -186,7 +187,7 @@ public class AutorouteSettings implements Serializable {
 
     public void set_layer_active(int p_layer, boolean p_value) {
         if (p_layer < 0 || p_layer >= layer_active_arr.length) {
-            System.out.println("AutorouteSettings.set_layer_active: p_layer out of range");
+            Freerouter.logInfo("AutorouteSettings.set_layer_active: p_layer out of range");
             return;
         }
         layer_active_arr[p_layer] = p_value;
@@ -194,7 +195,7 @@ public class AutorouteSettings implements Serializable {
 
     public boolean get_layer_active(int p_layer) {
         if (p_layer < 0 || p_layer >= layer_active_arr.length) {
-            System.out.println("AutorouteSettings.get_layer_active: p_layer out of range");
+            Freerouter.logInfo("AutorouteSettings.get_layer_active: p_layer out of range");
             return false;
         }
         return layer_active_arr[p_layer];
@@ -202,7 +203,7 @@ public class AutorouteSettings implements Serializable {
 
     public void set_preferred_direction_is_horizontal(int p_layer, boolean p_value) {
         if (p_layer < 0 || p_layer >= layer_active_arr.length) {
-            System.out.println("AutorouteSettings.set_preferred_direction_is_horizontal: p_layer out of range");
+            Freerouter.logInfo("AutorouteSettings.set_preferred_direction_is_horizontal: p_layer out of range");
             return;
         }
         preferred_direction_is_horizontal_arr[p_layer] = p_value;
@@ -210,7 +211,7 @@ public class AutorouteSettings implements Serializable {
 
     public boolean get_preferred_direction_is_horizontal(int p_layer) {
         if (p_layer < 0 || p_layer >= layer_active_arr.length) {
-            System.out.println("AutorouteSettings.get_preferred_direction_is_horizontal: p_layer out of range");
+            Freerouter.logInfo("AutorouteSettings.get_preferred_direction_is_horizontal: p_layer out of range");
             return false;
         }
         return preferred_direction_is_horizontal_arr[p_layer];
@@ -218,7 +219,7 @@ public class AutorouteSettings implements Serializable {
 
     public void set_preferred_direction_trace_costs(int p_layer, double p_value) {
         if (p_layer < 0 || p_layer >= layer_active_arr.length) {
-            System.out.println("AutorouteSettings.set_preferred_direction_trace_costs: p_layer out of range");
+            Freerouter.logInfo("AutorouteSettings.set_preferred_direction_trace_costs: p_layer out of range");
             return;
         }
         preferred_direction_trace_cost_arr[p_layer] = Math.max(p_value, 0.1);
@@ -226,7 +227,7 @@ public class AutorouteSettings implements Serializable {
 
     public double get_preferred_direction_trace_costs(int p_layer) {
         if (p_layer < 0 || p_layer >= layer_active_arr.length) {
-            System.out.println("AutorouteSettings.get_preferred_direction_trace_costs: p_layer out of range");
+            Freerouter.logInfo("AutorouteSettings.get_preferred_direction_trace_costs: p_layer out of range");
             return 0;
         }
         return preferred_direction_trace_cost_arr[p_layer];
@@ -234,7 +235,7 @@ public class AutorouteSettings implements Serializable {
 
     public double get_against_preferred_direction_trace_costs(int p_layer) {
         if (p_layer < 0 || p_layer >= layer_active_arr.length) {
-            System.out.println("AutorouteSettings.get_against_preferred_direction_trace_costs: p_layer out of range");
+            Freerouter.logInfo("AutorouteSettings.get_against_preferred_direction_trace_costs: p_layer out of range");
             return 0;
         }
         return against_preferred_direction_trace_cost_arr[p_layer];
@@ -242,7 +243,7 @@ public class AutorouteSettings implements Serializable {
 
     public double get_horizontal_trace_costs(int p_layer) {
         if (p_layer < 0 || p_layer >= layer_active_arr.length) {
-            System.out.println("AutorouteSettings.get_preferred_direction_trace_costs: p_layer out of range");
+            Freerouter.logInfo("AutorouteSettings.get_preferred_direction_trace_costs: p_layer out of range");
             return 0;
         }
         double result;
@@ -256,7 +257,7 @@ public class AutorouteSettings implements Serializable {
 
     public void set_against_preferred_direction_trace_costs(int p_layer, double p_value) {
         if (p_layer < 0 || p_layer >= layer_active_arr.length) {
-            System.out.println("AutorouteSettings.set_against_preferred_direction_trace_costs: p_layer out of range");
+            Freerouter.logInfo("AutorouteSettings.set_against_preferred_direction_trace_costs: p_layer out of range");
             return;
         }
         against_preferred_direction_trace_cost_arr[p_layer] = Math.max(p_value, 0.1);
@@ -264,7 +265,7 @@ public class AutorouteSettings implements Serializable {
 
     public double get_vertical_trace_costs(int p_layer) {
         if (p_layer < 0 || p_layer >= layer_active_arr.length) {
-            System.out.println("AutorouteSettings.get_against_preferred_direction_trace_costs: p_layer out of range");
+            Freerouter.logInfo("AutorouteSettings.get_against_preferred_direction_trace_costs: p_layer out of range");
             return 0;
         }
         double result;

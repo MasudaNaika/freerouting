@@ -6,6 +6,7 @@ import board.RoutingBoard;
 import board.TestLevel;
 import geometry.planar.IntBox;
 import geometry.planar.PolylineShape;
+import gui.Freerouter;
 import java.util.Locale;
 import rules.BoardRules;
 
@@ -60,7 +61,7 @@ public class BoardHandlingImpl implements IBoardHandling {
     @Override
     public void create_board(IntBox p_bounding_box, LayerStructure p_layer_structure, PolylineShape[] p_outline_shapes, String p_outline_clearance_class_name, BoardRules p_rules, Communication p_board_communication, TestLevel p_test_level) {
         if (board != null) {
-            System.out.println(" BoardHandling.create_board: board already created");
+            Freerouter.logInfo(" BoardHandling.create_board: board already created");
         }
         int outline_cl_class_no = 0;
 

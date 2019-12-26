@@ -28,6 +28,7 @@ import geometry.planar.Polyline;
 import geometry.planar.PolylineShape;
 import geometry.planar.TileShape;
 import geometry.planar.Vector;
+import gui.Freerouter;
 import it.unimi.dsi.fastutil.ints.IntSortedSet;
 import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.awt.Graphics;
@@ -36,7 +37,6 @@ import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.ConcurrentModificationException;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Set;
@@ -138,7 +138,7 @@ public class BasicBoard implements Serializable {
 
         for (Point p : p_points) {
             if (!bounding_box.contains(p)) {
-                System.out.println("LayeredBoard.insert_trace: input point out of range");
+                Freerouter.logInfo("LayeredBoard.insert_trace: input point out of range");
             }
         }
         Polyline poly = new Polyline(p_points);
@@ -181,7 +181,7 @@ public class BasicBoard implements Serializable {
      */
     public ObstacleArea insert_obstacle(Area p_area, int p_layer, int p_clearance_class, FixedState p_fixed_state) {
         if (p_area == null) {
-            System.out.println("BasicBoard.insert_obstacle: p_area is null");
+            Freerouter.logInfo("BasicBoard.insert_obstacle: p_area is null");
             return null;
         }
         ObstacleArea obs = new ObstacleArea(p_area, p_layer, Vector.ZERO, 0, false, p_clearance_class, 0, 0, null, p_fixed_state, this);
@@ -196,7 +196,7 @@ public class BasicBoard implements Serializable {
     public ObstacleArea insert_obstacle(Area p_area, int p_layer, Vector p_translation, double p_rotation_in_degree,
             boolean p_side_changed, int p_clearance_class, int p_component_no, String p_name, FixedState p_fixed_state) {
         if (p_area == null) {
-            System.out.println("BasicBoard.insert_obstacle: p_area is null");
+            Freerouter.logInfo("BasicBoard.insert_obstacle: p_area is null");
             return null;
         }
         ObstacleArea obs = new ObstacleArea(p_area, p_layer, p_translation, p_rotation_in_degree, p_side_changed,
@@ -212,7 +212,7 @@ public class BasicBoard implements Serializable {
     public ViaObstacleArea insert_via_obstacle(Area p_area, int p_layer, int p_clearance_class,
             FixedState p_fixed_state) {
         if (p_area == null) {
-            System.out.println("BasicBoard.insert_via_obstacle: p_area is null");
+            Freerouter.logInfo("BasicBoard.insert_via_obstacle: p_area is null");
             return null;
         }
         ViaObstacleArea obs = new ViaObstacleArea(p_area, p_layer, Vector.ZERO, 0, false,
@@ -229,7 +229,7 @@ public class BasicBoard implements Serializable {
             boolean p_side_changed, int p_clearance_class, int p_component_no, String p_name,
             FixedState p_fixed_state) {
         if (p_area == null) {
-            System.out.println("BasicBoard.insert_via_obstacle: p_area is null");
+            Freerouter.logInfo("BasicBoard.insert_via_obstacle: p_area is null");
             return null;
         }
         ViaObstacleArea obs = new ViaObstacleArea(p_area, p_layer, p_translation, p_rotation_in_degree, p_side_changed,
@@ -245,7 +245,7 @@ public class BasicBoard implements Serializable {
     public ComponentObstacleArea insert_component_obstacle(Area p_area, int p_layer,
             int p_clearance_class, FixedState p_fixed_state) {
         if (p_area == null) {
-            System.out.println("BasicBoard.insert_component_obstacle: p_area is null");
+            Freerouter.logInfo("BasicBoard.insert_component_obstacle: p_area is null");
             return null;
         }
         ComponentObstacleArea obs = new ComponentObstacleArea(p_area, p_layer, Vector.ZERO, 0, false,
@@ -262,7 +262,7 @@ public class BasicBoard implements Serializable {
     public ComponentObstacleArea insert_component_obstacle(Area p_area, int p_layer, Vector p_translation, double p_rotation_in_degree,
             boolean p_side_changed, int p_clearance_class, int p_component_no, String p_name, FixedState p_fixed_state) {
         if (p_area == null) {
-            System.out.println("BasicBoard.insert_component_obstacle: p_area is null");
+            Freerouter.logInfo("BasicBoard.insert_component_obstacle: p_area is null");
             return null;
         }
         ComponentObstacleArea obs = new ComponentObstacleArea(p_area, p_layer, p_translation, p_rotation_in_degree, p_side_changed,
@@ -277,11 +277,11 @@ public class BasicBoard implements Serializable {
     public ComponentOutline insert_component_outline(Area p_area, boolean p_is_front, Vector p_translation, double p_rotation_in_degree,
             int p_component_no, FixedState p_fixed_state) {
         if (p_area == null) {
-            System.out.println("BasicBoard.insert_component_outline: p_area is null");
+            Freerouter.logInfo("BasicBoard.insert_component_outline: p_area is null");
             return null;
         }
         if (!p_area.is_bounded()) {
-            System.out.println("BasicBoard.insert_component_outline: p_area is not bounded");
+            Freerouter.logInfo("BasicBoard.insert_component_outline: p_area is not bounded");
             return null;
         }
         ComponentOutline outline = new ComponentOutline(p_area, p_is_front, p_translation, p_rotation_in_degree,
@@ -299,7 +299,7 @@ public class BasicBoard implements Serializable {
     public ConductionArea insert_conduction_area(Area p_area, int p_layer,
             int[] p_net_no_arr, int p_clearance_class, boolean p_is_obstacle, FixedState p_fixed_state) {
         if (p_area == null) {
-            System.out.println("BasicBoard.insert_conduction_area: p_area is null");
+            Freerouter.logInfo("BasicBoard.insert_conduction_area: p_area is null");
             return null;
         }
         ConductionArea c = new ConductionArea(p_area, p_layer, Vector.ZERO, 0, false, p_net_no_arr, p_clearance_class,
@@ -769,7 +769,7 @@ public class BasicBoard implements Serializable {
             if (!curr_shape.is_contained_in(bounding_box)) {
                 return false;
             }
-            Set<SearchTreeObject> obstacles = new HashSet<>();
+            Set<SearchTreeObject> obstacles = new ObjectAVLTreeSet<>();
             default_tree.overlapping_objects_with_clearance(curr_shape, p_layer, p_net_no_arr, p_cl_class, obstacles);
             for (SearchTreeObject curr_ob : obstacles) {
                 boolean is_obstacle = true;
@@ -1065,7 +1065,7 @@ public class BasicBoard implements Serializable {
 
         if (rules == null || rules.clearance_matrix == null || p_item.clearance_class_no() < 0
                 || p_item.clearance_class_no() >= rules.clearance_matrix.get_class_count()) {
-            System.out.println("LayeredBoard.insert_item: clearance_class no out of range");
+            Freerouter.logInfo("LayeredBoard.insert_item: clearance_class no out of range");
             p_item.set_clearance_class_no(0);
         }
         p_item.board = this;

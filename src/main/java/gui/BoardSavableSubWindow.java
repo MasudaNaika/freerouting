@@ -44,7 +44,7 @@ public abstract class BoardSavableSubWindow extends BoardSubWindow {
             setVisible(saved_attributes.is_visible);
             return true;
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("SelectParameterWindow.read: read failed");
+            Freerouter.logError("SelectParameterWindow.read: read failed");
             return false;
         }
     }
@@ -58,7 +58,7 @@ public abstract class BoardSavableSubWindow extends BoardSubWindow {
         try {
             p_object_stream.writeObject(saved_attributes);
         } catch (IOException e) {
-            System.out.println("BoardSubWindow.save: save failed");
+            Freerouter.logError("BoardSubWindow.save: save failed");
         }
     }
 

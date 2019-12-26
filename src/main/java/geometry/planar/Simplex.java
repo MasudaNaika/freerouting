@@ -15,6 +15,7 @@
  */
 package geometry.planar;
 
+import gui.Freerouter;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
@@ -84,10 +85,10 @@ public class Simplex extends TileShape implements Serializable {
     public boolean corner_is_bounded(int p_no) {
         int no;
         if (p_no < 0) {
-            System.out.println("corner: p_no is < 0");
+            Freerouter.logInfo("corner: p_no is < 0");
             no = 0;
         } else if (p_no >= arr.length) {
-            System.out.println("corner: p_index must be less than arr.length - 1");
+            Freerouter.logInfo("corner: p_index must be less than arr.length - 1");
             no = arr.length - 1;
         } else {
             no = p_no;
@@ -143,10 +144,10 @@ public class Simplex extends TileShape implements Serializable {
     public Point corner(int p_no) {
         int no;
         if (p_no < 0) {
-            System.out.println("Simplex.corner: p_no is < 0");
+            Freerouter.logInfo("Simplex.corner: p_no is < 0");
             no = 0;
         } else if (p_no >= arr.length) {
-            System.out.println("Simplex.corner: p_no must be less than arr.length - 1");
+            Freerouter.logInfo("Simplex.corner: p_no must be less than arr.length - 1");
             no = arr.length - 1;
         } else {
             no = p_no;
@@ -181,10 +182,10 @@ public class Simplex extends TileShape implements Serializable {
         }
         int no;
         if (p_no < 0) {
-            System.out.println("Simplex.corner_approx: p_no is < 0");
+            Freerouter.logInfo("Simplex.corner_approx: p_no is < 0");
             no = 0;
         } else if (p_no >= arr.length) {
-            System.out.println("Simplex.corner_approx: p_no must be less than arr.length - 1");
+            Freerouter.logInfo("Simplex.corner_approx: p_no must be less than arr.length - 1");
             no = arr.length - 1;
         } else {
             no = p_no;
@@ -234,15 +235,15 @@ public class Simplex extends TileShape implements Serializable {
     @Override
     public Line border_line(int p_no) {
         if (arr.length <= 0) {
-            System.out.println("Simplex.edge_line : simplex is empty");
+            Freerouter.logInfo("Simplex.edge_line : simplex is empty");
             return null;
         }
         int no;
         if (p_no < 0) {
-            System.out.println("Simplex.edge_line : p_no is < 0");
+            Freerouter.logInfo("Simplex.edge_line : p_no is < 0");
             no = 0;
         } else if (p_no >= arr.length) {
-            System.out.println("Simplex.edge_line: p_no must be less than arr.length - 1");
+            Freerouter.logInfo("Simplex.edge_line: p_no must be less than arr.length - 1");
             no = arr.length - 1;
         } else {
             no = p_no;
@@ -284,7 +285,7 @@ public class Simplex extends TileShape implements Serializable {
                 return 2;
             }
             if (side_of_line0 == Side.ON_THE_LEFT) {
-                System.out.println("empty Simplex not normalized");
+                Freerouter.logInfo("empty Simplex not normalized");
                 return -1;
             }
             // now the 3 lines intersect in the same point
@@ -719,7 +720,7 @@ public class Simplex extends TileShape implements Serializable {
     @Override
     public Simplex[] cutout_from(Simplex p_outer_simplex) {
         if (dimension() < 2) {
-            System.out.println("Simplex.cutout_from only implemented for 2-dim simplex");
+            Freerouter.logInfo("Simplex.cutout_from only implemented for 2-dim simplex");
             return null;
         }
         Simplex inner_simplex = intersection(p_outer_simplex);
@@ -734,7 +735,7 @@ public class Simplex extends TileShape implements Serializable {
             Line[] division_line = inner_simplex.calc_division_lines(inner_corner_no, p_outer_simplex);
             division_line_arr[inner_corner_no] = division_line;
             if (division_line == null) {
-                System.out.println("Simplex.cutout_from: division line is null");
+                Freerouter.logInfo("Simplex.cutout_from: division line is null");
                 Simplex[] result = {p_outer_simplex};
                 return result;
             }
@@ -1069,7 +1070,7 @@ public class Simplex extends TileShape implements Serializable {
         }
         FloatPoint intersection = curr_inner_line.intersection_approx(prev_inner_line);
         if (intersection.x >= Integer.MAX_VALUE) {
-            System.out.println("Simplex.calc_division_lines: intersection expexted");
+            Freerouter.logInfo("Simplex.calc_division_lines: intersection expexted");
             return null;
         }
         IntPoint inner_corner = intersection.round();
@@ -1163,7 +1164,7 @@ public class Simplex extends TileShape implements Serializable {
             }
         }
         if (min_distance == Integer.MAX_VALUE) {
-            System.out.println("Simplex.calc_division_lines: division not found");
+            Freerouter.logInfo("Simplex.calc_division_lines: division not found");
             return null;
         }
         Line[] result;

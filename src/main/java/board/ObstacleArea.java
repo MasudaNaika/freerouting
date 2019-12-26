@@ -23,6 +23,7 @@ import geometry.planar.IntPoint;
 import geometry.planar.Point;
 import geometry.planar.TileShape;
 import geometry.planar.Vector;
+import gui.Freerouter;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.io.IOException;
@@ -77,7 +78,7 @@ public class ObstacleArea extends Item implements Serializable {
     public Area get_area() {
         if (precalculated_absolute_area == null) {
             if (relative_area == null) {
-                System.out.println("ObstacleArea.get_area: area is null");
+                Freerouter.logInfo("ObstacleArea.get_area: area is null");
                 return null;
             }
             Area turned_area = relative_area;
@@ -156,7 +157,7 @@ public class ObstacleArea extends Item implements Serializable {
     public TileShape get_tile_shape(int p_no) {
         TileShape[] tile_shapes = split_to_convex();
         if (tile_shapes == null || p_no < 0 || p_no >= tile_shapes.length) {
-            System.out.println("ConvexObstacle.get_tile_shape: p_no out of range");
+            Freerouter.logInfo("ConvexObstacle.get_tile_shape: p_no out of range");
             return null;
         }
         return tile_shapes[p_no];
@@ -310,7 +311,7 @@ public class ObstacleArea extends Item implements Serializable {
 
     TileShape[] split_to_convex() {
         if (relative_area == null) {
-            System.out.println("ObstacleArea.split_to_convex: area is null");
+            Freerouter.logInfo("ObstacleArea.split_to_convex: area is null");
             return null;
         }
         return get_area().split_to_convex();
@@ -327,6 +328,7 @@ public class ObstacleArea extends Item implements Serializable {
         try {
             p_stream.writeObject(this);
         } catch (IOException e) {
+            Freerouter.logError(e);
             return false;
         }
         return true;

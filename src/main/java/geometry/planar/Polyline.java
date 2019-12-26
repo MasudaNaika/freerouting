@@ -15,6 +15,7 @@
  */
 package geometry.planar;
 
+import gui.Freerouter;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -44,7 +45,7 @@ public class Polyline implements Serializable {
     public Polyline(Polygon p_polygon) {
         Point[] point_arr = p_polygon.corner_array();
         if (point_arr.length < 2) {
-            System.out.println("Polyline: must contain at least 2 different points");
+            Freerouter.logInfo("Polyline: must contain at least 2 different points");
             arr = new Line[0];
             return;
         }
@@ -227,10 +228,10 @@ public class Polyline implements Serializable {
     public FloatPoint corner_approx(int p_no) {
         int no;
         if (p_no < 0) {
-            System.out.println("Polyline.corner_approx: p_no is < 0");
+            Freerouter.logInfo("Polyline.corner_approx: p_no is < 0");
             no = 0;
         } else if (p_no >= arr.length - 1) {
-            System.out.println("Polyline.corner_approx: p_no must be less than arr.length - 1");
+            Freerouter.logInfo("Polyline.corner_approx: p_no must be less than arr.length - 1");
             no = arr.length - 2;
         } else {
             no = p_no;
@@ -254,15 +255,15 @@ public class Polyline implements Serializable {
      */
     public Point corner(int p_no) {
         if (arr.length < 2) {
-            System.out.println("Polyline.corner: arr.length is < 2");
+            Freerouter.logInfo("Polyline.corner: arr.length is < 2");
             return null;
         }
         int no;
         if (p_no < 0) {
-            System.out.println("Polyline.corner: p_no is < 0");
+            Freerouter.logInfo("Polyline.corner: p_no is < 0");
             no = 0;
         } else if (p_no >= arr.length - 1) {
-            System.out.println("Polyline.corner: p_no must be less than arr.length - 1");
+            Freerouter.logInfo("Polyline.corner: p_no must be less than arr.length - 1");
             no = arr.length - 2;
         } else {
             no = p_no;
@@ -472,7 +473,7 @@ public class Polyline implements Serializable {
             }
             shape_arr[curr_shape_no] = bounding_shape.intersection_with_simplify(s1);
             if (shape_arr[curr_shape_no].is_empty()) {
-                System.out.println("offset_shapes: shape is empty");
+                Freerouter.logInfo("offset_shapes: shape is empty");
             }
 
             prev_dir = curr_dir;
@@ -489,7 +490,7 @@ public class Polyline implements Serializable {
      */
     public TileShape offset_shape(int p_half_width, int p_no) {
         if (p_no < 0 || p_no > arr.length - 3) {
-            System.out.println("Polyline.offset_shape: p_no out of range");
+            Freerouter.logInfo("Polyline.offset_shape: p_no out of range");
             return null;
         }
         TileShape[] result = offset_shapes(p_half_width, p_no, p_no + 2);
@@ -750,7 +751,7 @@ public class Polyline implements Serializable {
      */
     public Polyline[] split(int p_line_no, Line p_end_line) {
         if (p_line_no < 1 || p_line_no > arr.length - 2) {
-            System.out.println("Polyline.split: p_line_no out of range");
+            Freerouter.logInfo("Polyline.split: p_line_no out of range");
             return null;
         }
         if (arr[p_line_no].is_parallel(p_end_line)) {

@@ -23,6 +23,7 @@ import board.Item;
 import board.ItemSelectionFilter;
 import board.TestLevel;
 import geometry.planar.FloatPoint;
+import gui.Freerouter;
 import java.util.Collection;
 import java.util.Set;
 import javax.swing.JPopupMenu;
@@ -76,7 +77,7 @@ public class MenuState extends InteractiveState {
         if (picked_items.size() > 0) {
             Item first_item = picked_items.iterator().next();
             if (!(first_item instanceof board.Pin)) {
-                System.out.println("MenuState.swap_pin: Pin expected");
+                Freerouter.logInfo("MenuState.swap_pin: Pin expected");
                 return this;
             }
             board.Pin selected_pin = (board.Pin) first_item;

@@ -23,6 +23,7 @@ import geometry.planar.ConvexShape;
 import geometry.planar.Direction;
 import geometry.planar.IntBox;
 import geometry.planar.IntOctagon;
+import gui.Freerouter;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -67,7 +68,7 @@ public class Padstack implements Comparable<Padstack>, board.ObjectInfoPanel.Pri
      */
     public ConvexShape get_shape(int p_layer) {
         if (p_layer < 0 || p_layer >= shapes.length) {
-            System.out.println("Padstack.get_layer p_layer out of range");
+            Freerouter.logInfo("Padstack.get_layer p_layer out of range");
             return null;
         }
         return shapes[p_layer];

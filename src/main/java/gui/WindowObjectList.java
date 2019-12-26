@@ -259,7 +259,7 @@ public abstract class WindowObjectList extends BoardSavableSubWindow {
         try {
             p_object_stream.writeObject(selected_indices);
         } catch (IOException e) {
-            System.out.println("WindowObjectList.save: save failed");
+            Freerouter.logError("WindowObjectList.save: save failed");
         }
         super.save(p_object_stream);
     }
@@ -270,7 +270,7 @@ public abstract class WindowObjectList extends BoardSavableSubWindow {
         try {
             saved_selected_indices = (int[]) p_object_stream.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("WindowObjectListWithFilter.read: read failed");
+            Freerouter.logError("WindowObjectListWithFilter.read: read failed");
             return false;
         }
         boolean result = super.read(p_object_stream);

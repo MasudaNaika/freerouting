@@ -22,6 +22,7 @@ package designformats.specctra;
 
 import datastructures.IdentifierType;
 import datastructures.IndentFileWriter;
+import gui.Freerouter;
 import java.io.IOException;
 
 /**
@@ -41,11 +42,11 @@ public class AutorouteSettings {
             try {
                 next_token = p_scanner.next_token();
             } catch (IOException e) {
-                System.out.println("AutorouteSettings.read_scope: IO error scanning file");
+                Freerouter.logInfo("AutorouteSettings.read_scope: IO error scanning file");
                 return null;
             }
             if (next_token == null) {
-                System.out.println("AutorouteSettings.read_scope: unexpected end of file");
+                Freerouter.logInfo("AutorouteSettings.read_scope: unexpected end of file");
                 return null;
             }
             if (next_token == Keyword.CLOSED_BRACKET) {
@@ -92,16 +93,16 @@ public class AutorouteSettings {
         try {
             next_token = p_scanner.next_token();
         } catch (IOException e) {
-            System.out.println("AutorouteSettings.read_layer_rule: IO error scanning file");
+            Freerouter.logError("AutorouteSettings.read_layer_rule: IO error scanning file");
             return null;
         }
         if (!(next_token instanceof String)) {
-            System.out.println("AutorouteSettings.read_layer_rule: String expected");
+            Freerouter.logInfo("AutorouteSettings.read_layer_rule: String expected");
             return null;
         }
         int layer_no = p_layer_structure.get_no((String) next_token);
         if (layer_no < 0) {
-            System.out.println("AutorouteSettings.read_layer_rule: layer not found");
+            Freerouter.logInfo("AutorouteSettings.read_layer_rule: layer not found");
             return null;
         }
         while (true) {
@@ -109,11 +110,11 @@ public class AutorouteSettings {
             try {
                 next_token = p_scanner.next_token();
             } catch (IOException e) {
-                System.out.println("AutorouteSettings.read_layer_rule: IO error scanning file");
+                Freerouter.logError("AutorouteSettings.read_layer_rule: IO error scanning file");
                 return null;
             }
             if (next_token == null) {
-                System.out.println("AutorouteSettings.read_layer_rule: unexpected end of file");
+                Freerouter.logInfo("AutorouteSettings.read_layer_rule: unexpected end of file");
                 return null;
             }
             if (next_token == Keyword.CLOSED_BRACKET) {
@@ -130,17 +131,17 @@ public class AutorouteSettings {
                         if (next_token == Keyword.VERTICAL) {
                             pref_dir_is_horizontal = false;
                         } else if (next_token != Keyword.HORIZONTAL) {
-                            System.out.println("AutorouteSettings.read_layer_rule: unexpected key word");
+                            Freerouter.logInfo("AutorouteSettings.read_layer_rule: unexpected key word");
                             return null;
                         }
                         p_settings.set_preferred_direction_is_horizontal(layer_no, pref_dir_is_horizontal);
                         next_token = p_scanner.next_token();
                         if (next_token != Keyword.CLOSED_BRACKET) {
-                            System.out.println("AutorouteSettings.read_layer_rule: uclosing bracket expected");
+                            Freerouter.logInfo("AutorouteSettings.read_layer_rule: uclosing bracket expected");
                             return null;
                         }
                     } catch (IOException e) {
-                        System.out.println("AutorouteSettings.read_layer_rule: IO error scanning file");
+                        Freerouter.logError("AutorouteSettings.read_layer_rule: IO error scanning file");
                         return null;
                     }
                 } else if (next_token == Keyword.PREFERRED_DIRECTION_TRACE_COSTS) {

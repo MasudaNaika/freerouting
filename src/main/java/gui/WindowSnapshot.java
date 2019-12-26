@@ -167,7 +167,7 @@ public class WindowSnapshot extends BoardSavableSubWindow {
             settings_window.read(p_object_stream);
             return true;
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("VisibilityFrame.read_attriutes: read failed");
+            Freerouter.logError("VisibilityFrame.read_attriutes: read failed");
             return false;
         }
     }
@@ -181,7 +181,7 @@ public class WindowSnapshot extends BoardSavableSubWindow {
         try {
             p_object_stream.writeObject(saved_attributes);
         } catch (IOException e) {
-            System.out.println("VisibilityFrame.save_attriutes: save failed");
+            Freerouter.logError("VisibilityFrame.save_attriutes: save failed");
         }
         settings_window.save(p_object_stream);
     }

@@ -99,7 +99,7 @@ public abstract class WindowObjectListWithFilter extends WindowObjectList {
         try {
             p_object_stream.writeObject(filter_string.getText());
         } catch (IOException e) {
-            System.out.println("WindowObjectListWithFilter.save: save failed");
+            Freerouter.logError("WindowObjectListWithFilter.save: save failed");
         }
         super.save(p_object_stream);
     }
@@ -110,7 +110,7 @@ public abstract class WindowObjectListWithFilter extends WindowObjectList {
             String curr_string = (String) p_object_stream.readObject();
             filter_string.setText(curr_string);
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("WindowObjectListWithFilter.read: read failed");
+            Freerouter.logError("WindowObjectListWithFilter.read: read failed");
         }
         return super.read(p_object_stream);
     }

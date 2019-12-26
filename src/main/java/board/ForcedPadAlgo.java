@@ -30,6 +30,7 @@ import geometry.planar.Point;
 import geometry.planar.Polyline;
 import geometry.planar.TileShape;
 import geometry.planar.Vector;
+import gui.Freerouter;
 import java.util.Collection;
 import java.util.LinkedList;
 
@@ -159,7 +160,7 @@ public class ForcedPadAlgo {
     boolean forced_pad(TileShape p_pad_shape, CalcFromSide p_from_side,
             int p_layer, int[] p_net_no_arr, int p_cl_type, boolean p_copper_sharing_allowed, Collection<Item> p_ignore_items, int p_max_recursion_depth, int p_max_via_recursion_depth) {
         if (p_pad_shape.is_empty()) {
-            System.out.println("ShoveTraceAux.forced_pad: p_pad_shape is empty");
+            Freerouter.logInfo("ShoveTraceAux.forced_pad: p_pad_shape is empty");
             return true;
         }
         if (!p_pad_shape.is_contained_in(board.get_bounding_box())) {
@@ -425,7 +426,7 @@ public class ForcedPadAlgo {
                 }
                 break;
             default: {
-                System.out.println("ForcedPadAlgo.in_front_of_pad: p_from_side out of range");
+                Freerouter.logInfo("ForcedPadAlgo.in_front_of_pad: p_from_side out of range");
                 result = true;
             }
         }

@@ -20,6 +20,7 @@
 package designformats.specctra;
 
 import board.Communication.SpecctraParserInfo;
+import gui.Freerouter;
 import java.io.IOException;
 
 /**
@@ -44,11 +45,11 @@ public class Parser extends ScopeKeyword {
             try {
                 next_token = p_par.scanner.next_token();
             } catch (IOException e) {
-                System.out.println("Parser.read_scope: IO error scanning file");
+                Freerouter.logError("Parser.read_scope: IO error scanning file");
                 return false;
             }
             if (next_token == null) {
-                System.out.println("Parser.read_scope: unexpected end of file");
+                Freerouter.logError("Parser.read_scope: unexpected end of file");
                 return false;
             }
             if (next_token == CLOSED_BRACKET) {
@@ -93,24 +94,24 @@ public class Parser extends ScopeKeyword {
         try {
             Object next_token = p_par.scanner.next_token();
             if (!(next_token instanceof String)) {
-                System.out.println("Parser.read_write_solution: string expected");
+                Freerouter.logInfo("Parser.read_write_solution: string expected");
                 return null;
             }
             String resolution_string = (String) next_token;
             next_token = p_par.scanner.next_token();
             if (!(next_token instanceof Integer)) {
-                System.out.println("Parser.read_write_solution: integer expected expected");
+                Freerouter.logInfo("Parser.read_write_solution: integer expected expected");
                 return null;
             }
             int resolution_value = (Integer) next_token;
             next_token = p_par.scanner.next_token();
             if (next_token != Keyword.CLOSED_BRACKET) {
-                System.out.println("Parser.read_write_solution: closing_bracket expected");
+                Freerouter.logInfo("Parser.read_write_solution: closing_bracket expected");
                 return null;
             }
             return new SpecctraParserInfo.WriteResolution(resolution_string, resolution_value);
         } catch (IOException e) {
-            System.out.println("Parser.read_write_solution: IO error scanning file");
+            Freerouter.logError("Parser.read_write_solution: IO error scanning file");
             return null;
         }
     }
@@ -121,25 +122,25 @@ public class Parser extends ScopeKeyword {
             p_par.scanner.yybegin(SpecctraFileScanner.NAME);
             Object next_token = p_par.scanner.next_token();
             if (!(next_token instanceof String)) {
-                System.out.println("Parser.read_constant: string expected");
+                Freerouter.logInfo("Parser.read_constant: string expected");
                 return null;
             }
             result[0] = (String) next_token;
             p_par.scanner.yybegin(SpecctraFileScanner.NAME);
             next_token = p_par.scanner.next_token();
             if (!(next_token instanceof String)) {
-                System.out.println("Parser.read_constant: string expected");
+                Freerouter.logInfo("Parser.read_constant: string expected");
                 return null;
             }
             result[1] = (String) next_token;
             next_token = p_par.scanner.next_token();
             if (next_token != Keyword.CLOSED_BRACKET) {
-                System.out.println("Parser.read_constant: closing_bracket expected");
+                Freerouter.logInfo("Parser.read_constant: closing_bracket expected");
                 return null;
             }
             return result;
         } catch (IOException e) {
-            System.out.println("Parser.read_constant: IO error scanning file");
+            Freerouter.logError("Parser.read_constant: IO error scanning file");
             return null;
         }
     }
@@ -202,18 +203,18 @@ public class Parser extends ScopeKeyword {
         try {
             Object next_token = p_scanner.next_token();
             if (!(next_token instanceof String)) {
-                System.out.println("Parser.read_quote_char: string expected");
+                Freerouter.logInfo("Parser.read_quote_char: string expected");
                 return null;
             }
             String result = (String) next_token;
             next_token = p_scanner.next_token();
             if (next_token != Keyword.CLOSED_BRACKET) {
-                System.out.println("Parser.read_quote_char: closing bracket expected");
+                Freerouter.logInfo("Parser.read_quote_char: closing bracket expected");
                 return null;
             }
             return result;
         } catch (IOException e) {
-            System.out.println("Parser.read_quote_char: IO error scanning file");
+            Freerouter.logError("Parser.read_quote_char: IO error scanning file");
             return null;
         }
     }

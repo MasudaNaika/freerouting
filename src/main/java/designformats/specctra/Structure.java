@@ -29,6 +29,7 @@ import geometry.planar.IntBox;
 import geometry.planar.Point;
 import geometry.planar.PolylineShape;
 import geometry.planar.TileShape;
+import gui.Freerouter;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
@@ -69,12 +70,12 @@ class Structure extends ScopeKeyword {
             try {
                 next_token = p_par.scanner.next_token();
             } catch (IOException e) {
-                System.out.println("Structure.read_scope: IO error scanning file");
-                System.out.println(e);
+                Freerouter.logError("Structure.read_scope: IO error scanning file");
+                Freerouter.logError(e);
                 return false;
             }
             if (next_token == null) {
-                System.out.println("Structure.read_scope: unexpected end of file");
+                Freerouter.logInfo("Structure.read_scope: unexpected end of file");
                 return false;
             }
             if (next_token == CLOSED_BRACKET) {
@@ -186,7 +187,7 @@ class Structure extends ScopeKeyword {
             }
             rules.Net curr_net = board.rules.nets.get(plane_info.net_name, 1);
             if (curr_net == null) {
-                System.out.println("Plane.read_scope: net not found");
+                Freerouter.logInfo("Plane.read_scope: net not found");
                 continue;
             }
             geometry.planar.Area plane_area
@@ -197,7 +198,7 @@ class Structure extends ScopeKeyword {
                 if (plane_info.area.clearance_class_name != null) {
                     clearance_class_no = board.rules.clearance_matrix.get_no(plane_info.area.clearance_class_name);
                     if (clearance_class_no < 0) {
-                        System.out.println("Structure.read_scope: clearance class not found");
+                        Freerouter.logInfo("Structure.read_scope: clearance class not found");
                         clearance_class_no = BoardRules.clearance_class_none();
                     }
                 } else {
@@ -207,7 +208,7 @@ class Structure extends ScopeKeyword {
                 board.insert_conduction_area(plane_area, curr_layer.no, net_numbers, clearance_class_no,
                         false, FixedState.SYSTEM_FIXED);
             } else {
-                System.out.println("Plane.read_scope: unexpected layer name");
+                Freerouter.logInfo("Plane.read_scope: unexpected layer name");
                 return false;
             }
         }
@@ -244,7 +245,7 @@ class Structure extends ScopeKeyword {
             }
         }
         if (curr_ob == null) {
-            System.out.println("Structure.write_scope; outline not found");
+            Freerouter.logInfo("Structure.write_scope; outline not found");
             return;
         }
         board.BoardOutline outline = (board.BoardOutline) curr_ob;
@@ -337,7 +338,7 @@ class Structure extends ScopeKeyword {
                 p_file.write(" ");
                 p_identifier_type.write(curr_padstack.name, p_file);
             } else {
-                System.out.println("Structure.write_via_padstacks: padstack is null");
+                Freerouter.logInfo("Structure.write_via_padstacks: padstack is null");
             }
         }
         p_file.write(")");
@@ -416,23 +417,23 @@ class Structure extends ScopeKeyword {
                 prev_token = next_token;
             }
         } catch (IOException e) {
-            System.out.println("Structure.read_boundary_scope: IO error scanning file");
+            Freerouter.logError("Structure.read_boundary_scope: IO error scanning file");
             return false;
         }
         if (curr_shape == null) {
-            System.out.println("Structure.read_boundary_scope: shape is null");
+            Freerouter.logInfo("Structure.read_boundary_scope: shape is null");
             return true;
         }
         if (curr_shape.layer == Layer.PCB) {
             if (p_board_construction_info.bounding_shape == null) {
                 p_board_construction_info.bounding_shape = curr_shape;
             } else {
-                System.out.println("Structure.read_boundary_scope: exact 1 bounding_shape expected");
+                Freerouter.logInfo("Structure.read_boundary_scope: exact 1 bounding_shape expected");
             }
         } else if (curr_shape.layer == Layer.SIGNAL) {
             p_board_construction_info.outline_shapes.add(curr_shape);
         } else {
-            System.out.println("Structure.read_boundary_scope: unexpected layer");
+            Freerouter.logInfo("Structure.read_boundary_scope: unexpected layer");
         }
         return true;
     }
@@ -443,7 +444,7 @@ class Structure extends ScopeKeyword {
             boolean is_signal = true;
             Object next_token = p_scanner.next_token();
             if (!(next_token instanceof String)) {
-                System.out.println("Structure.read_layer_scope: String expected");
+                Freerouter.logInfo("Structure.read_layer_scope: String expected");
                 return false;
             }
             Collection<String> net_names = new LinkedList<>();
@@ -451,25 +452,26 @@ class Structure extends ScopeKeyword {
             next_token = p_scanner.next_token();
             while (next_token != Keyword.CLOSED_BRACKET) {
                 if (next_token != Keyword.OPEN_BRACKET) {
-                    System.out.println("Structure.read_layer_scope: ( expected");
+                    Freerouter.logInfo("Structure.read_layer_scope: ( expected");
                     return false;
                 }
                 next_token = p_scanner.next_token();
                 if (next_token == Keyword.TYPE) {
+                    StringBuilder sb = new StringBuilder();
                     next_token = p_scanner.next_token();
                     if (next_token == Keyword.POWER) {
                         is_signal = false;
                     } else if (next_token != Keyword.SIGNAL) {
-                        System.out.print("Structure.read_layer_scope: unknown layer type ");
+                        sb.append("Structure.read_layer_scope: unknown layer type ");
                         if (next_token instanceof String) {
-                            System.out.print((String) next_token);
+                            sb.append((String) next_token);
                         }
-                        System.out.println();
+                        Freerouter.logInfo(sb.toString());
                         layer_ok = false;
                     }
                     next_token = p_scanner.next_token();
                     if (next_token != Keyword.CLOSED_BRACKET) {
-                        System.out.println("Structure.read_layer_scope: ) expected");
+                        Freerouter.logInfo("Structure.read_layer_scope: ) expected");
                         return false;
                     }
                 } else if (next_token == Keyword.RULE) {
@@ -485,7 +487,7 @@ class Structure extends ScopeKeyword {
                         if (next_token instanceof String) {
                             net_names.add((String) next_token);
                         } else {
-                            System.out.println("Structure.read_layer_scope: string expected");
+                            Freerouter.logInfo("Structure.read_layer_scope: string expected");
                         }
                     }
                 } else {
@@ -499,8 +501,8 @@ class Structure extends ScopeKeyword {
                 ++p_board_construction_info.found_layer_count;
             }
         } catch (IOException e) {
-            System.out.println("Layer.read_scope: IO error scanning file");
-            System.out.println(e);
+            Freerouter.logError("Layer.read_scope: IO error scanning file");
+            Freerouter.logError(e);
             return false;
         }
         return true;
@@ -526,7 +528,7 @@ class Structure extends ScopeKeyword {
                 } else if (next_token instanceof String) {
                     normal_vias.add((String) next_token);
                 } else {
-                    System.out.println("Structure.read_via_padstack: String expected");
+                    Freerouter.logInfo("Structure.read_via_padstack: String expected");
                     return null;
                 }
             }
@@ -534,7 +536,7 @@ class Structure extends ScopeKeyword {
             normal_vias.addAll(spare_vias);
             return normal_vias;
         } catch (IOException e) {
-            System.out.println("Structure.read_via_padstack: IO error scanning file");
+            Freerouter.logError("Structure.read_via_padstack: IO error scanning file");
             return null;
         }
     }
@@ -546,11 +548,11 @@ class Structure extends ScopeKeyword {
             try {
                 next_token = p_par.scanner.next_token();
             } catch (IOException e) {
-                System.out.println("Structure.read_control_scope: IO error scanning file");
+                Freerouter.logError("Structure.read_control_scope: IO error scanning file");
                 return false;
             }
             if (next_token == null) {
-                System.out.println("Structure.read_control_scope: unexpected end of file");
+                Freerouter.logInfo("Structure.read_control_scope: unexpected end of file");
                 return false;
             }
             if (next_token == CLOSED_BRACKET) {
@@ -579,17 +581,17 @@ class Structure extends ScopeKeyword {
             } else if (next_token == Keyword.NONE) {
                 snap_angle = board.AngleRestriction.NONE;
             } else {
-                System.out.println("Structure.read_snap_angle_scope: unexpected token");
+                Freerouter.logInfo("Structure.read_snap_angle_scope: unexpected token");
                 return null;
             }
             next_token = p_scanner.next_token();
             if (next_token != Keyword.CLOSED_BRACKET) {
-                System.out.println("Structure.read_selection_layer_scop: closing bracket expected");
+                Freerouter.logInfo("Structure.read_selection_layer_scop: closing bracket expected");
                 return null;
             }
             return snap_angle;
         } catch (IOException e) {
-            System.out.println("Structure.read_snap_angl: IO error scanning file");
+            Freerouter.logError("Structure.read_snap_angl: IO error scanning file");
             return null;
         }
     }
@@ -612,13 +614,13 @@ class Structure extends ScopeKeyword {
     private boolean create_board(ReadScopeParameter p_par, BoardConstructionInfo p_board_construction_info) {
         int layer_count = p_board_construction_info.layer_info.size();
         if (layer_count == 0) {
-            System.out.println("Structure.create_board: layers missing in structure scope");
+            Freerouter.logInfo("Structure.create_board: layers missing in structure scope");
             return false;
         }
         if (p_board_construction_info.bounding_shape == null) {
             // happens if the boundary shape with layer pcb is missing
             if (p_board_construction_info.outline_shapes.isEmpty()) {
-                System.out.println("Structure.create_board: outline missing");
+                Freerouter.logInfo("Structure.create_board: outline missing");
                 p_par.board_outline_ok = false;
                 return false;
             }
@@ -636,7 +638,7 @@ class Structure extends ScopeKeyword {
         for (int i = 0; i < layer_count; ++i) {
             Layer curr_layer = it.next();
             if (curr_layer.no < 0 || curr_layer.no >= layer_count) {
-                System.out.println("Structure.create_board: illegal layer number");
+                Freerouter.logInfo("Structure.create_board: illegal layer number");
                 return false;
             }
             board_layer_arr[i] = new board.Layer(curr_layer.name, curr_layer.is_signal);
@@ -741,11 +743,9 @@ class Structure extends ScopeKeyword {
                     }
                 }
                 rules.Net curr_net = p_board.rules.nets.get(curr_net_id.name, curr_net_id.subnet_number);
-                {
-                    if (curr_net == null) {
-                        System.out.println("Structure.insert_missing_power_planes: net not found");
-                        continue;
-                    }
+                if (curr_net == null) {
+                    Freerouter.logInfo("Structure.insert_missing_power_planes: net not found");
+                    continue;
                 }
                 int[] net_numbers = {curr_net.net_number};
                 p_board.insert_conduction_area(p_board.bounding_box, curr_layer.no, net_numbers, BoardRules.clearance_class_none(),
@@ -864,7 +864,7 @@ class Structure extends ScopeKeyword {
                 curr_string = curr_string.substring(p_string_quote.length());
                 curr_pair = curr_string.split(p_string_quote, 2);
                 if (curr_pair.length != 2 || !curr_pair[1].startsWith("_")) {
-                    System.out.println("Structure.set_clearance_rule: '_' exprcted");
+                    Freerouter.logInfo("Structure.set_clearance_rule: '_' exprcted");
                     continue;
                 }
                 curr_pair[1] = curr_pair[1].substring(1);
@@ -976,12 +976,12 @@ class Structure extends ScopeKeyword {
         geometry.planar.Area keepout_area
                 = Shape.transform_area_to_board(p_area.shape_list, p_par.coordinate_transform);
         if (keepout_area.dimension() < 2) {
-            System.out.println("Structure.insert_keepout: keepout is not an area");
+            Freerouter.logInfo("Structure.insert_keepout: keepout is not an area");
             return true;
         }
         board.BasicBoard board = p_par.board_handling.get_routing_board();
         if (board == null) {
-            System.out.println("Structure.insert_keepout: board not initialized");
+            Freerouter.logInfo("Structure.insert_keepout: board not initialized");
             return false;
         }
         Layer curr_layer = (p_area.shape_list.iterator().next()).layer;
@@ -994,7 +994,7 @@ class Structure extends ScopeKeyword {
         } else if (curr_layer.no >= 0) {
             insert_keepout(board, keepout_area, curr_layer.no, p_area.clearance_class_name, p_keepout_type, p_fixed_state);
         } else {
-            System.out.println("Structure.insert_keepout: unknown layer name");
+            Freerouter.logInfo("Structure.insert_keepout: unknown layer name");
             return false;
         }
 
@@ -1010,7 +1010,7 @@ class Structure extends ScopeKeyword {
         } else {
             clearance_class_no = p_board.rules.clearance_matrix.get_no(p_clearance_class_name);
             if (clearance_class_no < 0) {
-                System.out.println("Keepout.insert_leepout: clearance class not found");
+                Freerouter.logInfo("Keepout.insert_leepout: clearance class not found");
                 clearance_class_no = BoardRules.clearance_class_none();
             }
         }

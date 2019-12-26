@@ -25,6 +25,7 @@ import boardgraphics.GraphicsContext;
 import datastructures.PlanarDelaunayTriangulation;
 import geometry.planar.FloatPoint;
 import geometry.planar.Point;
+import gui.Freerouter;
 import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -207,7 +208,7 @@ public class NetIncompletes {
             while (it.hasNext()) {
                 Item curr_item = it.next();
                 if (curr_index >= result.length) {
-                    System.out.println("NetIncompletes.calculate_net_items: to many items");
+                    Freerouter.logInfo("NetIncompletes.calculate_net_items: to many items");
                     return result;
                 }
                 result[curr_index] = new NetItem(curr_item, curr_connected_set);
@@ -215,7 +216,7 @@ public class NetIncompletes {
             }
         }
         if (curr_index < result.length) {
-            System.out.println("NetIncompletes.calculate_net_items: to few items");
+            Freerouter.logInfo("NetIncompletes.calculate_net_items: to few items");
         }
         return result;
     }

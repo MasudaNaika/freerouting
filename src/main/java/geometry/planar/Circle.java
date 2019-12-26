@@ -19,6 +19,7 @@
  */
 package geometry.planar;
 
+import gui.Freerouter;
 import java.io.Serializable;
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -36,7 +37,7 @@ public class Circle implements ConvexShape, Serializable {
     public Circle(IntPoint p_center, int p_radius) {
         center = p_center;
         if (p_radius < 0) {
-            System.out.println("Circle: unexpected negative radius");
+            Freerouter.logInfo("Circle: unexpected negative radius");
             radius = -p_radius;
         } else {
             radius = p_radius;
@@ -263,7 +264,7 @@ public class Circle implements ConvexShape, Serializable {
             return this;
         }
         if (!(p_vector instanceof IntVector)) {
-            System.out.println("Circle.translate_by only implemented for IntVectors till now");
+            Freerouter.logInfo("Circle.translate_by only implemented for IntVectors till now");
             return this;
         }
         IntPoint new_center = (IntPoint) center.translate_by(p_vector);
@@ -272,7 +273,7 @@ public class Circle implements ConvexShape, Serializable {
 
     @Override
     public FloatPoint nearest_point_approx(FloatPoint p_point) {
-        System.out.println("Circle.nearest_point_approx not yet implemented");
+        Freerouter.logInfo("Circle.nearest_point_approx not yet implemented");
         return null;
     }
 
@@ -298,7 +299,7 @@ public class Circle implements ConvexShape, Serializable {
 
     @Override
     public Polyline[] cutout(Polyline p_polyline) {
-        System.out.println("Circle.cutout not yet implemented");
+        Freerouter.logInfo("Circle.cutout not yet implemented");
         return null;
     }
 

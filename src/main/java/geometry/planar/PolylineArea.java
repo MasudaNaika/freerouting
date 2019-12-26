@@ -19,6 +19,7 @@
  */
 package geometry.planar;
 
+import gui.Freerouter;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
@@ -183,7 +184,7 @@ public class PolylineArea implements Area, Serializable {
 
             for (PolylineShape hole : hole_arr) {
                 if (hole.dimension() < 2) {
-                    System.out.println("PolylineArea. split_to_convex: dimennsion 2 for hole expected");
+                    Freerouter.logInfo("PolylineArea. split_to_convex: dimennsion 2 for hole expected");
                     continue;
                 }
                 TileShape[] convex_hole_pieces = hole.split_to_convex();

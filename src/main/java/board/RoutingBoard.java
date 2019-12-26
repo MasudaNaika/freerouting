@@ -33,6 +33,7 @@ import geometry.planar.Polyline;
 import geometry.planar.PolylineShape;
 import geometry.planar.TileShape;
 import geometry.planar.Vector;
+import gui.Freerouter;
 import it.unimi.dsi.fastutil.ints.IntAVLTreeSet;
 import it.unimi.dsi.fastutil.ints.IntBidirectionalIterator;
 import it.unimi.dsi.fastutil.ints.IntSortedSet;
@@ -586,7 +587,7 @@ public class RoutingBoard extends BasicBoard implements Serializable {
             return to_corner;
         }
         if (!(from_corner instanceof IntPoint && to_corner instanceof IntPoint)) {
-            System.out.println("RoutingBoard.insert_forced_trace_segment: only implemented for IntPoints");
+            Freerouter.logInfo("RoutingBoard.insert_forced_trace_segment: only implemented for IntPoints");
             return from_corner;
         }
         start_marking_changed_area();
@@ -671,7 +672,7 @@ public class RoutingBoard extends BasicBoard implements Serializable {
                         = new_polyline.shorten(new_polyline.arr.length - (trace_shapes.length - last_shape_no - 1), sample_width);
                 Point curr_last_corner = new_polyline.last_corner();
                 if (!(curr_last_corner instanceof IntPoint)) {
-                    System.out.println("insert_forced_trace_segment: IntPoint expected");
+                    Freerouter.logInfo("insert_forced_trace_segment: IntPoint expected");
                     return from_corner;
                 }
                 new_corner = curr_last_corner;
@@ -701,7 +702,7 @@ public class RoutingBoard extends BasicBoard implements Serializable {
                     p_net_no_arr, p_clearance_class_no, null, p_max_recursion_depth,
                     p_max_via_recursion_depth, p_max_spring_over_recursion_depth);
             if (!insert_ok) {
-                System.out.println("shove trace failed");
+                Freerouter.logInfo("shove trace failed");
                 return null;
             }
         }
@@ -784,7 +785,7 @@ public class RoutingBoard extends BasicBoard implements Serializable {
             return AutorouteEngine.AutorouteResult.ALREADY_CONNECTED;
         }
         if (p_item.net_count() > 1) {
-            System.out.println("RoutingBoard.autoroute: net_count > 1 not yet implemented");
+            Freerouter.logInfo("RoutingBoard.autoroute: net_count > 1 not yet implemented");
         }
         int route_net_no = p_item.get_net_no(0);
         AutorouteControl ctrl_settings = new AutorouteControl(this, route_net_no, p_settings, p_via_costs, p_settings.autoroute_settings.get_trace_cost_arr());

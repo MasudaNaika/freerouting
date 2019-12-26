@@ -28,6 +28,7 @@ import geometry.planar.Point;
 import geometry.planar.Polyline;
 import geometry.planar.Side;
 import geometry.planar.Vector;
+import gui.Freerouter;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -51,7 +52,7 @@ public class OptViaAlgo {
         }
         if (p_max_recursion_depth <= 0) {
             if (p_board.get_test_level().ordinal() >= TestLevel.CRITICAL_DEBUGGING_OUTPUT.ordinal()) {
-                System.out.println("OptViaAlgo.opt_via_location: probably endless loop");
+                Freerouter.logInfo("OptViaAlgo.opt_via_location: probably endless loop");
             }
             return false;
         }
@@ -101,7 +102,7 @@ public class OptViaAlgo {
             first_trace_from_corner
                     = first_trace.polyline().corner(first_trace.polyline().corner_count() - 2);
         } else {
-            System.out.println("OptViaAlgo.opt_via_location: incorrect first contact");
+            Freerouter.logInfo("OptViaAlgo.opt_via_location: incorrect first contact");
             return false;
         }
 
@@ -111,7 +112,7 @@ public class OptViaAlgo {
             second_trace_from_corner
                     = second_trace.polyline().corner(second_trace.polyline().corner_count() - 2);
         } else {
-            System.out.println("OptViaAlgo.opt_via_location: incorrect second contact");
+            Freerouter.logInfo("OptViaAlgo.opt_via_location: incorrect second contact");
             return false;
         }
 
@@ -136,7 +137,7 @@ public class OptViaAlgo {
         }
         Vector delta = new_location.difference_by(via_center);
         if (!MoveDrillItemAlgo.insert(p_via, delta, 9, 9, null, p_board)) {
-            System.out.println("OptViaAlgo.opt_via_location: move via failed");
+            Freerouter.logInfo("OptViaAlgo.opt_via_location: move via failed");
             return false;
         }
         ItemSelectionFilter filter = new ItemSelectionFilter(ItemSelectionFilter.SelectableChoices.TRACES);
@@ -166,7 +167,7 @@ public class OptViaAlgo {
             int p_trace_pull_tight_accuracy, int p_max_recursion_depth) {
         if (p_max_recursion_depth <= 0) {
             if (p_board.get_test_level().ordinal() >= TestLevel.CRITICAL_DEBUGGING_OUTPUT.ordinal()) {
-                System.out.println("OptViaAlgo.opt_plane_or_fanout_via: probably endless loop");
+                Freerouter.logInfo("OptViaAlgo.opt_plane_or_fanout_via: probably endless loop");
             }
             return false;
         }
@@ -201,7 +202,7 @@ public class OptViaAlgo {
         } else if (contact_trace.last_corner().equals(via_center)) {
             at_first_corner = false;
         } else {
-            System.out.println("OptViaAlgo.opt_plane_or_fanout_via: unconsistant contact");
+            Freerouter.logInfo("OptViaAlgo.opt_plane_or_fanout_via: unconsistant contact");
             return false;
         }
         Polyline trace_polyline = contact_trace.polyline();
@@ -275,7 +276,7 @@ public class OptViaAlgo {
         }
         Vector diff_vector = new_via_location.difference_by(via_center);
         if (!MoveDrillItemAlgo.insert(p_via, diff_vector, 9, 9, null, p_board)) {
-            System.out.println("OptViaAlgo.opt_plane_or_fanout_via: move via failed");
+            Freerouter.logInfo("OptViaAlgo.opt_plane_or_fanout_via: move via failed");
             return false;
         }
         ItemSelectionFilter filter = new ItemSelectionFilter(ItemSelectionFilter.SelectableChoices.TRACES);
@@ -353,7 +354,7 @@ public class OptViaAlgo {
 
         if (from_location.equals(p_to_location)) {
             if (p_board.get_test_level() == TestLevel.ALL_DEBUGGING_OUTPUT) {
-                System.out.println("OptViaAlgo.reposition_via: from_location equal p_to_location");
+                Freerouter.logInfo("OptViaAlgo.reposition_via: from_location equal p_to_location");
             }
             return false;
         }

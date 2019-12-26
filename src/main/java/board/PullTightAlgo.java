@@ -31,6 +31,7 @@ import geometry.planar.Point;
 import geometry.planar.Polyline;
 import geometry.planar.Side;
 import geometry.planar.TileShape;
+import gui.Freerouter;
 import java.util.Collection;
 import java.util.Set;
 
@@ -166,7 +167,7 @@ public abstract class PullTightAlgo {
         }
         boolean time_limit_exceeded = time_limit.limit_exceeded();
         if (time_limit_exceeded && board.get_test_level().ordinal() >= TestLevel.CRITICAL_DEBUGGING_OUTPUT.ordinal()) {
-            System.out.println("PullTightAlgo.is_stop_requested: time limit exceeded");
+            Freerouter.logInfo("PullTightAlgo.is_stop_requested: time limit exceeded");
         }
         return time_limit_exceeded;
     }

@@ -26,6 +26,7 @@ import geometry.planar.Point;
 import geometry.planar.Polyline;
 import geometry.planar.Side;
 import geometry.planar.TileShape;
+import gui.Freerouter;
 
 /**
  *
@@ -88,7 +89,7 @@ public class CalcFromSide {
         Point border_projection = p_shape.nearest_border_point(p_from_point);
         no = p_shape.contains_on_border_line_no(border_projection);
         if (no < 0) {
-            System.out.println("CalcFromSide: no >= 0 expected");
+            Freerouter.logInfo("CalcFromSide: no >= 0 expected");
         }
         border_intersection = border_projection.to_float();
     }
@@ -125,7 +126,7 @@ public class CalcFromSide {
             prev_side = next_side;
         }
         if (front_side_no < 0) {
-            System.out.println("CalcFromSide: start corner not found");
+            Freerouter.logInfo("CalcFromSide: start corner not found");
             no = -1;
             border_intersection = null;
             return;

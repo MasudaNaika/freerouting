@@ -20,6 +20,7 @@
 package designformats.specctra;
 
 import board.Item;
+import gui.Freerouter;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -54,7 +55,7 @@ public class Package {
             Collection<Shape.ReadAreaScopeResult> place_keepouts = new LinkedList<>();
             Object next_token = p_scanner.next_token();
             if (!(next_token instanceof String)) {
-                System.out.println("Package.read_scope: String expected");
+                Freerouter.logInfo("Package.read_scope: String expected");
                 return null;
             }
             String package_name = (String) next_token;
@@ -64,7 +65,7 @@ public class Package {
                 next_token = p_scanner.next_token();
 
                 if (next_token == null) {
-                    System.out.println("Package.read_scope: unexpected end of file");
+                    Freerouter.logInfo("Package.read_scope: unexpected end of file");
                     return null;
                 }
                 if (next_token == Keyword.CLOSED_BRACKET) {
@@ -88,7 +89,7 @@ public class Package {
                         // overread closing bracket
                         next_token = p_scanner.next_token();
                         if (next_token != Keyword.CLOSED_BRACKET) {
-                            System.out.println("Package.read_scope: closed bracket expected");
+                            Freerouter.logInfo("Package.read_scope: closed bracket expected");
                             return null;
                         }
                     } else if (next_token == Keyword.KEEPOUT) {
@@ -114,8 +115,8 @@ public class Package {
             PinInfo[] pin_info_arr = pin_info_list.toArray(PinInfo[]::new);
             return new Package(package_name, pin_info_arr, outline, keepouts, via_keepouts, place_keepouts, is_front);
         } catch (IOException e) {
-            System.out.println("Package.read_scope: IO error scanning file");
-            System.out.println(e);
+            Freerouter.logError("Package.read_scope: IO error scanning file");
+            Freerouter.logError(e);
             return null;
         }
     }
@@ -222,7 +223,7 @@ public class Package {
             } else if (next_token instanceof Integer) {
                 padstack_name = ((Integer) next_token).toString();
             } else {
-                System.out.println("Package.read_pin_info: String or Integer expected");
+                Freerouter.logInfo("Package.read_pin_info: String or Integer expected");
                 return null;
             }
             double rotation = 0;
@@ -247,7 +248,7 @@ public class Package {
             } else if (next_token instanceof Integer) {
                 pin_name = ((Integer) next_token).toString();
             } else {
-                System.out.println("Package.read_pin_info: String or Integer expected");
+                Freerouter.logInfo("Package.read_pin_info: String or Integer expected");
                 return null;
             }
 
@@ -259,7 +260,7 @@ public class Package {
                 } else if (next_token instanceof Integer) {
                     pin_coor[i] = ((Integer) next_token);
                 } else {
-                    System.out.println("Package.read_pin_info: number expected");
+                    Freerouter.logInfo("Package.read_pin_info: number expected");
                     return null;
                 }
             }
@@ -269,7 +270,7 @@ public class Package {
                 next_token = p_scanner.next_token();
 
                 if (next_token == null) {
-                    System.out.println("Package.read_pin_info: unexpected end of file");
+                    Freerouter.logInfo("Package.read_pin_info: unexpected end of file");
                     return null;
                 }
                 if (next_token == Keyword.CLOSED_BRACKET) {
@@ -286,7 +287,7 @@ public class Package {
             }
             return new PinInfo(padstack_name, pin_name, pin_coor, rotation);
         } catch (IOException e) {
-            System.out.println("Package.read_pin_info: IO error while scanning file");
+            Freerouter.logError("Package.read_pin_info: IO error while scanning file");
             return null;
         }
     }
@@ -300,15 +301,15 @@ public class Package {
             } else if (next_token instanceof Double) {
                 result = ((Double) next_token);
             } else {
-                System.out.println("Package.read_rotation: number expected");
+                Freerouter.logInfo("Package.read_rotation: number expected");
             }
             // Overread The closing bracket.
             next_token = p_scanner.next_token();
             if (next_token != Keyword.CLOSED_BRACKET) {
-                System.out.println("Package.read_rotation: closing bracket expected");
+                Freerouter.logInfo("Package.read_rotation: closing bracket expected");
             }
         } catch (IOException e) {
-            System.out.println("Package.read_rotation: IO error while scanning file");
+            Freerouter.logError("Package.read_rotation: IO error while scanning file");
         }
         return result;
     }
@@ -354,7 +355,7 @@ public class Package {
 
         next_token = p_scanner.next_token();
         if (next_token != Keyword.CLOSED_BRACKET) {
-            System.out.println("Package.read_placement_side: closing bracket expected");
+            Freerouter.logInfo("Package.read_placement_side: closing bracket expected");
         }
         return result;
     }

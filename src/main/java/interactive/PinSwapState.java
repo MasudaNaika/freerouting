@@ -23,6 +23,7 @@ import board.Item;
 import board.ItemSelectionFilter;
 import board.Pin;
 import geometry.planar.FloatPoint;
+import gui.Freerouter;
 import java.util.Collection;
 import java.util.Set;
 
@@ -79,7 +80,7 @@ public class PinSwapState extends InteractiveState {
             return cancel();
         }
         if (from_pin.net_count() > 1 || to_pin.net_count() > 1) {
-            System.out.println("PinSwapState.complete: pin swap not yet implemented for pins belonging to more than 1 net ");
+            Freerouter.logInfo("PinSwapState.complete: pin swap not yet implemented for pins belonging to more than 1 net ");
             return cancel();
         }
         int from_net_no;

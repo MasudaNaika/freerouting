@@ -5,6 +5,7 @@ import geometry.planar.FloatPoint;
 import geometry.planar.Point;
 import geometry.planar.TileShape;
 import geometry.planar.Vector;
+import gui.Freerouter;
 import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.awt.Color;
 import java.util.Locale;
@@ -32,7 +33,7 @@ public class ConductionArea extends ObstacleArea implements Connectable {
     @Override
     public Item copy(int p_id_no) {
         if (net_count() != 1) {
-            System.out.println("ConductionArea.copy not yet implemented for areas with more than 1 net");
+            Freerouter.logInfo("ConductionArea.copy not yet implemented for areas with more than 1 net");
             return null;
         }
         return new ConductionArea(get_relative_area(), get_layer(), get_translation(), get_rotation_in_degree(),
@@ -73,7 +74,7 @@ public class ConductionArea extends ObstacleArea implements Connectable {
     @Override
     public TileShape get_trace_connection_shape(ShapeSearchTree p_search_tree, int p_index) {
         if (p_index < 0 || p_index >= tree_shape_count(p_search_tree)) {
-            System.out.println("ConductionArea.get_trace_connection_shape p_index out of range");
+            Freerouter.logInfo("ConductionArea.get_trace_connection_shape p_index out of range");
             return null;
         }
         return get_tree_shape(p_search_tree, p_index);

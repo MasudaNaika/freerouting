@@ -193,7 +193,7 @@ public class WindowObjectInfo extends BoardTemporarySubWindow implements board.O
         try {
             document.insertString(document.getLength(), p_string, document.getStyle(p_style));
         } catch (BadLocationException e) {
-            System.out.println("ObjectInfoWindow.append: unable to insert text into text pane.");
+            Freerouter.logError("ObjectInfoWindow.append: unable to insert text into text pane.");
             return false;
         }
         return true;

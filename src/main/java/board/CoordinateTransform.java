@@ -20,6 +20,7 @@
 package board;
 
 import geometry.planar.FloatPoint;
+import gui.Freerouter;
 import java.io.Serializable;
 import java.util.Locale;
 
@@ -82,7 +83,7 @@ public class CoordinateTransform implements Serializable {
         } else if (p_shape instanceof geometry.planar.PolylineShape) {
             result = board_to_user((geometry.planar.PolylineShape) p_shape, p_locale);
         } else {
-            System.out.println("CoordinateTransform.board_to_user not yet implemented for p_shape");
+            Freerouter.logInfo("CoordinateTransform.board_to_user not yet implemented for p_shape");
             result = null;
         }
         return result;

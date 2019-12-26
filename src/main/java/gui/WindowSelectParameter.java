@@ -145,7 +145,7 @@ public class WindowSelectParameter extends BoardSavableSubWindow {
         }
         ItemSelectionFilter item_selection_filter = board_handling.settings.get_item_selection_filter();
         if (item_selection_filter == null) {
-            System.out.println("SelectParameterWindow.refresh: item_selection_filter is null");
+            Freerouter.logInfo("SelectParameterWindow.refresh: item_selection_filter is null");
         } else {
             final ItemSelectionFilter.SelectableChoices[] filter_values = ItemSelectionFilter.SelectableChoices.values();
             for (int i = 0; i < filter_values.length; ++i) {

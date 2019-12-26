@@ -73,14 +73,14 @@ public class GUIDefaultsFile {
         try {
             result.write_defaults_scope();
         } catch (IOException e) {
-            System.out.println("unable to write defaults file");
+            Freerouter.logError("unable to write defaults file");
             return false;
         }
 
         try {
             output_file.close();
         } catch (IOException e) {
-            System.out.println("unable to close defaults file");
+            Freerouter.logError("unable to close defaults file");
             return false;
         }
         return true;
@@ -101,7 +101,7 @@ public class GUIDefaultsFile {
         try {
             result = new_instance.read_defaults_scope();
         } catch (IOException e) {
-            System.out.println("unable to read defaults file");
+            Freerouter.logError("unable to read defaults file");
             result = false;
         }
         return result;
@@ -188,7 +188,7 @@ public class GUIDefaultsFile {
 
             if (prev_token == Keyword.OPEN_BRACKET) {
                 if (!(next_token instanceof Keyword)) {
-                    System.out.println("GUIDefaultsFile.windows: Keyword expected");
+                    Freerouter.logInfo("GUIDefaultsFile.windows: Keyword expected");
                     return false;
                 }
                 if (!read_frame_scope((Keyword) next_token)) {
@@ -236,17 +236,17 @@ public class GUIDefaultsFile {
         } else if (next_token == Keyword.NOT_VISIBLE) {
             is_visible = false;
         } else {
-            System.out.println("GUIDefaultsFile.read_frame_scope: visible or not_visible expected");
+            Freerouter.logInfo("GUIDefaultsFile.read_frame_scope: visible or not_visible expected");
             return false;
         }
         next_token = scanner.next_token();
         if (next_token != Keyword.OPEN_BRACKET) {
-            System.out.println("GUIDefaultsFile.read_frame_scope: open_bracket expected");
+            Freerouter.logInfo("GUIDefaultsFile.read_frame_scope: open_bracket expected");
             return false;
         }
         next_token = scanner.next_token();
         if (next_token != Keyword.BOUNDS) {
-            System.out.println("GUIDefaultsFile.read_frame_scope: bounds expected");
+            Freerouter.logInfo("GUIDefaultsFile.read_frame_scope: bounds expected");
             return false;
         }
         Rectangle bounds = read_rectangle();
@@ -256,13 +256,13 @@ public class GUIDefaultsFile {
         for (int i = 0; i < 2; ++i) {
             next_token = scanner.next_token();
             if (next_token != Keyword.CLOSED_BRACKET) {
-                System.out.println("GUIDefaultsFile.read_frame_scope: closing bracket expected");
+                Freerouter.logInfo("GUIDefaultsFile.read_frame_scope: closing bracket expected");
                 return false;
             }
         }
         JFrame curr_frame;
         if (null == p_frame) {
-            System.out.println("GUIDefaultsFile.read_frame_scope: unknown frame");
+            Freerouter.logInfo("GUIDefaultsFile.read_frame_scope: unknown frame");
             return false;
         } else {
             switch (p_frame) {
@@ -333,7 +333,7 @@ public class GUIDefaultsFile {
                     curr_frame = board_frame.clearance_violations_window;
                     break;
                 default:
-                    System.out.println("GUIDefaultsFile.read_frame_scope: unknown frame");
+                    Freerouter.logInfo("GUIDefaultsFile.read_frame_scope: unknown frame");
                     return false;
             }
         }
@@ -353,7 +353,7 @@ public class GUIDefaultsFile {
         for (int i = 0; i < 4; ++i) {
             Object next_token = scanner.next_token();
             if (!(next_token instanceof Integer)) {
-                System.out.println("GUIDefaultsFile.read_rectangle: Integer expected");
+                Freerouter.logInfo("GUIDefaultsFile.read_rectangle: Integer expected");
                 return null;
             }
             coor[i] = (Integer) next_token;
@@ -576,7 +576,7 @@ public class GUIDefaultsFile {
         board_frame.set_board_background(curr_color);
         Object next_token = scanner.next_token();
         if (next_token != Keyword.CLOSED_BRACKET) {
-            System.out.println("GUIDefaultsFile.read_background_color: closing bracket expected");
+            Freerouter.logInfo("GUIDefaultsFile.read_background_color: closing bracket expected");
             return false;
         }
         return true;
@@ -595,7 +595,7 @@ public class GUIDefaultsFile {
         board_handling.graphics_context.other_color_table.set_hilight_color(curr_color);
         Object next_token = scanner.next_token();
         if (next_token != Keyword.CLOSED_BRACKET) {
-            System.out.println("GUIDefaultsFile.read_higlight_color: closing bracket expected");
+            Freerouter.logInfo("GUIDefaultsFile.read_higlight_color: closing bracket expected");
             return false;
         }
         return true;
@@ -614,7 +614,7 @@ public class GUIDefaultsFile {
         board_handling.graphics_context.other_color_table.set_incomplete_color(curr_color);
         Object next_token = scanner.next_token();
         if (next_token != Keyword.CLOSED_BRACKET) {
-            System.out.println("GUIDefaultsFile.read_incompletes_color: closing bracket expected");
+            Freerouter.logInfo("GUIDefaultsFile.read_incompletes_color: closing bracket expected");
             return false;
         }
         return true;
@@ -633,7 +633,7 @@ public class GUIDefaultsFile {
         board_handling.graphics_context.other_color_table.set_length_matching_area_color(curr_color);
         Object next_token = scanner.next_token();
         if (next_token != Keyword.CLOSED_BRACKET) {
-            System.out.println("GUIDefaultsFile.read_length_matching_color: closing bracket expected");
+            Freerouter.logInfo("GUIDefaultsFile.read_length_matching_color: closing bracket expected");
             return false;
         }
         return true;
@@ -647,7 +647,7 @@ public class GUIDefaultsFile {
         board_handling.graphics_context.other_color_table.set_violations_color(curr_color);
         Object next_token = scanner.next_token();
         if (next_token != Keyword.CLOSED_BRACKET) {
-            System.out.println("GUIDefaultsFile.read_violations_color: closing bracket expected");
+            Freerouter.logInfo("GUIDefaultsFile.read_violations_color: closing bracket expected");
             return false;
         }
         return true;
@@ -661,7 +661,7 @@ public class GUIDefaultsFile {
         board_handling.graphics_context.other_color_table.set_outline_color(curr_color);
         Object next_token = scanner.next_token();
         if (next_token != Keyword.CLOSED_BRACKET) {
-            System.out.println("GUIDefaultsFile.read_outline_color: closing bracket expected");
+            Freerouter.logInfo("GUIDefaultsFile.read_outline_color: closing bracket expected");
             return false;
         }
         return true;
@@ -675,7 +675,7 @@ public class GUIDefaultsFile {
         board_handling.graphics_context.other_color_table.set_component_color(curr_color, p_front);
         Object next_token = scanner.next_token();
         if (next_token != Keyword.CLOSED_BRACKET) {
-            System.out.println("GUIDefaultsFile.read_component_color: closing bracket expected");
+            Freerouter.logInfo("GUIDefaultsFile.read_component_color: closing bracket expected");
             return false;
         }
         return true;
@@ -689,7 +689,7 @@ public class GUIDefaultsFile {
         } else if (next_token instanceof Integer) {
             result = (Integer) next_token;
         } else {
-            System.out.println("GUIDefaultsFile.read_color_intensity: Number expected");
+            Freerouter.logInfo("GUIDefaultsFile.read_color_intensity: Number expected");
             result = -1;
         }
         return result;
@@ -705,7 +705,7 @@ public class GUIDefaultsFile {
             Object next_token = scanner.next_token();
             if (!(next_token instanceof Integer)) {
                 if (next_token != Keyword.CLOSED_BRACKET) {
-                    System.out.println("GUIDefaultsFile.read_color: closing bracket expected");
+                    Freerouter.logInfo("GUIDefaultsFile.read_color: closing bracket expected");
                 }
                 return null;
             }
@@ -942,12 +942,12 @@ public class GUIDefaultsFile {
         } else if (next_token == Keyword.CURRENT_ONLY) {
             select_on_all_layers = false;
         } else {
-            System.out.println("GUIDefaultsFile.read_selection_layer_scope: unexpected token");
+            Freerouter.logInfo("GUIDefaultsFile.read_selection_layer_scope: unexpected token");
             return false;
         }
         next_token = scanner.next_token();
         if (next_token != Keyword.CLOSED_BRACKET) {
-            System.out.println("GUIDefaultsFile.read_selection_layer_scop: closing bracket expected");
+            Freerouter.logInfo("GUIDefaultsFile.read_selection_layer_scop: closing bracket expected");
             return false;
         }
         board_handling.settings.set_select_on_all_visible_layers(select_on_all_layers);
@@ -962,12 +962,12 @@ public class GUIDefaultsFile {
         } else if (next_token == Keyword.OFF) {
             shove_enabled = false;
         } else {
-            System.out.println("GUIDefaultsFile.read_shove_enabled_scope: unexpected token");
+            Freerouter.logInfo("GUIDefaultsFile.read_shove_enabled_scope: unexpected token");
             return false;
         }
         next_token = scanner.next_token();
         if (next_token != Keyword.CLOSED_BRACKET) {
-            System.out.println("GUIDefaultsFile.read_shove_enabled_scope: closing bracket expected");
+            Freerouter.logInfo("GUIDefaultsFile.read_shove_enabled_scope: closing bracket expected");
             return false;
         }
         board_handling.settings.set_push_enabled(shove_enabled);
@@ -982,12 +982,12 @@ public class GUIDefaultsFile {
         } else if (next_token == Keyword.OFF) {
             drag_components_enabled = false;
         } else {
-            System.out.println("GUIDefaultsFile.read_drag_components_enabled_scope: unexpected token");
+            Freerouter.logInfo("GUIDefaultsFile.read_drag_components_enabled_scope: unexpected token");
             return false;
         }
         next_token = scanner.next_token();
         if (next_token != Keyword.CLOSED_BRACKET) {
-            System.out.println("GUIDefaultsFile.read_drag_components_enabled_scope: closing bracket expected");
+            Freerouter.logInfo("GUIDefaultsFile.read_drag_components_enabled_scope: closing bracket expected");
             return false;
         }
         board_handling.settings.set_drag_components_enabled(drag_components_enabled);
@@ -1002,12 +1002,12 @@ public class GUIDefaultsFile {
         } else if (next_token == Keyword.OFF) {
             ignore_conduction = false;
         } else {
-            System.out.println("GUIDefaultsFile.read_ignore_conduction_scope: unexpected token");
+            Freerouter.logInfo("GUIDefaultsFile.read_ignore_conduction_scope: unexpected token");
             return false;
         }
         next_token = scanner.next_token();
         if (next_token != Keyword.CLOSED_BRACKET) {
-            System.out.println("GUIDefaultsFile.read_ignore_conduction_scope: closing bracket expected");
+            Freerouter.logInfo("GUIDefaultsFile.read_ignore_conduction_scope: closing bracket expected");
             return false;
         }
         board_handling.set_ignore_conduction(ignore_conduction);
@@ -1070,12 +1070,12 @@ public class GUIDefaultsFile {
         } else if (next_token == Keyword.DYNAMIC) {
             is_stitch_mode = false;
         } else {
-            System.out.println("GUIDefaultsFile.read_roude_mode_scope: unexpected token");
+            Freerouter.logInfo("GUIDefaultsFile.read_roude_mode_scope: unexpected token");
             return false;
         }
         next_token = scanner.next_token();
         if (next_token != Keyword.CLOSED_BRACKET) {
-            System.out.println("GUIDefaultsFile.read_selection_layer_scope: closing bracket expected");
+            Freerouter.logInfo("GUIDefaultsFile.read_selection_layer_scope: closing bracket expected");
             return false;
         }
         board_handling.settings.set_stitch_route(is_stitch_mode);
@@ -1097,13 +1097,13 @@ public class GUIDefaultsFile {
     private boolean read_pull_tight_region_scope() throws IOException {
         Object next_token = scanner.next_token();
         if (!(next_token instanceof Integer)) {
-            System.out.println("GUIDefaultsFile.read_pull_tight_region_scope: Integer expected");
+            Freerouter.logInfo("GUIDefaultsFile.read_pull_tight_region_scope: Integer expected");
             return false;
         }
         int pull_tight_region = (Integer) next_token;
         next_token = scanner.next_token();
         if (next_token != Keyword.CLOSED_BRACKET) {
-            System.out.println("GUIDefaultsFile.read_pull_tight_region_scope: closing bracket expected");
+            Freerouter.logInfo("GUIDefaultsFile.read_pull_tight_region_scope: closing bracket expected");
             return false;
         }
         board_handling.settings.set_current_pull_tight_region_width(pull_tight_region);
@@ -1122,13 +1122,13 @@ public class GUIDefaultsFile {
     private boolean read_pull_tight_accuracy_scope() throws IOException {
         Object next_token = scanner.next_token();
         if (!(next_token instanceof Integer)) {
-            System.out.println("GUIDefaultsFile.read_pull_tight_accuracy_scope: Integer expected");
+            Freerouter.logInfo("GUIDefaultsFile.read_pull_tight_accuracy_scope: Integer expected");
             return false;
         }
         int pull_tight_accuracy = (Integer) next_token;
         next_token = scanner.next_token();
         if (next_token != Keyword.CLOSED_BRACKET) {
-            System.out.println("GUIDefaultsFile.read_pull_tight_accuracy_scope: closing bracket expected");
+            Freerouter.logInfo("GUIDefaultsFile.read_pull_tight_accuracy_scope: closing bracket expected");
             return false;
         }
         board_handling.settings.set_current_pull_tight_accuracy(pull_tight_accuracy);
@@ -1152,12 +1152,12 @@ public class GUIDefaultsFile {
         } else if (next_token instanceof Integer) {
             intensity = (Integer) next_token;
         } else {
-            System.out.println("GUIDefaultsFile.read_automatic_layer_dimming_scope: Integer expected");
+            Freerouter.logInfo("GUIDefaultsFile.read_automatic_layer_dimming_scope: Integer expected");
             return false;
         }
         next_token = scanner.next_token();
         if (next_token != Keyword.CLOSED_BRACKET) {
-            System.out.println("GUIDefaultsFile.read_automatic_layer_dimming_scope: closing bracket expected");
+            Freerouter.logInfo("GUIDefaultsFile.read_automatic_layer_dimming_scope: closing bracket expected");
             return false;
         }
         board_handling.graphics_context.set_auto_layer_dim_factor(intensity);
@@ -1181,12 +1181,12 @@ public class GUIDefaultsFile {
         } else if (next_token == Keyword.OFF) {
             hilight_obstacle = false;
         } else {
-            System.out.println("GUIDefaultsFile.read_hilight_routing_obstacle_scope: unexpected token");
+            Freerouter.logInfo("GUIDefaultsFile.read_hilight_routing_obstacle_scope: unexpected token");
             return false;
         }
         next_token = scanner.next_token();
         if (next_token != Keyword.CLOSED_BRACKET) {
-            System.out.println("GUIDefaultsFile.read_hilight_routing_obstacle_scope: closing bracket expected");
+            Freerouter.logInfo("GUIDefaultsFile.read_hilight_routing_obstacle_scope: closing bracket expected");
             return false;
         }
         board_handling.settings.set_hilight_routing_obstacle(hilight_obstacle);
@@ -1213,12 +1213,12 @@ public class GUIDefaultsFile {
         } else if (next_token == Keyword.OFF) {
             clearance_compensation = false;
         } else {
-            System.out.println("GUIDefaultsFile.read_clearance_compensation_scope: unexpected token");
+            Freerouter.logInfo("GUIDefaultsFile.read_clearance_compensation_scope: unexpected token");
             return false;
         }
         next_token = scanner.next_token();
         if (next_token != Keyword.CLOSED_BRACKET) {
-            System.out.println("GUIDefaultsFile.read_clearance_compensation_scope: closing bracket expected");
+            Freerouter.logInfo("GUIDefaultsFile.read_clearance_compensation_scope: closing bracket expected");
             return false;
         }
         board_handling.set_clearance_compensation(clearance_compensation);
@@ -1245,12 +1245,12 @@ public class GUIDefaultsFile {
         } else if (next_token == Keyword.OFF) {
             snap = false;
         } else {
-            System.out.println("GUIDefaultsFile.read_via_snap_to_smd_center_scope: unexpected token");
+            Freerouter.logInfo("GUIDefaultsFile.read_via_snap_to_smd_center_scope: unexpected token");
             return false;
         }
         next_token = scanner.next_token();
         if (next_token != Keyword.CLOSED_BRACKET) {
-            System.out.println("GUIDefaultsFile.read_via_snap_to_smd_center_scope: closing bracket expected");
+            Freerouter.logInfo("GUIDefaultsFile.read_via_snap_to_smd_center_scope: closing bracket expected");
             return false;
         }
         board_handling.settings.set_via_snap_to_smd_center(snap);
@@ -1296,7 +1296,7 @@ public class GUIDefaultsFile {
             } else if (next_token == Keyword.VIAS) {
                 item_selection_filter.set_selected(ItemSelectionFilter.SelectableChoices.VIAS, true);
             } else {
-                System.out.println("GUIDefaultsFile.read_selectable_item_scope: unexpected token");
+                Freerouter.logInfo("GUIDefaultsFile.read_selectable_item_scope: unexpected token");
                 return false;
             }
         }
@@ -1418,7 +1418,7 @@ public class GUIDefaultsFile {
             } else if (next_token == Keyword.COMPONENT_GRID) {
                 attributes.component_grid = false;
             } else {
-                System.out.println("GUIDefaultsFile.read_deselected_snapshot_attributes: unexpected token");
+                Freerouter.logInfo("GUIDefaultsFile.read_deselected_snapshot_attributes: unexpected token");
                 return false;
             }
         }
@@ -1435,8 +1435,8 @@ public class GUIDefaultsFile {
             try {
                 curr_token = p_scanner.next_token();
             } catch (IOException e) {
-                System.out.println("GUIDefaultsFile.skip_scope: Error while scanning file");
-                System.out.println(e);
+                Freerouter.logError("GUIDefaultsFile.skip_scope: Error while scanning file");
+                Freerouter.logError(e);
                 return false;
             }
             if (curr_token == null) {
@@ -1448,7 +1448,7 @@ public class GUIDefaultsFile {
                 --open_bracked_count;
             }
         }
-        System.out.println("GUIDefaultsFile.skip_spope: unknown scope skipped");
+        Freerouter.logInfo("GUIDefaultsFile.skip_spope: unknown scope skipped");
         return true;
     }
 

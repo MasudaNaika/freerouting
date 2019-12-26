@@ -19,6 +19,7 @@
  */
 package datastructures;
 
+import gui.Freerouter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -45,7 +46,7 @@ public class IndentFileWriter extends OutputStreamWriter {
         try {
             write(BEGIN_SCOPE);
         } catch (IOException e) {
-            System.out.println("IndentFileWriter.start_scope: unable to write to file");
+            Freerouter.logError("IndentFileWriter.start_scope: unable to write to file");
         }
         ++current_indent_level;
     }
@@ -59,7 +60,7 @@ public class IndentFileWriter extends OutputStreamWriter {
         try {
             write(END_SCOPE);
         } catch (IOException e) {
-            System.out.println("IndentFileWriter.end_scope: unable to write to file");
+            Freerouter.logError("IndentFileWriter.end_scope: unable to write to file");
         }
     }
 
@@ -73,7 +74,7 @@ public class IndentFileWriter extends OutputStreamWriter {
                 write(INDENT_STRING);
             }
         } catch (IOException e) {
-            System.out.println("IndentFileWriter.new_line: unable to write to file");
+            Freerouter.logError("IndentFileWriter.new_line: unable to write to file");
         }
     }
 

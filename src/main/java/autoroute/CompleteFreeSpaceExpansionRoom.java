@@ -25,6 +25,7 @@ import board.SearchTreeObject;
 import board.ShapeSearchTree;
 import datastructures.ShapeTree;
 import geometry.planar.TileShape;
+import gui.Freerouter;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Collection;
@@ -199,7 +200,7 @@ public class CompleteFreeSpaceExpansionRoom extends FreeSpaceExpansionRoom imple
                     = curr_object.get_tree_shape(p_autoroute_engine.autoroute_search_tree, curr_entry.shape_index_in_object);
             TileShape intersection = get_shape().intersection(curr_shape);
             if (intersection.dimension() > 1) {
-                System.out.println("ExpansionRoom overlap conflict");
+                Freerouter.logInfo("ExpansionRoom overlap conflict");
                 result = false;
             }
         }

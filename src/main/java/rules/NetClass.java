@@ -19,6 +19,7 @@
  */
 package rules;
 
+import gui.Freerouter;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Locale;
@@ -98,7 +99,7 @@ public class NetClass implements Serializable, board.ObjectInfoPanel.Printable {
      */
     public int get_trace_half_width(int p_layer) {
         if (p_layer < 0 || p_layer >= trace_half_width_arr.length) {
-            System.out.println(" NetClass.get_trace_half_width: p_layer out of range");
+            Freerouter.logInfo(" NetClass.get_trace_half_width: p_layer out of range");
             return 0;
         }
         return trace_half_width_arr[p_layer];

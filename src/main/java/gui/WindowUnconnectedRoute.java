@@ -22,8 +22,8 @@ package gui;
 
 import board.Item;
 import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
+import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -50,7 +50,7 @@ public class WindowUnconnectedRoute extends WindowObjectListWithFilter {
     protected void fill_list() {
         board.BasicBoard routing_board = board_frame.board_panel.board_handling.get_routing_board();
 
-        Set<Item> handled_items = new HashSet<>();
+        Set<Item> handled_items = new ObjectOpenHashSet<>();
 
         SortedSet<UnconnectedRouteInfo> unconnected_route_info_set = new ObjectAVLTreeSet<>();
 
@@ -80,7 +80,7 @@ public class WindowUnconnectedRoute extends WindowObjectListWithFilter {
                         unconnected_route_info_set.add(curr_unconnected_route_info);
                     }
                 } else {
-                    System.out.println("WindowUnconnectedRoute.fill_list: net_count 1 expected");
+                    Freerouter.logInfo("WindowUnconnectedRoute.fill_list: net_count 1 expected");
                 }
             }
         }

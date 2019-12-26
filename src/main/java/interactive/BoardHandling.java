@@ -35,6 +35,7 @@ import geometry.planar.FloatPoint;
 import geometry.planar.IntBox;
 import geometry.planar.IntPoint;
 import geometry.planar.PolylineShape;
+import gui.Freerouter;
 import it.unimi.dsi.fastutil.ints.IntAVLTreeSet;
 import it.unimi.dsi.fastutil.ints.IntBidirectionalIterator;
 import it.unimi.dsi.fastutil.ints.IntSortedSet;
@@ -881,6 +882,7 @@ public class BoardHandling extends BoardHandlingImpl {
         try {
             read_result = DsnFile.read(p_design, this, p_observers, p_item_id_no_generator, p_test_level);
         } catch (Exception e) {
+            Freerouter.logError(e);
             read_result = DsnFile.ReadResult.ERROR;
         }
         if (read_result == DsnFile.ReadResult.OK) {

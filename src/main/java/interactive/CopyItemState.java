@@ -29,6 +29,7 @@ import geometry.planar.ConvexShape;
 import geometry.planar.FloatPoint;
 import geometry.planar.Point;
 import geometry.planar.Vector;
+import gui.Freerouter;
 import java.awt.Graphics;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -164,7 +165,7 @@ public class CopyItemState extends InteractiveState {
                 } else {
                     Component old_component = board.components.get(curr_cmp_no);
                     if (old_component == null) {
-                        System.out.println("CopyItemState: component not found");
+                        Freerouter.logInfo("CopyItemState: component not found");
                         continue;
                     }
                     Point new_location = old_component.get_location().translate_by(translate_vector);
@@ -176,7 +177,7 @@ public class CopyItemState extends InteractiveState {
                             Package.Pin old_pin = old_component.get_package().get_pin(i);
                             Padstack old_padstack = board.library.padstacks.get(old_pin.padstack_no);
                             if (old_padstack == null) {
-                                System.out.println("CopyItemState.insert: package padstack not found");
+                                Freerouter.logInfo("CopyItemState.insert: package padstack not found");
                                 return;
                             }
                             Padstack new_padstack = change_padstack_layers(old_padstack, current_layer, board, padstack_pairs);

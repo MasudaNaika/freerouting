@@ -22,6 +22,7 @@ package library;
 import geometry.planar.Area;
 import geometry.planar.Shape;
 import geometry.planar.Vector;
+import gui.Freerouter;
 import java.io.Serializable;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -66,7 +67,7 @@ public class Package implements Comparable<Package>, board.ObjectInfoPanel.Print
      */
     public Pin get_pin(int p_no) {
         if (p_no < 0 || p_no >= pin_arr.length) {
-            System.out.println("Package.get_pin: p_no out of range");
+            Freerouter.logInfo("Package.get_pin: p_no out of range");
             return null;
         }
         return pin_arr[p_no];

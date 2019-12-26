@@ -21,6 +21,7 @@ import geometry.planar.Line;
 import geometry.planar.Point;
 import geometry.planar.Polyline;
 import geometry.planar.TileShape;
+import gui.Freerouter;
 import java.util.Collection;
 import java.util.LinkedList;
 
@@ -204,7 +205,7 @@ public class ShapeTraceEntries {
 
     public static void cutout_trace(PolylineTrace p_trace, ConvexShape p_shape, int p_cl_class) {
         if (!p_trace.is_on_the_board()) {
-            System.out.println("ShapeTraceEntries.cutout_trace : trace is deleted");
+            Freerouter.logInfo("ShapeTraceEntries.cutout_trace : trace is deleted");
             return;
         }
         ConvexShape offset_shape;
@@ -397,7 +398,7 @@ public class ShapeTraceEntries {
     private void resort() {
         int edge_count = shape.border_line_count();
         if (from_side.no < 0 || from_side.no >= edge_count) {
-            System.out.println("ShapeTraceEntries.resort: from side not calculated");
+            Freerouter.logInfo("ShapeTraceEntries.resort: from side not calculated");
             return;
         }
         // resort the intersection points, so that they start in the
@@ -610,7 +611,7 @@ public class ShapeTraceEntries {
             }
         }
         if (curr_level != 1) {
-            System.out.println(
+            Freerouter.logInfo(
                     "ShapeTraceEntries.calculate_stack_levels: curr_level inconsistent");
             return false;
         }
@@ -626,7 +627,7 @@ public class ShapeTraceEntries {
     private EntryPoint[] pop_piece() {
         if (list_anchor == null) {
             if (trace_piece_count != 0) {
-                System.out.println("ShapeTraceEntries: trace_piece_count is inconsistent");
+                Freerouter.logInfo("ShapeTraceEntries: trace_piece_count is inconsistent");
             }
             return null;
         }
@@ -641,7 +642,7 @@ public class ShapeTraceEntries {
             first = first.next;
         }
         if (first == null) {
-            System.out.println("ShapeTraceEntries: max_stack_level not found");
+            Freerouter.logInfo("ShapeTraceEntries: max_stack_level not found");
             return null;
         }
         EntryPoint[] result = new EntryPoint[2];

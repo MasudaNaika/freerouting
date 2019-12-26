@@ -28,6 +28,7 @@ import geometry.planar.FloatPoint;
 import geometry.planar.IntPoint;
 import geometry.planar.Point;
 import geometry.planar.Vector;
+import gui.Freerouter;
 import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -64,7 +65,7 @@ public class MoveItemState extends InteractiveState {
             if (curr_item.get_component_no() > 0) {
                 Component curr_component = routing_board.components.get(curr_item.get_component_no());
                 if (curr_component == null) {
-                    System.out.println("MoveComponentState.get_instance inconsistant component number");
+                    Freerouter.logInfo("MoveComponentState.get_instance inconsistant component number");
                     return null;
                 }
                 if (grid_snap_component == null

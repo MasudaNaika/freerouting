@@ -27,6 +27,7 @@ import geometry.planar.Point;
 import geometry.planar.Polyline;
 import geometry.planar.TileShape;
 import geometry.planar.Vector;
+import gui.Freerouter;
 import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -58,7 +59,7 @@ public class ShoveTraceAlgo {
         }
 
         if (p_trace_shape.is_empty()) {
-            System.out.println("ShoveTraceAux.check: p_trace_shape is empty");
+            Freerouter.logInfo("ShoveTraceAux.check: p_trace_shape is empty");
             return true;
         }
         if (!p_trace_shape.is_contained_in(board.get_bounding_box())) {
@@ -178,13 +179,13 @@ public class ShoveTraceAlgo {
         }
         TileShape[] trace_shapes = p_line_segment.to_polyline().offset_shapes(p_trace_half_width);
         if (trace_shapes.length != 1) {
-            System.out.println("ShoveTraceAlgo.check: trace_shape count 1 expected");
+            Freerouter.logInfo("ShoveTraceAlgo.check: trace_shape count 1 expected");
             return 0;
         }
 
         TileShape trace_shape = trace_shapes[0];
         if (trace_shape.is_empty()) {
-            System.out.println("ShoveTraceAlgo.check: trace_shape is empty");
+            Freerouter.logInfo("ShoveTraceAlgo.check: trace_shape is empty");
             return 0;
         }
         if (!trace_shape.is_contained_in(p_board.get_bounding_box())) {
@@ -311,7 +312,7 @@ public class ShoveTraceAlgo {
             int p_cl_type, Collection<Item> p_ignore_items,
             int p_max_recursion_depth, int p_max_via_recursion_depth, int p_max_spring_over_recursion_depth) {
         if (p_trace_shape.is_empty()) {
-            System.out.println("ShoveTraceAux.insert: p_trace_shape is empty");
+            Freerouter.logInfo("ShoveTraceAux.insert: p_trace_shape is empty");
             return true;
         }
         if (!p_trace_shape.is_contained_in(board.get_bounding_box())) {

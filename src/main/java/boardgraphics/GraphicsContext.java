@@ -23,6 +23,7 @@ import geometry.planar.IntBox;
 import geometry.planar.PolylineShape;
 import geometry.planar.Shape;
 import geometry.planar.TileShape;
+import gui.Freerouter;
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -366,7 +367,7 @@ public class GraphicsContext implements Serializable {
         } else {
             PolylineShape border = (PolylineShape) p_area.get_border();
             if (!border.is_bounded()) {
-                System.out.println("GraphicsContext.fill_area: shape not bounded");
+                Freerouter.logInfo("GraphicsContext.fill_area: shape not bounded");
                 return;
             }
             Rectangle clip_shape = p_g.getClipBounds();

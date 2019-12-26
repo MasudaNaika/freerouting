@@ -19,6 +19,7 @@
  */
 package designformats.specctra;
 
+import gui.Freerouter;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
@@ -50,7 +51,7 @@ public class Component extends ScopeKeyword {
             }
             p_par.placement_list.add(component_placement);
         } catch (IOException e) {
-            System.out.println("Component.read_scope: IO error scanning file");
+            Freerouter.logError("Component.read_scope: IO error scanning file");
             return false;
         }
         return true;
@@ -62,7 +63,7 @@ public class Component extends ScopeKeyword {
     public static ComponentPlacement read_scope(Scanner p_scanner) throws IOException {
         Object next_token = p_scanner.next_token();
         if (!(next_token instanceof String)) {
-            System.out.println("Component.read_scope: component name expected");
+            Freerouter.logError("Component.read_scope: component name expected");
             return null;
         }
         String name = (String) next_token;
@@ -121,17 +122,17 @@ public class Component extends ScopeKeyword {
         }
         library.Package.Pin package_pin = p_component.get_package().get_pin(p_pin_no);
         if (package_pin == null) {
-            System.out.println("Component.write_pin_info: package pin not found");
+            Freerouter.logInfo("Component.write_pin_info: package pin not found");
             return;
         }
         board.Pin component_pin = p_par.board.get_pin(p_component.no, p_pin_no);
         if (component_pin == null) {
-            System.out.println("Component.write_pin_info: component pin not found");
+            Freerouter.logInfo("Component.write_pin_info: component pin not found");
             return;
         }
         String cl_class_name = p_par.board.rules.clearance_matrix.get_name(component_pin.clearance_class_no());
         if (cl_class_name == null) {
-            System.out.println("Component.write_pin_info: clearance class  name not found");
+            Freerouter.logInfo("Component.write_pin_info: clearance class  name not found");
             return;
         }
         p_par.file.new_line();
@@ -171,7 +172,7 @@ public class Component extends ScopeKeyword {
                 }
                 String cl_class_name = p_par.board.rules.clearance_matrix.get_name(curr_obstacle_area.clearance_class_no());
                 if (cl_class_name == null) {
-                    System.out.println("Component.write_keepout_infos: clearance class name not found");
+                    Freerouter.logInfo("Component.write_keepout_infos: clearance class name not found");
                     return;
                 }
                 p_par.file.new_line();
@@ -213,7 +214,7 @@ public class Component extends ScopeKeyword {
                     = new TreeMap<>();
             Object next_token = p_scanner.next_token();
             if (!(next_token instanceof String)) {
-                System.out.println("Component.read_place_scope: String expected");
+                Freerouter.logInfo("Component.read_place_scope: String expected");
                 return null;
             }
             String name = (String) next_token;
@@ -229,7 +230,7 @@ public class Component extends ScopeKeyword {
                     return new ComponentPlacement.ComponentLocation(name, null, true, 0, false, pin_infos,
                             keepout_infos, via_keepout_infos, place_keepout_infos);
                 } else {
-                    System.out.println("Component.read_place_scope: number  expected");
+                    Freerouter.logInfo("Component.read_place_scope: number  expected");
                     return null;
                 }
             }
@@ -238,7 +239,7 @@ public class Component extends ScopeKeyword {
             if (next_token == Keyword.BACK) {
                 is_front = false;
             } else if (next_token != Keyword.FRONT) {
-                System.out.println("Component.read_place_scope: Keyword.FRONT expected");
+                Freerouter.logInfo("Component.read_place_scope: Keyword.FRONT expected");
             }
             double rotation;
             next_token = p_scanner.next_token();
@@ -247,7 +248,7 @@ public class Component extends ScopeKeyword {
             } else if (next_token instanceof Integer) {
                 rotation = ((Integer) next_token);
             } else {
-                System.out.println("Component.read_place_scope: number expected");
+                Freerouter.logInfo("Component.read_place_scope: number expected");
                 return null;
             }
             boolean position_fixed = false;
@@ -286,7 +287,7 @@ public class Component extends ScopeKeyword {
                 next_token = p_scanner.next_token();
             }
             if (next_token != Keyword.CLOSED_BRACKET) {
-                System.out.println("Component.read_place_scope: ) expected");
+                Freerouter.logInfo("Component.read_place_scope: ) expected");
                 return null;
             }
             ComponentPlacement.ComponentLocation result
@@ -294,8 +295,8 @@ public class Component extends ScopeKeyword {
                             keepout_infos, via_keepout_infos, place_keepout_infos);
             return result;
         } catch (IOException e) {
-            System.out.println("Component.read_scope: IO error scanning file");
-            System.out.println(e);
+            Freerouter.logError("Component.read_scope: IO error scanning file");
+            Freerouter.logError(e);
             return null;
         }
     }
@@ -304,7 +305,7 @@ public class Component extends ScopeKeyword {
         p_scanner.yybegin(SpecctraFileScanner.NAME);
         Object next_token = p_scanner.next_token();
         if (!(next_token instanceof String)) {
-            System.out.println("Component.read_item_clearance_info: String expected");
+            Freerouter.logInfo("Component.read_item_clearance_info: String expected");
             return null;
         }
         String name = (String) next_token;
@@ -320,11 +321,11 @@ public class Component extends ScopeKeyword {
             next_token = p_scanner.next_token();
         }
         if (next_token != Keyword.CLOSED_BRACKET) {
-            System.out.println("Component.read_item_clearance_info: ) expected");
+            Freerouter.logInfo("Component.read_item_clearance_info: ) expected");
             return null;
         }
         if (cl_class_name == null) {
-            System.out.println("Component.read_item_clearance_info: clearance class name not found");
+            Freerouter.logInfo("Component.read_item_clearance_info: clearance class name not found");
             return null;
         }
         return new ComponentPlacement.ItemClearanceInfo(name, cl_class_name);

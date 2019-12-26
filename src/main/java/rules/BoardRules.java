@@ -20,6 +20,7 @@
 package rules;
 
 import geometry.planar.ConvexShape;
+import gui.Freerouter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -107,7 +108,7 @@ public class BoardRules implements Serializable {
      */
     public void set_default_trace_half_widths(int p_value) {
         if (p_value <= 0) {
-            System.out.println("BoardRules.set_trace_half_widths: p_value out of range");
+            Freerouter.logInfo("BoardRules.set_trace_half_widths: p_value out of range");
             return;
         }
         get_default_net_class().set_trace_half_width(p_value);

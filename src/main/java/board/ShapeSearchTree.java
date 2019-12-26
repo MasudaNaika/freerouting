@@ -36,10 +36,10 @@ import geometry.planar.ShapeBoundingDirections;
 import geometry.planar.Side;
 import geometry.planar.Simplex;
 import geometry.planar.TileShape;
+import gui.Freerouter;
 import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 import rules.ClearanceMatrix;
@@ -341,12 +341,12 @@ public class ShapeSearchTree extends datastructures.MinAreaTree {
             return;
         }
         if (p_tree_entries == null) {
-            System.out.println("board.ShapeSearchTree.overlaps: p_obstacle_entries is null");
+            Freerouter.logInfo("board.ShapeSearchTree.overlaps: p_obstacle_entries is null");
             return;
         }
         RegularTileShape bounds = p_shape.bounding_shape(bounding_directions);
         if (bounds == null) {
-            System.out.println("board.ShapeSearchTree.overlaps: p_shape not bounded");
+            Freerouter.logInfo("board.ShapeSearchTree.overlaps: p_shape not bounded");
             return;
         }
         Collection<Leaf> tmp_list = overlaps(bounds);
@@ -398,13 +398,13 @@ public class ShapeSearchTree extends datastructures.MinAreaTree {
             return;
         }
         if (p_obstacle_entries == null) {
-            System.out.println("board.ShapeSearchTree.overlaps_with_clearance: p_obstacle_entries is null");
+            Freerouter.logInfo("board.ShapeSearchTree.overlaps_with_clearance: p_obstacle_entries is null");
             return;
         }
         ClearanceMatrix cl_matrix = board.rules.clearance_matrix;
         RegularTileShape bounds = p_shape.bounding_shape(bounding_directions);
         if (bounds == null) {
-            System.out.println("board.ShapeSearchTree.overlaps_with_clearance: p_shape is not bounded");
+            Freerouter.logInfo("board.ShapeSearchTree.overlaps_with_clearance: p_shape is not bounded");
             bounds = board.get_bounding_box();
         }
         int max_clearance
@@ -491,8 +491,8 @@ public class ShapeSearchTree extends datastructures.MinAreaTree {
      */
     public Set<Item> overlapping_items_with_clearance(ConvexShape p_shape, int p_layer, int[] p_ignore_net_nos,
             int p_clearance_class) {
-        
-        Set<SearchTreeObject> overlaps = new HashSet<>();
+
+        Set<SearchTreeObject> overlaps = new ObjectAVLTreeSet<>();
         overlapping_objects_with_clearance(p_shape, p_layer, p_ignore_net_nos, p_clearance_class, overlaps);
         Set<Item> result = new ObjectAVLTreeSet<>();
         for (SearchTreeObject curr_object : overlaps) {
@@ -535,7 +535,7 @@ public class ShapeSearchTree extends datastructures.MinAreaTree {
     public Collection<IncompleteFreeSpaceExpansionRoom> complete_shape(IncompleteFreeSpaceExpansionRoom p_room, int p_net_no,
             SearchTreeObject p_ignore_object, TileShape p_ignore_shape) {
         if (p_room.get_contained_shape() == null) {
-            System.out.println("ShapeSearchTree.complete_shape: p_shape_to_be_contained != null expected");
+            Freerouter.logInfo("ShapeSearchTree.complete_shape: p_shape_to_be_contained != null expected");
             return new LinkedList<>();
         }
         if (root == null) {
@@ -630,7 +630,7 @@ public class ShapeSearchTree extends datastructures.MinAreaTree {
         int layer = p_incomplete_room.get_layer();
         if (shape_to_be_contained.is_empty()) {
             if (board.get_test_level().ordinal() >= TestLevel.ALL_DEBUGGING_OUTPUT.ordinal()) {
-                System.out.println("ShapeSearchTree.restrain_shape: p_shape_to_be_contained is empty");
+                Freerouter.logInfo("ShapeSearchTree.restrain_shape: p_shape_to_be_contained is empty");
             }
             return result;
         }
@@ -793,7 +793,7 @@ public class ShapeSearchTree extends datastructures.MinAreaTree {
                 }
                 int offset_width = clearance_compensation_value(p_drill_item.clearance_class_no(), p_drill_item.shape_layer(i));
                 if (curr_tile_shape == null) {
-                    System.out.println("ShapeSearchTree.calculate_tree_shapes: shape is null");
+                    Freerouter.logInfo("ShapeSearchTree.calculate_tree_shapes: shape is null");
                 } else {
                     curr_tile_shape = (TileShape) curr_tile_shape.enlarge(offset_width);
                 }
@@ -938,7 +938,7 @@ public class ShapeSearchTree extends datastructures.MinAreaTree {
         for (int i = 0; i < curr_tree_entries.length; ++i) {
             Leaf curr_leaf = curr_tree_entries[i];
             if (curr_leaf.shape_index_in_object != i) {
-                System.out.println("tree entry inconsistent for Item");
+                Freerouter.logInfo("tree entry inconsistent for Item");
                 return false;
             }
         }

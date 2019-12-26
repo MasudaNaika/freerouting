@@ -522,12 +522,12 @@ public class WindowNetClasses extends BoardSavableSubWindow {
             BoardRules board_rules = routing_board.rules;
             Object net_class_name = getValueAt(p_row, ColumnName.NAME.ordinal());
             if (!(net_class_name instanceof String)) {
-                System.out.println("EditNetRuLesVindow.setValueAt: String expected");
+                Freerouter.logInfo("EditNetRuLesVindow.setValueAt: String expected");
                 return;
             }
             NetClass net_rule = board_rules.net_classes.get((String) net_class_name);
             if (net_rule == null) {
-                System.out.println("EditNetRuLesVindow.setValueAt: net_rule not found");
+                Freerouter.logInfo("EditNetRuLesVindow.setValueAt: net_rule not found");
                 return;
             }
 
@@ -548,7 +548,7 @@ public class WindowNetClasses extends BoardSavableSubWindow {
                 String new_name = (String) p_value;
                 ViaRule new_via_rule = board_rules.get_via_rule(new_name);
                 if (new_via_rule == null) {
-                    System.out.println("EditNetRuLesVindow.setValueAt: via_rule not found");
+                    Freerouter.logInfo("EditNetRuLesVindow.setValueAt: via_rule not found");
                     return;
                 }
                 net_rule.set_via_rule(new_via_rule);
@@ -617,11 +617,9 @@ public class WindowNetClasses extends BoardSavableSubWindow {
                 }
                 String new_name = (String) p_value;
                 int new_cl_class_index = board_rules.clearance_matrix.get_no(new_name);
-                {
-                    if (new_cl_class_index < 0) {
-                        System.out.println("EditNetRuLesVindow.setValueAt: clearance class not found");
-                        return;
-                    }
+                if (new_cl_class_index < 0) {
+                    Freerouter.logInfo("EditNetRuLesVindow.setValueAt: clearance class not found");
+                    return;
                 }
                 net_rule.set_trace_clearance_class(new_cl_class_index);
             } else if (p_col == ColumnName.TRACE_WIDTH.ordinal()) {

@@ -21,6 +21,7 @@ package datastructures;
 
 import geometry.planar.RegularTileShape;
 import geometry.planar.ShapeBoundingDirections;
+import gui.Freerouter;
 import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.util.Set;
 
@@ -167,7 +168,7 @@ public class MinAreaTree extends ShapeTree {
         } else if (parent.first_child == p_leaf) {
             other_leaf = parent.second_child;
         } else {
-            System.out.println("MinAreaTree.remove_leaf: parent inconsistent");
+            Freerouter.logInfo("MinAreaTree.remove_leaf: parent inconsistent");
             other_leaf = null;
         }
         // link the other leaf to the grand_parent and remove the parent node
@@ -182,7 +183,7 @@ public class MinAreaTree extends ShapeTree {
             } else if (grand_parent.first_child == parent) {
                 grand_parent.first_child = other_leaf;
             } else {
-                System.out.println("MinAreaTree.remove_leaf: grand_parent inconsistent");
+                Freerouter.logInfo("MinAreaTree.remove_leaf: grand_parent inconsistent");
             }
         }
         parent.parent = null;

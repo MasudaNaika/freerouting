@@ -19,6 +19,7 @@
  */
 package geometry.planar;
 
+import gui.Freerouter;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -222,7 +223,7 @@ public abstract class PolylineShape implements Shape, Serializable {
      */
     public FloatLine polar_line_segment(FloatPoint p_from_point) {
         if (is_empty()) {
-            System.out.println("PolylineShape.polar_line_segment: shape is empty");
+            Freerouter.logInfo("PolylineShape.polar_line_segment: shape is empty");
             return null;
         }
         FloatPoint left_most_corner = corner_approx(0);

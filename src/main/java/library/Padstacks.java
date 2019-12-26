@@ -20,6 +20,7 @@
 package library;
 
 import geometry.planar.ConvexShape;
+import gui.Freerouter;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -66,13 +67,13 @@ public class Padstacks implements Serializable {
      */
     public Padstack get(int p_padstack_no) {
         if (p_padstack_no <= 0 || p_padstack_no > padstack_arr.size()) {
-            Integer padstack_count = padstack_arr.size();
-            System.out.println("Padstacks.get: 1 <= p_padstack_no <= " + padstack_count.toString() + " expected");
+            int padstack_count = padstack_arr.size();
+            Freerouter.logInfo("Padstacks.get: 1 <= p_padstack_no <= " + padstack_count + " expected");
             return null;
         }
         Padstack result = padstack_arr.get(p_padstack_no - 1);
         if (result != null && result.no != p_padstack_no) {
-            System.out.println("Padstacks.get: inconsistent padstack number");
+            Freerouter.logInfo("Padstacks.get: inconsistent padstack number");
         }
         return result;
     }

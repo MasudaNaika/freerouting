@@ -15,6 +15,7 @@
  */
 package geometry.planar;
 
+import gui.Freerouter;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
@@ -138,7 +139,7 @@ public class Polygon implements Serializable {
         }
         angle_sum /= 2.0 * Math.PI;
         if (Math.abs(angle_sum) < 0.5) {
-            System.out.println("Polygon.winding_number_after_closing: winding number != 0 expected");
+            Freerouter.logInfo("Polygon.winding_number_after_closing: winding number != 0 expected");
         }
         return (int) Math.round(angle_sum);
     }

@@ -4,11 +4,11 @@ import geometry.planar.FloatPoint;
 import geometry.planar.IntOctagon;
 import geometry.planar.Point;
 import geometry.planar.TileShape;
+import gui.Freerouter;
 import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.awt.Color;
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -302,7 +302,7 @@ public abstract class Trace extends Item implements Connectable, Serializable {
         if (is_overlap()) {
             return true;
         }
-        Set<Item> visited_items = new HashSet<>();
+        Set<Item> visited_items = new ObjectAVLTreeSet<>();
         Collection<Item> start_contacts = get_start_contacts();
         // a cycle exists if through expanding the start contact we reach
         // this trace again via an end contact
@@ -426,9 +426,8 @@ public abstract class Trace extends Item implements Connectable, Serializable {
     @Override
     public boolean validate() {
         boolean result = super.validate();
-
         if (first_corner().equals(last_corner())) {
-            System.out.println("Trace.validate: first and last corner are equal");
+            Freerouter.logInfo("Trace.validate: first and last corner are equal");
             result = false;
         }
         return result;

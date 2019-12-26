@@ -20,6 +20,7 @@
  */
 package designformats.specctra;
 
+import gui.Freerouter;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -45,11 +46,11 @@ public class Circuit {
             try {
                 next_token = p_scanner.next_token();
             } catch (IOException e) {
-                System.out.println("Circuit.read_scope: IO error scanning file");
+                Freerouter.logError("Circuit.read_scope: IO error scanning file");
                 return null;
             }
             if (next_token == null) {
-                System.out.println("Circuit.read_scope: unexpected end of file");
+                Freerouter.logInfo("Circuit.read_scope: unexpected end of file");
                 return null;
             }
             if (next_token == Keyword.CLOSED_BRACKET) {
@@ -83,7 +84,7 @@ public class Circuit {
             try {
                 next_token = p_scanner.next_token();
             } catch (IOException e) {
-                System.out.println("Circuit.read_length_scope: IO error scanning file");
+                Freerouter.logError("Circuit.read_length_scope: IO error scanning file");
                 return null;
             }
             if (next_token instanceof Double) {
@@ -91,7 +92,7 @@ public class Circuit {
             } else if (next_token instanceof Integer) {
                 length_arr[i] = ((Integer) next_token);
             } else {
-                System.out.println("Circuit.read_length_scope: number expected");
+                Freerouter.logInfo("Circuit.read_length_scope: number expected");
                 return null;
             }
         }
@@ -101,11 +102,11 @@ public class Circuit {
             try {
                 next_token = p_scanner.next_token();
             } catch (IOException e) {
-                System.out.println("Circuit.read_length_scope: IO error scanning file");
+                Freerouter.logError("Circuit.read_length_scope: IO error scanning file");
                 return null;
             }
             if (next_token == null) {
-                System.out.println("Circuit.read_length_scope: unexpected end of file");
+                Freerouter.logInfo("Circuit.read_length_scope: unexpected end of file");
                 return null;
             }
             if (next_token == Keyword.CLOSED_BRACKET) {

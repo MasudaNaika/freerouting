@@ -19,6 +19,7 @@
  */
 package geometry.planar;
 
+import gui.Freerouter;
 import java.io.Serializable;
 import java.math.BigInteger;
 
@@ -35,7 +36,7 @@ public class IntPoint extends Point implements Serializable {
      */
     public IntPoint(int p_x, int p_y) {
         if (Math.abs(p_x) > Limits.CRIT_INT || Math.abs(p_y) > Limits.CRIT_INT) {
-            System.out.println("Warning in IntPoint: p_x or p_y to big");
+            Freerouter.logInfo("Warning in IntPoint: p_x or p_y to big");
         }
         x = p_x;
         y = p_y;

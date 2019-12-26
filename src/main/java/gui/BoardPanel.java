@@ -60,7 +60,7 @@ public class BoardPanel extends JPanel {
                 // used to be able to change the location of the mouse pointer
                 robot = new Robot();
             } catch (AWTException e) {
-                System.out.println("unable to create robot");
+                Freerouter.logError("unable to create robot");
             }
         }
         board_frame = p_board_frame;

@@ -66,7 +66,7 @@ public class MainApplication extends JFrame {
             }
             DesignFile design_file = DesignFile.get_instance(startupOptions.design_file_name, false);
             if (design_file == null) {
-                System.out.println(resources.getString("message_6") + " "
+                Freerouter.logInfo(resources.getString("message_6") + " "
                         + startupOptions.design_file_name + " "
                         + resources.getString("message_7"));
                 return;

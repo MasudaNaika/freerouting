@@ -21,6 +21,7 @@ package designformats.specctra;
 
 import datastructures.IdentifierType;
 import datastructures.IndentFileWriter;
+import gui.Freerouter;
 import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.io.IOException;
 import java.util.Collection;
@@ -66,12 +67,12 @@ public class Net {
     public static void write_pin(WriteScopeParameter p_par, board.Pin p_pin) throws IOException {
         board.Component curr_component = p_par.board.components.get(p_pin.get_component_no());
         if (curr_component == null) {
-            System.out.println("Net.write_scope: component not found");
+            Freerouter.logInfo("Net.write_scope: component not found");
             return;
         }
         library.Package.Pin lib_pin = curr_component.get_package().get_pin(p_pin.get_index_in_package());
         if (lib_pin == null) {
-            System.out.println("Net.write_scope:  pin number out of range");
+            Freerouter.logInfo("Net.write_scope:  pin number out of range");
             return;
         }
         p_par.file.new_line();

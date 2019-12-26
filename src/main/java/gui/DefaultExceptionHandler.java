@@ -3,7 +3,6 @@ package gui;
 import java.awt.Frame;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import logger.FRLogger;
 
 /**
  * Andrey Belomutskiy 6/28/2014
@@ -18,7 +17,7 @@ public class DefaultExceptionHandler implements Thread.UncaughtExceptionHandler 
     public static void handleException(Throwable e) {
         // Here you should have a more robust, permanent record of problems
         JOptionPane.showMessageDialog(findActiveFrame(), e.toString(), "Exception Occurred", JOptionPane.OK_OPTION);
-        FRLogger.error(e);
+        Freerouter.logError(e);
     }
 
     private static Frame findActiveFrame() {

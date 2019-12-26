@@ -69,7 +69,7 @@ public class MazeListElement implements Comparable<MazeListElement> {
             double p_expansion_value, double p_sorting_value,
             CompleteExpansionRoom p_next_room, FloatLine p_shape_entry,
             boolean p_room_ripped, MazeSearchElement.Adjustment p_adjustment, boolean p_already_checked) {
-        
+
         door = p_door;
         section_no_of_door = p_section_no_of_door;
         backtrack_door = p_backtrack_door;

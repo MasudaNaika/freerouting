@@ -204,7 +204,7 @@ public class WindowDisplayMisc extends BoardSavableSubWindow {
                 rotation_270_degree_checkbox.setSelected(true);
                 break;
             default:
-                System.out.println("DisplayMiscWindow: unexpected ninety_degree_rotation");
+                Freerouter.logInfo("DisplayMiscWindow: unexpected ninety_degree_rotation");
                 rotation_none_checkbox.setSelected(true);
                 break;
         }

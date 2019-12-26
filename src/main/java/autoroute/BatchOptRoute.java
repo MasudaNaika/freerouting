@@ -23,6 +23,7 @@ import board.Trace;
 import board.Via;
 import datastructures.UndoableObjects;
 import geometry.planar.FloatPoint;
+import gui.Freerouter;
 import interactive.InteractiveActionThread;
 import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.util.Collection;
@@ -52,7 +53,8 @@ public class BatchOptRoute {
      */
     public void optimize_board() {
         if (routing_board.get_test_level() != TestLevel.RELEASE_VERSION) {
-            System.out.println("Before optimize: Via count: " + routing_board.get_vias().size() + ", trace length: " + Math.round(routing_board.cumulative_trace_length()));
+            Freerouter.logInfo("Before optimize: Via count: " + routing_board.get_vias().size()
+                    + ", trace length: " + Math.round(routing_board.cumulative_trace_length()));
         }
         boolean route_improved = true;
         int curr_pass_no = 0;

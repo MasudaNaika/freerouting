@@ -37,6 +37,7 @@ import geometry.planar.Line;
 import geometry.planar.Point;
 import geometry.planar.Polyline;
 import geometry.planar.TileShape;
+import gui.Freerouter;
 import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -51,7 +52,7 @@ import java.util.Set;
  * @author Alfons Wirtz
  */
 public class MazeSearchAlgo {
-    
+
     /**
      * Initializes a new instance of MazeSearchAlgo for secrching a connection
      * between p_start_items and p_destination_items. Returns null, if the
@@ -232,7 +233,7 @@ public class MazeSearchAlgo {
 
                 FloatPoint[] nearest_points = next_room_shape.nearest_border_points_approx(shape_entry_middle, 2);
                 if (nearest_points.length < 2) {
-                    System.out.println("MazeSearchAlgo.expand_to_room_doors: nearest_points.length == 2 expected");
+                    Freerouter.logInfo("MazeSearchAlgo.expand_to_room_doors: nearest_points.length == 2 expected");
                     next_room_is_thick = false;
                 } else {
                     double curr_dist = nearest_points[1].distance(shape_entry_middle);
@@ -456,7 +457,7 @@ public class MazeSearchAlgo {
             TileShape door_shape = p_door.get_shape();
             if (door_shape.is_empty()) {
                 if (autoroute_engine.board.get_test_level().ordinal() >= board.TestLevel.ALL_DEBUGGING_OUTPUT.ordinal()) {
-                    System.out.println("MazeSearchAlgo:check_door_width door_shape is empty");
+                    Freerouter.logInfo("MazeSearchAlgo:check_door_width door_shape is empty");
                 }
                 return true;
             }
@@ -861,7 +862,7 @@ public class MazeSearchAlgo {
             TileShape via_shape = ((board.Via) obstacle_item).get_tree_shape_on_layer(search_tree, layer);
             obstacle_half_width = 0.5 * via_shape.max_width();
         } else {
-            System.out.println("MazeSearchAlgo. room_shape_is_thick: unexpected obstacle item");
+            Freerouter.logInfo("MazeSearchAlgo. room_shape_is_thick: unexpected obstacle item");
             obstacle_half_width = 0;
         }
         return obstacle_half_width >= ctrl.compensated_trace_half_width[layer];
@@ -1213,7 +1214,7 @@ public class MazeSearchAlgo {
     private int section_no_of_destination_door = 0;
     private final Random random_generator = new Random();
     private static final int ALREADY_RIPPED_COSTS = 1;
-    
+
     /**
      * The result type of MazeSearchAlgo.find_connection
      */

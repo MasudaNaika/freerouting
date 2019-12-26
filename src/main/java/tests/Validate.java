@@ -27,6 +27,7 @@ import geometry.planar.IntOctagon;
 import geometry.planar.IntPoint;
 import geometry.planar.Polyline;
 import geometry.planar.TileShape;
+import gui.Freerouter;
 import java.util.Collection;
 
 /**
@@ -53,7 +54,7 @@ public class Validate {
         }
         for (int layer = 0; layer < layer_count; ++layer) {
             if (first_time) {
-                System.out.println(" validate board is on ");
+                Freerouter.logInfo(" validate board is on ");
                 first_time = false;
             }
 
@@ -65,7 +66,7 @@ public class Validate {
             for (SearchTreeObject obj : objects) {
                 Item curr_ob = (Item) obj;
                 if (!curr_ob.validate()) {
-                    System.out.println(p_s);
+                    Freerouter.logInfo(p_s);
                 }
                 int cl_count = curr_ob.clearance_violation_count();
                 if (cl_count > 0) {
@@ -77,13 +78,14 @@ public class Validate {
                 }
             }
             if (conflict_ob_count == 1) {
-                System.out.println("conflicts not symmetric");
+                Freerouter.logInfo("conflicts not symmetric");
             }
             if (clearance_violation_count != last_violation_count[layer]) {
                 result = false;
-                System.out.print(clearance_violation_count + " clearance violations on layer " + layer + " " + p_s);
+                StringBuilder sb = new StringBuilder();
+                sb.append(clearance_violation_count + " clearance violations on layer " + layer + " " + p_s);
                 if (clearance_violation_count > 0) {
-                    System.out.print("with items of nets: ");
+                    sb.append("with items of nets: ");
                 }
                 for (SearchTreeObject obj : objects) {
                     Item curr_ob = (Item) obj;
@@ -98,9 +100,9 @@ public class Validate {
                             curr_net_no = curr_trace.get_net_no(0);
                         }
                     }
-                    System.out.print(curr_net_no + ", ");
+                    sb.append(curr_net_no + ", ");
                 }
-                System.out.println();
+                Freerouter.logInfo(sb.toString());
             }
             if (clearance_violation_count != last_violation_count[layer]) {
                 last_violation_count[layer] = clearance_violation_count;
@@ -119,7 +121,7 @@ public class Validate {
                     .overlapping_items_with_clearance(ts, p_layer, p_net_no_arr, p_cl_type);
             for (Item curr_obs : obstacles) {
                 if (!curr_obs.shares_net_no(p_net_no_arr)) {
-                    System.out.println(p_s + ": cannot insert trace without violations");
+                    Freerouter.logInfo(p_s + ": cannot insert trace without violations");
                     return false;
                 }
             }
@@ -135,7 +137,7 @@ public class Validate {
             if (curr_ob instanceof PolylineTrace) {
                 PolylineTrace curr_trace = (PolylineTrace) curr_ob;
                 if (!curr_trace.polyline().is_orthogonal()) {
-                    System.out.println(p_s + ": trace not orthogonal");
+                    Freerouter.logInfo(p_s + ": trace not orthogonal");
                     break;
                 }
             }
@@ -156,14 +158,14 @@ public class Validate {
             }
         }
         if (count > 1) {
-            System.out.println(p_s + count + " traces not 45 degree");
+            Freerouter.logInfo(p_s + count + " traces not 45 degree");
         }
     }
 
     static public boolean corners_on_grid(String p_s, Polyline p_polyline) {
         for (int i = 0; i < p_polyline.corner_count(); ++i) {
             if (!(p_polyline.corner(i) instanceof IntPoint)) {
-                System.out.println(p_s + ": corner not on grid");
+                Freerouter.logInfo(p_s + ": corner not on grid");
                 return false;
             }
         }
@@ -172,7 +174,7 @@ public class Validate {
 
     static public int stub_count(String p_s, BasicBoard p_board, int p_net_no) {
         if (first_time) {
-            System.out.println(" stub_count is on ");
+            Freerouter.logInfo(" stub_count is on ");
             first_time = false;
         }
         int result = 0;
@@ -190,7 +192,7 @@ public class Validate {
             }
         }
         if (result != prev_stub_count) {
-            System.out.println(result + " stubs " + p_s);
+            Freerouter.logInfo(result + " stubs " + p_s);
             prev_stub_count = result;
         }
         return result;
@@ -203,7 +205,7 @@ public class Validate {
                 continue;
             }
             if (((board.Trace) curr_item).is_cycle()) {
-                System.out.println(p_s + ": cycle found");
+                Freerouter.logInfo(p_s + ": cycle found");
                 result = true;
                 break;
             }
@@ -225,7 +227,7 @@ public class Validate {
             }
         }
         if (found_traces > p_max_count) {
-            System.out.println(p_s + ": " + p_max_count + " traces exceeded");
+            Freerouter.logInfo(p_s + ": " + p_max_count + " traces exceeded");
             return true;
         }
         return false;
@@ -239,7 +241,7 @@ public class Validate {
             if (curr_item.is_route()) {
                 Collection<Item> contact_list = curr_item.get_normal_contacts();
                 if (contact_list.isEmpty()) {
-                    System.out.println(p_s + ": uncontacted routing item found ");
+                    Freerouter.logInfo(p_s + ": uncontacted routing item found ");
                     return true;
                 }
             }

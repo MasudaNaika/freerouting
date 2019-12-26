@@ -24,6 +24,7 @@ import datastructures.ShapeTree;
 import datastructures.UndoableObjects;
 import geometry.planar.FortyfiveDegreeBoundingDirections;
 import geometry.planar.Polyline;
+import gui.Freerouter;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -143,7 +144,7 @@ public class SearchTreeManager {
      */
     public void clearance_class_removed(int p_no) {
         if (p_no == default_tree.compensated_clearance_class_no) {
-            System.out.println("SearchtreeManager.clearance_class_removed: unable to remove default tree");
+            Freerouter.logInfo("SearchtreeManager.clearance_class_removed: unable to remove default tree");
             return;
         }
         compensated_search_trees.removeIf(curr_tree -> curr_tree.compensated_clearance_class_no == p_no);
@@ -200,7 +201,7 @@ public class SearchTreeManager {
 
     private void remove_all_board_items() {
         if (board == null) {
-            System.out.println("SearchtreeManager.remove_all_board_items: board is null");
+            Freerouter.logInfo("SearchtreeManager.remove_all_board_items: board is null");
             return;
         }
         Iterator<UndoableObjects.UndoableObjectNode> it = board.item_list.start_read_object();
@@ -215,7 +216,7 @@ public class SearchTreeManager {
 
     private void insert_all_board_items() {
         if (board == null) {
-            System.out.println("SearchtreeManager.insert_all_board_items: board is null");
+            Freerouter.logInfo("SearchtreeManager.insert_all_board_items: board is null");
             return;
         }
         Iterator<UndoableObjects.UndoableObjectNode> it = board.item_list.start_read_object();

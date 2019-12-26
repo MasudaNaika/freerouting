@@ -31,14 +31,15 @@ import datastructures.TimeLimit;
 import geometry.planar.Line;
 import geometry.planar.Simplex;
 import geometry.planar.TileShape;
+import gui.Freerouter;
 import it.unimi.dsi.fastutil.ints.IntAVLTreeSet;
 import it.unimi.dsi.fastutil.ints.IntBidirectionalIterator;
 import it.unimi.dsi.fastutil.ints.IntSortedSet;
 import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import it.unimi.dsi.fastutil.objects.ObjectLinkedOpenHashSet;
+import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import java.awt.Graphics;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Set;
@@ -103,8 +104,8 @@ public class AutorouteEngine {
         try {
             maze_search_algo = MazeSearchAlgo.get_instance(p_start_set, p_dest_set, this, p_ctrl);
         } catch (Exception e) {
-            System.out.println("AutorouteEngine.autoroute_connection: Exception in MazeSearchAlgo.get_instance");
-            System.out.println(e);
+            Freerouter.logError("AutorouteEngine.autoroute_connection: Exception in MazeSearchAlgo.get_instance");
+            Freerouter.logError(e);
             maze_search_algo = null;
         }
         MazeSearchAlgo.Result search_result = null;
@@ -112,7 +113,7 @@ public class AutorouteEngine {
             try {
                 search_result = maze_search_algo.find_connection();
             } catch (Exception e) {
-                System.out.println("AutorouteEngine.autoroute_connection: Exception in maze_search_algo.find_connection");
+                Freerouter.logError("AutorouteEngine.autoroute_connection: Exception in maze_search_algo.find_connection");
             }
         }
         LocateFoundConnectionAlgo autoroute_result = null;
@@ -121,7 +122,7 @@ public class AutorouteEngine {
                 autoroute_result = LocateFoundConnectionAlgo.get_instance(search_result, p_ctrl, autoroute_search_tree,
                         board.rules.get_trace_angle_restriction(), p_ripped_item_list, board.get_test_level());
             } catch (Exception e) {
-                System.out.println("AutorouteEngine.autoroute_connection: Exception in LocateFoundConnectionAlgo.get_instance");
+                Freerouter.logError("AutorouteEngine.autoroute_connection: Exception in LocateFoundConnectionAlgo.get_instance");
             }
         }
         if (!maintain_database) {
@@ -134,7 +135,7 @@ public class AutorouteEngine {
         }
         if (autoroute_result.connection_items == null) {
             if (board.get_test_level().ordinal() >= TestLevel.CRITICAL_DEBUGGING_OUTPUT.ordinal()) {
-                System.out.println("AutorouteEngine.autoroute_connection: result_items != null expected");
+                Freerouter.logInfo("AutorouteEngine.autoroute_connection: result_items != null expected");
             }
             return AutorouteResult.ALREADY_CONNECTED;
         }
@@ -146,7 +147,7 @@ public class AutorouteEngine {
             stop_connection_option = Item.StopConnectionOption.FANOUT_VIA;
         }
 
-        Set<Item> ripped_connections = new HashSet<>();
+        Set<Item> ripped_connections = new ObjectOpenHashSet<>();
         IntSortedSet changed_nets = new IntAVLTreeSet();
         for (Item curr_ripped_item : p_ripped_item_list) {
             ripped_connections.addAll(curr_ripped_item.get_connection_items(stop_connection_option));
@@ -305,7 +306,7 @@ public class AutorouteEngine {
         if (complete_expansion_rooms != null) {
             complete_expansion_rooms.remove(p_room);
         } else {
-            System.out.println("AutorouteEngine.remove_complete_expansion_room: complete_expansion_rooms is null");
+            Freerouter.logInfo("AutorouteEngine.remove_complete_expansion_room: complete_expansion_rooms is null");
         }
         drill_page_array.invalidate(room_shape);
     }
@@ -361,7 +362,7 @@ public class AutorouteEngine {
             }
             return result;
         } catch (Exception e) {
-            System.out.println("AutorouteEngine.complete_expansion_room: " + e);
+            Freerouter.logError("AutorouteEngine.complete_expansion_room: " + e);
             return new LinkedList<>();
         }
 

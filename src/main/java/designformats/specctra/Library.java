@@ -23,6 +23,7 @@ import geometry.planar.IntVector;
 import geometry.planar.PolygonShape;
 import geometry.planar.Simplex;
 import geometry.planar.Vector;
+import gui.Freerouter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
@@ -54,12 +55,12 @@ public class Library extends ScopeKeyword {
             try {
                 next_token = p_par.scanner.next_token();
             } catch (IOException e) {
-                System.out.println("Library.read_scope: IO error scanning file");
-                System.out.println(e);
+                Freerouter.logError("Library.read_scope: IO error scanning file");
+                Freerouter.logError(e);
                 return false;
             }
             if (next_token == null) {
-                System.out.println("Library.read_scope: unexpected end of file");
+                Freerouter.logInfo("Library.read_scope: unexpected end of file");
                 return false;
             }
             if (next_token == CLOSED_BRACKET) {
@@ -94,7 +95,7 @@ public class Library extends ScopeKeyword {
                     via_padstacks[found_padstack_count] = curr_padstack;
                     ++found_padstack_count;
                 } else {
-                    System.out.println("Library.read_scope: via padstack with name " + curr_padstack_name + " not found");
+                    Freerouter.logInfo("Library.read_scope: via padstack with name " + curr_padstack_name + " not found");
                 }
             }
             if (found_padstack_count != via_padstacks.length) {
@@ -117,7 +118,7 @@ public class Library extends ScopeKeyword {
                 Vector rel_coor = new IntVector(rel_x, rel_y);
                 library.Padstack board_padstack = board.library.padstacks.get(pin_info.padstack_name);
                 if (board_padstack == null) {
-                    System.out.println("Library.read_scope: board padstack not found");
+                    Freerouter.logInfo("Library.read_scope: board padstack not found");
                     return false;
                 }
                 pin_arr[i] = new library.Package.Pin(pin_info.pin_name, board_padstack.no, rel_coor, pin_info.rotation);
@@ -130,7 +131,7 @@ public class Library extends ScopeKeyword {
                 if (curr_shape != null) {
                     outline_arr[i] = curr_shape.transform_to_board_rel(p_par.coordinate_transform);
                 } else {
-                    System.out.println("Library.read_scope: outline shape is null");
+                    Freerouter.logInfo("Library.read_scope: outline shape is null");
                 }
             }
             generate_missing_keepout_names("keepout_", curr_package.keepouts);
@@ -195,7 +196,7 @@ public class Library extends ScopeKeyword {
             --last_layer_no;
         }
         if (first_layer_no >= p_par.board.get_layer_count() || last_layer_no < 0) {
-            System.out.println("Library.write_padstack_scope: padstack shape not found");
+            Freerouter.logInfo("Library.write_padstack_scope: padstack shape not found");
             return;
         }
 
@@ -237,7 +238,7 @@ public class Library extends ScopeKeyword {
             if (next_token instanceof String) {
                 padstack_name = (String) next_token;
             } else {
-                System.out.println("Library.read_padstack_scope: unexpected padstack identifier");
+                Freerouter.logInfo("Library.read_padstack_scope: unexpected padstack identifier");
                 return false;
             }
 
@@ -257,7 +258,7 @@ public class Library extends ScopeKeyword {
                             curr_next_token = p_scanner.next_token();
                         }
                         if (curr_next_token != Keyword.CLOSED_BRACKET) {
-                            System.out.println("Library.read_padstack_scope: closing bracket expected");
+                            Freerouter.logInfo("Library.read_padstack_scope: closing bracket expected");
                             return false;
                         }
                     } else if (next_token == Keyword.ATTACH) {
@@ -271,8 +272,8 @@ public class Library extends ScopeKeyword {
 
             }
         } catch (IOException e) {
-            System.out.println("Library.read_padstack_scope: IO error scanning file");
-            System.out.println(e);
+            Freerouter.logError("Library.read_padstack_scope: IO error scanning file");
+            Freerouter.logError(e);
             return false;
         }
         if (p_board_padstacks.get(padstack_name) != null) {
@@ -280,7 +281,7 @@ public class Library extends ScopeKeyword {
             return true;
         }
         if (shape_list.isEmpty()) {
-            System.out.println("Library.read_padstack_scope: shape not found for padstack with name " + padstack_name);
+            Freerouter.logInfo("Library.read_padstack_scope: shape not found for padstack with name " + padstack_name);
             return true;
         }
         geometry.planar.ConvexShape[] padstack_shapes = new geometry.planar.ConvexShape[p_layer_structure.arr.length];
@@ -295,7 +296,7 @@ public class Library extends ScopeKeyword {
                 }
                 geometry.planar.TileShape[] convex_shapes = curr_shape.split_to_convex();
                 if (convex_shapes.length != 1) {
-                    System.out.println("Library.read_padstack_scope: convex shape expected");
+                    Freerouter.logInfo("Library.read_padstack_scope: convex shape expected");
                 }
                 convex_shape = convex_shapes[0];
                 if (convex_shape instanceof Simplex) {
@@ -305,7 +306,7 @@ public class Library extends ScopeKeyword {
             geometry.planar.ConvexShape padstack_shape = convex_shape;
             if (padstack_shape != null) {
                 if (padstack_shape.dimension() < 2) {
-                    System.out.print("Library.read_padstack_scope: shape is not an area ");
+                    Freerouter.logInfo("Library.read_padstack_scope: shape is not an area ");
                     // enllarge the shape a little bit, so that it is an area
                     padstack_shape = padstack_shape.offset(1);
                     if (padstack_shape.dimension() < 2) {
@@ -319,7 +320,7 @@ public class Library extends ScopeKeyword {
             } else {
                 int shape_layer = p_layer_structure.get_no(pad_shape.layer.name);
                 if (shape_layer < 0 || shape_layer >= padstack_shapes.length) {
-                    System.out.println("Library.read_padstack_scope: layer number found");
+                    Freerouter.logInfo("Library.read_padstack_scope: layer number found");
                     return false;
                 }
                 padstack_shapes[shape_layer] = padstack_shape;

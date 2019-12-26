@@ -26,6 +26,7 @@ import geometry.planar.FloatPoint;
 import geometry.planar.IntPoint;
 import geometry.planar.Point;
 import geometry.planar.Vector;
+import gui.Freerouter;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.io.IOException;
@@ -195,7 +196,7 @@ public class ComponentOutline extends Item implements Serializable {
     public Area get_area() {
         if (precalculated_absolute_area == null) {
             if (relative_area == null) {
-                System.out.println("ObstacleArea.get_area: area is null");
+                Freerouter.logInfo("ObstacleArea.get_area: area is null");
                 return null;
             }
             Area turned_area = relative_area;
@@ -233,6 +234,7 @@ public class ComponentOutline extends Item implements Serializable {
         try {
             p_stream.writeObject(this);
         } catch (IOException e) {
+            Freerouter.logError(e);
             return false;
         }
         return true;

@@ -19,6 +19,7 @@
  */
 package board;
 
+import gui.Freerouter;
 import java.io.Serializable;
 
 /**
@@ -41,7 +42,7 @@ public class ItemIdNoGenerator implements datastructures.IdNoGenerator, Serializ
     @Override
     public int new_no() {
         if (last_generated_id_no >= c_max_id_no) {
-            System.out.println("IdNoGenerator: danger of overflow, please regenerate id numbers from scratch!");
+            Freerouter.logInfo("IdNoGenerator: danger of overflow, please regenerate id numbers from scratch!");
         }
         ++last_generated_id_no;
         return last_generated_id_no;

@@ -19,6 +19,7 @@
  */
 package geometry.planar;
 
+import gui.Freerouter;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -110,7 +111,7 @@ public class PolygonShape extends PolylineShape {
     @Override
     public Point corner(int p_no) {
         if (p_no < 0 || p_no >= corners.length) {
-            System.out.println("PolygonShape.corner: p_no out of range");
+            Freerouter.logInfo("PolygonShape.corner: p_no out of range");
             return null;
         }
         return corners[p_no];
@@ -177,7 +178,7 @@ public class PolygonShape extends PolylineShape {
 
     @Override
     public Polyline[] cutout(Polyline p_polyline) {
-        System.out.println("PolygonShape.cutout not yet implemented");
+        Freerouter.logInfo("PolygonShape.cutout not yet implemented");
         return null;
     }
 
@@ -186,13 +187,13 @@ public class PolygonShape extends PolylineShape {
         if (p_offset == 0) {
             return this;
         }
-        System.out.println("PolygonShape.enlarge not yet implemented");
+        Freerouter.logInfo("PolygonShape.enlarge not yet implemented");
         return null;
     }
 
     @Override
     public double border_distance(FloatPoint p_point) {
-        System.out.println("PolygonShape.border_distance not yet implemented");
+        Freerouter.logInfo("PolygonShape.border_distance not yet implemented");
         return 0;
     }
 
@@ -238,13 +239,13 @@ public class PolygonShape extends PolylineShape {
 
     @Override
     public boolean contains_on_border(Point p_point) {
-        //System.out.println("PolygonShape.contains_on_edge not yet implemented");
+        //Freerouter.logInfo("PolygonShape.contains_on_edge not yet implemented");
         return false;
     }
 
     @Override
     public double distance(FloatPoint p_point) {
-        System.out.println("PolygonShape.distance not yet implemented");
+        Freerouter.logInfo("PolygonShape.distance not yet implemented");
         return 0;
     }
 
@@ -458,7 +459,7 @@ public class PolygonShape extends PolylineShape {
     @Override
     public Line border_line(int p_no) {
         if (p_no < 0 || p_no >= corners.length) {
-            System.out.println("PolygonShape.edge_line: p_no out of range");
+            Freerouter.logInfo("PolygonShape.edge_line: p_no out of range");
             return null;
         }
         Point next_corner;
@@ -780,7 +781,7 @@ public class PolygonShape extends PolylineShape {
                 }
             }
             if (min_projection_dist == Integer.MAX_VALUE) {
-                System.out.println("PolygonShape.DivisionPoint: projection not found");
+                Freerouter.logInfo("PolygonShape.DivisionPoint: projection not found");
             }
 
             projection = min_projection;

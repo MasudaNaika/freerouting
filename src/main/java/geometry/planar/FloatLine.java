@@ -19,6 +19,8 @@
  */
 package geometry.planar;
 
+import gui.Freerouter;
+
 /**
  * Defines a line in the plane by to FloatPoints. Calculations with FloatLines
  * are generally not exact. For that reason collinearity for example is not
@@ -33,7 +35,7 @@ public class FloatLine {
      */
     public FloatLine(FloatPoint p_a, FloatPoint p_b) {
         if (p_a == null || p_b == null) {
-            System.out.println("FloatLine: Parameter is null");
+            Freerouter.logInfo("FloatLine: Parameter is null");
         }
         a = p_a;
         b = p_b;

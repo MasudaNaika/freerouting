@@ -19,6 +19,7 @@
  */
 package library;
 
+import gui.Freerouter;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,7 +62,7 @@ public class LogicalParts implements Serializable {
     public LogicalPart get(int p_part_no) {
         LogicalPart result = part_arr.get(p_part_no - 1);
         if (result != null && result.no != p_part_no) {
-            System.out.println("LogicalParts.get: inconsistent part number");
+            Freerouter.logInfo("LogicalParts.get: inconsistent part number");
         }
         return result;
     }

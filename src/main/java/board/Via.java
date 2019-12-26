@@ -24,6 +24,7 @@ import geometry.planar.Point;
 import geometry.planar.Shape;
 import geometry.planar.TileShape;
 import geometry.planar.Vector;
+import gui.Freerouter;
 import java.awt.Color;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -61,7 +62,7 @@ public class Via extends DrillItem implements Serializable {
     @Override
     public Shape get_shape(int p_index) {
         if (padstack == null) {
-            System.out.println("Via.get_shape: padstack is null");
+            Freerouter.logInfo("Via.get_shape: padstack is null");
             return null;
         }
         if (precalculated_shapes == null) {
@@ -237,6 +238,7 @@ public class Via extends DrillItem implements Serializable {
         try {
             p_stream.writeObject(this);
         } catch (IOException e) {
+            Freerouter.logError(e);
             return false;
         }
         return true;

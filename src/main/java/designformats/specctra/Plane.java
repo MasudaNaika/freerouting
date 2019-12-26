@@ -19,6 +19,7 @@
  */
 package designformats.specctra;
 
+import gui.Freerouter;
 import java.io.IOException;
 
 /**
@@ -46,14 +47,14 @@ public class Plane extends ScopeKeyword {
         try {
             Object next_token = p_par.scanner.next_token();
             if (!(next_token instanceof String)) {
-                System.out.println("Plane.read_scope: String expected");
+                Freerouter.logInfo("Plane.read_scope: String expected");
                 return false;
             }
             net_name = (String) next_token;
             conduction_area = Shape.read_area_scope(p_par.scanner, p_par.layer_structure, skip_window_scopes);
         } catch (IOException e) {
-            System.out.println("Plane.read_scope: IO error scanning file");
-            System.out.println(e);
+            Freerouter.logError("Plane.read_scope: IO error scanning file");
+            Freerouter.logError(e);
             return false;
         }
         ReadScopeParameter.PlaneInfo plane_info = new ReadScopeParameter.PlaneInfo(conduction_area, net_name);
@@ -64,7 +65,7 @@ public class Plane extends ScopeKeyword {
     public static void write_scope(WriteScopeParameter p_par, board.ConductionArea p_conduction) throws IOException {
         int net_count = p_conduction.net_count();
         if (net_count <= 0 || net_count > 1) {
-            System.out.println("Plane.write_scope: unexpected net count");
+            Freerouter.logInfo("Plane.write_scope: unexpected net count");
             return;
         }
         String net_name = p_par.board.rules.nets.get(p_conduction.get_net_no(0)).name;

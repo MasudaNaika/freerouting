@@ -7,6 +7,7 @@ import geometry.planar.Point;
 import geometry.planar.Shape;
 import geometry.planar.TileShape;
 import geometry.planar.Vector;
+import gui.Freerouter;
 import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -209,7 +210,7 @@ public abstract class DrillItem extends Item implements Connectable, Serializabl
         int from_layer = first_layer();
         int to_layer = last_layer();
         if (p_layer < from_layer || p_layer > to_layer) {
-            System.out.println("DrillItem.get_tree_shape_on_layer: p_layer out of range");
+            Freerouter.logInfo("DrillItem.get_tree_shape_on_layer: p_layer out of range");
             return null;
         }
         return get_tree_shape(p_tree, p_layer - from_layer);
@@ -219,7 +220,7 @@ public abstract class DrillItem extends Item implements Connectable, Serializabl
         int from_layer = first_layer();
         int to_layer = last_layer();
         if (p_layer < from_layer || p_layer > to_layer) {
-            System.out.println("DrillItem.get_tile_shape_on_layer: p_layer out of range");
+            Freerouter.logInfo("DrillItem.get_tile_shape_on_layer: p_layer out of range");
             return null;
         }
         return get_tile_shape(p_layer - from_layer);
@@ -229,7 +230,7 @@ public abstract class DrillItem extends Item implements Connectable, Serializabl
         int from_layer = first_layer();
         int to_layer = last_layer();
         if (p_layer < from_layer || p_layer > to_layer) {
-            System.out.println("DrillItem.get_shape_on_layer: p_layer out of range");
+            Freerouter.logInfo("DrillItem.get_shape_on_layer: p_layer out of range");
             return null;
         }
         return get_shape(p_layer - from_layer);

@@ -29,6 +29,7 @@ import geometry.planar.Line;
 import geometry.planar.Shape;
 import geometry.planar.Side;
 import geometry.planar.TileShape;
+import gui.Freerouter;
 import java.util.Collection;
 import java.util.LinkedList;
 
@@ -59,9 +60,9 @@ public class ShapeSearchTree45Degree extends ShapeSearchTree {
     @Override
     public Collection<IncompleteFreeSpaceExpansionRoom> complete_shape(IncompleteFreeSpaceExpansionRoom p_room,
             int p_net_no, SearchTreeObject p_ignore_object, TileShape p_ignore_shape) {
-        
+
         if (!(p_room.get_contained_shape().is_IntOctagon()) && board.get_test_level() != TestLevel.RELEASE_VERSION) {
-            System.out.println("ShapeSearchTree45Degree.complete_shape: unexpected p_shape_to_be_contained");
+            Freerouter.logInfo("ShapeSearchTree45Degree.complete_shape: unexpected p_shape_to_be_contained");
             return new LinkedList<>();
         }
         IntOctagon shape_to_be_contained = p_room.get_contained_shape().bounding_octagon();
@@ -71,7 +72,7 @@ public class ShapeSearchTree45Degree extends ShapeSearchTree {
         IntOctagon start_shape = board.get_bounding_box().bounding_octagon();
         if (p_room.get_shape() != null) {
             if (!(p_room.get_shape() instanceof IntOctagon)) {
-                System.out.println("ShapeSearchTree45Degree.complete_shape: p_start_shape of type IntOctagon expected");
+                Freerouter.logInfo("ShapeSearchTree45Degree.complete_shape: p_start_shape of type IntOctagon expected");
                 return new LinkedList<>();
             }
             start_shape = p_room.get_shape().bounding_octagon().intersection(start_shape);
@@ -210,7 +211,7 @@ public class ShapeSearchTree45Degree extends ShapeSearchTree {
         Collection<IncompleteFreeSpaceExpansionRoom> result = new LinkedList<>();
         if (p_incomplete_room.get_contained_shape().is_empty()) {
             if (board.get_test_level().ordinal() >= TestLevel.ALL_DEBUGGING_OUTPUT.ordinal()) {
-                System.out.println("ShapeSearchTree45Degree.restrain_shape: p_shape_to_be_contained is empty");
+                Freerouter.logInfo("ShapeSearchTree45Degree.restrain_shape: p_shape_to_be_contained is empty");
             }
             return result;
         }
@@ -308,7 +309,7 @@ public class ShapeSearchTree45Degree extends ShapeSearchTree {
                 result = 0.5 * (p_obstacle_shape.llx - p_contained_shape.urx);
                 break;
             default:
-                System.out.println("ShapeSearchTree45Degree.signed_line_distance: p_obstacle_line_no out of range");
+                Freerouter.logInfo("ShapeSearchTree45Degree.signed_line_distance: p_obstacle_line_no out of range");
                 result = 0;
                 break;
         }
@@ -355,7 +356,7 @@ public class ShapeSearchTree45Degree extends ShapeSearchTree {
                 urx = p_obstacle_shape.llx;
                 break;
             default:
-                System.out.println("ShapeSearchTree45Degree.calc_outside_restrained_shape: p_obstacle_line_no out of range");
+                Freerouter.logInfo("ShapeSearchTree45Degree.calc_outside_restrained_shape: p_obstacle_line_no out of range");
                 break;
         }
 
@@ -403,7 +404,7 @@ public class ShapeSearchTree45Degree extends ShapeSearchTree {
                 llx = p_obstacle_shape.llx;
                 break;
             default:
-                System.out.println("ShapeSearchTree45Degree.calc_inside_restrained_shape: p_obstacle_line_no out of range");
+                Freerouter.logInfo("ShapeSearchTree45Degree.calc_inside_restrained_shape: p_obstacle_line_no out of range");
                 break;
         }
 

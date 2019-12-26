@@ -19,6 +19,7 @@
  */
 package geometry.planar;
 
+import gui.Freerouter;
 import java.io.Serializable;
 import java.math.BigInteger;
 
@@ -49,7 +50,7 @@ public class BigIntDirection extends Direction implements Serializable {
 
     @Override
     public Direction turn_45_degree(int p_factor) {
-        System.out.println("BigIntDirection: turn_45_degree not yet implemented");
+        Freerouter.logInfo("BigIntDirection: turn_45_degree not yet implemented");
         return this;
     }
 

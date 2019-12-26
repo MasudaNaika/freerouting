@@ -16,6 +16,7 @@
 package geometry.planar;
 
 import datastructures.Signum;
+import gui.Freerouter;
 import java.io.Serializable;
 
 /**
@@ -46,7 +47,7 @@ public class LineSegment implements Serializable {
      */
     public LineSegment(Polyline p_polyline, int p_no) {
         if (p_no <= 0 || p_no >= p_polyline.arr.length - 1) {
-            System.out.println("LineSegment from Polyline: p_no out of range");
+            Freerouter.logInfo("LineSegment from Polyline: p_no out of range");
             start = null;
             middle = null;
             end = null;
@@ -64,7 +65,7 @@ public class LineSegment implements Serializable {
     public LineSegment(PolylineShape p_shape, int p_no) {
         int line_count = p_shape.border_line_count();
         if (p_no < 0 || p_no >= line_count) {
-            System.out.println("LineSegment from TileShape: p_no out of range");
+            Freerouter.logInfo("LineSegment from TileShape: p_no out of range");
             start = null;
             middle = null;
             end = null;
@@ -194,7 +195,7 @@ public class LineSegment implements Serializable {
      */
     public boolean contains(Point p_point) {
         if (!(p_point instanceof IntPoint)) {
-            System.out.println("LineSegments.contains currently only implementet for IntPoints");
+            Freerouter.logInfo("LineSegments.contains currently only implementet for IntPoints");
             return false;
         }
         if (middle.side_of(p_point) != Side.COLLINEAR) {
@@ -649,7 +650,7 @@ public class LineSegment implements Serializable {
                             intersection[intersection_count] = is;
                             ++intersection_count;
                         } else {
-                            System.out.println("border_intersections: intersection_count to big!");
+                            Freerouter.logInfo("border_intersections: intersection_count to big!");
                         }
 
                     }
@@ -680,7 +681,7 @@ public class LineSegment implements Serializable {
         }
 
         if (intersection_count != 1) {
-            System.out.println("LineSegment.border_intersections: intersection_count 1 expected");
+            Freerouter.logInfo("LineSegment.border_intersections: intersection_count 1 expected");
         }
 
         int[] normalised_result = {result[0]};

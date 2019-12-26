@@ -21,6 +21,7 @@ package designformats.specctra;
 
 import datastructures.IdentifierType;
 import datastructures.IndentFileWriter;
+import gui.Freerouter;
 import java.io.IOException;
 
 /**
@@ -80,19 +81,19 @@ public class PolylinePath extends Path {
 
     @Override
     public geometry.planar.Shape transform_to_board_rel(CoordinateTransform p_coordinate_transform) {
-        System.out.println("PolylinePath.transform_to_board_rel not implemented");
+        Freerouter.logInfo("PolylinePath.transform_to_board_rel not implemented");
         return null;
     }
 
     @Override
     public geometry.planar.Shape transform_to_board(CoordinateTransform p_coordinate_transform) {
-        System.out.println("PolylinePath.transform_to_board_rel not implemented");
+        Freerouter.logInfo("PolylinePath.transform_to_board_rel not implemented");
         return null;
     }
 
     @Override
     public Rectangle bounding_box() {
-        System.out.println("PolylinePath.boundingbox not implemented");
+        Freerouter.logInfo("PolylinePath.boundingbox not implemented");
         return null;
     }
 }

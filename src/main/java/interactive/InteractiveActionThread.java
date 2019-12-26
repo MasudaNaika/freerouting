@@ -20,6 +20,7 @@
  */
 package interactive;
 
+import gui.Freerouter;
 import java.awt.Graphics;
 import java.io.IOException;
 import java.io.InputStream;
@@ -68,7 +69,11 @@ public abstract class InteractiveActionThread implements datastructures.Stoppabl
         SwingWorker<Void, Void> worker = new SwingWorker<>() {
             @Override
             protected Void doInBackground() throws Exception {
-                thread_action();
+                try {
+                    thread_action();
+                } catch (Exception ex) {
+                    Freerouter.logError(ex);
+                }
                 return null;
             }
 
@@ -185,12 +190,13 @@ public abstract class InteractiveActionThread implements datastructures.Stoppabl
                         InteractiveState new_state
                                 = logfile_scope.read_scope(hdlg.logfile, hdlg.interactive_state, hdlg);
                         if (new_state == null) {
-                            System.out.println("BoardHandling:read_logfile: inconsistent logfile scope");
+                            Freerouter.logInfo("BoardHandling:read_logfile: inconsistent logfile scope");
                             new_state = previous_state;
                         }
                         hdlg.repaint();
                         hdlg.set_interactive_state(new_state);
                     } catch (Exception e) {
+                        Freerouter.logError(e);
                         done = true;
                     }
 
@@ -200,7 +206,7 @@ public abstract class InteractiveActionThread implements datastructures.Stoppabl
             try {
                 input_stream.close();
             } catch (IOException e) {
-                System.out.println("ReadLogfileThread: unable to close input stream");
+                Freerouter.logError("ReadLogfileThread: unable to close input stream");
             }
             hdlg.get_panel().board_frame.refresh_windows();
             hdlg.screen_messages.set_write_protected(false);

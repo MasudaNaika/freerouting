@@ -19,6 +19,7 @@
  */
 package datastructures;
 
+import gui.Freerouter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
@@ -51,7 +52,7 @@ public class IdentifierType {
                 p_file.write(quote(p_name));
             }
         } catch (IOException e) {
-            System.out.println("IndentFileWriter.new_line: unable to write to file");
+            Freerouter.logError("IndentFileWriter.new_line: unable to write to file");
         }
     }
 
@@ -60,7 +61,7 @@ public class IdentifierType {
      */
     private boolean is_legal(String p_string) {
         if (p_string == null) {
-            System.out.println("IdentifierType.is_legal: p_string is null");
+            Freerouter.logError("IdentifierType.is_legal: p_string is null");
             return false;
         }
         for (String str : reserved_chars) {

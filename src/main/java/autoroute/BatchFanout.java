@@ -18,6 +18,7 @@ package autoroute;
 import board.RoutingBoard;
 import datastructures.TimeLimit;
 import geometry.planar.FloatPoint;
+import gui.Freerouter;
 import interactive.InteractiveActionThread;
 import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.util.Collection;
@@ -99,7 +100,7 @@ public class BatchFanout {
             --components_to_go;
         }
         if (routing_board.get_test_level() != board.TestLevel.RELEASE_VERSION) {
-            System.out.println("fanout pass: " + (p_pass_no + 1) + ", routed: " + routed_count
+            Freerouter.logInfo("fanout pass: " + (p_pass_no + 1) + ", routed: " + routed_count
                     + ", not routed: " + not_routed_count + ", errors: " + insert_error_count);
         }
         return routed_count;

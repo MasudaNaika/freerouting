@@ -30,6 +30,7 @@ import geometry.planar.Polyline;
 import geometry.planar.Shape;
 import geometry.planar.TileShape;
 import geometry.planar.Vector;
+import gui.Freerouter;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.io.IOException;
@@ -57,7 +58,7 @@ public class PolylineTrace extends Trace implements Serializable {
         super(p_layer, p_half_width, p_net_no_arr, p_clearance_type,
                 p_id_no, p_group_no, p_fixed_state, p_board);
         if (p_polyline.arr.length < 3) {
-            System.out.println("PolylineTrace: p_polyline.arr.length >= 3 expected");
+            Freerouter.logInfo("PolylineTrace: p_polyline.arr.length >= 3 expected");
         }
         lines = p_polyline;
     }
@@ -631,7 +632,7 @@ public class PolylineTrace extends Trace implements Serializable {
             return null;
         }
         if (split_polylines.length != 2) {
-            System.out.println("PolylineTrace.split: array of length 2 expected for split_polylines");
+            Freerouter.logInfo("PolylineTrace.split: array of length 2 expected for split_polylines");
             return null;
         }
         if (split_inside_drill_pad_prohibited(p_line_no, p_new_end_line)) {
@@ -780,7 +781,7 @@ public class PolylineTrace extends Trace implements Serializable {
     @Override
     public TileShape get_trace_connection_shape(ShapeSearchTree p_search_tree, int p_index) {
         if (p_index < 0 || p_index >= tile_shape_count()) {
-            System.out.println("PolylineTrace.get_trace_connection_shape p_index out of range");
+            Freerouter.logInfo("PolylineTrace.get_trace_connection_shape p_index out of range");
             return null;
         }
         LineSegment curr_line_segment = new LineSegment(lines, p_index + 1);
@@ -793,6 +794,7 @@ public class PolylineTrace extends Trace implements Serializable {
         try {
             p_stream.writeObject(this);
         } catch (IOException e) {
+            Freerouter.logError(e);
             return false;
         }
         return true;

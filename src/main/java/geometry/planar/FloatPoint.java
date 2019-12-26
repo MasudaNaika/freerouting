@@ -19,6 +19,7 @@
  */
 package geometry.planar;
 
+import gui.Freerouter;
 import java.io.Serializable;
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -205,7 +206,7 @@ public class FloatPoint implements Serializable {
      */
     public double scalar_product(FloatPoint p_1, FloatPoint p_2) {
         if (p_1 == null || p_2 == null) {
-            System.out.println("FloatPoint.scalar_product: parameter point is null");
+            Freerouter.logInfo("FloatPoint.scalar_product: parameter point is null");
             return 0;
         }
         double dx_1 = p_1.x - x;
@@ -238,7 +239,7 @@ public class FloatPoint implements Serializable {
         double dx = p_to_point.x - x;
         double dy = p_to_point.y - y;
         if (dx == 0 && dy == 0) {
-            System.out.println("IntPoint.change_length: Points are equal");
+            Freerouter.logInfo("IntPoint.change_length: Points are equal");
             return p_to_point;
         }
         double length = Math.sqrt(dx * dx + dy * dy);

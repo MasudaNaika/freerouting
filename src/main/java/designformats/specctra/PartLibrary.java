@@ -19,6 +19,7 @@
  */
 package designformats.specctra;
 
+import gui.Freerouter;
 import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import java.io.IOException;
 import java.util.Collection;
@@ -46,12 +47,12 @@ public class PartLibrary extends ScopeKeyword {
             try {
                 next_token = p_par.scanner.next_token();
             } catch (IOException e) {
-                System.out.println("PartLibrary.read_scope: IO error scanning file");
-                System.out.println(e);
+                Freerouter.logError("PartLibrary.read_scope: IO error scanning file");
+                Freerouter.logError(e);
                 return false;
             }
             if (next_token == null) {
-                System.out.println("PartLibrary.read_scope: unexpected end of file");
+                Freerouter.logInfo("PartLibrary.read_scope: unexpected end of file");
                 return false;
             }
             if (next_token == CLOSED_BRACKET) {
@@ -144,18 +145,18 @@ public class PartLibrary extends ScopeKeyword {
         try {
             Object next_token = p_scanner.next_token();
             if (!(next_token instanceof String)) {
-                System.out.println("PartLibrary.read_logical_part_mapping: string expected");
+                Freerouter.logInfo("PartLibrary.read_logical_part_mapping: string expected");
                 return null;
             }
             String name = (String) next_token;
             next_token = p_scanner.next_token();
             if (next_token != Keyword.OPEN_BRACKET) {
-                System.out.println("PartLibrary.read_logical_part_mapping: open bracket expected");
+                Freerouter.logInfo("PartLibrary.read_logical_part_mapping: open bracket expected");
                 return null;
             }
             next_token = p_scanner.next_token();
             if (next_token != Keyword.COMPONENT_SCOPE) {
-                System.out.println("PartLibrary.read_logical_part_mapping: Keyword.COMPONENT_SCOPE expected");
+                Freerouter.logInfo("PartLibrary.read_logical_part_mapping: Keyword.COMPONENT_SCOPE expected");
                 return null;
             }
             SortedSet<String> result = new ObjectAVLTreeSet<>();
@@ -166,19 +167,19 @@ public class PartLibrary extends ScopeKeyword {
                     break;
                 }
                 if (!(next_token instanceof String)) {
-                    System.out.println("PartLibrary.read_logical_part_mapping: string expected");
+                    Freerouter.logInfo("PartLibrary.read_logical_part_mapping: string expected");
                     return null;
                 }
                 result.add((String) next_token);
             }
             next_token = p_scanner.next_token();
             if (next_token != Keyword.CLOSED_BRACKET) {
-                System.out.println("PartLibrary.read_logical_part_mapping: closing bracket expected");
+                Freerouter.logInfo("PartLibrary.read_logical_part_mapping: closing bracket expected");
                 return null;
             }
             return new LogicalPartMapping(name, result);
         } catch (IOException e) {
-            System.out.println("PartLibrary.read_logical_part_mapping: IO error scanning file");
+            Freerouter.logError("PartLibrary.read_logical_part_mapping: IO error scanning file");
             return null;
         }
     }
@@ -189,11 +190,11 @@ public class PartLibrary extends ScopeKeyword {
         try {
             next_token = p_scanner.next_token();
         } catch (IOException e) {
-            System.out.println("PartLibrary.read_logical_part: IO error scanning file");
+            Freerouter.logError("PartLibrary.read_logical_part: IO error scanning file");
             return null;
         }
         if (!(next_token instanceof String)) {
-            System.out.println("PartLibrary.read_logical_part: string expected");
+            Freerouter.logInfo("PartLibrary.read_logical_part: string expected");
             return null;
         }
         String part_name = (String) next_token;
@@ -202,11 +203,11 @@ public class PartLibrary extends ScopeKeyword {
             try {
                 next_token = p_scanner.next_token();
             } catch (IOException e) {
-                System.out.println("PartLibrary.read_logical_part: IO error scanning file");
+                Freerouter.logError("PartLibrary.read_logical_part: IO error scanning file");
                 return null;
             }
             if (next_token == null) {
-                System.out.println("PartLibrary.read_logical_part: unexpected end of file");
+                Freerouter.logInfo("PartLibrary.read_logical_part: unexpected end of file");
                 return null;
             }
             if (next_token == CLOSED_BRACKET) {
@@ -237,38 +238,38 @@ public class PartLibrary extends ScopeKeyword {
             p_scanner.yybegin(SpecctraFileScanner.NAME);
             Object next_token = p_scanner.next_token();
             if (!(next_token instanceof String)) {
-                System.out.println("PartLibrary.read_part_pin: string expected");
+                Freerouter.logInfo("PartLibrary.read_part_pin: string expected");
                 return null;
             }
             String pin_name = (String) next_token;
             next_token = p_scanner.next_token();
             if (!(next_token instanceof Integer)) {
-                System.out.println("PartLibrary.read_part_pin: integer expected");
+                Freerouter.logInfo("PartLibrary.read_part_pin: integer expected");
                 return null;
             }
             p_scanner.yybegin(SpecctraFileScanner.NAME);
             next_token = p_scanner.next_token();
             if (!(next_token instanceof String)) {
-                System.out.println("PartLibrary.read_part_pin: string expected");
+                Freerouter.logInfo("PartLibrary.read_part_pin: string expected");
                 return null;
             }
             String gate_name = (String) next_token;
             next_token = p_scanner.next_token();
             if (!(next_token instanceof Integer)) {
-                System.out.println("PartLibrary.read_part_pin: integer expected");
+                Freerouter.logInfo("PartLibrary.read_part_pin: integer expected");
                 return null;
             }
             int gate_swap_code = (Integer) next_token;
             p_scanner.yybegin(SpecctraFileScanner.NAME);
             next_token = p_scanner.next_token();
             if (!(next_token instanceof String)) {
-                System.out.println("PartLibrary.read_part_pin: string expected");
+                Freerouter.logInfo("PartLibrary.read_part_pin: string expected");
                 return null;
             }
             String gate_pin_name = (String) next_token;
             next_token = p_scanner.next_token();
             if (!(next_token instanceof Integer)) {
-                System.out.println("PartLibrary.read_part_pin: integer expected");
+                Freerouter.logInfo("PartLibrary.read_part_pin: integer expected");
                 return null;
             }
             int gate_pin_swap_code = (Integer) next_token;
@@ -281,7 +282,7 @@ public class PartLibrary extends ScopeKeyword {
             }
             return new PartPin(pin_name, gate_name, gate_swap_code, gate_pin_name, gate_pin_swap_code);
         } catch (IOException e) {
-            System.out.println("PartLibrary.read_part_pin: IO error scanning file");
+            Freerouter.logError("PartLibrary.read_part_pin: IO error scanning file");
             return null;
         }
     }

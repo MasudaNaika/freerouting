@@ -22,6 +22,7 @@ package designformats.specctra;
 import board.BasicBoard;
 import board.TestLevel;
 import datastructures.IndentFileWriter;
+import gui.Freerouter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -57,8 +58,8 @@ public class DsnFile {
             try {
                 curr_token = scanner.next_token();
             } catch (IOException e) {
-                System.out.println("DsnFile.read: IO error scanning file");
-                System.out.println(e);
+                Freerouter.logError("DsnFile.read: IO error scanning file");
+                Freerouter.logError(e);
                 return ReadResult.ERROR;
             }
             boolean keyword_ok = true;
@@ -69,7 +70,7 @@ public class DsnFile {
                 scanner.yybegin(SpecctraFileScanner.NAME); // to overread the name of the pcb for i = 2
             }
             if (!keyword_ok) {
-                System.out.println("DsnFile.read: specctra dsn file format expected");
+                Freerouter.logInfo("DsnFile.read: specctra dsn file format expected");
                 return ReadResult.ERROR;
             }
         }
@@ -196,20 +197,20 @@ public class DsnFile {
         //tests.Validate.check("before writing dsn", p_board);
         IndentFileWriter output_file = new IndentFileWriter(p_file);
         if (output_file == null) {
-            System.out.println("unable to write dsn file");
+            Freerouter.logInfo("unable to write dsn file");
             return false;
         }
 
         try {
             write_pcb_scope(p_board_handling, output_file, p_design_name, p_compat_mode);
         } catch (IOException e) {
-            System.out.println("unable to write dsn file");
+            Freerouter.logError("unable to write dsn file");
             return false;
         }
         try {
             output_file.close();
         } catch (IOException e) {
-            System.out.println("unable to close dsn file");
+            Freerouter.logError("unable to close dsn file");
             return false;
         }
         return true;
@@ -245,12 +246,12 @@ public class DsnFile {
             if (next_token == Keyword.ON) {
                 result = true;
             } else if (next_token != Keyword.OFF) {
-                System.out.println("DsnFile.read_boolean: Keyword.OFF expected");
+                Freerouter.logInfo("DsnFile.read_boolean: Keyword.OFF expected");
             }
             ScopeKeyword.skip_scope(p_scanner);
             return result;
         } catch (IOException e) {
-            System.out.println("DsnFile.read_boolean: IO error scanning file");
+            Freerouter.logError("DsnFile.read_boolean: IO error scanning file");
             return false;
         }
     }
@@ -262,17 +263,17 @@ public class DsnFile {
             if (next_token instanceof Integer) {
                 value = ((Integer) next_token);
             } else {
-                System.out.println("DsnFile.read_integer_scope: number expected");
+                Freerouter.logInfo("DsnFile.read_integer_scope: number expected");
                 return 0;
             }
             next_token = p_scanner.next_token();
             if (next_token != Keyword.CLOSED_BRACKET) {
-                System.out.println("DsnFile.read_integer_scope: closing bracket expected");
+                Freerouter.logInfo("DsnFile.read_integer_scope: closing bracket expected");
                 return 0;
             }
             return value;
         } catch (IOException e) {
-            System.out.println("DsnFile.read_integer_scope: IO error scanning file");
+            Freerouter.logError("DsnFile.read_integer_scope: IO error scanning file");
             return 0;
         }
     }
@@ -286,17 +287,17 @@ public class DsnFile {
             } else if (next_token instanceof Integer) {
                 value = ((Integer) next_token);
             } else {
-                System.out.println("DsnFile.read_float_scope: number expected");
+                Freerouter.logInfo("DsnFile.read_float_scope: number expected");
                 return 0;
             }
             next_token = p_scanner.next_token();
             if (next_token != Keyword.CLOSED_BRACKET) {
-                System.out.println("DsnFile.read_float_scope: closing bracket expected");
+                Freerouter.logInfo("DsnFile.read_float_scope: closing bracket expected");
                 return 0;
             }
             return value;
         } catch (IOException e) {
-            System.out.println("DsnFile.read_float_scope: IO error scanning file");
+            Freerouter.logError("DsnFile.read_float_scope: IO error scanning file");
             return 0;
         }
     }
@@ -306,17 +307,17 @@ public class DsnFile {
             p_scanner.yybegin(SpecctraFileScanner.NAME);
             Object next_token = p_scanner.next_token();
             if (!(next_token instanceof String)) {
-                System.out.println("DsnFile:read_string_scope: String expected");
+                Freerouter.logInfo("DsnFile:read_string_scope: String expected");
                 return null;
             }
             String result = (String) next_token;
             next_token = p_scanner.next_token();
             if (next_token != Keyword.CLOSED_BRACKET) {
-                System.out.println("DsnFile.read_string_scope: closing bracket expected");
+                Freerouter.logInfo("DsnFile.read_string_scope: closing bracket expected");
             }
             return result;
         } catch (IOException e) {
-            System.out.println("DsnFile.read_string_scope: IO error scanning file");
+            Freerouter.logError("DsnFile.read_string_scope: IO error scanning file");
             return null;
         }
     }
@@ -331,13 +332,13 @@ public class DsnFile {
                     break;
                 }
                 if (!(next_token instanceof String)) {
-                    System.out.println("DsnFileread_string_list_scope: string expected");
+                    Freerouter.logInfo("DsnFileread_string_list_scope: string expected");
                     return null;
                 }
                 result.add((String) next_token);
             }
         } catch (IOException e) {
-            System.out.println("DsnFile.read_string_list_scope: IO error scanning file");
+            Freerouter.logError("DsnFile.read_string_list_scope: IO error scanning file");
         }
         return result;
     }

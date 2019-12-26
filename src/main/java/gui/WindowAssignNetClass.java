@@ -193,7 +193,7 @@ public class WindowAssignNetClass extends BoardSavableSubWindow {
             }
             Object first_row_object = getValueAt(p_row, 0);
             if (!(first_row_object instanceof Net)) {
-                System.out.println("AssignNetRuLesVindow.setValueAt: Net expected");
+                Freerouter.logInfo("AssignNetRuLesVindow.setValueAt: Net expected");
                 return;
             }
             Net curr_net = (Net) first_row_object;

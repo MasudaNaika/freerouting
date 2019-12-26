@@ -27,6 +27,7 @@ import datastructures.IdentifierType;
 import datastructures.IndentFileWriter;
 import geometry.planar.FloatPoint;
 import geometry.planar.Point;
+import gui.Freerouter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Collection;
@@ -50,7 +51,7 @@ public class SessionFile {
         try {
             output_file = new IndentFileWriter(p_output_stream);
         } catch (Exception e) {
-            System.out.println("unable to create session file");
+            Freerouter.logError("unable to create session file");
             return false;
         }
         String session_name = p_design_name.replace(".dsn", ".ses");
@@ -59,13 +60,13 @@ public class SessionFile {
             IdentifierType identifier_type = new IdentifierType(reserved_chars, p_board.communication.specctra_parser_info.string_quote);
             write_session_scope(p_board, identifier_type, output_file, session_name, p_design_name);
         } catch (IOException e) {
-            System.out.println("unable to write session file");
+            Freerouter.logError("unable to write session file");
             return false;
         }
         try {
             output_file.close();
         } catch (IOException e) {
-            System.out.println("unable to close session file");
+            Freerouter.logError("unable to close session file");
             return false;
         }
         return true;
@@ -178,7 +179,7 @@ public class SessionFile {
                     library.Package.Pin package_pin = curr_cmp.get_package().get_pin(curr_pin.get_index_in_package());
                     p_identifier_type.write(package_pin.name, p_file);
                 } else {
-                    System.out.println("SessionFile.write_was_is: component not found");
+                    Freerouter.logInfo("SessionFile.write_was_is: component not found");
                 }
                 p_file.write(" ");
                 board.Component swap_cmp = p_board.components.get(swapped_with.get_component_no());
@@ -188,7 +189,7 @@ public class SessionFile {
                     library.Package.Pin package_pin = swap_cmp.get_package().get_pin(swapped_with.get_index_in_package());
                     p_identifier_type.write(package_pin.name, p_file);
                 } else {
-                    System.out.println("SessionFile.write_was_is: component not found");
+                    Freerouter.logInfo("SessionFile.write_was_is: component not found");
                 }
                 p_file.write(")");
             }
@@ -236,7 +237,7 @@ public class SessionFile {
             --last_layer_no;
         }
         if (first_layer_no >= p_board.get_layer_count() || last_layer_no < 0) {
-            System.out.println("SessionFile.write_padstack: padstack shape not found");
+            Freerouter.logInfo("SessionFile.write_padstack: padstack shape not found");
             return;
         }
 
@@ -292,7 +293,7 @@ public class SessionFile {
                 p_file.write("net ");
                 rules.Net curr_net = p_board.rules.nets.get(p_net_no);
                 if (curr_net == null) {
-                    System.out.println("SessionFile.write_net: net not found");
+                    Freerouter.logInfo("SessionFile.write_net: net not found");
                 } else {
                     p_identifier_type.write(curr_net.name, p_file);
                 }
@@ -401,7 +402,7 @@ public class SessionFile {
             IndentFileWriter p_file) throws IOException {
         int net_count = p_conduction_area.net_count();
         if (net_count <= 0 || net_count > 1) {
-            System.out.println("SessionFile.write_conduction_area: unexpected net count");
+            Freerouter.logInfo("SessionFile.write_conduction_area: unexpected net count");
             return;
         }
         geometry.planar.Area curr_area = p_conduction_area.get_area();

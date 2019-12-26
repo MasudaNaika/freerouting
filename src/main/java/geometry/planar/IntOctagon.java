@@ -15,6 +15,7 @@
  */
 package geometry.planar;
 
+import gui.Freerouter;
 import java.io.Serializable;
 import java.util.Arrays;
 
@@ -618,7 +619,7 @@ public class IntOctagon extends RegularTileShape implements Serializable {
                 tmp = llx - p_x - p_y;
                 break;
             default:
-                System.out.println("IntOctagon.side_of_border_line: p_border_line_no out of range");
+                Freerouter.logInfo("IntOctagon.side_of_border_line: p_border_line_no out of range");
                 tmp = 0;
                 break;
         }
@@ -987,7 +988,7 @@ public class IntOctagon extends RegularTileShape implements Serializable {
 
     @Override
     public int border_line_index(Line p_line) {
-        System.out.println("edge_index_of_line not yet implemented for octagons");
+        Freerouter.logInfo("edge_index_of_line not yet implemented for octagons");
         return -1;
     }
 
@@ -1045,7 +1046,7 @@ public class IntOctagon extends RegularTileShape implements Serializable {
                 result_y = p_point.y + p_point.x - result_x;
                 break;
             default:
-                System.out.println("IntOctagon.border_point: unexpected 45 degree direction");
+                Freerouter.logInfo("IntOctagon.border_point: unexpected 45 degree direction");
                 result_x = 0;
                 result_y = 0;
         }
@@ -1177,7 +1178,7 @@ public class IntOctagon extends RegularTileShape implements Serializable {
                 break;
             }
             default:
-                System.out.println("IntOctagon.border_line_side_of: p_line_no out of range");
+                Freerouter.logInfo("IntOctagon.border_line_side_of: p_line_no out of range");
                 result = Side.COLLINEAR;
                 break;
         }

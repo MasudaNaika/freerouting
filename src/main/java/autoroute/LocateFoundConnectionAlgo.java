@@ -28,6 +28,7 @@ import board.TestLevel;
 import geometry.planar.FloatPoint;
 import geometry.planar.IntPoint;
 import geometry.planar.TileShape;
+import gui.Freerouter;
 import java.awt.Graphics;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -72,7 +73,7 @@ public abstract class LocateFoundConnectionAlgo {
         connection_items = new LinkedList<>();
         BacktrackElement start_info = backtrack_array[backtrack_array.length - 1];
         if (!(start_info.door instanceof TargetItemExpansionDoor)) {
-            System.out.println("LocateFoundConnectionAlgo: ItemExpansionDoor expected for start_info.door");
+            Freerouter.logInfo("LocateFoundConnectionAlgo: ItemExpansionDoor expected for start_info.door");
             start_item = null;
             start_layer = 0;
             target_item = null;
@@ -99,7 +100,7 @@ public abstract class LocateFoundConnectionAlgo {
             target_layer = curr_drill.first_layer + p_maze_search_result.section_no_of_door;
             at_fanout_end = true;
         } else {
-            System.out.println("LocateFoundConnectionAlgo: unexpected type of destination_door");
+            Freerouter.logInfo("LocateFoundConnectionAlgo: unexpected type of destination_door");
             target_item = null;
             target_layer = 0;
             return;
@@ -279,7 +280,7 @@ public abstract class LocateFoundConnectionAlgo {
             }
             int curr_section_no = curr_maze_search_element.section_no_of_backtrack_door;
             if (curr_section_no >= curr_backtrack_door.maze_search_element_count()) {
-                System.out.println("LocateFoundConnectionAlgo: curr_section_no to big");
+                Freerouter.logInfo("LocateFoundConnectionAlgo: curr_section_no to big");
                 curr_section_no = curr_backtrack_door.maze_search_element_count() - 1;
             }
             if (curr_backtrack_door instanceof ExpansionDrill) {

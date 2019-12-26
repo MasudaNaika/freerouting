@@ -19,6 +19,7 @@
  */
 package designformats.specctra;
 
+import gui.Freerouter;
 import java.io.IOException;
 
 /**
@@ -46,8 +47,8 @@ public class ScopeKeyword extends Keyword {
             try {
                 curr_token = p_scanner.next_token();
             } catch (IOException e) {
-                System.out.println("ScopeKeyword.skip_scope: Error while scanning file");
-                System.out.println(e);
+                Freerouter.logError("ScopeKeyword.skip_scope: Error while scanning file");
+                Freerouter.logError(e);
                 return false;
             }
             if (curr_token == null) {
@@ -72,8 +73,8 @@ public class ScopeKeyword extends Keyword {
             try {
                 next_token = p_par.scanner.next_token();
             } catch (IOException e) {
-                System.out.println("ScopeKeyword.read_scope: IO error scanning file");
-                System.out.println(e);
+                Freerouter.logError("ScopeKeyword.read_scope: IO error scanning file");
+                Freerouter.logError(e);
                 return false;
             }
             if (next_token == null) {
