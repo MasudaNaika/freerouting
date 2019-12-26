@@ -3,14 +3,11 @@ package gui;
 import java.awt.Desktop;
 import java.awt.Taskbar;
 import java.awt.Window;
-import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -66,15 +63,10 @@ public class Freerouter {
     }
 
     private static void initLogger() {
-        try {
-            URL url = Freerouter.class.getResource("/gui/resources/log4j2.xml");
-            Path log4jxml = Path.of(url.toURI());
-            try (InputStream in = new BufferedInputStream(Files.newInputStream(log4jxml))) {
-                ConfigurationSource src = new ConfigurationSource(in);
-                Configurator.initialize(null, src);
-            } catch (IOException ex) {
-            }
-        } catch (URISyntaxException ex) {
+        try (InputStream is = Freerouter.class.getResourceAsStream("resources/log4j2.xml")) {
+            ConfigurationSource src = new ConfigurationSource(is);
+            Configurator.initialize(null, src);
+        } catch (IOException ex) {
         }
     }
 
