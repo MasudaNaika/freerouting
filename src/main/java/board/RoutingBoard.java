@@ -708,6 +708,10 @@ public class RoutingBoard extends BasicBoard implements Serializable {
             join_changed_area(new_polyline.corner_approx(i), p_layer);
         }
         PolylineTrace new_trace = insert_trace_without_cleaning(new_polyline, p_layer, p_half_width, p_net_no_arr, p_clearance_class_no, FixedState.UNFIXED);
+        // add null check 2019/12/26
+        if (new_trace == null) {
+            return null;
+        }
         new_trace.combine();
 
         IntOctagon tidy_region = null;

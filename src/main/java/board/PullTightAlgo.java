@@ -394,6 +394,10 @@ public abstract class PullTightAlgo {
                 board.remove_item(curr_trace);
                 curr_trace = board.insert_trace_without_cleaning(adjusted_polyline, trace_layer, curr_half_width, curr_trace.net_no_arr,
                         curr_cl_class, curr_fixed_state);
+                // add null check 2019/12/26
+                if (curr_trace == null) {
+                    continue;
+                }
                 for (int curr_net_no : curr_trace.net_no_arr) {
                     board.split_traces(adjusted_polyline.first_corner(), trace_layer, curr_net_no);
                     board.split_traces(adjusted_polyline.last_corner(), trace_layer, curr_net_no);
