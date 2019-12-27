@@ -25,6 +25,7 @@ import datastructures.UndoableObjects;
 import geometry.planar.FloatPoint;
 import gui.Freerouter;
 import interactive.InteractiveActionThread;
+import java.text.NumberFormat;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.ResourceBundle;
@@ -51,9 +52,14 @@ public class BatchOptRoute {
      * Optimize the route on the board.
      */
     public void optimize_board() {
+
+        int via_count = routing_board.get_vias().size();
+        double trace_length = Math.round(routing_board.cumulative_trace_length());
+        NumberFormat nf = NumberFormat.getInstance(thread.hdlg.get_locale());
+
         if (routing_board.get_test_level() != TestLevel.RELEASE_VERSION) {
-            Freerouter.logInfo("Before optimize: Via count: " + routing_board.get_vias().size()
-                    + ", trace length: " + Math.round(routing_board.cumulative_trace_length()));
+            Freerouter.logInfo("Before optimize: Via count: " + via_count
+                    + ", Trace len: " + nf.format(trace_length));
         }
         boolean route_improved = true;
         int curr_pass_no = 0;
@@ -62,7 +68,13 @@ public class BatchOptRoute {
         while (route_improved) {
             ++curr_pass_no;
             boolean with_prefered_directions = (curr_pass_no % 2 != 0); // to create more variations
+            Freerouter.logInfo("Batch optRoute pass: " + curr_pass_no
+                    + " Via count: " + via_count + " Trace len: " + nf.format(trace_length) + " start.");
             route_improved = opt_route_pass(curr_pass_no, with_prefered_directions);
+            via_count = routing_board.get_vias().size();
+            trace_length = Math.round(routing_board.cumulative_trace_length());
+            Freerouter.logInfo("Batch optRoute pass: " + curr_pass_no
+                    + " Via count: " + via_count + " Trace len: " + nf.format(trace_length) + " end.");
         }
     }
 

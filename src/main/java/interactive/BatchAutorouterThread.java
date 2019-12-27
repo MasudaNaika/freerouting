@@ -29,7 +29,6 @@ import geometry.planar.FloatPoint;
 import gui.Freerouter;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.time.ZonedDateTime;
 import java.util.ResourceBundle;
 
 /**
@@ -54,7 +53,7 @@ public class BatchAutorouterThread extends InteractiveActionThread {
     protected void thread_action() {
 
         try {
-            Freerouter.logInfo("Start BatchAutorouter at " + ZonedDateTime.now().toString());
+            Freerouter.logInfo("BatchAutorouter start.");
             
             ResourceBundle resources
                     = ResourceBundle.getBundle("interactive.resources.InteractiveState", hdlg.get_locale());
@@ -77,9 +76,9 @@ public class BatchAutorouterThread extends InteractiveActionThread {
             }
             hdlg.get_routing_board().finish_autoroute();
             
-            Freerouter.logInfo("End BatchAutorouter at " + ZonedDateTime.now().toString());
+            Freerouter.logInfo("BatchAutorouter end.");
             
-            Freerouter.logInfo("Start BatchOptRoute at " + ZonedDateTime.now().toString());
+            Freerouter.logInfo("BatchOptRoute start.");
             
             if (hdlg.get_settings().autoroute_settings.get_with_postroute() && !is_stop_requested()) {
                 String opt_message = resources.getString("batch_optimizer") + " " + resources.getString("stop_message");
@@ -118,7 +117,7 @@ public class BatchAutorouterThread extends InteractiveActionThread {
                 tests.Validate.multiple_of_45_degree("after autoroute: ", hdlg.get_routing_board());
             }
             
-            Freerouter.logInfo("End BatchOptRoute at " + ZonedDateTime.now().toString());
+            Freerouter.logInfo("BatchAutorouter end.");
         } catch (Exception e) {
 //            Freerouter.logError(e);
         }

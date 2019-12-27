@@ -21,7 +21,6 @@
 package gui;
 
 import board.TestLevel;
-import interactive.InteractiveActionThread;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -233,7 +232,6 @@ public class MainApplication extends JFrame {
      * Exit the Application
      */
     private static void exit(int code) {
-        InteractiveActionThread.shutdown();
         System.exit(code);
     }
 

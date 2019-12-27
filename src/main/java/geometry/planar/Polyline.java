@@ -931,10 +931,14 @@ public class Polyline implements Serializable {
         if (!p_line_arr[0].is_equal_or_opposite(p_line_arr[2])) {
             ++new_length;
         }
-        // else  skip the first line
+        // else skip the first line
         tmp_arr[new_length] = p_line_arr[1];
         ++new_length;
         for (int i = 2; i < p_line_arr.length - 2; ++i) {
+            // array index check 2019/12/27
+            if (!isValidIndex(tmp_arr, new_length - 1) || !isValidIndex(p_line_arr, i + 1)) {
+                continue;
+            }
             if (tmp_arr[new_length - 1].is_equal_or_opposite(p_line_arr[i + 1])) {
                 // skip 2 lines
                 --new_length;
@@ -961,6 +965,10 @@ public class Polyline implements Serializable {
         Line[] result = new Line[new_length];
         System.arraycopy(tmp_arr, 0, result, 0, new_length);
         return result;
+    }
+    
+    private static boolean isValidIndex(Object[] arr, int idx) {
+        return 0 <= idx && idx < arr.length;
     }
 
     /**

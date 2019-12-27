@@ -28,8 +28,8 @@ import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.ThreadFactory;
 import javax.swing.SwingUtilities;
-import javax.swing.SwingWorker;
 
 /**
  * Used for running an interactive action in a seperate Thread, that can be
@@ -42,17 +42,11 @@ public abstract class InteractiveActionThread implements datastructures.Stoppabl
     private boolean stop_requested = false;
     public final BoardHandling hdlg;
     
-    private static final ExecutorService EXEC;
+    private static final ThreadFactory THREAD_FACTORY = new NamedThreadFactory("Freerouter");
+    
+    private final ExecutorService exec;
     private Future future;
-    
-    static {
-        NamedThreadFactory factory = new NamedThreadFactory("Freerouter");
-        EXEC = Executors.newSingleThreadExecutor(factory);
-    }
-    
-    public static void shutdown() {
-        EXEC.shutdownNow();
-    }
+
 
     public static InteractiveActionThread get_autoroute_instance(BoardHandling p_board_handling) {
         return new AutorouteThread(p_board_handling);
@@ -79,6 +73,7 @@ public abstract class InteractiveActionThread implements datastructures.Stoppabl
      */
     protected InteractiveActionThread(BoardHandling p_board_handling) {
         hdlg = p_board_handling;
+        exec = Executors.newSingleThreadExecutor(THREAD_FACTORY);
     }
 
     protected abstract void thread_action();
@@ -93,12 +88,17 @@ public abstract class InteractiveActionThread implements datastructures.Stoppabl
             try {
                 thread_action();
             } catch (Exception ex) {
-                Freerouter.logError(ex);
+//                Freerouter.logError(ex);
             }
             future = null;
             SwingUtilities.invokeLater(() -> hdlg.repaint());
+            dispose();
         };
-        future = EXEC.submit(task);
+        future = exec.submit(task);
+    }
+    
+    private void dispose() {
+        exec.shutdown();
     }
 
     @Override
@@ -106,6 +106,7 @@ public abstract class InteractiveActionThread implements datastructures.Stoppabl
         stop_requested = true;
         if (future != null && !future.isCancelled()) {
             future.cancel(true);
+            dispose();
         }
     }
 

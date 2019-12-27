@@ -109,7 +109,11 @@ public class BatchAutorouter {
             String start_message = resources.getString("batch_autorouter") + " " + resources.getString("stop_message")
                     + "        " + resources.getString("pass") + " " + curr_pass_no + ": ";
             hdlg.screen_messages.set_status_message(start_message);
+            
+            Freerouter.logInfo("Batch autorouter pass: " + curr_pass_no + " start.");
             still_unrouted_items = autoroute_pass(curr_pass_no, true);
+            Freerouter.logInfo("Batch autorouter pass: " + curr_pass_no + " end.");
+            
             if (still_unrouted_items && !is_interrupted) {
                 hdlg.get_settings().autoroute_settings.increment_pass_no();
             }
@@ -274,7 +278,7 @@ public class BatchAutorouter {
                     || autoroute_result == AutorouteEngine.AutorouteResult.ALREADY_CONNECTED;
             return result;
         } catch (Exception e) {
-            Freerouter.logError(e);
+//            Freerouter.logError(e);
             return false;
         }
     }

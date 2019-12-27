@@ -359,7 +359,7 @@ public class AutorouteEngine {
             return result;
         } catch (Exception e) {
             Freerouter.logError("AutorouteEngine.complete_expansion_room: ");
-            Freerouter.logError(e);
+//            Freerouter.logError(e);
             return new LinkedList<>();
         }
 
