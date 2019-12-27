@@ -376,5 +376,5 @@ public class MainApplication extends JFrame {
     /**
      * Change this string when creating a new version
      */
-    static final String VERSION_NUMBER_STRING = "1.2.43 Extra";
+    static final String VERSION_NUMBER_STRING = "1.2.43-m";
 }
