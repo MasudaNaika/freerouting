@@ -25,11 +25,6 @@ import java.awt.Graphics;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ResourceBundle;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.ThreadFactory;
-import javax.swing.SwingUtilities;
 
 /**
  * Used for running an interactive action in a seperate Thread, that can be
@@ -37,16 +32,10 @@ import javax.swing.SwingUtilities;
  *
  * @author Alfons Wirtz
  */
-public abstract class InteractiveActionThread implements datastructures.Stoppable {
-    
+public abstract class InteractiveActionThread extends Thread implements datastructures.Stoppable {
+
     private boolean stop_requested = false;
     public final BoardHandling hdlg;
-    
-    private static final ThreadFactory THREAD_FACTORY = new NamedThreadFactory("Freerouter");
-    
-    private final ExecutorService exec;
-    private Future future;
-
 
     public static InteractiveActionThread get_autoroute_instance(BoardHandling p_board_handling) {
         return new AutorouteThread(p_board_handling);
@@ -73,41 +62,20 @@ public abstract class InteractiveActionThread implements datastructures.Stoppabl
      */
     protected InteractiveActionThread(BoardHandling p_board_handling) {
         hdlg = p_board_handling;
-        exec = Executors.newSingleThreadExecutor(THREAD_FACTORY);
+        setName(getClass().getSimpleName());
     }
 
     protected abstract void thread_action();
 
-    public void start() {
-        
-        if (stop_requested || future != null || (future != null && !future.isCancelled())) {
-            return;
-        }
-        
-        Runnable task = () -> {
-            try {
-                thread_action();
-            } catch (Exception ex) {
-//                Freerouter.logError(ex);
-            }
-            future = null;
-            SwingUtilities.invokeLater(() -> hdlg.repaint());
-            dispose();
-        };
-        future = exec.submit(task);
-    }
-    
-    private void dispose() {
-        exec.shutdown();
+    @Override
+    public void run() {
+        thread_action();
+        hdlg.repaint();
     }
 
     @Override
     public synchronized void request_stop() {
         stop_requested = true;
-        if (future != null && !future.isCancelled()) {
-            future.cancel(true);
-            dispose();
-        }
     }
 
     @Override
@@ -118,7 +86,6 @@ public abstract class InteractiveActionThread implements datastructures.Stoppabl
     public synchronized void draw(Graphics p_graphics) {
         // Can be overwritten in derived classes.
     }
-
 
     private static class AutorouteThread extends InteractiveActionThread {
 
@@ -169,9 +136,9 @@ public abstract class InteractiveActionThread implements datastructures.Stoppabl
     }
 
     private static class ReadLogfileThread extends InteractiveActionThread {
-        
+
         private final InputStream input_stream;
-        
+
         private ReadLogfileThread(BoardHandling p_board_handling, InputStream p_input_stream) {
             super(p_board_handling);
             input_stream = p_input_stream;

@@ -192,8 +192,6 @@ public class WindowSelectParameter extends BoardSavableSubWindow {
         public final int layer_no;
     }
 
-
-
     private class ItemSelectionListener implements ActionListener {
 
         public ItemSelectionListener(int p_item_no) {

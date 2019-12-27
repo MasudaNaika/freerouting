@@ -23,8 +23,6 @@ import datastructures.UndoableObjects;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
@@ -268,7 +266,6 @@ public class WindowClearanceMatrix extends BoardSavableSubWindow {
         }
         return result;
     }
-
 
     private final BoardFrame board_frame;
     private final JPanel main_panel;

@@ -966,7 +966,7 @@ public class Polyline implements Serializable {
         System.arraycopy(tmp_arr, 0, result, 0, new_length);
         return result;
     }
-    
+
     private static boolean isValidIndex(Object[] arr, int idx) {
         return 0 <= idx && idx < arr.length;
     }

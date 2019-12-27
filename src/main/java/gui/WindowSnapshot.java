@@ -284,7 +284,7 @@ public class WindowSnapshot extends BoardSavableSubWindow {
 
         list.setSelectedIndex(selected_index + 1);
     }
-    
+
     private class SettingsListener implements ActionListener {
 
         @Override
@@ -298,7 +298,7 @@ public class WindowSnapshot extends BoardSavableSubWindow {
         }
         boolean first_time = true;
     }
-    
+
     /**
      * Type for attributes of this class, which are saved to an Objectstream.
      */

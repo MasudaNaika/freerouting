@@ -22,8 +22,6 @@ package gui;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -139,7 +137,6 @@ public abstract class WindowVisibility extends BoardSavableSubWindow {
 
     private static final int MAX_SLIDER_VALUE = 100;
 
-    
     /**
      * p_slider_no is required to identify the number of the slider in
      * slider_arr.

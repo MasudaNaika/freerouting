@@ -78,7 +78,7 @@ public class Freerouter {
         } catch (IOException ex) {
         }
     }
-    
+
     public static <E> SortedSet<E> newSortedSet() {
 //        return new TreeSet<>();
         return new ObjectAVLTreeSet<>();
@@ -88,7 +88,7 @@ public class Freerouter {
 //        return new HashMap<>();
         return new ObjectOpenHashSet<>();
     }
-    
+
     public static <E> Set<E> newLinkedHashSet() {
 //        return new LinkedHashSet<>();
         return new ObjectLinkedOpenHashSet<>();
@@ -98,16 +98,16 @@ public class Freerouter {
 //        return new TreeSet<Integer>();
         return new IntAVLTreeSet();
     }
-    
+
     public static List<Integer> newIntArrayList() {
 //        return new ArrayList<>();
         return new IntArrayList();
     }
-    
+
     public static void toArray(List<Integer> list, int[] array) {
         ((IntArrayList) list).toArray(array);
     }
-    
+
     public static void toArray(Set<Integer> set, int[] array) {
         ((IntSet) set).toArray(array);
     }

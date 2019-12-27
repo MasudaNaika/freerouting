@@ -23,12 +23,8 @@ import board.BoardOutline;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 /**
  * Window handling detail parameters of the interactive routing.
@@ -150,7 +146,7 @@ public class WindowRouteDetail extends BoardSavableSubWindow {
         int accuracy_slider_value = c_max_slider_value - board_handling.settings.get_trace_pull_tight_accuracy() / c_accuracy_scale_factor + 1;
         accuracy_slider.setValue(accuracy_slider_value);
     }
-    
+
     private final interactive.BoardHandling board_handling;
     private final JSlider accuracy_slider;
     private final JRadioButton on_button;

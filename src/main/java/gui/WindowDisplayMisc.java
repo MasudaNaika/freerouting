@@ -237,8 +237,6 @@ public class WindowDisplayMisc extends BoardSavableSubWindow {
 
     private static final int MAX_SLIDER_VALUE = 100;
 
-
-
     private class RotationNoneListener implements ActionListener {
 
         @Override

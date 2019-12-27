@@ -54,7 +54,7 @@ public class BatchAutorouterThread extends InteractiveActionThread {
 
         try {
             Freerouter.logInfo("BatchAutorouter start.");
-            
+
             ResourceBundle resources
                     = ResourceBundle.getBundle("interactive.resources.InteractiveState", hdlg.get_locale());
             boolean saved_board_read_only = hdlg.is_board_read_only();
@@ -75,11 +75,11 @@ public class BatchAutorouterThread extends InteractiveActionThread {
                 batch_autorouter.autoroute_passes();
             }
             hdlg.get_routing_board().finish_autoroute();
-            
+
             Freerouter.logInfo("BatchAutorouter end.");
-            
+
             Freerouter.logInfo("BatchOptRoute start.");
-            
+
             if (hdlg.get_settings().autoroute_settings.get_with_postroute() && !is_stop_requested()) {
                 String opt_message = resources.getString("batch_optimizer") + " " + resources.getString("stop_message");
                 hdlg.screen_messages.set_status_message(opt_message);
@@ -116,12 +116,12 @@ public class BatchAutorouterThread extends InteractiveActionThread {
             if (hdlg.get_routing_board().rules.get_trace_angle_restriction() == board.AngleRestriction.FORTYFIVE_DEGREE && hdlg.get_routing_board().get_test_level() != board.TestLevel.RELEASE_VERSION) {
                 tests.Validate.multiple_of_45_degree("after autoroute: ", hdlg.get_routing_board());
             }
-            
+
             Freerouter.logInfo("BatchAutorouter end.");
         } catch (Exception e) {
 //            Freerouter.logError(e);
         }
-        
+
     }
 
     @Override

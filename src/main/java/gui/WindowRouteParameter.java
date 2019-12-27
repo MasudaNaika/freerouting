@@ -31,8 +31,6 @@ import java.util.Collection;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 /**
  * Window handling parameters of the interactive routing.
@@ -546,7 +544,6 @@ public class WindowRouteParameter extends BoardSavableSubWindow {
 
         boolean first_time = true;
     }
-
 
     private class RestrictPinExitDirectionsListener implements ActionListener {
 

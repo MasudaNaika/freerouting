@@ -160,7 +160,7 @@ public class AutorouteEngine {
         board.remove_items(ripped_connections, false);
 
         for (Iterator it = changed_nets.iterator(); it.hasNext();) {
-            int curr_net_no = ((IntBidirectionalIterator)it).nextInt();
+            int curr_net_no = ((IntBidirectionalIterator) it).nextInt();
             board.remove_trace_tails(curr_net_no, stop_connection_option);
         }
         InsertFoundConnectionAlgo insert_found_connection_algo
