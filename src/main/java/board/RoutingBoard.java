@@ -34,7 +34,7 @@ import geometry.planar.PolylineShape;
 import geometry.planar.TileShape;
 import geometry.planar.Vector;
 import gui.Freerouter;
-import it.unimi.dsi.fastutil.ints.IntBidirectionalIterator;
+//import it.unimi.dsi.fastutil.ints.IntBidirectionalIterator;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
@@ -128,7 +128,8 @@ public class RoutingBoard extends BasicBoard implements Serializable {
             }
         }
         for (Iterator it = changed_nets.iterator(); it.hasNext();) {
-            int curr_net_no = ((IntBidirectionalIterator) it).nextInt();
+//            int curr_net_no = ((IntBidirectionalIterator) it).nextInt();
+            int curr_net_no = (int) it.next();
             combine_traces(curr_net_no);
         }
         if (calculate_tidy_region) {

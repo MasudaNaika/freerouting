@@ -38,7 +38,7 @@ import geometry.planar.IntPoint;
 import geometry.planar.Point;
 import geometry.planar.Vector;
 import gui.Freerouter;
-import it.unimi.dsi.fastutil.ints.IntBidirectionalIterator;
+//import it.unimi.dsi.fastutil.ints.IntBidirectionalIterator;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.util.Collection;
@@ -304,7 +304,8 @@ public class SelectedItemState extends InteractiveState {
             logfile.start_scope(LogfileScope.DELETE_SELECTED);
         }
         for (Iterator it = changed_nets.iterator(); it.hasNext();) {
-            int curr_net_no = ((IntBidirectionalIterator) it).nextInt();
+//            int curr_net_no = ((IntBidirectionalIterator) it).nextInt();
+            int curr_net_no = (int) it.next();
             hdlg.update_ratsnest(curr_net_no);
         }
         hdlg.repaint();
@@ -573,7 +574,8 @@ public class SelectedItemState extends InteractiveState {
         }
         Set<Item> new_selected_items = Freerouter.newSortedSet();
         for (Iterator it = curr_net_no_set.iterator(); it.hasNext();) {
-            int curr_net_no = ((IntBidirectionalIterator) it).nextInt();
+//            int curr_net_no = ((IntBidirectionalIterator) it).nextInt();
+            int curr_net_no = (int) it.next();
             new_selected_items.addAll(hdlg.get_routing_board().get_connectable_items(curr_net_no));
         }
         item_list = new_selected_items;
@@ -604,7 +606,8 @@ public class SelectedItemState extends InteractiveState {
         Set<Item> new_selected_items = Freerouter.newSortedSet();
         new_selected_items.addAll(item_list);
         for (Iterator it = curr_group_no_set.iterator(); it.hasNext();) {
-            int curr_group_no = ((IntBidirectionalIterator) it).nextInt();
+//            int curr_group_no = ((IntBidirectionalIterator) it).nextInt();
+            int curr_group_no = (int) it.next();
             new_selected_items.addAll(hdlg.get_routing_board().get_component_items(curr_group_no));
         }
         if (new_selected_items.isEmpty()) {

@@ -24,7 +24,7 @@ import board.Item;
 import board.Trace;
 import geometry.planar.FloatPoint;
 import gui.Freerouter;
-import it.unimi.dsi.fastutil.ints.IntBidirectionalIterator;
+//import it.unimi.dsi.fastutil.ints.IntBidirectionalIterator;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.SortedSet;
@@ -109,7 +109,8 @@ public abstract class DragState extends InteractiveState {
             SortedSet<Integer> changed_nets = Freerouter.newIntSortedSet();
             hdlg.get_routing_board().undo(changed_nets);
             for (Iterator it = changed_nets.iterator(); it.hasNext();) {
-                int changed_net = ((IntBidirectionalIterator) it).nextInt();
+//                int changed_net = ((IntBidirectionalIterator) it).nextInt();
+                int changed_net = (int) it.next();
                 hdlg.update_ratsnest(changed_net);
             }
         }

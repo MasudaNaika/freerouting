@@ -32,8 +32,8 @@ import geometry.planar.Line;
 import geometry.planar.Simplex;
 import geometry.planar.TileShape;
 import gui.Freerouter;
-import it.unimi.dsi.fastutil.ints.IntBidirectionalIterator;
-import it.unimi.dsi.fastutil.objects.ObjectLinkedOpenHashSet;
+//import it.unimi.dsi.fastutil.ints.IntBidirectionalIterator;
+//import it.unimi.dsi.fastutil.objects.ObjectLinkedOpenHashSet;
 import java.awt.Graphics;
 import java.util.Collection;
 import java.util.Iterator;
@@ -160,7 +160,8 @@ public class AutorouteEngine {
         board.remove_items(ripped_connections, false);
 
         for (Iterator it = changed_nets.iterator(); it.hasNext();) {
-            int curr_net_no = ((IntBidirectionalIterator) it).nextInt();
+//            int curr_net_no = ((IntBidirectionalIterator) it).nextInt();
+            int curr_net_no = (int) it.next();
             board.remove_trace_tails(curr_net_no, stop_connection_option);
         }
         InsertFoundConnectionAlgo insert_found_connection_algo
@@ -373,7 +374,7 @@ public class AutorouteEngine {
         CompleteFreeSpaceExpansionRoom result;
         if (completed_room != null && completed_room.get_shape().dimension() == 2) {
             if (complete_expansion_rooms == null) {
-                complete_expansion_rooms = new ObjectLinkedOpenHashSet<>(); // LinkedList
+                complete_expansion_rooms = Freerouter.newLinkedHashSet(); // LinkedList
             }
             complete_expansion_rooms.add(completed_room);
             autoroute_search_tree.insert(completed_room);
