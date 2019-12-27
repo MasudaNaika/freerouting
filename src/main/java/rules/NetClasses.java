@@ -77,10 +77,10 @@ public class NetClasses implements Serializable {
                 = ResourceBundle.getBundle("rules.resources.Default", p_locale);
         String name_front = resources.getString("class");
         String new_name = null;
-        Integer index = 0;
+        int index = 0;
         while (true) {
             ++index;
-            new_name = name_front + index.toString();
+            new_name = name_front + Integer.toString(index);
             if (get(new_name) == null) {
                 break;
             }

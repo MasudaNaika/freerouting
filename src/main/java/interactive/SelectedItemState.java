@@ -329,8 +329,8 @@ public class SelectedItemState extends InteractiveState {
             String start_message = resources.getString("autoroute") + " " + resources.getString("stop_message");
             hdlg.screen_messages.set_status_message(start_message);
         }
-        Integer not_found_count = 0;
-        Integer found_count = 0;
+        int not_found_count = 0;
+        int found_count = 0;
         boolean interrupted = false;
         Collection<Item> autoroute_item_list = new LinkedList<>();
         for (Item curr_item : item_list) {
@@ -389,8 +389,8 @@ public class SelectedItemState extends InteractiveState {
             } else {
                 curr_message = resources.getString("completed");
             }
-            String end_message = resources.getString("autoroute") + " " + curr_message + ": " + found_count.toString()
-                    + " " + resources.getString("connections_found") + ", " + not_found_count.toString()
+            String end_message = resources.getString("autoroute") + " " + curr_message + ": " + Integer.toString(found_count)
+                    + " " + resources.getString("connections_found") + ", " + Integer.toString(not_found_count)
                     + " " + resources.getString("connections_not_found");
             hdlg.screen_messages.set_status_message(end_message);
         }
@@ -416,8 +416,8 @@ public class SelectedItemState extends InteractiveState {
             String start_message = resources.getString("fanout") + " " + resources.getString("stop_message");
             hdlg.screen_messages.set_status_message(start_message);
         }
-        Integer not_found_count = 0;
-        Integer found_count = 0;
+        int not_found_count = 0;
+        int found_count = 0;
         int trace_pull_tight_accuracy = hdlg.settings.trace_pull_tight_accuracy;
         boolean interrupted = false;
         Collection<Pin> fanout_list = new LinkedList<>();
@@ -460,8 +460,8 @@ public class SelectedItemState extends InteractiveState {
             } else {
                 curr_message = resources.getString("completed");
             }
-            String end_message = resources.getString("fanout") + " " + curr_message + ": " + found_count.toString()
-                    + " " + resources.getString("connections_found") + ", " + not_found_count.toString()
+            String end_message = resources.getString("fanout") + " " + curr_message + ": " + Integer.toString(found_count)
+                    + " " + resources.getString("connections_found") + ", " + Integer.toString(not_found_count)
                     + " " + resources.getString("connections_not_found");
             hdlg.screen_messages.set_status_message(end_message);
         }
@@ -702,8 +702,8 @@ public class SelectedItemState extends InteractiveState {
     public void toggle_clearance_violations() {
         if (clearance_violations == null) {
             clearance_violations = new ClearanceViolations(item_list);
-            Integer violation_count = clearance_violations.list.size();
-            String curr_message = violation_count.toString() + " " + resources.getString("clearance_violations_found");
+            int violation_count = clearance_violations.list.size();
+            String curr_message = Integer.toString(violation_count) + " " + resources.getString("clearance_violations_found");
             hdlg.screen_messages.set_status_message(curr_message);
         } else {
             clearance_violations = null;

@@ -294,7 +294,7 @@ public class ObstacleArea extends Item implements Serializable {
         p_window.append(" " + resources.getString("at") + " ");
         geometry.planar.FloatPoint center = get_area().get_border().centre_of_gravity();
         p_window.append(center);
-        Integer hole_count = relative_area.get_holes().length;
+        int hole_count = relative_area.get_holes().length;
         if (hole_count > 0) {
             p_window.append(" " + resources.getString("with") + " ");
             NumberFormat nf = NumberFormat.getInstance(p_locale);

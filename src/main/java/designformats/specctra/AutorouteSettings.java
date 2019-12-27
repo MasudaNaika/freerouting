@@ -191,29 +191,29 @@ public class AutorouteSettings {
         p_file.new_line();
         p_file.write("(via_costs ");
         {
-            Integer via_costs = p_settings.get_via_costs();
-            p_file.write(via_costs.toString());
+            int via_costs = p_settings.get_via_costs();
+            p_file.write(Integer.toString(via_costs));
         }
         p_file.write(")");
         p_file.new_line();
         p_file.write("(plane_via_costs ");
         {
-            Integer via_costs = p_settings.get_plane_via_costs();
-            p_file.write(via_costs.toString());
+            int via_costs = p_settings.get_plane_via_costs();
+            p_file.write(Integer.toString(via_costs));
         }
         p_file.write(")");
         p_file.new_line();
         p_file.write("(start_ripup_costs ");
         {
-            Integer ripup_costs = p_settings.get_start_ripup_costs();
-            p_file.write(ripup_costs.toString());
+            int ripup_costs = p_settings.get_start_ripup_costs();
+            p_file.write(Integer.toString(ripup_costs));
         }
         p_file.write(")");
         p_file.new_line();
         p_file.write("(start_pass_no ");
         {
-            Integer pass_no = p_settings.get_pass_no();
-            p_file.write(pass_no.toString());
+            int pass_no = p_settings.get_pass_no();
+            p_file.write(Integer.toString(pass_no));
         }
         p_file.write(")");
         for (int i = 0; i < p_layer_structure.arr.length; ++i) {

@@ -72,13 +72,13 @@ public class LogicalPart implements board.ObjectInfoPanel.Printable, Serializabl
             p_window.append(", " + resources.getString("gate") + " ");
             p_window.append(curr_pin.gate_name);
             p_window.append(", " + resources.getString("swap_code") + " ");
-            Integer gate_swap_code = curr_pin.gate_swap_code;
-            p_window.append(gate_swap_code.toString());
+            int gate_swap_code = curr_pin.gate_swap_code;
+            p_window.append(Integer.toString(gate_swap_code));
             p_window.append(", " + resources.getString("gate_pin") + " ");
             p_window.append(curr_pin.gate_pin_name);
             p_window.append(", " + resources.getString("swap_code") + " ");
-            Integer pin_swap_code = curr_pin.gate_pin_swap_code;
-            p_window.append(pin_swap_code.toString());
+            int pin_swap_code = curr_pin.gate_pin_swap_code;
+            p_window.append(Integer.toString(pin_swap_code));
         }
         p_window.newline();
         p_window.newline();

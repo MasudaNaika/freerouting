@@ -111,8 +111,8 @@ public class Rectangle extends Shape {
         p_identifier.write(layer.name, p_file);
         for (int i = 0; i < coor.length; ++i) {
             p_file.write(" ");
-            Integer curr_coor = (int) Math.round(coor[i]);
-            p_file.write(curr_coor.toString());
+            int curr_coor = (int) Math.round(coor[i]);
+            p_file.write(Integer.toString(curr_coor));
         }
         p_file.write(")");
     }

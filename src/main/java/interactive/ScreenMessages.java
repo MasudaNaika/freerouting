@@ -69,36 +69,36 @@ public class ScreenMessages {
     }
 
     public void set_interactive_autoroute_info(int p_found, int p_not_found, int p_items_to_go) {
-        Integer found = p_found;
-        Integer failed = p_not_found;
-        Integer items_to_go = p_items_to_go;
-        add_field.setText(resources.getString("to_route") + " " + items_to_go.toString());
-        layer_field.setText(resources.getString("found") + " " + found.toString() + ", "
-                + resources.getString("failed") + " " + failed.toString());
+        int found = p_found;
+        int failed = p_not_found;
+        int items_to_go = p_items_to_go;
+        add_field.setText(resources.getString("to_route") + " " + Integer.toString(items_to_go));
+        layer_field.setText(resources.getString("found") + " " + Integer.toString(found) + ", "
+                + resources.getString("failed") + " " + Integer.toString(failed));
     }
 
     public void set_batch_autoroute_info(int p_items_to_go, int p_routed, int p_ripped, int p_failed) {
-        Integer ripped = p_ripped;
-        Integer routed = p_routed;
-        Integer items_to_go = p_items_to_go;
-        Integer failed = p_failed;
-        add_field.setText(resources.getString("to_route") + " " + items_to_go.toString() + ", "
-                + resources.getString("routed") + " " + routed.toString() + ", ");
-        layer_field.setText(resources.getString("ripped") + " " + ripped.toString() + ", "
-                + resources.getString("failed") + " " + failed.toString());
+        int ripped = p_ripped;
+        int routed = p_routed;
+        int items_to_go = p_items_to_go;
+        int failed = p_failed;
+        add_field.setText(resources.getString("to_route") + " " + Integer.toString(items_to_go) + ", "
+                + resources.getString("routed") + " " + Integer.toString(routed) + ", ");
+        layer_field.setText(resources.getString("ripped") + " " + Integer.toString(ripped) + ", "
+                + resources.getString("failed") + " " + Integer.toString(failed));
     }
 
     public void set_batch_fanout_info(int p_pass_no, int p_components_to_go) {
-        Integer components_to_go = p_components_to_go;
-        Integer pass_no = p_pass_no;
-        add_field.setText(resources.getString("fanout_pass") + " " + pass_no.toString() + ": ");
+        int components_to_go = p_components_to_go;
+        int pass_no = p_pass_no;
+        add_field.setText(resources.getString("fanout_pass") + " " + Integer.toString(pass_no) + ": ");
         layer_field.setText(resources.getString("still") + " "
-                + components_to_go.toString() + " " + resources.getString("components"));
+                + Integer.toString(components_to_go) + " " + resources.getString("components"));
     }
 
     public void set_post_route_info(int p_via_count, double p_trace_length) {
-        Integer via_count = p_via_count;
-        add_field.setText(resources.getString("via_count") + " " + via_count.toString());
+        int via_count = p_via_count;
+        add_field.setText(resources.getString("via_count") + " " + Integer.toString(via_count));
         layer_field.setText(resources.getString("trace_length") + " " + number_format.format(p_trace_length));
     }
 

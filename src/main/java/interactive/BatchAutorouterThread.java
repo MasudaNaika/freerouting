@@ -100,8 +100,8 @@ public class BatchAutorouterThread extends InteractiveActionThread {
                 } else {
                     curr_message = resources.getString("completed");
                 }
-                Integer incomplete_count = hdlg.get_ratsnest().incomplete_count();
-                String end_message = resources.getString("autoroute") + " " + curr_message + ", " + incomplete_count.toString()
+                int incomplete_count = hdlg.get_ratsnest().incomplete_count();
+                String end_message = resources.getString("autoroute") + " " + curr_message + ", " + Integer.toString(incomplete_count)
                         + " " + resources.getString("connections_not_found");
                 hdlg.screen_messages.set_status_message(end_message);
             }

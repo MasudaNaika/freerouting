@@ -217,12 +217,12 @@ public class SessionToEagle extends JFrame {
         }
         for (ComponentPlacement.ComponentLocation curr_location : component_placement.locations) {
             out_file.write("ROTATE =");
-            Integer rotation = (int) Math.round(curr_location.rotation);
+            int rotation = (int) Math.round(curr_location.rotation);
             String rotation_string;
             if (curr_location.is_front) {
-                rotation_string = "R" + rotation.toString();
+                rotation_string = "R" + Integer.toString(rotation);
             } else {
-                rotation_string = "MR" + rotation.toString();
+                rotation_string = "MR" + Integer.toString(rotation);
             }
             out_file.write(rotation_string);
             out_file.write(" '");

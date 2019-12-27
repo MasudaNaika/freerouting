@@ -373,8 +373,8 @@ public class BoardHandling extends BoardHandlingImpl {
     public void toggle_clearance_violations() {
         if (clearance_violations == null) {
             clearance_violations = new ClearanceViolations(board.get_items());
-            Integer violation_count = (clearance_violations.list.size() + 1) / 2;
-            String curr_message = violation_count.toString() + " " + resources.getString("clearance_violations_found");
+            int violation_count = (clearance_violations.list.size() + 1) / 2;
+            String curr_message = Integer.toString(violation_count) + " " + resources.getString("clearance_violations_found");
             screen_messages.set_status_message(curr_message);
         } else {
             clearance_violations = null;
@@ -388,14 +388,14 @@ public class BoardHandling extends BoardHandlingImpl {
      */
     public void create_ratsnest() {
         ratsnest = new RatsNest(board, locale);
-        Integer incomplete_count = ratsnest.incomplete_count();
-        Integer length_violation_count = ratsnest.length_violation_count();
+        int incomplete_count = ratsnest.incomplete_count();
+        int length_violation_count = ratsnest.length_violation_count();
         String curr_message;
         if (length_violation_count == 0) {
-            curr_message = incomplete_count.toString() + " " + resources.getString("incomplete_connections_to_route");
+            curr_message = Integer.toString(incomplete_count) + " " + resources.getString("incomplete_connections_to_route");
         } else {
-            curr_message = incomplete_count.toString() + " " + resources.getString("incompletes")
-                    + " " + length_violation_count.toString() + " " + resources.getString("length_violations");
+            curr_message = Integer.toString(incomplete_count) + " " + resources.getString("incompletes")
+                    + " " + Integer.toString(length_violation_count) + " " + resources.getString("length_violations");
         }
         screen_messages.set_status_message(curr_message);
     }

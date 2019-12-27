@@ -71,11 +71,11 @@ public class PolygonPath extends Path {
         int corner_count = coordinate_arr.length / 2;
         for (int i = 0; i < corner_count; ++i) {
             p_file.new_line();
-            Integer curr_coor = (int) Math.round(coordinate_arr[2 * i]);
-            p_file.write(curr_coor.toString());
+            int curr_coor = (int) Math.round(coordinate_arr[2 * i]);
+            p_file.write(Integer.toString(curr_coor));
             p_file.write(" ");
             curr_coor = (int) Math.round(coordinate_arr[2 * i + 1]);
-            p_file.write(curr_coor.toString());
+            p_file.write(Integer.toString(curr_coor));
         }
         p_file.end_scope();
     }

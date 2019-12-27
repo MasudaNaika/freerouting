@@ -142,12 +142,12 @@ public class SessionFile {
         p_file.write("(place ");
         p_identifier_type.write(p_component.name, p_file);
         double[] location = p_coordinate_transform.board_to_dsn(p_component.get_location().to_float());
-        Integer x_coor = (int) Math.round(location[0]);
-        Integer y_coor = (int) Math.round(location[1]);
+        int x_coor = (int) Math.round(location[0]);
+        int y_coor = (int) Math.round(location[1]);
         p_file.write(" ");
-        p_file.write(x_coor.toString());
+        p_file.write(Integer.toString(x_coor));
         p_file.write(" ");
-        p_file.write(y_coor.toString());
+        p_file.write(Integer.toString(y_coor));
         if (p_component.placed_on_front()) {
             p_file.write(" front ");
         } else {
@@ -357,11 +357,11 @@ public class SessionFile {
         p_identifier_type.write(via_padstack.name, p_file);
         p_file.write(" ");
         double[] location = p_coordinate_transform.board_to_dsn(via_location);
-        Integer x_coor = (int) Math.round(location[0]);
-        p_file.write(x_coor.toString());
+        int x_coor = (int) Math.round(location[0]);
+        p_file.write(Integer.toString(x_coor));
         p_file.write(" ");
-        Integer y_coor = (int) Math.round(location[1]);
-        p_file.write(y_coor.toString());
+        int y_coor = (int) Math.round(location[1]);
+        p_file.write(Integer.toString(y_coor));
         write_fixed_state(p_file, p_via.get_fixed_state());
         p_file.end_scope();
     }

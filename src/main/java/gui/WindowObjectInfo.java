@@ -57,9 +57,9 @@ public class WindowObjectInfo extends BoardTemporarySubWindow implements board.O
             BoardFrame p_board_frame, board.CoordinateTransform p_coordinate_transform, java.awt.Point p_location) {
         WindowObjectInfo new_instance = new WindowObjectInfo(p_board_frame, p_coordinate_transform);
         new_instance.setTitle(new_instance.resources.getString("title"));
-        Integer pin_count = 0;
-        Integer via_count = 0;
-        Integer trace_count = 0;
+        int pin_count = 0;
+        int via_count = 0;
+        int trace_count = 0;
         double cumulative_trace_length = 0;
         for (WindowObjectInfo.Printable curr_object : p_item_list) {
             curr_object.print_info(new_instance, p_board_frame.get_locale());

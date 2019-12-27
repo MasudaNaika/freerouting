@@ -59,8 +59,8 @@ public class Net {
         p_file.write("net ");
         p_identifier_type.write(p_net.name, p_file);
         p_file.write(" ");
-        Integer subnet_number = p_net.subnet_number;
-        p_file.write(subnet_number.toString());
+        int subnet_number = p_net.subnet_number;
+        p_file.write(Integer.toString(subnet_number));
     }
 
     public static void write_pin(WriteScopeParameter p_par, board.Pin p_pin) throws IOException {

@@ -379,17 +379,17 @@ public class GUIDefaultsFile {
         out_file.start_scope();
         out_file.write("bounds");
         out_file.new_line();
-        Integer x = (int) p_bounds.getX();
-        out_file.write(x.toString());
-        Integer y = (int) p_bounds.getY();
+        int x = (int) p_bounds.getX();
+        out_file.write(Integer.toString(x));
+        int y = (int) p_bounds.getY();
         out_file.write(" ");
-        out_file.write(y.toString());
-        Integer width = (int) p_bounds.getWidth();
+        out_file.write(Integer.toString(y));
+        int width = (int) p_bounds.getWidth();
         out_file.write(" ");
-        out_file.write(width.toString());
-        Integer height = (int) p_bounds.getHeight();
+        out_file.write(Integer.toString(width));
+        int height = (int) p_bounds.getHeight();
         out_file.write(" ");
-        out_file.write(height.toString());
+        out_file.write(Integer.toString(height));
         out_file.end_scope();
     }
 
@@ -821,14 +821,14 @@ public class GUIDefaultsFile {
 
     private void write_color_scope(Color p_color) throws IOException {
         out_file.new_line();
-        Integer red = p_color.getRed();
-        out_file.write(red.toString());
+        int red = p_color.getRed();
+        out_file.write(Integer.toString(red));
         out_file.write(" ");
-        Integer green = p_color.getGreen();
-        out_file.write(green.toString());
+        int green = p_color.getGreen();
+        out_file.write(Integer.toString(green));
         out_file.write(" ");
-        Integer blue = p_color.getBlue();
-        out_file.write(blue.toString());
+        int blue = p_color.getBlue();
+        out_file.write(Integer.toString(blue));
     }
 
     private void write_color(Color[] p_colors) throws IOException {
@@ -1114,8 +1114,8 @@ public class GUIDefaultsFile {
         out_file.start_scope();
         out_file.write("pull_tight_region ");
         out_file.new_line();
-        Integer pull_tight_region = board_handling.settings.get_trace_pull_tight_region_width();
-        out_file.write(pull_tight_region.toString());
+        int pull_tight_region = board_handling.settings.get_trace_pull_tight_region_width();
+        out_file.write(Integer.toString(pull_tight_region));
         out_file.end_scope();
     }
 
@@ -1139,8 +1139,8 @@ public class GUIDefaultsFile {
         out_file.start_scope();
         out_file.write("pull_tight_accuracy ");
         out_file.new_line();
-        Integer pull_tight_accuracy = board_handling.settings.get_trace_pull_tight_accuracy();
-        out_file.write(pull_tight_accuracy.toString());
+        int pull_tight_accuracy = board_handling.settings.get_trace_pull_tight_accuracy();
+        out_file.write(Integer.toString(pull_tight_accuracy));
         out_file.end_scope();
     }
 

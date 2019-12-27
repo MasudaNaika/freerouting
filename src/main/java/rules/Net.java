@@ -183,12 +183,12 @@ public class Net implements Comparable<Net>, board.ObjectInfoPanel.Printable, Se
 
     @Override
     public void print_info(board.ObjectInfoPanel p_window, Locale p_locale) {
-        Integer via_count = get_via_count();
+        int via_count = get_via_count();
         double cumulative_trace_length = get_trace_length();
         Collection<Item> terminal_items = get_terminal_items();
         Collection<Printable> terminals = new LinkedList<>();
         terminals.addAll(terminal_items);
-        Integer terminal_item_count = terminals.size();
+        int terminal_item_count = terminals.size();
 
         ResourceBundle resources
                 = ResourceBundle.getBundle("board.resources.ObjectInfoPanel", p_locale);
@@ -198,10 +198,10 @@ public class Net implements Comparable<Net>, board.ObjectInfoPanel.Printable, Se
         p_window.append(resources.getString("class") + " ");
         p_window.append(net_class.get_name(), resources.getString("net_class"), net_class);
         p_window.append(", ");
-        p_window.append_objects(terminal_item_count.toString(), resources.getString("terminal_items_2"), terminals);
+        p_window.append_objects(Integer.toString(terminal_item_count), resources.getString("terminal_items_2"), terminals);
         p_window.append(" " + resources.getString("terminal_items"));
         p_window.append(", " + resources.getString("via_count") + " ");
-        p_window.append(via_count.toString());
+        p_window.append(Integer.toString(via_count));
         p_window.append(", " + resources.getString("trace_length") + " ");
         p_window.append(cumulative_trace_length);
         p_window.newline();

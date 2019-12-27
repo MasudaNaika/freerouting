@@ -134,8 +134,8 @@ public class WindowUnconnectedRoute extends WindowObjectListWithFilter {
         public String toString() {
 
             String result = resources.getString("net") + " " + net.name + ": "
-                    + resources.getString("trace_count") + " " + trace_count.toString() + ", "
-                    + resources.getString("via_count") + " " + via_count.toString();
+                    + resources.getString("trace_count") + " " + Integer.toString(trace_count) + ", "
+                    + resources.getString("via_count") + " " + Integer.toString(via_count);
 
             return result;
         }
@@ -152,7 +152,7 @@ public class WindowUnconnectedRoute extends WindowObjectListWithFilter {
         private final rules.Net net;
         private final Collection<Item> item_list;
         private final int id_no;
-        private final Integer trace_count;
-        private final Integer via_count;
+        private final int trace_count;
+        private final int via_count;
     }
 }

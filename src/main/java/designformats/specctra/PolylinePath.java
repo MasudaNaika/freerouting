@@ -71,8 +71,8 @@ public class PolylinePath extends Path {
         for (int i = 0; i < line_count; ++i) {
             p_file.new_line();
             for (int j = 0; j < 4; ++j) {
-                Integer curr_coor = (int) Math.round(coordinate_arr[4 * i + j]);
-                p_file.write(curr_coor.toString());
+                int curr_coor = (int) Math.round(coordinate_arr[4 * i + j]);
+                p_file.write(Integer.toString(curr_coor));
                 p_file.write(" ");
             }
         }
