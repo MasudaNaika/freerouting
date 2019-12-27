@@ -65,8 +65,10 @@ public class WindowSelectParameter extends BoardSavableSubWindow {
         current_only_button = new JRadioButton(resources.getString("current_only"));
         current_only_button.setToolTipText(resources.getString("current_only_tooltip"));
 
-        all_visible_button.addActionListener(new AllVisibleListener());
-        current_only_button.addActionListener(new CurrentOnlyListener());
+        all_visible_button.addActionListener(ae
+                -> board_handling.settings.set_select_on_all_visible_layers(true));
+        current_only_button.addActionListener(ae
+                -> board_handling.settings.set_select_on_all_visible_layers(false));
 
         ButtonGroup selection_layer_button_group = new ButtonGroup();
         selection_layer_button_group.add(all_visible_button);
@@ -190,21 +192,7 @@ public class WindowSelectParameter extends BoardSavableSubWindow {
         public final int layer_no;
     }
 
-    private class AllVisibleListener implements ActionListener {
 
-        @Override
-        public void actionPerformed(ActionEvent p_evt) {
-            board_handling.settings.set_select_on_all_visible_layers(true);
-        }
-    }
-
-    private class CurrentOnlyListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent p_evt) {
-            board_handling.settings.set_select_on_all_visible_layers(false);
-        }
-    }
 
     private class ItemSelectionListener implements ActionListener {
 

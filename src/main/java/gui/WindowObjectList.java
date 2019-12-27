@@ -74,8 +74,7 @@ public abstract class WindowObjectList extends BoardSavableSubWindow {
 
         JButton instance_button = new JButton(resources.getString("select"));
         instance_button.setToolTipText(resources.getString("select_tooltip"));
-        SelectListener instance_listener = new SelectListener();
-        instance_button.addActionListener(instance_listener);
+        instance_button.addActionListener(ae -> select_instances());
         north_button_panel.add(instance_button);
 
         JPanel south_button_panel = new JPanel();
@@ -88,8 +87,7 @@ public abstract class WindowObjectList extends BoardSavableSubWindow {
 
         JButton recalculate_button = new JButton(resources.getString("recalculate"));
         recalculate_button.setToolTipText(resources.getString("recalculate_tooltip"));
-        RecalculateListener recalculate_listener = new RecalculateListener();
-        recalculate_button.addActionListener(recalculate_listener);
+        recalculate_button.addActionListener(ae -> recalculate());
         south_button_panel.add(recalculate_button);
 
         list_empty_message = new JLabel(resources.getString("list_empty"));
@@ -213,17 +211,6 @@ public abstract class WindowObjectList extends BoardSavableSubWindow {
     }
 
     /**
-     * Listens to the button for showing the selected incompletes
-     */
-    private class SelectListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent p_evt) {
-            select_instances();
-        }
-    }
-
-    /**
      * Listens to the button for inverting the selection
      */
     private class InvertListener implements ActionListener {
@@ -280,14 +267,4 @@ public abstract class WindowObjectList extends BoardSavableSubWindow {
         return result;
     }
 
-    /**
-     * Listens to the button for recalculating the content of the window
-     */
-    private class RecalculateListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent p_evt) {
-            recalculate();
-        }
-    }
 }

@@ -63,7 +63,7 @@ public abstract class WindowNetSamples extends BoardSubWindow {
 
         // create open button
         JButton open_button = new JButton(resources.getString(p_button_name));
-        open_button.addActionListener(new OpenListener());
+        open_button.addActionListener(ae -> button_pushed());
         main_panel.add(open_button, BorderLayout.SOUTH);
 
         // create list with the sample designs
@@ -176,11 +176,5 @@ public abstract class WindowNetSamples extends BoardSubWindow {
     protected DefaultListModel list_model = new DefaultListModel();
     protected final JList list;
 
-    private class OpenListener implements ActionListener {
 
-        @Override
-        public void actionPerformed(ActionEvent p_evt) {
-            button_pushed();
-        }
-    }
 }

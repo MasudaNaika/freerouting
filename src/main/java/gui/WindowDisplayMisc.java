@@ -68,12 +68,12 @@ public class WindowDisplayMisc extends BoardSavableSubWindow {
 
         small_cursor_checkbox = new JRadioButton(resources.getString("small"));
         small_cursor_checkbox.setToolTipText(resources.getString("cursor_checkbox_tooltip"));
-        small_cursor_checkbox.addActionListener(new SmallCursorListener());
+        small_cursor_checkbox.addActionListener(ae -> panel.set_custom_crosshair_cursor(false));
         gridbag.setConstraints(small_cursor_checkbox, gridbag_constraints);
         main_panel.add(small_cursor_checkbox, gridbag_constraints);
 
         big_cursor_checkbox = new JRadioButton(resources.getString("big"));
-        big_cursor_checkbox.addActionListener(new BigCursorListener());
+        big_cursor_checkbox.addActionListener(ae -> panel.set_custom_crosshair_cursor(true));
         big_cursor_checkbox.setToolTipText(resources.getString("cursor_checkbox_tooltip"));
         gridbag.setConstraints(big_cursor_checkbox, gridbag_constraints);
         main_panel.add(big_cursor_checkbox, gridbag_constraints);
@@ -237,21 +237,7 @@ public class WindowDisplayMisc extends BoardSavableSubWindow {
 
     private static final int MAX_SLIDER_VALUE = 100;
 
-    private class SmallCursorListener implements ActionListener {
 
-        @Override
-        public void actionPerformed(ActionEvent p_evt) {
-            panel.set_custom_crosshair_cursor(false);
-        }
-    }
-
-    private class BigCursorListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent p_evt) {
-            panel.set_custom_crosshair_cursor(true);
-        }
-    }
 
     private class RotationNoneListener implements ActionListener {
 

@@ -67,8 +67,10 @@ public class WindowRouteDetail extends BoardSavableSubWindow {
         on_button = new JRadioButton(resources.getString("on"));
         off_button = new JRadioButton(resources.getString("off"));
 
-        on_button.addActionListener(new CompensationOnListener());
-        off_button.addActionListener(new CompensationOffListener());
+        on_button.addActionListener(ae
+                -> board_handling.set_clearance_compensation(true));
+        off_button.addActionListener(ae
+                -> board_handling.set_clearance_compensation(false));
 
         ButtonGroup clearance_compensation_button_group = new ButtonGroup();
         clearance_compensation_button_group.add(on_button);
@@ -95,7 +97,10 @@ public class WindowRouteDetail extends BoardSavableSubWindow {
 
         accuracy_slider = new JSlider();
         accuracy_slider.setMaximum(c_max_slider_value);
-        accuracy_slider.addChangeListener(new SliderChangeListener());
+        accuracy_slider.addChangeListener(evt -> {
+            int new_accurracy = (c_max_slider_value - accuracy_slider.getValue() + 1) * c_accuracy_scale_factor;
+            board_handling.settings.set_current_pull_tight_accuracy(new_accurracy);
+        });
         gridbag.setConstraints(accuracy_slider, gridbag_constraints);
         main_panel.add(accuracy_slider);
 
@@ -106,7 +111,15 @@ public class WindowRouteDetail extends BoardSavableSubWindow {
         // add switch to define, if keepout is generated outside the outline.
         outline_keepout_check_box = new JCheckBox(resources.getString("keepout_outside_outline"));
         outline_keepout_check_box.setSelected(false);
-        outline_keepout_check_box.addActionListener(new OutLineKeepoutListener());
+        outline_keepout_check_box.addActionListener(ae -> {
+            if (board_handling.is_board_read_only()) {
+                return;
+            }
+            BoardOutline outline = board_handling.get_routing_board().get_outline();
+            if (outline != null) {
+                outline.generate_keepout_outside(outline_keepout_check_box.isSelected());
+            }
+        });
         gridbag.setConstraints(outline_keepout_check_box, gridbag_constraints);
         outline_keepout_check_box.setToolTipText(resources.getString("keepout_outside_outline_tooltip"));
         main_panel.add(outline_keepout_check_box, gridbag_constraints);
@@ -137,6 +150,7 @@ public class WindowRouteDetail extends BoardSavableSubWindow {
         int accuracy_slider_value = c_max_slider_value - board_handling.settings.get_trace_pull_tight_accuracy() / c_accuracy_scale_factor + 1;
         accuracy_slider.setValue(accuracy_slider_value);
     }
+    
     private final interactive.BoardHandling board_handling;
     private final JSlider accuracy_slider;
     private final JRadioButton on_button;
@@ -145,42 +159,4 @@ public class WindowRouteDetail extends BoardSavableSubWindow {
     private static final int c_max_slider_value = 100;
     private static final int c_accuracy_scale_factor = 20;
 
-    private class CompensationOnListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent p_evt) {
-            board_handling.set_clearance_compensation(true);
-        }
-    }
-
-    private class CompensationOffListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent p_evt) {
-            board_handling.set_clearance_compensation(false);
-        }
-    }
-
-    private class SliderChangeListener implements ChangeListener {
-
-        @Override
-        public void stateChanged(ChangeEvent evt) {
-            int new_accurracy = (c_max_slider_value - accuracy_slider.getValue() + 1) * c_accuracy_scale_factor;
-            board_handling.settings.set_current_pull_tight_accuracy(new_accurracy);
-        }
-    }
-
-    private class OutLineKeepoutListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent p_evt) {
-            if (board_handling.is_board_read_only()) {
-                return;
-            }
-            BoardOutline outline = board_handling.get_routing_board().get_outline();
-            if (outline != null) {
-                outline.generate_keepout_outside(outline_keepout_check_box.isSelected());
-            }
-        }
-    }
 }

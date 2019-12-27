@@ -66,7 +66,7 @@ public class WindowClearanceMatrix extends BoardSavableSubWindow {
         interactive.BoardHandling board_handling = board_frame.board_panel.board_handling;
         layer_combo_box = new ComboBoxLayer(board_handling.get_routing_board().layer_structure, p_board_frame.get_locale());
         north_panel.add(layer_combo_box);
-        layer_combo_box.addActionListener(new ComboBoxListener());
+        layer_combo_box.addActionListener(ae -> refresh());
 
         main_panel.add(north_panel, BorderLayout.NORTH);
 
@@ -83,12 +83,12 @@ public class WindowClearanceMatrix extends BoardSavableSubWindow {
 
         final JButton add_class_button = new JButton(resources.getString("add_class"));
         add_class_button.setToolTipText(resources.getString("add_class_tooltip"));
-        add_class_button.addActionListener(new AddClassListener());
+        add_class_button.addActionListener(ae -> add_class());
         south_panel.add(add_class_button, BorderLayout.WEST);
 
         final JButton prune_button = new JButton(resources.getString("prune"));
         prune_button.setToolTipText(resources.getString("prune_tooltip"));
-        prune_button.addActionListener(new PruneListener());
+        prune_button.addActionListener(ae -> prune_clearance_matrix());
         south_panel.add(prune_button, BorderLayout.EAST);
 
         main_panel.add(south_panel, BorderLayout.SOUTH);
@@ -269,13 +269,6 @@ public class WindowClearanceMatrix extends BoardSavableSubWindow {
         return result;
     }
 
-    private class ComboBoxListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent evt) {
-            refresh();
-        }
-    }
 
     private final BoardFrame board_frame;
     private final JPanel main_panel;
@@ -289,22 +282,6 @@ public class WindowClearanceMatrix extends BoardSavableSubWindow {
      * Characters, which are not allowed in the name of a clearance class.
      */
     private static final String[] reserved_name_chars = {"(", ")", " ", "_"};
-
-    private class AddClassListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent p_evt) {
-            add_class();
-        }
-    }
-
-    private class PruneListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent p_evt) {
-            prune_clearance_matrix();
-        }
-    }
 
     /**
      * Table model of the clearance matrix.

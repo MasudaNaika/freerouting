@@ -20,6 +20,7 @@
  */
 package gui;
 
+import interactive.SnapShot;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -55,29 +56,38 @@ public class WindowSnapshotSettings extends BoardSavableSubWindow {
         gridbag_constraints.gridwidth = GridBagConstraints.REMAINDER;
         gridbag_constraints.insets = new Insets(1, 10, 1, 10);
 
+        SnapShot.Attributes attr = board_handling.settings.get_snapshot_attributes();
         // add check box for the object colors
         object_color_check_box = new JCheckBox(resources.getString("object_colors"));
         gridbag.setConstraints(object_color_check_box, gridbag_constraints);
         main_panel.add(object_color_check_box, gridbag_constraints);
-        object_color_check_box.addActionListener(new ObjectColorListener());
+        object_color_check_box.addActionListener(ae -> {
+            attr.object_colors = object_color_check_box.isSelected();
+        });
 
         // add check box for the object visibility
         object_visibility_check_box = new JCheckBox(resources.getString("object_visibility"));
         gridbag.setConstraints(object_visibility_check_box, gridbag_constraints);
         main_panel.add(object_visibility_check_box, gridbag_constraints);
-        object_visibility_check_box.addActionListener(new ObjectVisibilityListener());
+        object_visibility_check_box.addActionListener(ae -> {
+            attr.object_visibility = object_visibility_check_box.isSelected();
+        });
 
         // add check box for the layer visibility
         layer_visibility_check_box = new JCheckBox(resources.getString("layer_visibility"));
         gridbag.setConstraints(layer_visibility_check_box, gridbag_constraints);
         main_panel.add(layer_visibility_check_box, gridbag_constraints);
-        layer_visibility_check_box.addActionListener(new LayerVisibilityListener());
+        layer_visibility_check_box.addActionListener(ae -> {
+            attr.layer_visibility = layer_visibility_check_box.isSelected();
+        });
 
         // add check box for display region
         display_region_check_box = new JCheckBox(resources.getString("display_region"));
         gridbag.setConstraints(display_region_check_box, gridbag_constraints);
         main_panel.add(display_region_check_box, gridbag_constraints);
-        display_region_check_box.addActionListener(new DisplayRegionListener());
+        display_region_check_box.addActionListener(ae -> {
+            attr.display_region = display_region_check_box.isSelected();
+        });
 
         JLabel separator = new JLabel("  ----------------------------------------  ");
         gridbag.setConstraints(separator, gridbag_constraints);
@@ -87,7 +97,9 @@ public class WindowSnapshotSettings extends BoardSavableSubWindow {
         interactive_state_check_box = new JCheckBox(resources.getString("interactive_state"));
         gridbag.setConstraints(interactive_state_check_box, gridbag_constraints);
         main_panel.add(interactive_state_check_box, gridbag_constraints);
-        interactive_state_check_box.addActionListener(new InteractiveStateListener());
+        interactive_state_check_box.addActionListener(ae -> {
+            attr.interactive_state = interactive_state_check_box.isSelected();
+        });
 
         separator = new JLabel("  ----------------------------------------  ");
         gridbag.setConstraints(separator, gridbag_constraints);
@@ -97,19 +109,25 @@ public class WindowSnapshotSettings extends BoardSavableSubWindow {
         selection_layers_check_box = new JCheckBox(resources.getString("selection_layers"));
         gridbag.setConstraints(selection_layers_check_box, gridbag_constraints);
         main_panel.add(selection_layers_check_box, gridbag_constraints);
-        selection_layers_check_box.addActionListener(new SelectionLayersListener());
+        selection_layers_check_box.addActionListener(ae -> {
+            attr.selection_layers = selection_layers_check_box.isSelected();
+        });
 
         // add check box for the selectable items
         selectable_items_check_box = new JCheckBox(resources.getString("selectable_items"));
         gridbag.setConstraints(selectable_items_check_box, gridbag_constraints);
         main_panel.add(selectable_items_check_box, gridbag_constraints);
-        selectable_items_check_box.addActionListener(new SelectableItemsListener());
+        selectable_items_check_box.addActionListener(ae -> {
+            attr.selectable_items = selectable_items_check_box.isSelected();
+        });
 
         // add check box for the current layer
         current_layer_check_box = new JCheckBox(resources.getString("current_layer"));
         gridbag.setConstraints(current_layer_check_box, gridbag_constraints);
         main_panel.add(current_layer_check_box, gridbag_constraints);
-        current_layer_check_box.addActionListener(new CurrentLayerListener());
+        current_layer_check_box.addActionListener(ae -> {
+            attr.current_layer = current_layer_check_box.isSelected();
+        });
 
         separator = new JLabel("  ----------------------------------------  ");
         gridbag.setConstraints(separator, gridbag_constraints);
@@ -119,31 +137,41 @@ public class WindowSnapshotSettings extends BoardSavableSubWindow {
         rule_selection_check_box = new JCheckBox(resources.getString("rule_selection"));
         gridbag.setConstraints(rule_selection_check_box, gridbag_constraints);
         main_panel.add(rule_selection_check_box, gridbag_constraints);
-        rule_selection_check_box.addActionListener(new RuleSelectionListener());
+        rule_selection_check_box.addActionListener(ae -> {
+            attr.rule_selection = rule_selection_check_box.isSelected();
+        });
 
         // add check box for the manual rule settings
         manual_rule_settings_check_box = new JCheckBox(resources.getString("manual_rule_settings"));
         gridbag.setConstraints(manual_rule_settings_check_box, gridbag_constraints);
         main_panel.add(manual_rule_settings_check_box, gridbag_constraints);
-        manual_rule_settings_check_box.addActionListener(new ManualRuleSettingsListener());
+        manual_rule_settings_check_box.addActionListener(ae -> {
+            attr.manual_rule_settings = manual_rule_settings_check_box.isSelected();
+        });
 
         // add check box for push and shove enabled
         push_and_shove_enabled_check_box = new JCheckBox(resources.getString("push&shove_enabled"));
         gridbag.setConstraints(push_and_shove_enabled_check_box, gridbag_constraints);
         main_panel.add(push_and_shove_enabled_check_box, gridbag_constraints);
-        push_and_shove_enabled_check_box.addActionListener(new PushAndShoveEnabledListener());
+        push_and_shove_enabled_check_box.addActionListener(ae -> {
+            attr.push_and_shove_enabled = push_and_shove_enabled_check_box.isSelected();
+        });
 
         // add check box for drag components enabled
         drag_components_enabled_check_box = new JCheckBox(resources.getString("drag_components_enabled"));
         gridbag.setConstraints(drag_components_enabled_check_box, gridbag_constraints);
         main_panel.add(drag_components_enabled_check_box, gridbag_constraints);
-        drag_components_enabled_check_box.addActionListener(new DragComponentsEnabledListener());
+        drag_components_enabled_check_box.addActionListener(ae -> {
+            attr.drag_components_enabled = drag_components_enabled_check_box.isSelected();
+        });
 
         // add check box for the pull tight region
         pull_tight_region_check_box = new JCheckBox(resources.getString("pull_tight_region"));
         gridbag.setConstraints(pull_tight_region_check_box, gridbag_constraints);
         main_panel.add(pull_tight_region_check_box, gridbag_constraints);
-        pull_tight_region_check_box.addActionListener(new PullTightRegionListener());
+        pull_tight_region_check_box.addActionListener(ae -> {
+            attr.pull_tight_region = pull_tight_region_check_box.isSelected();
+        });
 
         separator = new JLabel("  ----------------------------------------  ");
         gridbag.setConstraints(separator, gridbag_constraints);
@@ -153,7 +181,9 @@ public class WindowSnapshotSettings extends BoardSavableSubWindow {
         component_grid_check_box = new JCheckBox(resources.getString("component_grid"));
         gridbag.setConstraints(component_grid_check_box, gridbag_constraints);
         main_panel.add(component_grid_check_box, gridbag_constraints);
-        component_grid_check_box.addActionListener(new ComponentGridListener());
+        component_grid_check_box.addActionListener(ae -> {
+            attr.component_grid = component_grid_check_box.isSelected();
+        });
 
         separator = new JLabel("  ----------------------------------------  ");
         gridbag.setConstraints(separator, gridbag_constraints);
@@ -163,7 +193,9 @@ public class WindowSnapshotSettings extends BoardSavableSubWindow {
         info_list_filter_check_box = new JCheckBox(resources.getString("info_list_selections"));
         gridbag.setConstraints(info_list_filter_check_box, gridbag_constraints);
         main_panel.add(info_list_filter_check_box, gridbag_constraints);
-        info_list_filter_check_box.addActionListener(new InfoListFilterListener());
+        info_list_filter_check_box.addActionListener(ae -> {
+            attr.info_list_selections = info_list_filter_check_box.isSelected();
+        });
 
         p_board_frame.set_context_sensitive_help(this, "WindowSnapshots_SnapshotSettings");
 
@@ -213,123 +245,4 @@ public class WindowSnapshotSettings extends BoardSavableSubWindow {
     final JCheckBox component_grid_check_box;
     final JCheckBox info_list_filter_check_box;
 
-    private class ObjectColorListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent p_evt) {
-            board_handling.settings.get_snapshot_attributes().object_colors = object_color_check_box.isSelected();
-        }
-    }
-
-    private class ObjectVisibilityListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent p_evt) {
-            board_handling.settings.get_snapshot_attributes().object_visibility = object_visibility_check_box.isSelected();
-        }
-    }
-
-    private class LayerVisibilityListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent p_evt) {
-            board_handling.settings.get_snapshot_attributes().layer_visibility = layer_visibility_check_box.isSelected();
-        }
-    }
-
-    private class DisplayRegionListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent p_evt) {
-            board_handling.settings.get_snapshot_attributes().display_region = display_region_check_box.isSelected();
-        }
-    }
-
-    private class InteractiveStateListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent p_evt) {
-            board_handling.settings.get_snapshot_attributes().interactive_state = interactive_state_check_box.isSelected();
-        }
-    }
-
-    private class SelectionLayersListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent p_evt) {
-            board_handling.settings.get_snapshot_attributes().selection_layers = selection_layers_check_box.isSelected();
-        }
-    }
-
-    private class SelectableItemsListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent p_evt) {
-            board_handling.settings.get_snapshot_attributes().selectable_items = selectable_items_check_box.isSelected();
-        }
-    }
-
-    private class CurrentLayerListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent p_evt) {
-            board_handling.settings.get_snapshot_attributes().current_layer = current_layer_check_box.isSelected();
-        }
-    }
-
-    private class RuleSelectionListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent p_evt) {
-            board_handling.settings.get_snapshot_attributes().rule_selection = rule_selection_check_box.isSelected();
-        }
-    }
-
-    private class ManualRuleSettingsListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent p_evt) {
-            board_handling.settings.get_snapshot_attributes().manual_rule_settings = manual_rule_settings_check_box.isSelected();
-        }
-    }
-
-    private class PushAndShoveEnabledListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent p_evt) {
-            board_handling.settings.get_snapshot_attributes().push_and_shove_enabled = push_and_shove_enabled_check_box.isSelected();
-        }
-    }
-
-    private class DragComponentsEnabledListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent p_evt) {
-            board_handling.settings.get_snapshot_attributes().drag_components_enabled = drag_components_enabled_check_box.isSelected();
-        }
-    }
-
-    private class PullTightRegionListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent p_evt) {
-            board_handling.settings.get_snapshot_attributes().pull_tight_region = pull_tight_region_check_box.isSelected();
-        }
-    }
-
-    private class ComponentGridListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent p_evt) {
-            board_handling.settings.get_snapshot_attributes().component_grid = component_grid_check_box.isSelected();
-        }
-    }
-
-    private class InfoListFilterListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent p_evt) {
-            board_handling.settings.get_snapshot_attributes().info_list_selections = info_list_filter_check_box.isSelected();
-        }
-    }
 }

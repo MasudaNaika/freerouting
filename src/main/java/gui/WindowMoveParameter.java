@@ -98,8 +98,10 @@ public class WindowMoveParameter extends BoardSavableSubWindow {
         zoom_button = new JRadioButton(resources.getString("zoom"));
         rotate_button = new JRadioButton(resources.getString("rotate"));
 
-        zoom_button.addActionListener(new ZoomButtonListener());
-        rotate_button.addActionListener(new RotateButtonListener());
+        zoom_button.addActionListener(ae
+                -> board_handling.settings.set_zoom_with_wheel(true));
+        rotate_button.addActionListener(ae
+                -> board_handling.settings.set_zoom_with_wheel(false));
 
         ButtonGroup button_group = new ButtonGroup();
         button_group.add(zoom_button);
@@ -183,22 +185,6 @@ public class WindowMoveParameter extends BoardSavableSubWindow {
                 set_vertical_grid_field(board_handling.settings.get_vertical_component_grid());
             }
 
-        }
-    }
-
-    private class ZoomButtonListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent p_evt) {
-            board_handling.settings.set_zoom_with_wheel(true);
-        }
-    }
-
-    private class RotateButtonListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent p_evt) {
-            board_handling.settings.set_zoom_with_wheel(false);
         }
     }
 

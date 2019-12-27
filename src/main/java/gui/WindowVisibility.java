@@ -80,12 +80,18 @@ public abstract class WindowVisibility extends BoardSavableSubWindow {
                 = ResourceBundle.getBundle("gui.resources.Default", p_board_frame.get_locale());
         JButton min_all_button = new JButton(resources.getString("minimum_all"));
         min_all_button.setToolTipText(resources.getString("minimum_all_tooltip"));
-        min_all_button.addActionListener(new MinAllButtonListener());
+        min_all_button.addActionListener(ae -> {
+            set_all_minimum();
+            board_panel.repaint();
+        });
         gridbag.setConstraints(min_all_button, gridbag_constraints);
         main_panel.add(min_all_button);
         JButton max_all_button = new JButton(resources.getString("maximum_all"));
         max_all_button.setToolTipText(resources.getString("maximum_all_tooltip"));
-        max_all_button.addActionListener(new MaxAllButtonListener());
+        max_all_button.addActionListener(ae -> {
+            set_all_maximum();
+            board_panel.repaint();
+        });
         gridbag.setConstraints(max_all_button, gridbag_constraints);
         main_panel.add(max_all_button);
         pack();
@@ -133,25 +139,7 @@ public abstract class WindowVisibility extends BoardSavableSubWindow {
 
     private static final int MAX_SLIDER_VALUE = 100;
 
-    // private classes
-    private class MinAllButtonListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent p_evt) {
-            set_all_minimum();
-            board_panel.repaint();
-        }
-    }
-
-    private class MaxAllButtonListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent p_evt) {
-            set_all_maximum();
-            board_panel.repaint();
-        }
-    }
-
+    
     /**
      * p_slider_no is required to identify the number of the slider in
      * slider_arr.

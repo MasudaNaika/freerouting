@@ -60,8 +60,7 @@ public class WindowSnapshot extends BoardSavableSubWindow {
         // create goto button
         JButton goto_button = new JButton(resources.getString("goto_snapshot"));
         goto_button.setToolTipText(resources.getString("goto_tooltip"));
-        GotoListener goto_listener = new GotoListener();
-        goto_button.addActionListener(goto_listener);
+        goto_button.addActionListener(ae -> goto_selected());
         main_panel.add(goto_button, BorderLayout.NORTH);
 
         // create snapshot list
@@ -107,14 +106,17 @@ public class WindowSnapshot extends BoardSavableSubWindow {
 
         // create delete buttons
         JButton delete_button = new JButton(resources.getString("remove"));
-        DeleteListener delete_listener = new DeleteListener();
-        delete_button.addActionListener(delete_listener);
+        delete_button.addActionListener(ae -> {
+            Object selected_snapshot = list.getSelectedValue();
+            if (selected_snapshot != null) {
+                list_model.removeElement(selected_snapshot);
+            }
+        });
         gridbag.setConstraints(delete_button, gridbag_constraints);
         south_panel.add(delete_button);
 
         JButton delete_all_button = new JButton(resources.getString("remove_all"));
-        DeleteAllListener delete_all_listener = new DeleteAllListener();
-        delete_all_button.addActionListener(delete_all_listener);
+        delete_all_button.addActionListener(ae -> list_model.removeAllElements());
         gridbag.setConstraints(delete_all_button, gridbag_constraints);
         south_panel.add(delete_all_button);
 
@@ -282,34 +284,7 @@ public class WindowSnapshot extends BoardSavableSubWindow {
 
         list.setSelectedIndex(selected_index + 1);
     }
-
-    private class DeleteListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent p_evt) {
-            Object selected_snapshot = list.getSelectedValue();
-            if (selected_snapshot != null) {
-                list_model.removeElement(selected_snapshot);
-            }
-        }
-    }
-
-    private class DeleteAllListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent p_evt) {
-            list_model.removeAllElements();
-        }
-    }
-
-    private class GotoListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent p_evt) {
-            goto_selected();
-        }
-    }
-
+    
     private class SettingsListener implements ActionListener {
 
         @Override
@@ -323,7 +298,7 @@ public class WindowSnapshot extends BoardSavableSubWindow {
         }
         boolean first_time = true;
     }
-
+    
     /**
      * Type for attributes of this class, which are saved to an Objectstream.
      */
