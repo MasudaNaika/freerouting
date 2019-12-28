@@ -36,7 +36,6 @@ import geometry.planar.IntBox;
 import geometry.planar.IntPoint;
 import geometry.planar.PolylineShape;
 import gui.Freerouter;
-//import it.unimi.dsi.fastutil.ints.IntBidirectionalIterator;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Rectangle;
@@ -617,9 +616,7 @@ public class BoardHandling extends BoardHandlingImpl {
         }
         Set<Integer> changed_nets = Freerouter.newIntSortedSet();
         if (board.undo(changed_nets)) {
-            for (Iterator it = changed_nets.iterator(); it.hasNext();) {
-//                int changed_net = ((IntBidirectionalIterator) it).nextInt();
-                int changed_net = (int) it.next();
+            for (int changed_net : changed_nets) {
                 update_ratsnest(changed_net);
             }
             if (changed_nets.size() > 0) {
@@ -644,9 +641,7 @@ public class BoardHandling extends BoardHandlingImpl {
         }
         Set<Integer> changed_nets = Freerouter.newIntSortedSet();
         if (board.redo(changed_nets)) {
-            for (Iterator it = changed_nets.iterator(); it.hasNext();) {
-//                int changed_net = ((IntBidirectionalIterator) it).nextInt();
-                int changed_net = (int) it.next();
+            for (int changed_net : changed_nets) {
                 update_ratsnest(changed_net);
             }
             screen_messages.set_status_message(resources.getString("redo"));

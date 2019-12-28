@@ -26,7 +26,6 @@ import geometry.planar.FloatPoint;
 import geometry.planar.IntBox;
 import geometry.planar.IntPoint;
 import gui.Freerouter;
-//import it.unimi.dsi.fastutil.ints.IntBidirectionalIterator;
 import java.awt.Graphics;
 import java.util.Collection;
 import java.util.Iterator;
@@ -117,9 +116,7 @@ public class CutoutRouteState extends SelectRegionState {
             }
         }
 
-        for (Iterator it = changed_nets.iterator(); it.hasNext();) {
-//            int changed_net = ((IntBidirectionalIterator) it).nextInt();
-            int changed_net = (int) it.next();
+        for (int changed_net : changed_nets) {
             hdlg.update_ratsnest(changed_net);
         }
     }

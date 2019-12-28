@@ -26,7 +26,6 @@ import geometry.planar.FloatPoint;
 import geometry.planar.IntPoint;
 import geometry.planar.Vector;
 import gui.Freerouter;
-//import it.unimi.dsi.fastutil.ints.IntBidirectionalIterator;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.SortedSet;
@@ -142,9 +141,7 @@ public class DragItemState extends DragState {
                         changed_nets.add(curr_moved_item.get_net_no(i));
                     }
                 }
-                for (Iterator it = changed_nets.iterator(); it.hasNext();) {
-//                    int curr_net_no = ((IntBidirectionalIterator) it).nextInt();
-                    int curr_net_no = (int) it.next();
+                for (int curr_net_no : changed_nets) {
                     hdlg.update_ratsnest(curr_net_no);
                 }
             }

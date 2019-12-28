@@ -22,6 +22,8 @@ package datastructures;
 import geometry.planar.RegularTileShape;
 import geometry.planar.ShapeBoundingDirections;
 import gui.Freerouter;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Set;
 
 /**
@@ -54,16 +56,13 @@ public class MinAreaTree extends ShapeTree {
         if (root == null) {
             return found_overlaps;
         }
-        node_stack.reset();
+        node_stack.clear();
         node_stack.push(root);
         TreeNode curr_node;
         while (true) {
-            curr_node = node_stack.pop();
-            if (curr_node == null) {
-                break;
-            }
+            curr_node = node_stack.poll();
             // null check 2019/12/26
-            if (curr_node.bounding_shape == null) {
+            if (curr_node == null || curr_node.bounding_shape == null) {
                 break;
             }
             if (curr_node.bounding_shape.intersects(p_shape)) {
@@ -208,5 +207,6 @@ public class MinAreaTree extends ShapeTree {
         }
     }
 
-    protected ArrayStack<TreeNode> node_stack = new ArrayStack<>(10000);
+//    protected ArrayStack<TreeNode> node_stack = new ArrayStack<>(10000);
+    protected Deque<TreeNode> node_stack = new ArrayDeque<>(1000);
 }

@@ -32,8 +32,6 @@ import geometry.planar.Line;
 import geometry.planar.Simplex;
 import geometry.planar.TileShape;
 import gui.Freerouter;
-//import it.unimi.dsi.fastutil.ints.IntBidirectionalIterator;
-//import it.unimi.dsi.fastutil.objects.ObjectLinkedOpenHashSet;
 import java.awt.Graphics;
 import java.util.Collection;
 import java.util.Iterator;
@@ -159,9 +157,7 @@ public class AutorouteEngine {
 
         board.remove_items(ripped_connections, false);
 
-        for (Iterator it = changed_nets.iterator(); it.hasNext();) {
-//            int curr_net_no = ((IntBidirectionalIterator) it).nextInt();
-            int curr_net_no = (int) it.next();
+        for (int curr_net_no : changed_nets) {
             board.remove_trace_tails(curr_net_no, stop_connection_option);
         }
         InsertFoundConnectionAlgo insert_found_connection_algo
