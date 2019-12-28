@@ -150,8 +150,8 @@ public class Freerouter {
         return new LinkedHashSet<>();
     }
 
-    public static SortedSet newIntSortedSet() {
-        return new TreeSet<Integer>();
+    public static SortedSet<Integer> newIntSortedSet() {
+        return new TreeSet<>();
     }
 
     public static List<Integer> newIntArrayList() {

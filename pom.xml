@@ -19,7 +19,7 @@
         <dependency>
             <groupId>com.formdev</groupId>
             <artifactId>flatlaf</artifactId>
-            <version>0.21</version>
+            <version>0.22</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
@@ -69,10 +69,10 @@
                     <source>11</source>
                     <target>11</target>
                     <!--
-                                        <compilerArgs>
-                                            <arg>-Xlint:unchecked</arg>
-                                            <arg>-Xlint:deprecation</arg>
-                                        </compilerArgs>
+                    <compilerArgs>
+                        <arg>-Xlint:unchecked</arg>
+                        <arg>-Xlint:deprecation</arg>
+                    </compilerArgs>
                     -->
                 </configuration>
             </plugin>
