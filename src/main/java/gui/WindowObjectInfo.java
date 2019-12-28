@@ -19,6 +19,7 @@
  */
 package gui;
 
+import net.freerouting.Freerouter;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Insets;

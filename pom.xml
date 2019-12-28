@@ -42,7 +42,7 @@
                     <archive>
                         <manifestEntries>
                             <Multi-Release>true</Multi-Release>
-                            <Main-Class>gui.Freerouter</Main-Class>
+                            <Main-Class>net.freerouting.Freerouter</Main-Class>
                         </manifestEntries>
                     </archive>
                     <descriptorRefs>
@@ -85,7 +85,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>gui.Freerouter</mainClass>
+                            <mainClass>net.freerouting.Freerouter</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

@@ -16,7 +16,7 @@
 package interactive;
 
 import geometry.planar.FloatPoint;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;

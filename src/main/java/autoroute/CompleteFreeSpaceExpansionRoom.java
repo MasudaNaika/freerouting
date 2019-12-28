@@ -25,7 +25,7 @@ import board.SearchTreeObject;
 import board.ShapeSearchTree;
 import datastructures.ShapeTree;
 import geometry.planar.TileShape;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Collection;

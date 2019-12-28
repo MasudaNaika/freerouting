@@ -26,7 +26,7 @@ import geometry.planar.Point;
 import geometry.planar.Polyline;
 import geometry.planar.Side;
 import geometry.planar.TileShape;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 
 /**
  *

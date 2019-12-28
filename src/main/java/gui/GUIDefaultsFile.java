@@ -19,6 +19,7 @@
  */
 package gui;
 
+import net.freerouting.Freerouter;
 import board.ItemSelectionFilter;
 import datastructures.IndentFileWriter;
 import java.awt.Color;

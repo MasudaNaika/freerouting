@@ -22,7 +22,7 @@ package designformats.specctra;
 
 import board.BasicBoard;
 import datastructures.IndentFileWriter;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;

@@ -21,7 +21,7 @@ package autoroute;
 
 import board.Item;
 import board.ShapeSearchTree;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.awt.Graphics;
 
 /**

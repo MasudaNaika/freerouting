@@ -4,7 +4,7 @@ import geometry.planar.FloatPoint;
 import geometry.planar.IntOctagon;
 import geometry.planar.Point;
 import geometry.planar.TileShape;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.awt.Color;
 import java.io.Serializable;
 import java.util.Collection;

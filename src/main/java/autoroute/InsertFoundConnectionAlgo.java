@@ -30,7 +30,7 @@ import geometry.planar.FloatPoint;
 import geometry.planar.IntPoint;
 import geometry.planar.Point;
 import geometry.planar.Polyline;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.util.Set;
 import library.Padstack;
 import rules.ViaInfo;

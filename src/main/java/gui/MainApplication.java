@@ -20,6 +20,7 @@
  */
 package gui;
 
+import net.freerouting.Freerouter;
 import board.TestLevel;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;

@@ -20,6 +20,7 @@
  */
 package gui;
 
+import net.freerouting.Freerouter;
 import java.net.URL;
 import java.util.Locale;
 import javax.help.CSH;

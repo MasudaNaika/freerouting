@@ -23,7 +23,7 @@ package autoroute;
 import board.Item;
 import board.Trace;
 import geometry.planar.Point;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.util.Collection;
 import java.util.Set;
 

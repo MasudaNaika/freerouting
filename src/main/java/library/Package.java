@@ -22,7 +22,7 @@ package library;
 import geometry.planar.Area;
 import geometry.planar.Shape;
 import geometry.planar.Vector;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.io.Serializable;
 import java.util.Locale;
 import java.util.ResourceBundle;

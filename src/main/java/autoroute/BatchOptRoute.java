@@ -23,7 +23,7 @@ import board.Trace;
 import board.Via;
 import datastructures.UndoableObjects;
 import geometry.planar.FloatPoint;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import interactive.InteractiveActionThread;
 import java.text.NumberFormat;
 import java.util.Collection;

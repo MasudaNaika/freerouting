@@ -31,7 +31,7 @@ import datastructures.TimeLimit;
 import geometry.planar.Line;
 import geometry.planar.Simplex;
 import geometry.planar.TileShape;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.awt.Graphics;
 import java.util.Collection;
 import java.util.Iterator;

@@ -30,7 +30,7 @@ import geometry.planar.FloatPoint;
 import geometry.planar.IntBox;
 import geometry.planar.Simplex;
 import geometry.planar.TileShape;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.SortedSet;

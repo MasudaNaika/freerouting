@@ -27,7 +27,7 @@ import geometry.planar.IntOctagon;
 import geometry.planar.IntPoint;
 import geometry.planar.Polyline;
 import geometry.planar.TileShape;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.util.Collection;
 
 /**

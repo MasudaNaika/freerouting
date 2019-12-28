@@ -20,6 +20,7 @@
  */
 package gui;
 
+import net.freerouting.Freerouter;
 import board.Item;
 import datastructures.Signum;
 import geometry.planar.FloatPoint;

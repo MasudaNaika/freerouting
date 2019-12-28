@@ -19,7 +19,7 @@
  */
 package boardgraphics;
 
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.io.Serializable;
 
 /**

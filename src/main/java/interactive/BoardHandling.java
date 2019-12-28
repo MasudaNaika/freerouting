@@ -35,7 +35,7 @@ import geometry.planar.FloatPoint;
 import geometry.planar.IntBox;
 import geometry.planar.IntPoint;
 import geometry.planar.PolylineShape;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Rectangle;

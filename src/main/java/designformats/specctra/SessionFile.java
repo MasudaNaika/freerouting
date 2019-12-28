@@ -27,7 +27,7 @@ import datastructures.IdentifierType;
 import datastructures.IndentFileWriter;
 import geometry.planar.FloatPoint;
 import geometry.planar.Point;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Collection;

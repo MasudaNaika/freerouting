@@ -23,7 +23,7 @@ import geometry.planar.IntVector;
 import geometry.planar.PolygonShape;
 import geometry.planar.Simplex;
 import geometry.planar.Vector;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;

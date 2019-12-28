@@ -25,7 +25,7 @@ import boardgraphics.GraphicsContext;
 import datastructures.PlanarDelaunayTriangulation;
 import geometry.planar.FloatPoint;
 import geometry.planar.Point;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Arrays;

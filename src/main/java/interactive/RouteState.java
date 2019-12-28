@@ -29,7 +29,7 @@ import board.Via;
 import geometry.planar.FloatPoint;
 import geometry.planar.IntPoint;
 import geometry.planar.Point;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.awt.Graphics;
 import java.util.Collection;
 import java.util.Set;

@@ -23,7 +23,7 @@ import geometry.planar.RegularTileShape;
 import geometry.planar.Shape;
 import geometry.planar.ShapeBoundingDirections;
 import geometry.planar.TileShape;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 
 /**
  * Abstract binary search tree for shapes in the plane. The shapes are stored in

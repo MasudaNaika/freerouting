@@ -26,7 +26,7 @@ import autoroute.BatchOptRoute;
 import board.Unit;
 import geometry.planar.FloatLine;
 import geometry.planar.FloatPoint;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ResourceBundle;

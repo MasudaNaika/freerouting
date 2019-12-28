@@ -18,7 +18,7 @@ package autoroute;
 import board.RoutingBoard;
 import datastructures.TimeLimit;
 import geometry.planar.FloatPoint;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import interactive.InteractiveActionThread;
 import java.util.Collection;
 import java.util.LinkedList;

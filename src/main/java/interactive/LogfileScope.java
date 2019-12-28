@@ -20,7 +20,7 @@
 package interactive;
 
 import geometry.planar.FloatPoint;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.awt.geom.Point2D;
 import java.util.Collection;
 

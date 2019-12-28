@@ -19,6 +19,7 @@
  */
 package gui;
 
+import net.freerouting.Freerouter;
 import interactive.RatsNest;
 import java.util.Arrays;
 import java.util.List;

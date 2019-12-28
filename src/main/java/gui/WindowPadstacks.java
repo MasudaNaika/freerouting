@@ -19,6 +19,7 @@
  */
 package gui;
 
+import net.freerouting.Freerouter;
 import datastructures.UndoableObjects;
 import java.util.Arrays;
 import java.util.Collection;

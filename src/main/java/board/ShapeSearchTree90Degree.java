@@ -27,7 +27,7 @@ import geometry.planar.OrthogonalBoundingDirections;
 import geometry.planar.Polyline;
 import geometry.planar.Shape;
 import geometry.planar.TileShape;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.util.Collection;
 import java.util.LinkedList;
 

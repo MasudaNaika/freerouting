@@ -6,7 +6,7 @@ import board.RoutingBoard;
 import board.TestLevel;
 import geometry.planar.IntBox;
 import geometry.planar.PolylineShape;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.util.Locale;
 import rules.BoardRules;
 

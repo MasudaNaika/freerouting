@@ -33,7 +33,7 @@ import geometry.planar.Polyline;
 import geometry.planar.PolylineShape;
 import geometry.planar.TileShape;
 import geometry.planar.Vector;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;

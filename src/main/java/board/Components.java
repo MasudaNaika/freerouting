@@ -23,7 +23,7 @@ package board;
 import datastructures.UndoableObjects;
 import geometry.planar.IntPoint;
 import geometry.planar.Point;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;

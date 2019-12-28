@@ -20,7 +20,7 @@
  */
 package interactive;
 
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.awt.Graphics;
 import java.io.IOException;
 import java.io.InputStream;

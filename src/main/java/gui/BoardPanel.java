@@ -19,6 +19,7 @@
  */
 package gui;
 
+import net.freerouting.Freerouter;
 import interactive.BoardHandling;
 import interactive.ScreenMessages;
 import java.awt.AWTException;

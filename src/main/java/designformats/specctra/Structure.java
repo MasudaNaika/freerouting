@@ -29,7 +29,7 @@ import geometry.planar.IntBox;
 import geometry.planar.Point;
 import geometry.planar.PolylineShape;
 import geometry.planar.TileShape;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;

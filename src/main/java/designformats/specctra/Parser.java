@@ -20,7 +20,7 @@
 package designformats.specctra;
 
 import board.Communication.SpecctraParserInfo;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.io.IOException;
 
 /**

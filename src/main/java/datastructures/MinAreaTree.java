@@ -21,7 +21,7 @@ package datastructures;
 
 import geometry.planar.RegularTileShape;
 import geometry.planar.ShapeBoundingDirections;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Set;

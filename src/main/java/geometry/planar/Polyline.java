@@ -15,7 +15,7 @@
  */
 package geometry.planar;
 
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -936,7 +936,8 @@ public class Polyline implements Serializable {
         ++new_length;
         for (int i = 2; i < p_line_arr.length - 2; ++i) {
             // array index check 2019/12/27
-            if (!isValidIndex(tmp_arr, new_length - 1) || !isValidIndex(p_line_arr, i + 1)) {
+            if (!Freerouter.isValidArrayIndex(tmp_arr, new_length - 1) 
+                    || !Freerouter.isValidArrayIndex(p_line_arr, i + 1)) {
                 continue;
             }
             if (tmp_arr[new_length - 1].is_equal_or_opposite(p_line_arr[i + 1])) {
@@ -965,10 +966,6 @@ public class Polyline implements Serializable {
         Line[] result = new Line[new_length];
         System.arraycopy(tmp_arr, 0, result, 0, new_length);
         return result;
-    }
-
-    private static boolean isValidIndex(Object[] arr, int idx) {
-        return 0 <= idx && idx < arr.length;
     }
 
     /**

@@ -19,6 +19,7 @@
  */
 package gui;
 
+import net.freerouting.Freerouter;
 import java.awt.Rectangle;
 import java.io.IOException;
 import java.io.ObjectInputStream;

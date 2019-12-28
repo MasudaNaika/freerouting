@@ -19,7 +19,7 @@
  */
 package datastructures;
 
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;

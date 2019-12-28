@@ -20,6 +20,7 @@
  */
 package gui;
 
+import net.freerouting.Freerouter;
 import javax.swing.JFrame;
 
 /**

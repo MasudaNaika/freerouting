@@ -23,7 +23,7 @@ import datastructures.TimeLimit;
 import datastructures.UndoableObjects;
 import geometry.planar.FloatLine;
 import geometry.planar.FloatPoint;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import interactive.BoardHandling;
 import interactive.InteractiveActionThread;
 import java.util.Collection;

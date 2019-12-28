@@ -20,7 +20,7 @@
 package library;
 
 import geometry.planar.ConvexShape;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;

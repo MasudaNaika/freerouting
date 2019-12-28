@@ -16,7 +16,7 @@
 package geometry.planar;
 
 import datastructures.Signum;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.io.Serializable;
 import java.math.BigInteger;
 

@@ -5,7 +5,7 @@ import geometry.planar.FloatPoint;
 import geometry.planar.Point;
 import geometry.planar.TileShape;
 import geometry.planar.Vector;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.awt.Color;
 import java.util.Locale;
 import java.util.ResourceBundle;

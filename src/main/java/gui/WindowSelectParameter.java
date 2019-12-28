@@ -19,6 +19,7 @@
  */
 package gui;
 
+import net.freerouting.Freerouter;
 import board.ItemSelectionFilter;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;

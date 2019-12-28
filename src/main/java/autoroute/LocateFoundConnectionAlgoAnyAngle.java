@@ -27,7 +27,7 @@ import geometry.planar.FloatLine;
 import geometry.planar.FloatPoint;
 import geometry.planar.Side;
 import geometry.planar.TileShape;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.SortedSet;

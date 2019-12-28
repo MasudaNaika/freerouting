@@ -1,5 +1,6 @@
-package gui;
+package net.freerouting;
 
+import gui.MainApplication;
 import java.awt.Desktop;
 import java.awt.Taskbar;
 import java.awt.Window;
@@ -39,86 +40,6 @@ public class Freerouter {
 
     // https://icon-icons.com/ja/アイコン/回路/2679
     public static ImageIcon ICON;
-
-    private static ImageIcon getImageIcon(String fileName) {
-        URL url = Freerouter.class.getResource("/gui/resources/" + fileName);
-        ImageIcon icon = new ImageIcon(url);
-        return icon;
-    }
-
-    public static void setWindowIcon(Window w) {
-        w.setIconImage(ICON.getImage());
-    }
-
-    public static Logger getLogger() {
-        return LogManager.getLogger("freerooter.logger");
-    }
-
-    public static void logInfo(String msg) {
-        getLogger().log(Level.INFO, msg);
-    }
-
-    public static void logWarn(String msg) {
-        getLogger().log(Level.WARN, msg);
-    }
-
-    public static void logError(String msg) {
-        getLogger().log(Level.ERROR, msg);
-    }
-
-    public static void logError(Throwable ex) {
-        getLogger().log(Level.ERROR, ex.getMessage(), ex);
-    }
-
-    private static void initLogger() {
-        try (InputStream is = Freerouter.class.getResourceAsStream("resources/log4j2.xml")) {
-            ConfigurationSource src = new ConfigurationSource(is);
-            Configurator.initialize(null, src);
-        } catch (IOException ex) {
-        }
-    }
-
-    public static <E> SortedSet<E> newSortedSet() {
-        return new TreeSet<>();
-//        return new ObjectAVLTreeSet<>();
-    }
-
-    public static <E> Set<E> newHashSet() {
-        return new HashSet<>();
-//        return new ObjectOpenHashSet<>();
-    }
-
-    public static <E> Set<E> newLinkedHashSet() {
-        return new LinkedHashSet<>();
-//        return new ObjectLinkedOpenHashSet<>();
-    }
-
-    public static SortedSet newIntSortedSet() {
-        return new TreeSet<Integer>();
-//        return new IntAVLTreeSet();
-    }
-
-    public static List<Integer> newIntArrayList() {
-        return new ArrayList<>();
-//        return new IntArrayList();
-    }
-
-    public static void toArray(Collection<Integer> list, int[] array) {
-//        ((IntArrayList) list).toArray(array);
-        int i = 0;
-        for (int value : list) {
-            array[i++] = value;
-        }
-    }
-    
-    public static int[] toArray(Collection<Integer> list) {
-        int[] array = new int[list.size()];
-        int i = 0;
-        for (int value : list) {
-            array[i++] = value;
-        }
-        return array;
-    }
 
     public static void main(String... args) {
 
@@ -174,6 +95,87 @@ public class Freerouter {
         initLogger();
 
         MainApplication.main(args);
+    }
+    
+    
+    // Utilitiy methods
+    
+    private static ImageIcon getImageIcon(String fileName) {
+        URL url = Freerouter.class.getResource("resources/" + fileName);
+        ImageIcon icon = new ImageIcon(url);
+        return icon;
+    }
+
+    public static void setWindowIcon(Window w) {
+        w.setIconImage(ICON.getImage());
+    }
+
+    public static Logger getLogger() {
+        return LogManager.getLogger("freerooter.logger");
+    }
+
+    public static void logInfo(String msg) {
+        getLogger().log(Level.INFO, msg);
+    }
+
+    public static void logWarn(String msg) {
+        getLogger().log(Level.WARN, msg);
+    }
+
+    public static void logError(String msg) {
+        getLogger().log(Level.ERROR, msg);
+    }
+
+    public static void logError(Throwable ex) {
+        getLogger().log(Level.ERROR, ex.getMessage(), ex);
+    }
+
+    private static void initLogger() {
+        try (InputStream is = Freerouter.class.getResourceAsStream("resources/log4j2.xml")) {
+            ConfigurationSource src = new ConfigurationSource(is);
+            Configurator.initialize(null, src);
+        } catch (IOException ex) {
+        }
+    }
+
+    public static <E> SortedSet<E> newSortedSet() {
+        return new TreeSet<>();
+    }
+
+    public static <E> Set<E> newHashSet() {
+        return new HashSet<>();
+    }
+
+    public static <E> Set<E> newLinkedHashSet() {
+        return new LinkedHashSet<>();
+    }
+
+    public static SortedSet newIntSortedSet() {
+        return new TreeSet<Integer>();
+    }
+
+    public static List<Integer> newIntArrayList() {
+        return new ArrayList<>();
+    }
+
+    public static void toArray(Collection<Integer> list, int[] array) {
+        int i = 0;
+        for (int value : list) {
+            array[i++] = value;
+        }
+    }
+    
+    public static int[] toArray(Collection<Integer> list) {
+        int[] array = new int[list.size()];
+        int i = 0;
+        for (int value : list) {
+            array[i++] = value;
+        }
+        return array;
+    }
+    
+    public static boolean isValidArrayIndex(Object[] arr, int idx) {
+        return 0 <= idx && idx < arr.length;
     }
 
 }

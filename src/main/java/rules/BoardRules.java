@@ -20,7 +20,7 @@
 package rules;
 
 import geometry.planar.ConvexShape;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;

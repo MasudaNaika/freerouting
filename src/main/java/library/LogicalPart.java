@@ -19,7 +19,7 @@
  */
 package library;
 
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.io.Serializable;
 import java.util.Locale;
 import java.util.ResourceBundle;

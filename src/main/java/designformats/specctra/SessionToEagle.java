@@ -19,7 +19,7 @@
  */
 package designformats.specctra;
 
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;

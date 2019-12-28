@@ -24,7 +24,7 @@ import geometry.planar.Point;
 import geometry.planar.Shape;
 import geometry.planar.TileShape;
 import geometry.planar.Vector;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.awt.Color;
 import java.io.IOException;
 import java.io.ObjectOutputStream;

@@ -19,6 +19,7 @@
  */
 package gui;
 
+import net.freerouting.Freerouter;
 import board.ObjectInfoPanel.Printable;
 import java.awt.BorderLayout;
 import java.awt.Dimension;

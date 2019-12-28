@@ -23,7 +23,7 @@ import board.Item;
 import board.ItemSelectionFilter;
 import board.Pin;
 import geometry.planar.FloatPoint;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.util.Collection;
 import java.util.Set;
 

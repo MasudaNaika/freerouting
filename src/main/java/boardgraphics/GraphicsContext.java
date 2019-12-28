@@ -23,7 +23,7 @@ import geometry.planar.IntBox;
 import geometry.planar.PolylineShape;
 import geometry.planar.Shape;
 import geometry.planar.TileShape;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;

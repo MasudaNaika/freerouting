@@ -24,7 +24,7 @@ import datastructures.ShapeTree;
 import datastructures.UndoableObjects;
 import geometry.planar.FortyfiveDegreeBoundingDirections;
 import geometry.planar.Polyline;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;

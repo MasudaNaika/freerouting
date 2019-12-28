@@ -19,6 +19,7 @@
  */
 package gui;
 
+import net.freerouting.Freerouter;
 import board.Component;
 import board.Components;
 import java.util.Arrays;

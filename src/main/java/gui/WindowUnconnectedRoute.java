@@ -20,6 +20,7 @@
  */
 package gui;
 
+import net.freerouting.Freerouter;
 import board.Item;
 import java.util.Collection;
 import java.util.List;

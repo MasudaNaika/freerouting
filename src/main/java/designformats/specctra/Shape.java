@@ -22,7 +22,7 @@ package designformats.specctra;
 import datastructures.IdentifierType;
 import datastructures.IndentFileWriter;
 import geometry.planar.PolylineShape;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;

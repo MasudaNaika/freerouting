@@ -23,7 +23,7 @@ import geometry.planar.IntPoint;
 import geometry.planar.Limits;
 import geometry.planar.Point;
 import geometry.planar.Side;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;

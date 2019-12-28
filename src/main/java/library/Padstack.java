@@ -23,7 +23,7 @@ import geometry.planar.ConvexShape;
 import geometry.planar.Direction;
 import geometry.planar.IntBox;
 import geometry.planar.IntOctagon;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.LinkedList;

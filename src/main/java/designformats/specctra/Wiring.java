@@ -35,7 +35,7 @@ import geometry.planar.IntPoint;
 import geometry.planar.Line;
 import geometry.planar.Point;
 import geometry.planar.Polyline;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;

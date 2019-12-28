@@ -20,7 +20,7 @@
 package designformats.specctra;
 
 import board.Item;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.LinkedList;

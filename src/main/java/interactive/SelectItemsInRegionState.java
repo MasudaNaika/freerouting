@@ -23,7 +23,7 @@ import board.Item;
 import geometry.planar.FloatPoint;
 import geometry.planar.IntBox;
 import geometry.planar.IntPoint;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.util.Set;
 
 /**

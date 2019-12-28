@@ -19,7 +19,7 @@
  */
 package geometry.planar;
 
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.LinkedList;

@@ -19,6 +19,7 @@
  */
 package gui;
 
+import net.freerouting.Freerouter;
 import datastructures.UndoableObjects;
 import java.awt.BorderLayout;
 import java.awt.Color;

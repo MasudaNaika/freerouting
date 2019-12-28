@@ -26,7 +26,7 @@ import geometry.planar.FloatPoint;
 import geometry.planar.IntPoint;
 import geometry.planar.Point;
 import geometry.planar.Vector;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.io.IOException;

@@ -24,7 +24,7 @@ import geometry.planar.IntBox;
 import geometry.planar.Line;
 import geometry.planar.PolylineShape;
 import geometry.planar.Vector;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.io.Serializable;
 
 /**

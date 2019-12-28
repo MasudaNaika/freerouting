@@ -19,7 +19,7 @@
  */
 package geometry.planar;
 
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 
 /**
  * Defines a line in the plane by to FloatPoints. Calculations with FloatLines

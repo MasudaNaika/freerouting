@@ -30,7 +30,7 @@ import board.Item;
 import board.RoutingBoard;
 import geometry.planar.FloatPoint;
 import geometry.planar.TileShape;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.awt.Graphics;
 import java.util.Collection;
 import java.util.Set;

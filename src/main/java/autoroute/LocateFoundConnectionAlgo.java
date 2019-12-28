@@ -28,7 +28,7 @@ import board.TestLevel;
 import geometry.planar.FloatPoint;
 import geometry.planar.IntPoint;
 import geometry.planar.TileShape;
-import gui.Freerouter;
+import net.freerouting.Freerouter;
 import java.awt.Graphics;
 import java.util.Collection;
 import java.util.LinkedList;
