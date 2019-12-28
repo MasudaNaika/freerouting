@@ -15,6 +15,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -108,20 +109,21 @@ public class Freerouter {
 //        return new IntArrayList();
     }
 
-    public static void toArray(List<Integer> list, int[] array) {
+    public static void toArray(Collection<Integer> list, int[] array) {
 //        ((IntArrayList) list).toArray(array);
         int i = 0;
         for (int value : list) {
             array[i++] = value;
         }
     }
-
-    public static void toArray(Set<Integer> set, int[] array) {
-//        ((IntSet) set).toArray(array);
+    
+    public static int[] toArray(Collection<Integer> list) {
+        int[] array = new int[list.size()];
         int i = 0;
-        for (int value : set) {
+        for (int value : list) {
             array[i++] = value;
         }
+        return array;
     }
 
     public static void main(String... args) {

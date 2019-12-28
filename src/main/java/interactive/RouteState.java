@@ -435,8 +435,7 @@ public class RouteState extends InteractiveState {
                 }
             }
         }
-        int[] result = new int[net_number_list.size()];
-        Freerouter.toArray(net_number_list, result);
+        int[] result = Freerouter.toArray(net_number_list);
 
         return result;
     }

@@ -1083,8 +1083,7 @@ public class Network extends ScopeKeyword {
                     net_numbers.add(curr_board_net.net_number);
                 }
             }
-            int[] net_no_arr = new int[net_numbers.size()];
-            Freerouter.toArray(net_numbers, net_no_arr);
+            int[] net_no_arr = Freerouter.toArray(net_numbers);
 
             rules.NetClass net_class;
             rules.Net board_net;
