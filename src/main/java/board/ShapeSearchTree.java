@@ -421,6 +421,10 @@ public class ShapeSearchTree extends datastructures.MinAreaTree {
 
         for (Leaf curr_leaf : tmp_list) {
             Item curr_item = (Item) curr_leaf.object;
+            // add null check 2019/12/29
+            if (curr_item == null) {
+                continue;
+            }
             int shape_index = curr_leaf.shape_index_in_object;
             boolean ignore_item
                     = p_layer >= 0 && curr_item.shape_layer(shape_index) != p_layer;
