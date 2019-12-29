@@ -25,6 +25,7 @@ import net.freerouting.Freerouter;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Set;
+import java.util.SortedSet;
 
 /**
  * Class for reading and writing net scopes from dsn-files.
@@ -97,7 +98,7 @@ public class Net {
     /**
      * List of elements of type Pin.
      */
-    private Set<Pin> pin_list = null;
+    private SortedSet<Pin> pin_list = null;
 
     public static class Id implements Comparable<Id> {
 
