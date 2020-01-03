@@ -186,7 +186,6 @@ public class WindowVia extends BoardSavableSubWindow {
         while (it.hasNext()) {
             JFrame curr_subwindow = it.next();
             if (curr_subwindow != null) {
-
                 curr_subwindow.dispose();
             }
             it.remove();

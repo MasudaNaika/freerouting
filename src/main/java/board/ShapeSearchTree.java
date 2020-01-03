@@ -555,13 +555,13 @@ public class ShapeSearchTree extends datastructures.MinAreaTree {
                     p_room.get_layer(), p_room.get_contained_shape());
             result.add(new_room);
         }
-        node_stack.clear();
+        node_stack.reset();
         node_stack.push(root);
         TreeNode curr_node;
         int room_layer = p_room.get_layer();
 
         while (true) {
-            curr_node = node_stack.poll();
+            curr_node = node_stack.pop();
             if (curr_node == null || curr_node.bounding_shape == null) {
                 break;
             }

@@ -27,7 +27,6 @@ import net.freerouting.Freerouter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
@@ -124,12 +123,10 @@ public class Library extends ScopeKeyword {
                 pin_arr[i] = new library.Package.Pin(pin_info.pin_name, board_padstack.no, rel_coor, pin_info.rotation);
             }
             geometry.planar.Shape[] outline_arr = new geometry.planar.Shape[curr_package.outline.size()];
-
-            Iterator<Shape> it3 = curr_package.outline.iterator();
-            for (int i = 0; i < outline_arr.length; ++i) {
-                Shape curr_shape = it3.next();
+            int i = 0;
+            for (Shape curr_shape : curr_package.outline) {
                 if (curr_shape != null) {
-                    outline_arr[i] = curr_shape.transform_to_board_rel(p_par.coordinate_transform);
+                    outline_arr[i++] = curr_shape.transform_to_board_rel(p_par.coordinate_transform);
                 } else {
                     Freerouter.logInfo("Library.read_scope: outline shape is null");
                 }
@@ -137,29 +134,29 @@ public class Library extends ScopeKeyword {
             generate_missing_keepout_names("keepout_", curr_package.keepouts);
             generate_missing_keepout_names("via_keepout_", curr_package.via_keepouts);
             generate_missing_keepout_names("place_keepout_", curr_package.place_keepouts);
+            
             library.Package.Keepout[] keepout_arr = new library.Package.Keepout[curr_package.keepouts.size()];
-            Iterator<Shape.ReadAreaScopeResult> it2 = curr_package.keepouts.iterator();
-            for (int i = 0; i < keepout_arr.length; ++i) {
-                Shape.ReadAreaScopeResult curr_keepout = it2.next();
+            i = 0;
+            for (Shape.ReadAreaScopeResult curr_keepout : curr_package.keepouts) {
                 Layer curr_layer = curr_keepout.shape_list.iterator().next().layer;
                 geometry.planar.Area curr_area = Shape.transform_area_to_board_rel(curr_keepout.shape_list, p_par.coordinate_transform);
-                keepout_arr[i] = new library.Package.Keepout(curr_keepout.area_name, curr_area, curr_layer.no);
+                keepout_arr[i++] = new library.Package.Keepout(curr_keepout.area_name, curr_area, curr_layer.no);
             }
+            
             library.Package.Keepout[] via_keepout_arr = new library.Package.Keepout[curr_package.via_keepouts.size()];
-            it2 = curr_package.via_keepouts.iterator();
-            for (int i = 0; i < via_keepout_arr.length; ++i) {
-                Shape.ReadAreaScopeResult curr_keepout = it2.next();
+            i = 0;
+            for (Shape.ReadAreaScopeResult curr_keepout : curr_package.via_keepouts) {
                 Layer curr_layer = (curr_keepout.shape_list.iterator().next()).layer;
                 geometry.planar.Area curr_area = Shape.transform_area_to_board_rel(curr_keepout.shape_list, p_par.coordinate_transform);
-                via_keepout_arr[i] = new library.Package.Keepout(curr_keepout.area_name, curr_area, curr_layer.no);
+                via_keepout_arr[i++] = new library.Package.Keepout(curr_keepout.area_name, curr_area, curr_layer.no);
             }
+            
             library.Package.Keepout[] place_keepout_arr = new library.Package.Keepout[curr_package.place_keepouts.size()];
-            it2 = curr_package.place_keepouts.iterator();
-            for (int i = 0; i < place_keepout_arr.length; ++i) {
-                Shape.ReadAreaScopeResult curr_keepout = it2.next();
+            i = 0;
+            for (Shape.ReadAreaScopeResult curr_keepout : curr_package.place_keepouts) {
                 Layer curr_layer = (curr_keepout.shape_list.iterator().next()).layer;
                 geometry.planar.Area curr_area = Shape.transform_area_to_board_rel(curr_keepout.shape_list, p_par.coordinate_transform);
-                place_keepout_arr[i] = new library.Package.Keepout(curr_keepout.area_name, curr_area, curr_layer.no);
+                place_keepout_arr[i++] = new library.Package.Keepout(curr_keepout.area_name, curr_area, curr_layer.no);
             }
             board.library.packages.add(curr_package.name, pin_arr, outline_arr,
                     keepout_arr, via_keepout_arr, place_keepout_arr, curr_package.is_front);

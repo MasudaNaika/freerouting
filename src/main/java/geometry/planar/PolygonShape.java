@@ -21,7 +21,6 @@ package geometry.planar;
 
 import net.freerouting.Freerouter;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -544,10 +543,9 @@ public class PolygonShape extends PolylineShape {
                 return null;
             }
             precalculated_convex_pieces = new TileShape[convex_pieces.size()];
-            Iterator<PolygonShape> it = convex_pieces.iterator();
-            for (int i = 0; i < precalculated_convex_pieces.length; ++i) {
-                PolygonShape curr_piece = it.next();
-                precalculated_convex_pieces[i] = TileShape.get_instance(curr_piece.corners);
+            int i = 0;
+            for (PolygonShape curr_piece : convex_pieces) {
+                precalculated_convex_pieces[i++] = TileShape.get_instance(curr_piece.corners);
             }
         }
         return precalculated_convex_pieces;

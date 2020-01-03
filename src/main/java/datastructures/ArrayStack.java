@@ -40,14 +40,14 @@ public class ArrayStack<E> {
     /**
      * Sets the stack to empty.
      */
-    public void reset() {
+    public synchronized void reset() {
         level = -1;
     }
 
     /**
      * Pushed p_element onto the stack.
      */
-    public void push(E p_element) {
+    public synchronized void push(E p_element) {
 
         ++level;
 
@@ -62,7 +62,7 @@ public class ArrayStack<E> {
      * Pops the next element from the top of the stack. Returns null, if the
      * stack is exhausted.
      */
-    public E pop() {
+    public synchronized E pop() {
         if (level < 0) {
             return null;
         }

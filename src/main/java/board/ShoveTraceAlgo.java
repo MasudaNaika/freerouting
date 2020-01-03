@@ -386,9 +386,9 @@ public class ShoveTraceAlgo {
             }
             Point[] end_corners = null;
             if (!tails_exist_before) {
-                end_corners = new Point[2];
-                end_corners[0] = curr_substitute_trace.first_corner();
-                end_corners[1] = curr_substitute_trace.last_corner();
+                end_corners = new Point[]{
+                    curr_substitute_trace.first_corner(),
+                    curr_substitute_trace.last_corner()};
             }
             board.insert_item(curr_substitute_trace);
             curr_substitute_trace.normalize(board.changed_area.get_area(p_layer));

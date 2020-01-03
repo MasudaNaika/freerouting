@@ -56,11 +56,11 @@ public class MinAreaTree extends ShapeTree {
         if (root == null) {
             return found_overlaps;
         }
-        node_stack.clear();
+        node_stack.reset();
         node_stack.push(root);
         TreeNode curr_node;
         while (true) {
-            curr_node = node_stack.poll();
+            curr_node = node_stack.pop();
             // null check 2019/12/26
             if (curr_node == null) {
                 break;
@@ -212,6 +212,5 @@ public class MinAreaTree extends ShapeTree {
         }
     }
 
-//    protected ArrayStack<TreeNode> node_stack = new ArrayStack<>(10000);
-    protected Deque<TreeNode> node_stack = new ArrayDeque<>(1000);
+    protected ArrayStack<TreeNode> node_stack = new ArrayStack<>(5000);
 }

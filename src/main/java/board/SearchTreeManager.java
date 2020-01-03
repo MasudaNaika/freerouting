@@ -148,7 +148,6 @@ public class SearchTreeManager {
             return;
         }
         compensated_search_trees.removeIf(curr_tree -> curr_tree.compensated_clearance_class_no == p_no);
-        Iterator<ShapeSearchTree> it = compensated_search_trees.iterator();
     }
 
     /**

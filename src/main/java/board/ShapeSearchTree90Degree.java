@@ -78,12 +78,12 @@ public class ShapeSearchTree90Degree extends ShapeSearchTree {
         int room_layer = p_room.get_layer();
         Collection<IncompleteFreeSpaceExpansionRoom> result = new LinkedList<>();
         result.add(new IncompleteFreeSpaceExpansionRoom(start_shape, room_layer, shape_to_be_contained));
-        node_stack.clear();
+        node_stack.reset();
         node_stack.push(root);
         TreeNode curr_node;
 
         while (true) {
-            curr_node = node_stack.poll();
+            curr_node = node_stack.pop();
             if (curr_node == null || curr_node.bounding_shape == null) {
                 break;
             }

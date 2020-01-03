@@ -634,14 +634,13 @@ class Structure extends ScopeKeyword {
         }
         Rectangle bounding_box = p_board_construction_info.bounding_shape.bounding_box();
         board.Layer[] board_layer_arr = new board.Layer[layer_count];
-        Iterator<Layer> it = p_board_construction_info.layer_info.iterator();
-        for (int i = 0; i < layer_count; ++i) {
-            Layer curr_layer = it.next();
+        int j = 0;
+        for (Layer curr_layer : p_board_construction_info.layer_info) {
             if (curr_layer.no < 0 || curr_layer.no >= layer_count) {
                 Freerouter.logInfo("Structure.create_board: illegal layer number");
                 return false;
             }
-            board_layer_arr[i] = new board.Layer(curr_layer.name, curr_layer.is_signal);
+            board_layer_arr[j++] = new board.Layer(curr_layer.name, curr_layer.is_signal);
         }
         board.LayerStructure board_layer_structure = new board.LayerStructure(board_layer_arr);
         p_par.layer_structure = new LayerStructure(p_board_construction_info.layer_info);
@@ -760,9 +759,9 @@ class Structure extends ScopeKeyword {
      */
     private static Collection<PolylineShape> separate_holes(Collection<PolylineShape> p_outline_shapes) {
         OutlineShape shape_arr[] = new OutlineShape[p_outline_shapes.size()];
-        Iterator<PolylineShape> it = p_outline_shapes.iterator();
-        for (int i = 0; i < shape_arr.length; ++i) {
-            shape_arr[i] = new OutlineShape(it.next());
+        int k = 0;
+        for (PolylineShape ps : p_outline_shapes) {
+            shape_arr[k++] = new OutlineShape(ps);
         }
         for (int i = 0; i < shape_arr.length; ++i) {
             OutlineShape curr_shape = shape_arr[i];

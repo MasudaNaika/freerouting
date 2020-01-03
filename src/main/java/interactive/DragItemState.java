@@ -27,7 +27,6 @@ import geometry.planar.IntPoint;
 import geometry.planar.Vector;
 import net.freerouting.Freerouter;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.SortedSet;
 
 /**

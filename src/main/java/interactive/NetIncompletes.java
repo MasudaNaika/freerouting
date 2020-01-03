@@ -30,7 +30,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Locale;
 import java.util.SortedSet;
@@ -196,18 +195,14 @@ public class NetIncompletes {
      */
     private NetItem[] calculate_net_items(Collection<Item> p_item_list) {
         NetItem[] result = new NetItem[p_item_list.size()];
-        Collection<Item> handeled_items = new LinkedList<>();
         int curr_index = 0;
         while (!p_item_list.isEmpty()) {
             Item start_item = p_item_list.iterator().next();
             Collection<Item> curr_connected_set = start_item.get_connected_set(net.net_number);
-            handeled_items.addAll(curr_connected_set);
             p_item_list.removeAll(curr_connected_set);
-            Iterator<Item> it = curr_connected_set.iterator();
-            while (it.hasNext()) {
-                Item curr_item = it.next();
+            for (Item curr_item : curr_connected_set) {
                 if (curr_index >= result.length) {
-                    Freerouter.logInfo("NetIncompletes.calculate_net_items: to many items");
+                    Freerouter.logInfo("NetIncompletes.calculate_net_items: too many items");
                     return result;
                 }
                 result[curr_index] = new NetItem(curr_item, curr_connected_set);
@@ -215,7 +210,7 @@ public class NetIncompletes {
             }
         }
         if (curr_index < result.length) {
-            Freerouter.logInfo("NetIncompletes.calculate_net_items: to few items");
+            Freerouter.logInfo("NetIncompletes.calculate_net_items: too few items");
         }
         return result;
     }
