@@ -62,8 +62,11 @@ public class MinAreaTree extends ShapeTree {
         while (true) {
             curr_node = node_stack.poll();
             // null check 2019/12/26
-            if (curr_node == null || curr_node.bounding_shape == null) {
+            if (curr_node == null) {
                 break;
+            }
+            if (curr_node.bounding_shape == null) {
+                continue;
             }
             if (curr_node.bounding_shape.intersects(p_shape)) {
                 if (curr_node instanceof Leaf) {
