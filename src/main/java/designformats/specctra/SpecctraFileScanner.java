@@ -686,7 +686,7 @@ public class SpecctraFileScanner implements Scanner {
     /**
      * Returns the text matched by the current regular expression.
      */
-    public final String yytext() {
+    private String yytext() {
         String str = zzBuffer.substring(zzStartRead, zzMarkedPos);
 //        System.out.println(str);
         return str;
@@ -741,28 +741,22 @@ public class SpecctraFileScanner implements Scanner {
 
             int zzAction = -1;
             int zzState = zzLexicalState;
-            int zzCurrentPos = zzMarkedPos;
-            zzStartRead = zzCurrentPos;
-  
-            while (true) {
-                if (zzCurrentPos >= zzBuffer.length() - 1) {
-                    return null;
-                }
-                int zzInput = zzBuffer.charAt(zzCurrentPos++);
+            zzStartRead = zzMarkedPos;
+            
+            for (int pos = zzMarkedPos; pos < zzBuffer.length(); ++pos) {
+                char zzInput = zzBuffer.charAt(pos);
                 // 2-byte character, dirty fix. 2020/01/03
-                if (zzInput > 255) {
-                    zzMarkedPos = zzCurrentPos;
-                    continue;
+                if (zzInput < 256) {
+                    int zzNext = ZZ_TRANS[ZZ_ROWMAP[zzState] + ZZ_CMAP[zzInput]];
+                    if (zzNext == -1) {
+                        break;
+                    }
+                    zzState = zzNext;
                 }
-                int zzNext = ZZ_TRANS[ZZ_ROWMAP[zzState] + ZZ_CMAP[zzInput]];
-                if (zzNext == -1) {
-                    break;
-                }
-                zzState = zzNext;
                 int zzAttributes = ZZ_ATTRIBUTE[zzState];
                 if ((zzAttributes & 1) == 1) {
                     zzAction = zzState;
-                    zzMarkedPos = zzCurrentPos;
+                    zzMarkedPos = pos + 1;
                     if ((zzAttributes & 8) == 8) {
                         break;
                     }
