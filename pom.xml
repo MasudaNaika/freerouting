@@ -19,7 +19,7 @@
         <dependency>
             <groupId>com.formdev</groupId>
             <artifactId>flatlaf</artifactId>
-            <version>0.22</version>
+            <version>0.23.1</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
