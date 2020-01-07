@@ -233,6 +233,8 @@ class BoardToolbarSelectedItem extends JToolBar {
         });
 
         add(display_region_button);
+        
+        setFloatable(false);
     }
 
     private void assign_clearance_class() {

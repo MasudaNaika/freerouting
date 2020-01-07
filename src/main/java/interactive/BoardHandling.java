@@ -144,12 +144,11 @@ public class BoardHandling extends BoardHandlingImpl {
             Collection<board.Pin> pin_list = board.get_pins();
             for (board.Pin curr_pin : pin_list) {
                 if (curr_pin.has_trace_exit_restrictions()) {
-                    Collection<Item> contact_list = curr_pin.get_normal_contacts();
-                    for (Item curr_contact : contact_list) {
-                        if ((curr_contact instanceof PolylineTrace) && curr_contact.get_fixed_state() == FixedState.SHOVE_FIXED) {
-                            if (((PolylineTrace) curr_contact).corner_count() == 2) {
-                                curr_contact.set_fixed_state(FixedState.UNFIXED);
-                            }
+                    for (Item curr_contact : curr_pin.get_normal_contacts()) {
+                        if (curr_contact instanceof PolylineTrace
+                                && curr_contact.get_fixed_state() == FixedState.SHOVE_FIXED
+                                && ((PolylineTrace) curr_contact).corner_count() == 2) {
+                            curr_contact.set_fixed_state(FixedState.UNFIXED);
                         }
                     }
                 }

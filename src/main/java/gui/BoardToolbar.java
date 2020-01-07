@@ -233,6 +233,10 @@ class BoardToolbar extends JPanel {
         right_toolbar.add(jLabel4);
 
         add(right_toolbar, BorderLayout.EAST);
+        
+        left_toolbar.setFloatable(false);
+        middle_toolbar.setFloatable(false);
+        right_toolbar.setFloatable(false);
     }
 
     /**
