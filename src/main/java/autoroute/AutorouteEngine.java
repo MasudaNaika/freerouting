@@ -66,10 +66,14 @@ public class AutorouteEngine {
         if (maintain_database && p_net_no != net_no) {
             if (complete_expansion_rooms != null) {
                 // invalidate the net dependent complete free space expansion rooms.
+                Collection<CompleteFreeSpaceExpansionRoom> rooms_to_remove = new LinkedList<>();
                 for (CompleteFreeSpaceExpansionRoom curr_room : complete_expansion_rooms) {
                     if (curr_room.is_net_dependent()) {
-                        remove_complete_expansion_room(curr_room);
+                        rooms_to_remove.add(curr_room);
                     }
+                }
+                for (CompleteFreeSpaceExpansionRoom curr_room : rooms_to_remove) {
+                    remove_complete_expansion_room(curr_room);
                 }
             }
             // invalidate the neighbour rooms of the items of p_net_no
